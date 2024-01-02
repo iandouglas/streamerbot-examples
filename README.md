@@ -4,7 +4,7 @@ This is a respository of things I've built or tweaked for [Streamer.bot](Streame
 
 ## How to use it
 
-Each folder will have an 'export' that will work in Streamer.bot 0.2.x. I will not be generating exports for Streamer.bot 0.1.x. But each folder will also include any C# code needed to build your own actions, subactions, etc along the way.
+Each folder will have a README with instructions, and an 'import_code.txt' file containing the import text that will work in Streamer.bot 0.2.x. I will not be generating exports for Streamer.bot 0.1.x. But each folder will also include any C# code needed to build your own actions, subactions, etc along the way or if you want to make any modifications/improvements. Please make a pull request to the code if you add something helpful!
 
 ## Yes, it's open-source
 
