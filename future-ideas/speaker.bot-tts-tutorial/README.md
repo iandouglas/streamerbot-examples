@@ -1,9 +1,10 @@
-# Cumulative Bits Goal Giveaway
+# Speaker.bot using Google AI voices
 
-Set an internal Streamer.bot goal that, when reached, triggers a giveaway. The streamer can choose when/how to do the giveaway.
+Inspired by many other TTS systems that allow you to pick celebrity voices, I'd like to be able to use Google's AI voices for my Speaker.bot.
 
-Ideas:
-- add an argument to reset the goal back to zero whenever met if you have lots of things to give away
+We examined some AI generated voices for recording some small clips like when someone follows my channel, but we weren't sure how well it would work for near-real-time TTS for a channel point redeem.
+
+I'd like to build a step-by-step tutorial on how to use Google's AI voices for your Speaker.bot, and connect it to a channel point redeem or a bit redeem, or both.
 
 
 ## Coming Soon

@@ -1,10 +1,13 @@
-# Speaker.bot using Google AI voices
+# Giveaway prizes from Google Sheets
 
-Inspired by many other TTS systems that allow you to pick celebrity voices, I'd like to be able to use Google's AI voices for my Speaker.bot.
+Inspired by [DKlarations](https://twitch.tv/DKlarations)
 
-We examined some AI generated voices for recording some small clips like when someone follows my channel, but we weren't sure how well it would work for near-real-time TTS for a channel point redeem.
+Track my giveaway items (game codes, shirts, pins, stickers, etc) in a Google Sheets document and have Streamer.bot randomly choose an item from the spreadsheet to give away.
 
-I'd like to build a step-by-step tutorial on how to use Google's AI voices for your Speaker.bot, and connect it to a channel point redeem or a bit redeem, or both.
+This will require the document to have two worksheets, one to pick the prizes from, and another for the streamer to move the row to once given away to include a username etc.
+
+Ideas:
+- it would be nice to have Streamer.bot automatically send a whisper to the winner with the game code and where to redeem, or to remind them to submit their mailing address for physical items, otherwise we'll need a form for them to fill out with their contact info etc.
 
 
 ## Coming Soon
