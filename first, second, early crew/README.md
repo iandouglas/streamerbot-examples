@@ -61,3 +61,7 @@ The `EarlyCrewPrefix` will always be followed by a carriage return, no matter wh
 ## All done!
 
 Once you set all of those arguments, you should be up and running.
+
+## Troubleshooting
+
+If you have trouble setting this up, head over to [my Discord community](https://tig.fyi/discord) for help.
