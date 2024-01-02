@@ -142,6 +142,7 @@ In the subaction for the main command ("Bit redeems media and audio from CSV"), 
 
 If people want it badly enough, here are some ideas for future expansion:
 
+- dump the catalog into a Twitch-friendly block of text for an About panel showing the bit redeem values in ascending order (this can't be done programmatically, but should be easy enough to dump to a filename under your Streamer.bot installation folder in the 'data' subfolder like "bits_panel.txt" or something. Then you can edit that and paste it into your Twitch panel.
 - adding multiple sources, maybe pipe-delimited, like `source1|source2` and have the code randomly pick one, or analyze if one is already active, to use the next one (round-robin)
 - support for other audio/video formats to determine their duration
 - make it optional to only play one bit redeem at a time
