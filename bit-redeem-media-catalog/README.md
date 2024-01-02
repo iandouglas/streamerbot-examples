@@ -37,6 +37,13 @@ Alternatively, you can build your own Google Sheet from scratch, but MUST follow
 - Column E must be called "OBSScene"
 - Column F must be called "Duration"
 
+**IMPORTANT** you MUST set the document sharing to be visible by Streamer.bot:
+
+1. Click the "Share" button
+2. Under "General Access", set this to "Anyone with the link" and set that to "Viewer"
+
+Next, copy the full address bad of your Google Sheets and use it below in the installation instructions.
+
 ### Field explanations:
 
 - *Bits* -- this is the number of bits you want someone to redeem to play this media file. If you want to have multiple media files play at the same time, you can have multiple rows with the same bit value.
@@ -65,7 +72,8 @@ If you have a background video of 60 seconds, and and audio file of 15 seconds, 
 
 Check out the [import code](./import_code.txt) file, copy that to your clipboard, click on the "Import" button in Streamer.bot and paste it in the "Import String" field. Click on the Import button. This should import two actions:
 
-1. Load CSV data from Google Sheets 
+1. Load CSV data from Google Sheets
+  - there is a subaction that sets an argument called "GoogleSheetURL", set this to the FULL address bar URL of your Google Sheet.
   - this action loads your Google Sheet into Streamer.bot
   - if Streamer.bot is closed, the settings will be lost
   - there are two triggers for this action:
@@ -112,6 +120,8 @@ If you still get errors, check the Troubleshooting section below.
 In my sample Google Sheet you'll see a row with a bit value of "-1" and a "Type" field called "base_path". This is an optional line that will set a base disk path for ALL media files in your spreadsheet if you don't want to type the same "C:\obs\assets" string over and over. Note that if you have media files on multiple disk drives, you should NOT use this feature.
 
 ## Troubleshooting
+
+After you attempt to load the Google Sheet data, check the "Variables" in Streamer.bot and look at the "Non-Persisted Globals". If you do not see an item there called "ID736MediaCatalog" then your import did not work. Check your Google Sheets permissions. If you DO see data there, copy the value from the global variable and paste it over on JSONlint.com and click the "validate JSON" button to see if everything looks correct. If you see media files that aren't yours, you probably didn't set the correct "GoogleSheetsURL" argument.
 
 Your Streamer.bot logs will write an info-level message if a file cannot be found. Double check spelling and case-sensitivity of your filenames
 
