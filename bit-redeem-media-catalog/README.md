@@ -114,10 +114,37 @@ If you see errors about "assembly references", then you will need to do a few mo
 
 If you still get errors, check the Troubleshooting section below.
 
+## Advanced feature, change the "queue"
+
+I built this where everything happens on the "default" queue in Streamer.bot. If you want to use a different queue, then you'll need to create a new queue first:
+
+1. Click on the "Action Queues" tab at the top of Streamer.bot
+2. Click on the "Queues" tab
+3. Right-click in an empty area of the lie of queues and click "Add", give it a name, and whether it should block other things happening, click OK
+
+Then update the two actions that were imported by going back to the "Actions" tab at the top of Streamer.bot
+
+1. Double-click on the action name
+2. Pick your new queue from the drop-down list, click OK
+3. (repeat for both commands)
 
 ## Advanced feature, "base path"
 
 In my sample Google Sheet you'll see a row with a bit value of "-1" and a "Type" field called "base_path". This is an optional line that will set a base disk path for ALL media files in your spreadsheet if you don't want to type the same "C:\obs\assets" string over and over. Note that if you have media files on multiple disk drives, you should NOT use this feature.
+
+## Advanced feature, remove the queue pausing
+
+Okay, so you really, really, really want chaos and want all things to play all the time no matter what?
+
+In the subaction for the main command ("Bit redeems media and audio from CSV"), remove all the other subactions EXCEPT for the Execute Code subaction.
+
+## Future plans
+
+If people want it badly enough, here are some ideas for future expansion:
+
+- adding multiple sources, maybe pipe-delimited, like `source1|source2` and have the code randomly pick one, or analyze if one is already active, to use the next one (round-robin)
+- support for other audio/video formats to determine their duration
+- make it optional to only play one bit redeem at a time
 
 ## Troubleshooting
 
