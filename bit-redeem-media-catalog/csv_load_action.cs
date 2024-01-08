@@ -165,7 +165,3 @@ public class CPHInline
 		return true;
 	}
 }
-
-
-//https://docs.google.com/spreadsheets/d/16pINHhBQQ3H6IzRbduXzbOU53Od8jL2loTmbFbsm9RA/edit#gid=0
-//https://docs.google.com/spreadsheets/d/16pINHhBQQ3H6IzRbduXzbOU53Od8jL2loTmbFbsm9RA/gviz/tq?tqx=out:csv&sheet=Sheet1
