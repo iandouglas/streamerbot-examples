@@ -6,6 +6,10 @@ We examined some AI generated voices for recording some small clips like when so
 
 I'd like to build a step-by-step tutorial on how to use Google's AI voices for your Speaker.bot, and connect it to a channel point redeem or a bit redeem, or both.
 
+## this will cost real money
+
+Google is generous with quotas, but their APIs can cost actual money.
+
 
 ## Coming Soon
 
