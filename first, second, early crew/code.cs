@@ -6,6 +6,16 @@ public class CPHInline
 {
 	public bool Execute()
 	{
+		// get OBS scene where we might want this information displayed
+		string obsScene = args["EarlyCrewOBSScene"].ToString();
+		// get OBS scene
+		string whichScene = CPH.ObsGetCurrentScene();
+		// if we're not on our starting soon scene, return
+		if (whichScene != obsScene) {
+			// TODO CPH.TwitchRedemptionCancel();
+			return true;
+		}
+		
 		// get user and reward ifno
 		string userName = args["userName"].ToString();
 		string redemptionId = args["redemptionId"].ToString();
@@ -17,8 +27,7 @@ public class CPHInline
 			CPH.SendMessage("Sorry, must set EarlyCrewSizeLimit to a value greater than 1");
 		}
 		
-		// get OBS scene and source names
-		string obsScene = args["EarlyCrewOBSScene"].ToString();
+		// get OBS source names
 		string obsFirstSource = args["FirstOBSSource"].ToString();
 		string obsSecondSource = args["SecondOBSSource"].ToString();
 		string obsEarlyCrewSource = args["EarlyCrewOBSSource"].ToString();
@@ -28,6 +37,9 @@ public class CPHInline
 		string secondUsernamePrefix = args["SecondUsernamePrefix"].ToString() ?? "";
 		string earlyCrewPrefix = args["EarlyCrewPrefix"].ToString() ?? "";
 		string earlyCrewSeparator = args["EarlyCrewSeparator"].ToString() ?? "\n";
+		if (earlyCrewSeparator == "\\n") {
+			earlyCrewSeparator = "\n" ;
+		}
 
 		// get channel point redeem names so we know which channel redeem was called
 		string cprFirst = args["FirstChannelPointRedeemName"].ToString();
@@ -124,7 +136,7 @@ public class CPHInline
 		}
 
 		//CPH.SendMessage(obsOutput);
-		
+		CPH.LogInfo(obsOutput);
 		CPH.ObsSetGdiText(obsScene, obsSourceTarget, obsOutput);
 		
 		return true;
