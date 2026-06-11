@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-06-11T23:10:07.570101+00:00",
+  "officialDocs": {
+    "site": "https://docs.streamer.bot/",
+    "repo": "https://github.com/Streamerbot/docs",
+    "revision": "538dbedbe32ee3067bf889473cc5b41f8518dfa3"
+  },
+  "counts": {
+    "allPages": 1228,
+    "csharpGuides": 9,
+    "csharpMethods": 195,
+    "csharpClasses": 29,
+    "csharpEnums": 6,
+    "subActions": 345,
+    "triggers": 408,
+    "httpPages": 10,
+    "websocketPages": 10,
+    "udpPages": 3,
+    "guidePages": 54,
+    "examplePages": 15
+  },
+  "files": {
+    "overview": "overview.md",
+    "allPages": "all-pages.json",
+    "csharpMethods": "api-calls/csharp-methods.json",
+    "csharpGuides": "api-calls/csharp-guides.json",
+    "csharpClasses": "api-calls/csharp-classes.json",
+    "csharpEnums": "api-calls/csharp-enums.json",
+    "subActions": "api-calls/sub-actions.json",
+    "triggers": "api-calls/triggers.json",
+    "httpApi": "api-calls/http-api.json",
+    "websocketApi": "api-calls/websocket-api.json",
+    "udpApi": "api-calls/udp-api.json",
+    "guidePages": "api-calls/guide-pages.json",
+    "examples": "api-calls/examples.json",
+    "csharpBestPractices": "csharp-patterns/best-practices.md",
+    "interactiveControls": "csharp-patterns/interactive-controls.md",
+    "worklog": "WORKLOG.md"
+  },
+  "highlights": {
+    "toolModel": [
+      "Actions orchestrate work.",
+      "Triggers supply event-driven execution.",
+      "Variables carry event state and shared state.",
+      "Inline C# extends built-in sub-actions through the CPH API."
+    ],
+    "csharpGuidance": [
+      "Use CPH.TryGetArg<T>() for safe argument access.",
+      "Use Execute() as the required action entrypoint.",
+      "Use Init() and Dispose() only when lifecycle setup or cleanup is needed.",
+      "Use documented HTTP, WebSocket, and UDP entrypoints for remote control."
+    ]
+  }
+}

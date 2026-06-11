@@ -1,0 +1,781 @@
+[
+  {
+    "title": "Configuration",
+    "name": null,
+    "description": "How to configure the Streamer.bot WebSocket Server",
+    "version": null,
+    "route": "/api/websocket/guide/configuration",
+    "sourceUrl": "https://docs.streamer.bot/api/websocket/guide/configuration",
+    "sourcePath": "3.api/4.websocket/0.guide/0.configuration.md",
+    "headings": [
+      "Parameters"
+    ],
+    "summary": "Navigate to **Servers/Clients > WebSocket Server** in Streamer.bot\n\n!WebSocket Server Settings{caption=\"WebSocket Server Settings\"}\n\nParameters",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Using the Client",
+    "name": null,
+    "description": "Connect to the Streamer.bot WebSocket Server using the official client package",
+    "version": null,
+    "route": "/api/websocket/guide/client",
+    "sourceUrl": "https://docs.streamer.bot/api/websocket/guide/client",
+    "sourcePath": "3.api/4.websocket/0.guide/1.client.md",
+    "headings": [
+      "Installation",
+      "Usage",
+      "Execute Actions",
+      "Event Handling"
+    ],
+    "summary": "The easiest way to interact with the WebSocket Server is by using the official client package\n\nInstallation\nInstall the package via your preferred package manager:\n\nOr import it directly in the browser via a CDN:",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "bash",
+        "label": "pnpm",
+        "code": "pnpm install @streamerbot/client"
+      },
+      {
+        "language": "bash",
+        "label": "npm",
+        "code": "npm install @streamerbot/client"
+      },
+      {
+        "language": "bash",
+        "label": "yarn",
+        "code": "yarn add @streamerbot/client"
+      },
+      {
+        "language": "html",
+        "label": "index.html",
+        "code": "<script src=\"https://cdn.jsdelivr.net/npm/@streamerbot/client/dist/streamerbot-client.js\"></script>"
+      },
+      {
+        "language": "html",
+        "label": "index.html",
+        "code": "<script type=\"module\" src=\"index.js\"></script>"
+      },
+      {
+        "language": "js",
+        "label": "index.js",
+        "code": "import { StreamerbotClient } from 'https://cdn.skypack.dev/@streamerbot/client';"
+      },
+      {
+        "language": "ts",
+        "label": "",
+        "code": "const client = new StreamerbotClient();"
+      },
+      {
+        "language": "ts",
+        "label": "",
+        "code": "const client = new StreamerbotClient({\n  host: '127.0.0.1',\n  port: 8080,\n  endpoint: '/',\n  password: 'my-secret-password' // Only needed if authentication is enabled\n});"
+      },
+      {
+        "language": "js",
+        "label": "",
+        "code": "// Execute an action with actionId \"9c6203fd-363f-4834-983e-b10423c568ea\"\nclient.doAction(\"9c6203fd-363f-4834-983e-b10423c568ea\");\n\n// Execute an action by name\nclient.doAction({ name: \"My Action\" })"
+      },
+      {
+        "language": "js",
+        "label": "",
+        "code": "// Subscribe to Twitch Chat messages and register an event handler\nclient.on('Twitch.ChatMessage', ({ event, data }) => {\n  // Do something with Twitch Chat data...\n  console.log('Twitch Chat:', data);\n});"
+      },
+      {
+        "language": "js",
+        "label": "",
+        "code": "// Subscribe to *All* Twitch events\nclient.on('Twitch.*', ({ event, data }) => {\n  // Do something with Twitch data...\n  console.log('Twitch Event:', event.type, data);\n});"
+      },
+      {
+        "language": "js",
+        "label": "",
+        "code": "// Subscribe to *All events*\nclient.on('*', ({ event, data }) => {\n  // Do something with all events...\n  console.log(`[${event.source}.${event.type}]`, data);\n});"
+      }
+    ],
+    "codeBlockCount": 12
+  },
+  {
+    "title": "Sending Requests",
+    "name": null,
+    "description": "Learn how to send requests to the WebSocket server",
+    "version": null,
+    "route": "/api/websocket/guide/requests",
+    "sourceUrl": "https://docs.streamer.bot/api/websocket/guide/requests",
+    "sourcePath": "3.api/4.websocket/0.guide/2.requests.md",
+    "headings": [
+      "Request Format",
+      "Properties",
+      "Response Format",
+      "Properties"
+    ],
+    "summary": "Check out the **Streamer.bot Client** library if you are using JavaScript or TypeScript!\n\nRequest Format\n\nRequests can be made to the server in stringified JSON format.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "json",
+        "label": "Request Schema",
+        "code": "{\n  \"request\": \"<request>\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "Response Schema",
+        "code": "{\n  \"status\": \"ok\" | \"error\",\n  \"id\": \"<id>\"\n}"
+      }
+    ],
+    "codeBlockCount": 2
+  },
+  {
+    "title": "Receiving Events",
+    "name": null,
+    "description": "Learn how to subscribe to and handle events from the WebSocket server",
+    "version": null,
+    "route": "/api/websocket/guide/events",
+    "sourceUrl": "https://docs.streamer.bot/api/websocket/guide/events",
+    "sourcePath": "3.api/4.websocket/0.guide/3.events.md",
+    "headings": [
+      "Subscribing to Events",
+      "Event Schema"
+    ],
+    "summary": "Subscribing to Events\n\nIn order to receive events from the WebSocket server, you must first subscribe to them.\n\nWhen using the **Streamer.bot Client** library and its .on(){lang} method, this is handled automatically!",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "ts",
+        "label": "JSON Schema",
+        "code": "{\n    \"timeStamp\": Date, // ISO 8601 DateTime\n    \"event\": {\n      \"source\": string,\n      \"type\": string\n    },\n    \"data\": {\n      // Data for the respective event\n    }\n  }"
+      },
+      {
+        "language": "json",
+        "label": "example.json",
+        "code": "{\n    \"timeStamp\": \"2022-01-30T21:32:04.4588947-05:00\",\n    \"event\": {\n      \"source\": \"Twitch\",\n      \"type\": \"ChatMessage\"\n    },\n    \"data\": {\n      // Twitch Chat Message Data\n    }\n  }"
+      }
+    ],
+    "codeBlockCount": 2
+  },
+  {
+    "title": "Authentication",
+    "name": null,
+    "description": "How to authenticate with the WebSocket server",
+    "version": "0.2.5",
+    "route": "/api/websocket/guide/authentication",
+    "sourceUrl": "https://docs.streamer.bot/api/websocket/guide/authentication",
+    "sourcePath": "3.api/4.websocket/0.guide/4.authentication.md",
+    "headings": [
+      "Authenticating with Client",
+      "Authentication Steps",
+      "Hello Request",
+      "Authenticate Request",
+      "Example in JavaScript"
+    ],
+    "summary": "Authentication was added to the WebSocket server in Streamer.bot v0.2.5.\n\nAuthentication is **optional** and can be enabled or disabled in the WebSocket settings.\n- SendMessage is the only request where authentication is required.\n\nAuthenticating with Client",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "js",
+        "label": "",
+        "code": "const client = new StreamerbotClient({\n  password: 'MySuperSecretPassword'\n});"
+      },
+      {
+        "language": "json",
+        "label": "hello.json",
+        "code": "{\n  \"timestamp\": \"<ISO8601_string>\",\n  \"session\": \"<string>\",\n  \"request\": \"Hello\",\n  \"info\": {\n    \"instanceId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"version\": \"<string>\",\n    \"os\": \"<string>\",\n    \"osVersion\": \"<string>\",\n    \"mode\": \"ui\",\n    \"darkMode\": true,\n    \"source\": \"websocketServer\"\n  },\n  \"authentication\": {\n    \"salt\": \"<base64_string>\",\n    \"challenge\": \"<base64_string>\"\n  }\n}"
+      },
+      {
+        "language": "js",
+        "label": "Authenticate.json",
+        "code": "{\n  \"request\": \"Authenticate\",\n  \"id\": \"<request_id>\", // Any unique ID you want to use\n  \"authentication\": \"<authentication_string>\" // Your generated authentication string\n}"
+      },
+      {
+        "language": "js",
+        "label": "example.js",
+        "code": "import crypto from 'crypto';\n\nconst { salt, challenge } = data.authentication;\nconst password = 'your_websocket_password';\nconst secret = crypto.createHash('sha256').update(password + salt, 'utf8').digest('base64');\nconst authentication = crypto.createHash('sha256').update(secret + challenge, 'utf8').digest('base64');\n\nconst authRequest = {\n  id: '1',\n  request: 'Authenticate',\n  authentication\n};\nws.send(JSON.stringify(authRequest));"
+      }
+    ],
+    "codeBlockCount": 4
+  },
+  {
+    "title": "WebSocket API",
+    "name": null,
+    "description": "Real-time interaction with Streamer.bot via the built-in WebSocket server.",
+    "version": null,
+    "route": "/api/websocket",
+    "sourceUrl": "https://docs.streamer.bot/api/websocket",
+    "sourcePath": "3.api/4.websocket/0.index.md",
+    "headings": [],
+    "summary": "Learn how to configure and use the WebSocket server in Streamer.bot\n  \n  \n   Additional documentation for common use cases\n  \n  \n    Complete WebSocket API examples\n\nDocumentation for all WebSocket requests\n  \n  \n    Documentation for all WebSocket events",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Custom Overlays",
+    "name": null,
+    "description": "Create your own custom overlays using the WebSocket API",
+    "version": null,
+    "route": "/api/websocket/recipes/overlays",
+    "sourceUrl": "https://docs.streamer.bot/api/websocket/recipes/overlays",
+    "sourcePath": "3.api/4.websocket/1.recipes/overlays.md",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Remote Access",
+    "name": null,
+    "description": "Access your Streamer.bot instance from other devices",
+    "version": null,
+    "route": "/api/websocket/recipes/remote-access",
+    "sourceUrl": "https://docs.streamer.bot/api/websocket/recipes/remote-access",
+    "sourcePath": "3.api/4.websocket/1.recipes/remote-access.md",
+    "headings": [
+      "Local Area Network (LAN)",
+      "Configuration",
+      "Example",
+      "Mixed Content Restrictions",
+      "Virtual Private Network (VPN)",
+      "Tailscale",
+      "Install Tailscale",
+      "Configure Tailscale Serve",
+      "Connect to Streamer.bot",
+      "Secure Tunnel",
+      "Cloudflare Tunnel",
+      "ngrok",
+      "Tailscale Funnel"
+    ],
+    "summary": "When interacting with the Streamer.bot WebSocket Server, you may want to access your instance from other devices, such as your phone or another computer.\n\nDepending on your use case, there are a few different ways to achieve this.\n\nLocal Area Network (LAN)\nYou can access your Streamer.bot instance over your local network by simply using the local IP address of the machine running Streamer.bot.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "js",
+        "label": "",
+        "code": "const client = new StreamerbotClient({\n  host: '192.168.1.10' // Replace with your local IP address\n});"
+      },
+      {
+        "language": "bash",
+        "label": "Terminal",
+        "code": "tailscale serve 8080"
+      },
+      {
+        "language": "js",
+        "label": "",
+        "code": "const client = new StreamerbotClient({\n  host: 'device.my-tailnet.ts.net',\n  port: 443,\n  scheme: 'wss'\n});"
+      }
+    ],
+    "codeBlockCount": 3
+  },
+  {
+    "title": "WebSocket Events",
+    "name": null,
+    "description": "Reference of all events emitted by the Streamer.bot WebSocket Server",
+    "version": null,
+    "route": "/api/websocket/events",
+    "sourceUrl": "https://docs.streamer.bot/api/websocket/events",
+    "sourcePath": "3.api/4.websocket/3.events/index.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "WebSocket Requests",
+    "name": null,
+    "description": "Reference of all requests that can be made to the Streamer.bot WebSocket Server",
+    "version": null,
+    "route": "/api/websocket/requests",
+    "sourceUrl": "https://docs.streamer.bot/api/websocket/requests",
+    "sourcePath": "3.api/4.websocket/3.requests.md",
+    "headings": [
+      "`Subscribe`",
+      "`UnSubscribe`",
+      "`GetEvents`",
+      "`GetActions`",
+      "`DoAction`",
+      "`GetBroadcaster`",
+      "`GetCredits`",
+      "`TestCredits`",
+      "`ClearCredits`",
+      "`GetInfo`",
+      "`GetActiveViewers`",
+      "`GetCodeTriggers`",
+      "`ExecuteCodeTrigger`",
+      "`GetCommands`",
+      "`TwitchGetEmotes`",
+      "`YouTubeGetEmotes`",
+      "`GetGlobals`",
+      "`GetGlobal`",
+      "`TwitchGetUserGlobals`",
+      "`TwitchGetUserGlobal`",
+      "`SendMessage`",
+      "`GetUserPronouns`"
+    ],
+    "summary": "Check out the **Streamer.bot Client** library if you are using JavaScript or TypeScript!\n\nRequests can be made to the server in stringified JSON format.\n\nRequests and responses follow the following base schema:",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "json",
+        "label": "↗️ Request Format",
+        "code": "{\n  \"request\": \"<request>\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "ts",
+        "label": "↙️ Response Format",
+        "code": "{\n  \"status\": \"ok\" | \"error\",\n  \"id\": \"<request-id>\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"Subscribe\",\n  \"id\": \"<id>\",\n  \"events\": {\n    \"<event category>\": [\"<event name>\", \"<event name>\", \"...\"]\n  }\n}"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"Subscribe\",\n  \"id\": \"my-subscribe-id\",\n  \"events\": {\n    \"Twitch\": [\"Follow\", \"Cheer\", \"Sub\", \"ReSub\", \"GiftSub\", \"GiftBomb\"]\n  }\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"my-subscribe-id\",\n  \"events\": {\n    \"Twitch\": [\"Follow\", \"Cheer\", \"Sub\", \"ReSub\", \"GiftSub\", \"GiftBomb\"]\n  }\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nclient.subscribe(\"Twitch.ChatMessage\");"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"UnSubscribe\",\n  \"id\": \"<id>\",\n  \"events\": {\n    \"<event category>\": [\"<event name>\", \"<event name>\", \"...\"]\n  }\n}"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"UnSubscribe\",\n  \"id\": \"my-unsubscribe-id\",\n  \"events\": {\n    \"Twitch\": [\"Follow\"]\n  }\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"my-unsubscribe-id\",\n  \"events\": [\"Follow\"]\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nclient.unsubscribe(\"Twitch.ChatMessage\");"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"GetEvents\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"GetEvents\",\n  \"id\": \"my-get-events-id\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"my-get-events-id\",\n  \"events\": {\n    \"general\": [\"Custom\"],\n    \"twitch\": [\n      \"Follow\",\n      \"Cheer\",\n      \"Sub\",\n      \"ReSub\",\n      \"GiftSub\",\n      \"GiftBomb\",\n      \"Raid\",\n      \"HypeTrainStart\",\n      \"HypeTrainUpdate\",\n      \"HypeTrainLevelUp\",\n      \"HypeTrainEnd\",\n      \"RewardRedemption\",\n      \"RewardCreated\",\n      \"RewardUpdated\",\n      \"RewardDeleted\",\n      \"CommunityGoalContribution\",\n      \"CommunityGoalEnded\",\n      \"StreamUpdate\",\n      \"Whisper\",\n      \"FirstWord\",\n      \"SubCounterRollover\",\n      \"BroadcastUpdate\",\n      \"StreamUpdateGameOnConnect\",\n      \"PresentViewers\",\n      \"PollCreated\",\n      \"PollUpdated\",\n      \"PollCompleted\",\n      \"PredictionCreated\",\n      \"PredictionUpdated\",\n      \"PredictionCompleted\",\n      \"PredictionCanceled\",\n      \"PredictionLocked\",\n      \"ChatMessage\",\n      \"ChatMessageDeleted\",\n      \"UserTimedOut\",\n      \"UserBanned\",\n      \"Announcement\",\n      \"AdRun\",\n      \"BotWhisper\",\n      \"CharityDonation\",\n      \"CharityCompleted\",\n      \"CoinCheer\",\n      \"ShoutoutCreated\",\n      \"UserUntimedOut\",\n      \"CharityStarted\",\n      \"CharityProgress\",\n      \"GoalBegin\",\n      \"GoalProgress\",\n      \"GoalEnd\",\n      \"ShieldModeBegin\",\n      \"ShieldModeEnd\",\n      \"AdMidRoll\"\n    ],\n    \"streamlabs\": [\"Donation\", \"Merchandise\"],\n    \"speechToText\": [\"Dictation\", \"Command\"],\n    \"command\": [\"Message\", \"Whisper\", \"MessageCooldown\", \"BotWhisper\"],\n    \"fileWatcher\": [\"Changed\", \"Created\", \"Deleted\", \"Renamed\"],\n    \"quote\": [\"Added\", \"Show\"],\n    \"misc\": [\"TimedAction\", \"PyramidSuccess\", \"PyramidBroken\"],\n    \"raw\": [\"Action\", \"SubAction\", \"ActionCompleted\"],\n    \"websocketClient\": [\"Open\", \"Close\", \"Message\"],\n    \"streamElements\": [\"Tip\", \"Merch\"],\n    \"websocketCustomServer\": [\"Open\", \"Close\", \"Message\"],\n    \"donorDrive\": [\"Donation\", \"ProfileUpdated\"],\n    \"youTube\": [\n      \"BroadcastStarted\",\n      \"BroadcastEnded\",\n      \"Message\",\n      \"MessageDeleted\",\n      \"UserBanned\",\n      \"SuperChat\",\n      \"SuperSticker\",\n      \"NewSponsor\",\n      \"MemberMileStone\",\n      \"NewSponsorOnlyStarted\",\n      \"NewSponsorOnlyEnded\",\n      \"StatisticsUpdated\",\n      \"BroadcastUpdated\",\n      \"MembershipGift\",\n      \"GiftMembershipReceived\",\n      \"FirstWords\",\n      \"PresentViewers\"\n    ],\n    \"pulsoid\": [\"HeartRatePulse\"],\n    \"hypeRate\": [\"HeartRatePulse\"],\n    \"kofi\": [\"Donation\", \"Subscription\", \"Resubscription\", \"ShopOrder\", \"Commission\"],\n    \"patreon\": [\n      \"FollowCreated\",\n      \"FollowDeleted\",\n      \"PledgeCreated\",\n      \"PledgeUpdated\",\n      \"PledgeDeleted\"\n    ],\n    \"application\": [\"ActionAdded\", \"ActionUpdated\", \"ActionDeleted\"],\n    \"tipeeeStream\": [\"Donation\"],\n    \"treatStream\": [\"Treat\"],\n    \"shopify\": [\"OrderCreated\", \"OrderPaid\"],\n    \"obs\": [\"Connected\", \"Disconnected\"],\n    \"midi\": [\"Message\"]\n  }\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.getEvents();\nconsole.log(\"Streamer.bot Events\", response.events);"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"GetActions\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"GetActions\",\n  \"id\": \"my-get-actions-id\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"count\": 1,\n  \"actions\": [\n    {\n      \"enabled\": true,\n      \"group\": \"None\",\n      \"id\": \"a0ff6f91-a51e-4b7d-948b-5e03ff4a82f0\",\n      \"name\": \"Action Number One\",\n      \"subaction_count\": 4,\n      \"trigger_count\": 1\n    }\n  ],\n  \"status\": \"ok\",\n  \"id\": \"my-get-actions-id\"\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.getActions();\nconsole.log(\"Streamer.bot Actions\", response.actions);"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"DoAction\",\n  \"action\": {\n    \"id\": \"<guid>\",\n    \"name\": \"<name>\"\n  },\n  \"args\": {\n    \"key\": \"value\"\n  },\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"DoAction\",\n  \"action\": {\n    \"id\": \"47da7c2c-1b7e-4ee7-9bbf-306bf18ff1b8\"\n  },\n  \"id\": \"sb:client:req:1753223220663-2906868922\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.doAction(\"47da7c2c-1b7e-4ee7-9bbf-306bf18ff1b8\");"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"DoAction\",\n  \"id\": \"sb:client:req:1753224740175-3103164791\"\n  \"action\": {\n    \"name\": \"example action\"\n  },\n  \"args\": {\n    \"stringArg\": \"abcdef\",\n    \"numArg\": 1234\n  },\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.doAction(action = {name: \"example action\"},\n                                         args = {\"stringArg\" : \"abcdef\",\n                                                 \"numArg\" : 1234}));"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"GetBroadcaster\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"platforms\": {\n    \"twitch\": {\n      \"broadcastUser\": \"ik1497\",\n      \"broadcastUserName\": \"ik1497\",\n      \"broadcastUserId\": 695682330,\n      \"broadcasterIsAffiliate\": false,\n      \"broadcasterIsPartner\": false,\n      \"botUser\": \"MyBot\",\n      \"botUserName\": \"mybot\",\n      \"botUserId\": \"682553973\"\n    },\n    \"youtube\": {\n      \"broadcastUserName\": \"Ik1497 Tutorials\",\n      \"broadcastUserId\": \"UCl3oatIf9tYopHaZHvnH3xw\",\n      \"broadcastUserProfileImage\": \"https://yt3.ggpht.com/VpC8_9WcDEKcPSvnD6p1iGT_S2_XxdeZtL6tTL2axexj0SpG-c4Wx8i5lYNbJtvmzwCnzm9Bsg=s88-c-k-c0x00ffffff-no-rj\"\n    },\n    \"kick\": {\n      \"broadcasterLogin\": \"ik1497kicker\",\n      \"broadcasterUserName\": \"IK1497Kicker\",\n      \"broadcasterUserId\": \"5081399\",\n      \"broadcasterProfileUrl\": \"https://files.kick.com/images/user/5081399/profile_image/conversion/cf435acc-5bef-4ef9-938d-4f9c0582af19-fullsize.webp\"\n    }\n  },\n  \"connected\": [\"twitch\", \"youtube\", \"kick\"],\n  \"disconnected\": [],\n  \"status\": \"ok\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.getBroadcaster();\nconsole.log(\"Streamer.bot Broadcasters\", response.platforms);"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"GetCredits\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"id\": \"<id>\",\n  \"events\": {\n    \"follows\": [],\n    \"cheers\": [],\n    \"subs\": [],\n    \"resubs\": [],\n    \"giftsubs\": [],\n    \"giftbombs\": [],\n    \"raided\": [],\n    \"rewardredemptions\": [],\n    \"goalcontributions\": [],\n    \"gameupdates\": [],\n    \"pyramids\": [],\n    \"hypetrains\": []\n  },\n  \"hypeTrain\": {\n    \"conductors\": [],\n    \"contributors\": []\n  },\n  \"users\": {\n    \"editors\": [],\n    \"moderators\": [],\n    \"subscribers\": [],\n    \"vips\": [],\n    \"groups\": [],\n    \"users\": []\n  },\n  \"groups\": {},\n  \"top\": {\n    \"allBits\": [],\n    \"monthBits\": [],\n    \"weekBits\": [],\n    \"channelRewards\": []\n  },\n  \"status\": \"ok\"\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.getCredits();\nconsole.log(\"Streamer.bot Credits\", response.credits);"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"TestCredits\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.testCredits();\nconsole.log(\"Streamer.bot Test Credits\", response.credits);"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"ClearCredits\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.clearCredits();\nconsole.log(\"Streamer.bot Credits Cleared\", response.status);"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"GetInfo\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"info\": {\n    \"instanceId\": \"jx5gd80u-3b04-4c9b-x902-4589nn5010ax\",\n    \"name\": \"‍Streamer.bot\",\n    \"version\": \"0.1.15\",\n    \"os\": \"windows\",\n    \"osVersion\": \"6.2.9200.0\",\n    \"mode\": \"ui\",\n    \"darkMode\": false,\n    \"source\": \"websocketServer\"\n  },\n  \"status\": \"ok\",\n  \"id\": \"123\"\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.getInfo();\nconsole.log(\"Streamer.bot Instance Info\", response.info);"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"GetActiveViewers\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"count\": 2,\n  \"viewers\": [\n    {\n      \"id\": \"695682330\",\n      \"type\": \"kick\",\n      \"login\": \"ik1497\",\n      \"display\": \"ik1497\",\n      \"subscribed\": true,\n      \"role\": \"Broadcaster\",\n      \"groups\": [],\n      \"channelPointsUsed\": 0,\n      \"previousActive\": \"2022-12-20T01:03:01.4613004+01:00\",\n      \"exempt\": true\n    },\n    {\n      \"id\": \"750146097\",\n      \"type\": \"twitch\",\n      \"login\": \"ik1497bot\",\n      \"display\": \"Ik1497Bot\",\n      \"subscribed\": false,\n      \"role\": \"Moderator\",\n      \"groups\": [\"Friends\"],\n      \"channelPointsUsed\": 0,\n      \"previousActive\": \"2022-12-20T01:03:10.5548462+01:00\",\n      \"exempt\": false\n    }\n  ],\n  \"status\": \"ok\",\n  \"id\": \"123\"\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.getActiveViewers();\nconsole.log(\"Streamer.bot Active Viewers\", response.viewers);"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"GetCodeTriggers\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"GetCodeTriggers\",\n  \"id\": \"my-subscribe-id\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"my-subscribe-id\",\n  \"count\": 1,\n  \"triggers\": [\n    {\n      \"name\": \"Channel Created\",\n      \"eventName\": \"channel_created\",\n      \"category\": \"Custom/Discord Server/Channels\"\n    }\n  ]\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.getCodeTriggers();"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"ExecuteCodeTrigger\",\n  \"id\": \"<id>\",\n  \"triggerName\": \"<triggerName>\",\n  \"args\": {\n    \"key\": \"value\"\n  }\n}"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"ExecuteCodeTrigger\",\n  \"id\": \"my-subscribe-id\",\n  \"triggerName\": \"poll_vote_removed\",\n  \"args\": {\n    \"stringArg\": \"abcdef\",\n    \"numArg\": 1234\n  }\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"my-subscribe-id\"\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nclient.executeCodeTrigger(\n  (triggerName = \"poll_vote_removed\"),\n  (args = { stringArg: \"abcdef\", numArg: 1234 }),\n);"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"GetCommands\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"GetCommands\",\n  \"id\": \"my-subscribe-id\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"my-subscribe-id\",\n  \"commands\": [\n    {\n      \"id\": \"81bc8200-256d-4e1e-9e41-5010c3b808de\",\n      \"enabled\": false,\n      \"name\": \"My Game\",\n      \"group\": \"playing with viewers\",\n      \"commands\": [\"!addplayer\", \"!nextplayer\", \"!randomplayer\"],\n      \"caseSensitive\": false,\n      \"ignoreInternal\": true,\n      \"ignoreBotAccount\": true,\n      \"sources\": 1\n    },\n    {\n      \"id\": \"ac0dfb07-b5e2-4e97-8528-ca27dd67f47c\",\n      \"enabled\": true,\n      \"name\": \"CheckFiveMPlayers\",\n      \"group\": null,\n      \"commands\": [\"!server\"],\n      \"caseSensitive\": false,\n      \"ignoreInternal\": true,\n      \"ignoreBotAccount\": true,\n      \"sources\": 1\n    }\n  ],\n  \"count\": 2\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.getCommands();"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"TwitchGetEmotes\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"TwitchGetEmotes\",\n  \"id\": \"my-subscribe-id\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"my-subscribe-id\",\n  \"emotes\": {\n    \"userEmotes\": [\n      {\n        \"name\": \"CurseLit\",\n        \"type\": \"twitch_globals\",\n        \"imageUrl\": \"https://static-cdn.jtvnw.net/emoticons/v2/116625/default/dark/3.0\"\n      },\n      {\n        \"name\": \"demons176Pumpkin\",\n        \"type\": \"twitch_subscriptions\",\n        \"imageUrl\": \"https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_6d5daa168c274d4fbf8ae46216e3730a/default/dark/3.0\"\n      },\n      {\n        \"name\": \"CurseLit\",\n        \"type\": \"twitch_globals\",\n        \"imageUrl\": \"https://static-cdn.jtvnw.net/emoticons/v2/116625/default/dark/3.0\"\n      }\n    ],\n    \"bttvEmotes\": [\n      {\n        \"name\": \"AngelThump\",\n        \"imageUrl\": \"https://cdn.betterttv.net/emote/566ca1a365dbbdab32ec055b/3x\",\n        \"type\": \"BTTVGlobal\",\n        \"zeroWidth\": false\n      }\n    ],\n    \"ffzEmotes\": [\n      {\n        \"name\": \"CatBag\",\n        \"imageUrl\": \"https://cdn.frankerfacez.com/emote/25927/4\",\n        \"type\": \"FFZGlobal\",\n        \"zeroWidth\": false\n      }\n    ],\n    \"sevenTvEmotes\": [\n      {\n        \"name\": \"reckH\",\n        \"imageUrl\": \"https://cdn.7tv.app/emote/01F014S6KG0007E4VV006YKSM3/4x.png\",\n        \"type\": \"7TVGlobal\",\n        \"zeroWidth\": false\n      }\n    ]\n  }\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.getEmotes(\"twitch\");"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"YouTubeGetEmotes\",\n  \"id\": \"<id>\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"YouTubeGetEmotes\",\n  \"id\": \"my-subscribe-id\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"my-subscribe-id\",\n  \"emotes\": {\n    \"userEmotes\": [\n       {\n        \"name\": \":hand-pink-waving:\",\n        \"type\": \"youtube\",\n        \"imageUrl\": \"https://yt3.ggpht.com/KOxdr_z3A5h1Gb7kqnxqOCnbZrBmxI2B_tRQ453BhTWUhYAlpg5ZP8IKEBkcvRoY8grY91Q=w24-h24-c-k-nd\"\n      }\n    ],\n    \"bttvEmotes\": [\n      {\n        \"name\": \"AngelThump\",\n        \"imageUrl\": \"https://cdn.betterttv.net/emote/566ca1a365dbbdab32ec055b/3x\",\n        \"type\": \"BTTVGlobal\",\n        \"zeroWidth\": false\n      }\n    ],\n    \"sevenTvEmotes\": [\n      {\n        \"name\": \"reckH\",\n        \"imageUrl\": \"https://cdn.7tv.app/emote/01F014S6KG0007E4VV006YKSM3/4x.png\",\n        \"type\": \"7TVGlobal\",\n        \"zeroWidth\": false\n      }\n    ]\n    \"ffzEmotes\": [\n      {\n        \"name\": \"CatBag\",\n        \"imageUrl\": \"https://cdn.frankerfacez.com/emote/25927/4\",\n        \"type\": \"FFZGlobal\",\n        \"zeroWidth\": false\n      }\n    ]\n  }\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.getEmotes(\"youtube\");"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"GetGlobals\",\n  \"id\": \"<id>\",\n  \"persisted\": <bool>\n}"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"GetGlobal\",\n  \"id\": \"my-subscribe-id\",\n  \"persisted\": true\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"my-subscribe-id\",\n  \"variables\": [\n    \"aGlobal\": {\n      \"name\": \"aGlobal\",\n      \"value\": \"4\",\n      \"lastWrite\": \"2025-07-22T11:32:17.935-07:00\"\n    },\n    \"alertInterval\": {\n      \"name\": \"alertInterval\",\n      \"value\": 3,\n      \"lastWrite\": \"2025-06-29T22:03:21.734-07:00\"\n    }\n  ],\n  \"count\": 2\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.getGlobals();\nconsole.log(`aGlobal is ${response.variables[\"aGlobal\"].value}`); // ==> 4"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"GetGlobal\",\n  \"id\": \"<id>\",\n  \"variable\": \"<name>\",\n  \"persisted\": <bool>,\n}"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"GetGlobal\",\n  \"id\": \"my-subscribe-id\",\n  \"variable\": \"aGlobal\",\n  \"persisted\": true\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"my-subscribe-id\",\n  \"variable\": {\n    \"name\": \"aGlobal\",\n    \"value\": \"4\",\n    \"lastWrite\": \"2025-07-22T11:32:17.935-07:00\"\n  }\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.getGlobal((name = \"aGlobal\"), (persisted = true));\nconsole.log(`aGlobal is ${response.variable.value}`); // ==> 4"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"TwitchGetUserGlobals\",\n  \"id\": \"<id>\",\n  \"variable\": \"<name>\",\n  \"persisted\": <bool>,\n}"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"TwitchGetUserGlobals\",\n  \"id\": \"my-subscribe-id\",\n  \"variable\": \"tuna\",\n  \"persisted\": true\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"my-subscribe-id\",\n  \"variables\": [\n    {\n      \"name\": \"tuna\",\n      \"userId\": \"136079477\",\n      \"userLogin\": \"whazzittoya\",\n      \"userName\": \"WhazzItToYa\",\n      \"platform\": \"twitch\",\n      \"value\": 3,\n      \"lastWrite\": \"2025-07-15T19:46:40.971-07:00\"\n    },\n    {\n      \"name\": \"tuna\",\n      \"userId\": \"39547242\",\n      \"userLogin\": \"nervousbeard\",\n      \"userName\": \"NERVOUSBEARD\",\n      \"platform\": \"twitch\",\n      \"value\": \"a second fish\",\n      \"lastWrite\": \"2025-07-22T17:17:34.053-07:00\"\n    }\n  ],\n  \"count\": 2\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.getUserGlobals(\"twitch\", \"tuna\");"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"TwitchGetUserGlobal\",\n  \"id\": \"<id>\",\n  \"userId\": \"<userId>\",\n  \"persisted\": <bool>,\n  }"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"TwitchGetUserGlobal\",\n  \"id\": \"my-subscribe-id\",\n  \"userId\": \"136079477\",\n  \"persisted\": true\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"my-subscribe-id\",\n  \"variables\": [\n    {\n      \"name\": \"tuna\",\n      \"value\": 3,\n      \"lastWrite\": \"2025-07-15T19:46:40.971-07:00\"\n    },\n    {\n      \"name\": \"addedTime\",\n      \"value\": 1752206450,\n      \"lastWrite\": \"2025-07-10T21:00:50.553-07:00\"\n    }\n  ],\n  \"count\": 2\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.getUserGlobal((platform = \"twitch\"), (userId = \"136079477\"));"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"TwitchGetUserGlobal\",\n  \"id\": \"my-subscribe-id\",\n  \"userId\": \"136079477\",\n  \"variable\": \"tuna\",\n  \"persisted\": true\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"my-subscribe-id\",\n  \"variable\": {\n    \"name\": \"tuna\",\n    \"value\": 3,\n    \"lastWrite\": \"2025-07-15T19:46:40.971-07:00\"\n  }\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nconst response = await client.getUserGlobal(\n  (platform = \"twitch\"),\n  (userId = \"136079477\"),\n  (name = \"tuna\"),\n);"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"SendMessage\",\n  \"id\": \"<id>\",\n  \"platform\": \"twitch | kick | youtube\",\n  \"bot\": \"true/false\",\n  \"internal\": \"true/false\",\n  \"message\": \"<message>\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"SendMessage\",\n  \"id\": \"my-subscribe-id\",\n  \"bot\": true,\n  \"internal\": false,\n  \"message\": \"This is a test\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"my-subscribe-id\"\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nclient.sendMessage(\n  (platform = \"twitch\"),\n  (message = \"This is a test\"),\n  (options = { bot: true, internal: false }),\n);"
+      },
+      {
+        "language": "json",
+        "label": "Schema",
+        "code": "{\n  \"request\": \"GetUserPronouns\",\n  \"id\": \"<id>\",\n  \"platform\": \"twitch\",\n  \"userLogin\": \"<login>\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↗️ Request",
+        "code": "{\n  \"request\": \"GetUserPronouns\",\n  \"id\": \"my-subscribe-id\",\n  \"platform\": \"twitch\",\n  \"userLogin\": \"justsomeguyyouknow\"\n}"
+      },
+      {
+        "language": "json",
+        "label": "↙️ Response",
+        "code": "{\n  \"status\": \"ok\",\n  \"id\": \"my-subscribe-id\",\n  \"userLogin\": \"justsomeguyyouknow\",\n  \"pronoun\": {\n    \"pronounSubject\": \"He\",\n    \"pronounObject\": \"Him\",\n    \"pronounPossessive\": \"His\",\n    \"pronounPronoun\": \"His\",\n    \"pronounReflexive\": \"Himself\",\n    \"pronounPastTense\": \"Was\",\n    \"pronounSubjectLower\": \"he\",\n    \"pronounObjectLower\": \"him\",\n    \"pronounPossessiveLower\": \"his\",\n    \"pronounPronounLower\": \"his\",\n    \"pronounReflexiveLower\": \"himself\",\n    \"pronounPastTenseLower\": \"was\",\n    \"pronounCurrentTense\": \"Is\",\n    \"pronounCurrentTenseLower\": \"is\",\n    \"pronounPluralLower\": \"s\",\n    \"pronouns\": \"(He/Him)\",\n    \"pronounLastCached\": \"2025-07-22T15:23:02.529-07:00\",\n    \"userFound\": true,\n    \"pronounsPlain\": \"He/Him\"\n  }\n}"
+      },
+      {
+        "language": "ts",
+        "label": "example.js",
+        "code": "// Using @streamerbot/client\nclient.getUserPronouns(platform = \"twitch\",\n                        userLogin = \"justsomeguyyouknow\"));"
+      }
+    ],
+    "codeBlockCount": 88
+  }
+]

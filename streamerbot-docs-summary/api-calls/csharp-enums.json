@@ -1,0 +1,203 @@
+[
+  {
+    "title": "EventSource",
+    "name": "EventSource",
+    "description": "C# enum definition for EventSource",
+    "version": null,
+    "route": "/api/csharp/enums/event-source",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/enums/event-source",
+    "sourcePath": "3.api/3.csharp/5.enums/event-source.md",
+    "headings": [
+      "Usage Example",
+      "Enum Values"
+    ],
+    "summary": "Within any action, the value of the eventSource variable can be retrieved using the CPH.GetSource() method, which returns an EventSource enum value.\n\nThis enum represents the source of the event that triggered the action.\n\nUsage Example",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "csharp",
+        "label": "",
+        "code": "using System;\n\npublic class CPHInline\n{\n  public bool Execute()\n  {\n    // Get the EventSource for the current action\n    EventSource source = CPH.GetSource();\n\n    // Compare EventSource with switch or if\n    switch(source)\n    {\n      case EventSource.Twitch:\n        // Do something with Twitch events...\n        break;\n      case EventSource.YouTube:\n        // Do something with YouTube events...\n        break;\n    }\n\n    return true;\n  }\n}"
+      }
+    ],
+    "codeBlockCount": 1
+  },
+  {
+    "title": "EventType",
+    "name": "EventType",
+    "description": "C# enum definition for EventType",
+    "version": null,
+    "route": "/api/csharp/enums/event-type",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/enums/event-type",
+    "sourcePath": "3.api/3.csharp/5.enums/event-type.md",
+    "headings": [
+      "Usage Example",
+      "Enum Values by Source",
+      "Application",
+      "Chat Window",
+      "Command",
+      "CrowdControl",
+      "Custom",
+      "DonorDrive",
+      "Elgato Camera Hub",
+      "Elgato Stream Deck",
+      "Elgato Wave Link",
+      "File",
+      "Fourthwall",
+      "Global Variable",
+      "Group",
+      "HypeRate.io",
+      "Input",
+      "Kick",
+      "Ko-Fi",
+      "Meld Studio",
+      "MIDI",
+      "Misc",
+      "OBS Studio",
+      "Pally.gg",
+      "Patreon",
+      "Process",
+      "Pulsoid",
+      "Quote",
+      "Raw",
+      "Shopify",
+      "Speaker.bot",
+      "Speech",
+      "StreamElements",
+      "Streamer.bot",
+      "Streamlabs",
+      "Streamlabs Desktop",
+      "System",
+      "T.I.T.S.",
+      "Timed Actions",
+      "TipeeeStream",
+      "Toast",
+      "TreatStream",
+      "Twitch",
+      "User Global Variable",
+      "VoiceMod",
+      "VTube Studio",
+      "Websocket Client",
+      "Websocket Custom Server",
+      "YouTube"
+    ],
+    "summary": "Within any action, the value of the %__source%{lang=cs} variable indicates which event triggered the action.\n\nThis variable is of type EventType{lang=cs}, which is an enumeration (enum) defined in C#.\n\nUsage Example",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "csharp",
+        "label": "Example.cs",
+        "code": "using System;\n\npublic class CPHInline\n{\n  public bool Execute()\n  {\n    // Get the EventType for the current action\n    EventType eventType = CPH.GetEventType();\n\n    // Compare EventType with switch or if\n    switch(eventType)\n    {\n      case EventType.TwitchSub:\n        // Do something with TwitchSub events...\n        break;\n      case EventType.TwitchReSub:\n        // Do something with TwithReSub events...\n        break;\n    }\n\n    return true;\n  }\n}"
+      }
+    ],
+    "codeBlockCount": 1
+  },
+  {
+    "title": "Platform",
+    "name": "Platform",
+    "description": "C# enum definition for Platform",
+    "version": null,
+    "route": "/api/csharp/enums/platform",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/enums/platform",
+    "sourcePath": "3.api/3.csharp/5.enums/platform.md",
+    "headings": [
+      "Namespace",
+      "Definition",
+      "Values"
+    ],
+    "summary": "Namespace\n\nStreamer.bot.Plugin.Interface.Enums\n\nDefinition",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "cs",
+        "label": "Platform.cs",
+        "code": "public enum Platform\n{\n    Twitch,\n    YouTube,\n    Kick\n}"
+      }
+    ],
+    "codeBlockCount": 1
+  },
+  {
+    "title": "StreamlabsDesktopOutputType",
+    "name": "StreamlabsDesktopOutputType",
+    "description": "C# enum definition for StreamlabsDesktopOutputType",
+    "version": null,
+    "route": "/api/csharp/enums/streamlabs-desktop-output-type",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/enums/streamlabs-desktop-output-type",
+    "sourcePath": "3.api/3.csharp/5.enums/streamlabs-desktop-output-type.md",
+    "headings": [
+      "Namespace",
+      "Definition",
+      "Values"
+    ],
+    "summary": "Namespace\n\nStreamer.bot.Plugin.Interface.Enums\n\nDefinition",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "cs",
+        "label": "StreamlabsDesktopOutputType.cs",
+        "code": "public enum StreamlabsDesktopOutputType\n{\n    Both,\n    Horizontal,\n    Vertical\n}"
+      }
+    ],
+    "codeBlockCount": 1
+  },
+  {
+    "title": "TwitchBlockContext",
+    "name": "TwitchBlockContext",
+    "description": "C# enum definition for TwitchBlockContext",
+    "version": null,
+    "route": "/api/csharp/enums/twitch-block-context",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/enums/twitch-block-context",
+    "sourcePath": "3.api/3.csharp/5.enums/twitch-block-context.md",
+    "headings": [
+      "Namespace",
+      "Definition",
+      "Values"
+    ],
+    "summary": "Namespace\n\nStreamer.bot.Plugin.Interface.Enums\n\nDefinition",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "cs",
+        "label": "TwitchBlockContext.cs",
+        "code": "public enum TwitchBlockContext\n{\n    None,\n    Chat,\n    Whisper\n}"
+      }
+    ],
+    "codeBlockCount": 1
+  },
+  {
+    "title": "TwitchBlockReason",
+    "name": "TwitchBlockReason",
+    "description": "C# enum definition for TwitchBlockReason",
+    "version": null,
+    "route": "/api/csharp/enums/twitch-block-reason",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/enums/twitch-block-reason",
+    "sourcePath": "3.api/3.csharp/5.enums/twitch-block-reason.md",
+    "headings": [
+      "Namespace",
+      "Definition",
+      "Values"
+    ],
+    "summary": "Namespace\n\nStreamer.bot.Plugin.Interface.Enums\n\nDefinition",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "cs",
+        "label": "TwitchBlockReason.cs",
+        "code": "public enum TwitchBlockReason\n{\n    None,\n    Harassment,\n    Spam,\n    Other\n}"
+      }
+    ],
+    "codeBlockCount": 1
+  }
+]

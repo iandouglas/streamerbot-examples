@@ -1,0 +1,481 @@
+[
+  {
+    "title": "Examples",
+    "name": null,
+    "description": "Some basic examples for getting started with Streamer.bot!",
+    "version": null,
+    "route": "/examples",
+    "sourceUrl": "https://docs.streamer.bot/examples",
+    "sourcePath": "4.examples/0.index.md",
+    "headings": [
+      "Additional Resources"
+    ],
+    "summary": "Additional Resources\n\nBrowse the largest library of community-made functionality for Streamer.bot!",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "AutoHotKey Actions",
+    "name": null,
+    "description": "Execute your Streamer.bot actions with AutoHotKey",
+    "version": null,
+    "route": "/examples/autohotkey",
+    "sourceUrl": "https://docs.streamer.bot/examples/autohotkey",
+    "sourcePath": "4.examples/autohotkey.md",
+    "headings": [
+      "Prerequisites",
+      "Instructions",
+      "Tips & Tricks"
+    ],
+    "summary": "You can use AutoHotKey{target=_blank rel=noopener} to execute your Streamer.bot Actions in realtime via the UDP Server\n\n:read-more{to=\"/api/servers/udp\"}\n\nPrerequisites",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "",
+        "label": "example-do-action.ahk",
+        "code": "; Update Streamer.bot Host IP and port as needed\n    sb := StreamerbotUDP(\"127.0.0.1\", 4242)"
+      },
+      {
+        "language": "",
+        "label": "example-do-action.ahk",
+        "code": "; Set to your desired keybind or key combination\n    F11::\n    {\n      ; Set to your desired Action ID\n      sb.DoAction(\"94754342-3397-4dbc-8b16-123906b34015\")\n    }"
+      }
+    ],
+    "codeBlockCount": 2
+  },
+  {
+    "title": "Chat Message Timer",
+    "name": null,
+    "description": "Send custom messages to chat on a given interval",
+    "version": null,
+    "route": "/examples/chat-message-timer",
+    "sourceUrl": "https://docs.streamer.bot/examples/chat-message-timer",
+    "sourcePath": "4.examples/chat-message-timer.md",
+    "headings": [
+      "Instructions",
+      "Tips & Tricks"
+    ],
+    "summary": "You can easily execute any of your actions in Streamer.bot at a given interval with **Timed Actions**.\n\n:read-more{to=\"/guide/core/timers\"}\n\nIn this example, we are going to create a simple timer to send a chat message every 5 minutes.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Chatbot Commands",
+    "name": null,
+    "description": "Configure some basic chat commands with Streamer.bot",
+    "version": null,
+    "route": "/examples/chatbot-commands",
+    "sourceUrl": "https://docs.streamer.bot/examples/chatbot-commands",
+    "sourcePath": "4.examples/chatbot-commands.md",
+    "headings": [
+      "Overview",
+      "Instructions",
+      "Load the import code",
+      "Confirm the Import"
+    ],
+    "summary": "Overview\n\nIf you are coming from another bot platform, you are probably used to having some basic commands available out of the box.\n\n**Streamer.bot ships with a blank slate**, but a few simple actions can provide similar functionality.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Simple Counter",
+    "name": null,
+    "description": "Create a simple counter to count up or down",
+    "version": null,
+    "route": "/examples/counter",
+    "sourceUrl": "https://docs.streamer.bot/examples/counter",
+    "sourcePath": "4.examples/counter.md",
+    "headings": [
+      "Instructions",
+      "Tips & Tricks"
+    ],
+    "summary": "Counters can be used in various ways, for example:\n- Death counters in video games\n- Counting how many times the streamer has yawned\n- Keep track of how many times a specific command has been used.\n\nWhile commands and Twitch Channel Point Rewards offer their own built-in counters, they're not as versatile as the following example which utilizes **global variables**.\n:read-more{to=\"/guide/variables#global-variables\"}\n\n!Counter Preview",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "OBS Raw Requests in C#",
+    "name": null,
+    "description": "An example how to send OBS Raw requests and work with the responses in C#",
+    "version": null,
+    "route": "/examples/csharp_obsraw",
+    "sourceUrl": "https://docs.streamer.bot/examples/csharp_obsraw",
+    "sourcePath": "4.examples/csharp_obsraw.md",
+    "headings": [
+      "Instructions"
+    ],
+    "summary": "You are probably already familiar with sending OBS Raw requests with Streamer.bot's OBS Raw Generator or the Raw subaction that you find under OBS -> Raw. Sending it vía the subaction then populates variables that you can further use in your action. Sending Raw requests in C# however works a little different.\n\nInstructions\n\n1. Retrieving the CPH method",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "cs",
+        "label": "",
+        "code": "CPH.ObsSendRaw(\"GetInputSettings\", \"{\\\"inputName\\\":\\\"Bitrate Text\\\"}\", 0);"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "using System;\n\n   public class CPHInline\n   {\n       public bool Execute()\n       {\n           CPH.ObsSendRaw(\"GetInputSettings\", \"{\\\"inputName\\\":\\\"Bitrate Text\\\"}\", 0);\n\n           return true;\n       }\n   }"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "using System;\n\n   public class CPHInline\n   {\n       public bool Execute()\n       {\n           string getInputSettingsResponse = CPH.ObsSendRaw(\"GetInputSettings\", \"{\\\"inputName\\\":\\\"Bitrate Text\\\"}\", 0);\n\n           return true;\n       }\n   }"
+      },
+      {
+        "language": "json",
+        "label": "",
+        "code": "{\n     \"inputKind\": \"text_gdiplus_v3\",\n     \"inputSettings\": {\n       \"color\": 8388437,\n       \"font\": {\n         \"face\": \"Neue Haas Grotesk Text Pro Extr\",\n         \"flags\": 0,\n         \"size\": 144,\n         \"style\": \"ExtraLight\"\n       },\n       \"text\": \"Current bitrate: 7500\"\n     }\n   }"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "using System;\n   using Newtonsoft.Json.Linq;\n\n   public class CPHInline\n   {\n       public bool Execute()\n       {\n           string getInputSettingsResponse = CPH.ObsSendRaw(\"GetInputSettings\", \"{\\\"inputName\\\":\\\"Bitrate Text\\\"}\", 0);\n\n           JObject inputSettingsJObject = JObject.Parse(getInputSettingsResponse);\n\n           return true;\n       }\n   }"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "string gdiText = (string)inputSettingsJObject[\"inputSettings\"][\"text\"];"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "int fontSize = (int)inputSettingsJObject[\"inputSettings\"][\"font\"][\"size\"];"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "using System;\n   using Newtonsoft.Json.Linq;\n\n   public class CPHInline\n   {\n       public bool Execute()\n       {\n           string getInputSettingsResponse = CPH.ObsSendRaw(\"GetInputSettings\", \"{\\\"inputName\\\":\\\"Bitrate Text\\\"}\", 0);\n\n           JObject inputSettingsJObject = JObject.Parse(getInputSettingsResponse);\n\n           string gdiText = (string)inputSettingsJObject[\"inputSettings\"][\"text\"];\n\n           int fontSize = (int)inputSettingsJObject[\"inputSettings\"][\"font\"][\"size\"];\n\n           return true;\n       }\n   }"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "CPH.LogInfo($\"GDI Text: {gdiText} // Font Size: {fontSize}\");"
+      },
+      {
+        "language": "",
+        "label": "",
+        "code": "[2024-08-11 19:13:48.297 INF] GDI Text: Current bitrate: 7500 // Font Size: 144"
+      },
+      {
+        "language": "json",
+        "label": "",
+        "code": "{\n    \"font\": {\n      \"size\": 144\n    },\n    \"text\": \"7500\"\n   }"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "CPH.ObsSendRaw(\"SetInputSettings\", \"{\\\"inputName\\\":\\\"Other Textsource\\\",\\\"inputSettings\\\":{\\\"font\\\":{\\\"size\\\":144},\\\"text\\\":\\\"7500\\\"},\\\"overlay\\\":true}\", 0);"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "using System;\n   using Newtonsoft.Json.Linq;\n\n   public class CPHInline\n   {\n       public bool Execute()\n       {\n           string getInputSettingsResponse = CPH.ObsSendRaw(\"GetInputSettings\", \"{\\\"inputName\\\":\\\"Bitrate Text\\\"}\", 0);\n\n           JObject inputSettingsJObject = JObject.Parse(getInputSettingsResponse);\n\n           string gdiText = (string)inputSettingsJObject[\"inputSettings\"][\"text\"];\n\n           int fontSize = (int)inputSettingsJObject[\"inputSettings\"][\"font\"][\"size\"];\n\n           CPH.ObsSendRaw(\"SetInputSettings\", \"{\\\"inputName\\\":\\\"Other Textsource\\\",\\\"inputSettings\\\":{\\\"font\\\":{\\\"size\\\": \" + fontSize + \"},\\\"text\\\":\\\" \" + gdiText + \"\\\"},\\\"overlay\\\":true}\", 0);\n\n           return true;\n       }\n   }"
+      }
+    ],
+    "codeBlockCount": 13
+  },
+  {
+    "title": "cURL POST Requests",
+    "name": null,
+    "description": "Example code for making POST requests with cURL in Streamer.bot",
+    "version": null,
+    "route": "/examples/curl-requests",
+    "sourceUrl": "https://docs.streamer.bot/examples/curl-requests",
+    "sourcePath": "4.examples/curl-requests.md",
+    "headings": [
+      "Setup",
+      "Load the import code",
+      "Confirm the Import",
+      "Usage",
+      "Input Arguments",
+      "Output Variables",
+      "Example"
+    ],
+    "summary": "While the built-in Fetch URL sub-action is great for making quick HTTP GET requests, sometimes you may need to make more complex requests, such as POST requests with custom headers and body content.\n\nThis utility action provides a simple way to make HTTP requests using cURL, which supports a wide range of HTTP methods and options.\n\ncurl is now included by default on Windows 10 or later, so there is no need to install it separately.\n<br>\nThis utility action will use the system curl executable to make HTTP requests.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Execute Scripts",
+    "name": null,
+    "description": "Integrate Python, Javascript, or other scripts into your Streamer.bot actions",
+    "version": null,
+    "route": "/examples/execute-scripts",
+    "sourceUrl": "https://docs.streamer.bot/examples/execute-scripts",
+    "sourcePath": "4.examples/execute-scripts.md",
+    "headings": [
+      "Basic Math",
+      "HTTP POST Requests",
+      "Discord Webhook Embeds"
+    ],
+    "summary": "You can utilize the Run a Program sub-action to execute scripts on the fly.\n\n:read-more{to=\"/api/sub-actions/core/system/run-a-program\"}\n\nThis can be great if you are more comfortable in another language, such as Python or Javascript, and less comfortable in C#.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "js",
+        "label": "fetch.js",
+        "code": "const url = process.env.URL;\n    fetch(url, {\n      // Default to GET, override if provided in environment variables\n      method: process.env.METHOD || 'GET',\n      headers: {\n        // Default to applicaton/json, override if provided in environment variables\n        'Content-Type': process.env.CONTENT_TYPE || 'application/json',\n      },\n      body: process.env.DATA,\n    }).then(response => {\n      // Send the response status code to %output0%\n      console.log(response.status);\n\n      // Send the response body to %output1%\n      // If the response is not JSON, you can use .text() instead of .json()\n      // We are just making sure we un-prettyify the JSON response to place it on a single line of output\n      response.json().then(data => console.log(JSON.stringify(data)));\n    });"
+      },
+      {
+        "language": "js",
+        "label": "discord-webhook.js",
+        "code": "const data = {\n      \"embeds\": [\n        {\n          \"title\": \"Hello, world!\",\n          \"description\": \"This is an embed, sent from Streamer.bot, via a NodeJS sub-action!\",\n          \"color\": 36863,\n          \"fields\": [\n            {\n              \"name\": process.env.FIELD_1_NAME,\n              \"value\": process.env.FIELD_1_VALUE,\n            },\n            {\n              \"name\": process.env.FIELD_2_NAME,\n              \"value\": process.env.FIELD_2_VALUE,\n            }\n          ],\n          \"author\": {\n            \"name\": \"Streamer.bot\",\n            \"url\": \"https://streamer.bot\",\n            \"icon_url\": \"https://streamer.bot/logo-transparent.png\"\n          }\n        }\n      ],\n    };\n\n    const url = process.env.WEBHOOK_URL;\n    fetch(url, {\n      method: 'POST',\n      headers: {\n        'Content-Type': 'application/json',\n      },\n      body: JSON.stringify(data),\n    }).then(response => {\n      // Send the response status code to %output0%\n      console.log(response.status);\n    });"
+      }
+    ],
+    "codeBlockCount": 2
+  },
+  {
+    "title": "Advanced \"Fetch URL\"",
+    "name": null,
+    "description": "Send web requests manually using HTTPClient.",
+    "version": null,
+    "route": "/examples/http-post",
+    "sourceUrl": "https://docs.streamer.bot/examples/http-post",
+    "sourcePath": "4.examples/http-post.md",
+    "headings": [
+      "Prerequisites",
+      "Instructions",
+      "Tips & Tricks"
+    ],
+    "summary": "StreamerBot already has the built-in Fetch URL sub-action to immediately send simple HTTP GET requests directly from the actions UI.\n\nSometimes, however, you will find a situation where you need to send data via POST, PUT or generally any other request type that is *not* GET.\n\nIn this case, you will need to implement your own request handling in a C# code module using the HttpClient{target=_blank rel=noopener} class.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "cs",
+        "label": "Basic Setup",
+        "code": "using System;\n  using System.Text;\n  using System.Threading.Tasks;\n  using System.Net.Http;\n  using System.Net.Http.Headers;\n  using Newtonsoft.Json;\n  using Newtonsoft.Json.Linq;\n\n  public class CPHInline {\n    // You can set the timeout to any length you need\n    private static readonly HttpClient _httpClient = new HttpClient{Timeout = TimeSpan.FromSeconds(30)};\n\n    public void Init() {\n      // Ensure we are working with a clean slate\n      _httpClient.DefaultRequestHeaders.Clear();\n    }\n\n    public void Dispose() {\n      // Free up allocations\n      _httpClient.Dispose();\n    }\n\n    public bool Execute() {\n      // ...\n      return true;\n    }\n  }"
+      },
+      {
+        "language": "cs",
+        "label": "Send PUT payload in Execute method",
+        "code": "public bool Execute() {\n    // Get the arguments - or abort if it does not exist\n    if(!CPH.TryGetArg(\"userName\", out string userName)) return false;\n    if(!CPH.TryGetArg(\"userId\", out string userId)) return false;\n\n    // Build a wrapper object as payload\n    var data = new {\n      id = userId,\n      name = userName\n    };\n\n    // Serialize JSON\n    string json = JsonConvert.SerializeObject(data);\n\n    // Create web request payload\n    var payload = new StringContent(json, Encoding.UTF8, \"application/json\");\n\n    // Finally, send request\n    HttpResponseMessage response = _httpClient.PutAsync(\"https://my-logging-server.com\", payload).GetAwaiter().GetResult();\n\n    // Do with the response what you need to.\n    // ...\n\n    return true;\n  }"
+      },
+      {
+        "language": "cs",
+        "label": "PATCH workaround",
+        "code": "// ...\n\n    // Finally, send the request\n    var request = new HttpRequestMessage(new HttpMethod(\"PATCH\"), \"https://my-logging-server.com\"){\n      Content = payload\n    };\n    HttpResponseMessage response = _httpClient.SendAsync(request).GetAwaiter().GetResult();\n\n    // ..."
+      },
+      {
+        "language": "cs",
+        "label": "Header management",
+        "code": "public bool Execute() {\n    // Making a call to the Twitch API to get all currently live streams\n    string token = CPH.TwitchOAuthToken;\n    string clientId = CPH.TwitchClientId;\n\n    // Clear our old headers\n    _httpClient.DefaultRequestHeaders.Clear();\n\n    // Now set your Twitch API authorization\n    _httpClient.DefaultRequestHeaders.Add(\"Authorization\", \"Bearer \"+token);\n    _httpClient.DefaultRequestHeaders.Add(\"Client-Id\", clientId);\n\n    // Send your request\n    HttpResponseMessage response = _httpClient.GetAsync(\"https://api.twitch.tv/helix/streams\").GetAwaiter().GetResult();\n\n    // Do with the response what you need to.\n    // ...\n\n    return true;\n  }"
+      },
+      {
+        "language": "cs",
+        "label": "Response handling",
+        "code": "public bool Execute() {\n    // ...all your data preparation\n\n    HttpResponseMessage response = _httpClient.GetAsync(\"https://api.twitch.tv/helix/streams\").GetAwaiter().GetResult();\n\n    // Check if our request was successful\n    try {\n      if(!response.IsSuccessStatusCode) {\n        // It was not. Abort.\n        CPH.LogError($\"{response.StatusCode} - {response.ReasonPhrase}\");\n        return false;\n      }\n\n      // Get the response data\n      string content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();\n\n      // Usually, data is JSON. So you would decode it now.\n      JObject parsed = JObject.Parse(content);\n\n      // And then do with the data whatever you need.\n      // ...\n\n      return true;\n    } catch (Exception e) {\n      // Something went wrong\n      CPH.LogError(e.Message);\n      return false;\n    }\n  }"
+      }
+    ],
+    "codeBlockCount": 5
+  },
+  {
+    "title": "AI Chat Command",
+    "name": null,
+    "description": "Create a basic AI chat command with Ollama and Python",
+    "version": null,
+    "route": "/examples/ollama-chat-command",
+    "sourceUrl": "https://docs.streamer.bot/examples/ollama-chat-command",
+    "sourcePath": "4.examples/ollama-chat-command.md",
+    "headings": [
+      "Prerequisites",
+      "Instructions",
+      "Import Code",
+      "Tips & Tricks",
+      "Extended Examples"
+    ],
+    "summary": "You can utilize the Run a Program sub-action to execute scripts with Streamer.bot\n\n:read-more{to=\"/api/sub-actions/core/system/run-a-program\"}\n\n**Requires Streamer.bot v0.2.5-beta.2 or later**\n<br>\nA bug in previous versions of Streamer.bot prevented capturing of stdout from scripts",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "bash",
+        "label": "Command Prompt",
+        "code": "ollama run llama3.1"
+      },
+      {
+        "language": "python",
+        "label": "Streamer.bot\\data\\scripts\\ollama-example.py",
+        "code": "import sys\n    import ollama\n\n    # Load the prompt from command line arguments\n    prompt = \" \".join(sys.argv[1:])\n\n    # Generate text using llama3.1 model\n    response = ollama.generate(model=\"llama3.1\", prompt=prompt)\n\n    # Print the response as a single line, truncated at 500 characters\n    output = response[\"response\"].replace(\"\\n\", \" \")\n    print(output[0:499])"
+      },
+      {
+        "language": "bash",
+        "label": "Command Prompt",
+        "code": "pip install ollama"
+      }
+    ],
+    "codeBlockCount": 3
+  },
+  {
+    "title": "Parse JSON Utility",
+    "name": null,
+    "description": "Example code for parsing arbitrary JSON data into Streamer.bot variables",
+    "version": null,
+    "route": "/examples/parse-json-utility",
+    "sourceUrl": "https://docs.streamer.bot/examples/parse-json-utility",
+    "sourcePath": "4.examples/parse-json-utility.md",
+    "headings": [
+      "Setup",
+      "Load the import code",
+      "Confirm the Import",
+      "Usage",
+      "Prepare your action",
+      "Run the Parse JSON utility",
+      "Access the parsed data"
+    ],
+    "summary": "Sometimes you may want to parse JSON data from an API response or other source into Streamer.bot variables for use in your actions. This utility action provides a simple way to do that using C# code.\n\nThis utility action will take a JSON string as input, parse it, and store the resulting data in Streamer.bot variables that you can use in subsequent actions.\n\n:streamerbot-import-card{name=\"wsgs.utils.json.parse\" author=\"whipstickgostop\" expanded}",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "json",
+        "label": "",
+        "code": "{\n  \"user\": {\n    \"name\": \"StreamerBot\",\n    \"age\": 5,\n    \"isActive\": true\n  },\n  \"stats\": {\n    \"followers\": 1000,\n    \"views\": 50000\n  },\n  \"status\": \"ok\"\n}"
+      }
+    ],
+    "codeBlockCount": 1
+  },
+  {
+    "title": "Quotes Commands for v1.0.0+",
+    "name": null,
+    "description": "An example how to get and add quotes using commands in Streamer.bot v1.0.0+",
+    "version": "1.0.0",
+    "route": "/examples/quotes-commands",
+    "sourceUrl": "https://docs.streamer.bot/examples/quotes-commands",
+    "sourcePath": "4.examples/quotes-commands.md",
+    "headings": [
+      "Commands",
+      "Get Quote",
+      "Creating an action",
+      "Adding the \"!quote\" command trigger",
+      "Check whether input is empty or not",
+      "Get a random quote and send the message",
+      "Check whether input is a number or not",
+      "Get a specific quote and send the message",
+      "Add Quote",
+      "Creating an action",
+      "Adding the \"!quoteadd\" command trigger",
+      "Check if the rawInput of the command is empty or not",
+      "Adding the quote itself",
+      "Check if the quote was added successfully",
+      "Delete Quote",
+      "Creating an action",
+      "Adding the \"!quotedel\" command trigger",
+      "Check whether input is empty or not",
+      "Delete Quote",
+      "Check whether the quote was actually deleted by the input",
+      "Import Code"
+    ],
+    "summary": "This guide is only for **Streamer.bot v1.0.0** and above!\n\nIn Streamer.bot v1.0.0+, the built-in quote command \"!quote\" has been removed.\nThis allows for more customization and flexibility in how quotes are retrieved and displayed.\nWith that the \"Show Quote\" trigger will also not work anymore.\n\nThe following example shows how to:",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Remote Triggers",
+    "name": null,
+    "description": "Easily communicate between multiple Streamer.bot instances",
+    "version": null,
+    "route": "/examples/remote-triggers",
+    "sourceUrl": "https://docs.streamer.bot/examples/remote-triggers",
+    "sourcePath": "4.examples/remote-triggers.md",
+    "headings": [
+      "Prerequisites",
+      "Instructions",
+      "Tips & Tricks"
+    ],
+    "summary": "You can use **Remote Triggers** to easily send data or execute actions on **multiple** Streamer.bot instances. It even works over remote networks!\n\nTo **send** events to another instance, we utilize the **Send Remote Trigger** sub-action\n\nTo **receive** events on another instance, we uitlize the **Remote Instance Trigger**",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Streamer.bot Starter Pack",
+    "name": null,
+    "description": "Get started with a collection of starter extensions provided by the community!",
+    "version": null,
+    "route": "/examples/starter-pack",
+    "sourceUrl": "https://docs.streamer.bot/examples/starter-pack",
+    "sourcePath": "4.examples/starter-pack.md",
+    "headings": [
+      "Introduction",
+      "Setup",
+      "Contributions",
+      "Lyfesaver74",
+      "Commands",
+      "nutty",
+      "MarkusoOoO",
+      "Setup",
+      "ConfuzzedCat",
+      "Configuration",
+      "TerrierDarts",
+      "pwnyyTV",
+      "Mustached_Maniac",
+      "BRB Clip Player",
+      "Video Shoutouts",
+      "Chat Lockdown",
+      "GoWMan",
+      "Phlare",
+      "Ad Management Triggers",
+      "Link Protection Module",
+      "Title/Category Management",
+      "Shield Mode Commands",
+      "Some fun commands",
+      "OSUPhoenix",
+      "OSUPhoenix Alerts",
+      "Retro Game Alerts",
+      "QR Code Generator"
+    ],
+    "summary": "Introduction\n\nThis is a starter pack for anyone wanting to get started using Streamer.bot. It contains a wide range of extensions for you to use, including alerts, a point system, a death counter and many other features.\n\nThis package was built as a part of a raid train streamed live on Twitch, in celebration of Streamer.bot's 3rd birthday on August 24, 2024.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "VRFlad's Fast Track",
+    "name": null,
+    "description": "The quickest way to get a fully functioning bot that's customized to your channel!",
+    "version": null,
+    "route": "/examples/vrflad-fast-track",
+    "sourceUrl": "https://docs.streamer.bot/examples/vrflad-fast-track",
+    "sourcePath": "4.examples/vrflad-fast-track.md",
+    "headings": [],
+    "summary": "Read more at vrflad.com!",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  }
+]

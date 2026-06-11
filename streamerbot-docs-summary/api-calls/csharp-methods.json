@@ -1,0 +1,4187 @@
+[
+  {
+    "title": "PauseActionQueue",
+    "name": "PauseActionQueue",
+    "description": "Pause a specific action queue by name",
+    "version": null,
+    "route": "/api/csharp/methods/core/action-queues/pause-action-queue",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/action-queues/pause-action-queue",
+    "sourcePath": "3.api/3.csharp/3.methods/core/action-queues/pause-action-queue.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "name",
+        "default": "\"SoundAlerts\"",
+        "description": "Name of your action queue"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "PauseAllActionQueues",
+    "name": "PauseAllActionQueues",
+    "description": "Pause all action queues",
+    "version": null,
+    "route": "/api/csharp/methods/core/action-queues/pause-all-action-queues",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/action-queues/pause-all-action-queues",
+    "sourcePath": "3.api/3.csharp/3.methods/core/action-queues/pause-all-action-queues.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ResumeActionQueue",
+    "name": "ResumeActionQueue",
+    "description": "Resume action queue, optionally clear all pending actions before resume",
+    "version": null,
+    "route": "/api/csharp/methods/core/action-queues/resume-action-queue",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/action-queues/resume-action-queue",
+    "sourcePath": "3.api/3.csharp/3.methods/core/action-queues/resume-action-queue.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "name",
+        "default": "\"SoundAlerts\"",
+        "description": "Name of your action queue"
+      },
+      {
+        "name": "clear",
+        "default": false,
+        "description": "- `true`{lang=cs} - Clear still pending actions in queue before resume\n- `false`{lang=cs} - Do not clear pending actions in queue\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ResumeAllActionQueues",
+    "name": "ResumeAllActionQueues",
+    "description": "Resume all paused queues, optionally clear all pending actions before resume",
+    "version": null,
+    "route": "/api/csharp/methods/core/action-queues/resume-all-action-queues",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/action-queues/resume-all-action-queues",
+    "sourcePath": "3.api/3.csharp/3.methods/core/action-queues/resume-all-action-queues.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "clear",
+        "default": false,
+        "description": "- `true`{lang=cs} - Clear still pending actions in the paused queues before resume\n- `false`{lang=cs} - Do not clear pending actions in paused queues\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ActionExists",
+    "name": "ActionExists",
+    "description": "Check if an action exist by name<br>Returns a boolean indicating whether the action exists.",
+    "version": null,
+    "route": "/api/csharp/methods/core/actions/action-exists",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/actions/action-exists",
+    "sourcePath": "3.api/3.csharp/3.methods/core/actions/action-exists.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "DisableActionById",
+    "name": "DisableActionById",
+    "description": "Disables an action, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/actions/disable-action-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/actions/disable-action-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/core/actions/disable-action-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "DisableAction",
+    "name": "DisableAction",
+    "description": "Disables an action, by name",
+    "version": null,
+    "route": "/api/csharp/methods/core/actions/disable-action",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/actions/disable-action",
+    "sourcePath": "3.api/3.csharp/3.methods/core/actions/disable-action.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "EnableActionById",
+    "name": "EnableActionById",
+    "description": "Enables an action, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/actions/enable-action-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/actions/enable-action-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/core/actions/enable-action-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "actionId",
+        "default": "\"1234-abcde-5678\"",
+        "description": "You can get the action id by right-clicking on an action and `Copy Action Id`\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "EnableAction",
+    "name": "EnableAction",
+    "description": "Enables an action, by name",
+    "version": null,
+    "route": "/api/csharp/methods/core/actions/enable-action",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/actions/enable-action",
+    "sourcePath": "3.api/3.csharp/3.methods/core/actions/enable-action.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetActions",
+    "name": "GetActions",
+    "description": "Returns a list of action data for all available actions",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/actions/get-actions",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/actions/get-actions",
+    "sourcePath": "3.api/3.csharp/3.methods/core/actions/get-actions.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "RunActionById",
+    "name": "RunActionById",
+    "description": "Run an action, by id\n\nReturns a boolean indicating whether the operation was successful.\n",
+    "version": null,
+    "route": "/api/csharp/methods/core/actions/run-action-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/actions/run-action-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/core/actions/run-action-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "runImmediately",
+        "default": true,
+        "description": "- `true`  - Will run the action as part of the current action, like a subaction\n- `false` - Will run the action in it's own set queue. Code will continue without waiting\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "RunAction",
+    "name": "RunAction",
+    "description": "Execute another Streamer.bot action",
+    "version": null,
+    "route": "/api/csharp/methods/core/actions/run-action",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/actions/run-action",
+    "sourcePath": "3.api/3.csharp/3.methods/core/actions/run-action.md",
+    "headings": [],
+    "summary": "Run an action, by name\n\nReturns a boolean indicating whether the operation was successful.",
+    "parameters": [
+      {
+        "name": "runImmediately",
+        "default": true,
+        "description": "Whether to run the action immediately, inline with the current action, or in it's own queue",
+        "options": [
+          {
+            "value": true,
+            "description": "Will run the action as part of the current action, like a sub-action"
+          },
+          {
+            "value": false,
+            "description": "Will run the action in it's own set queue. Code will continue without waiting"
+          }
+        ]
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "SendAction",
+    "name": "SendAction",
+    "description": "Sends an Action from either the Twitch Broadcaster or Twitch Bot Account (denoted by *Italics* in Twitch chat)",
+    "version": "0.2.5",
+    "route": "/api/csharp/methods/core/actions/send-action",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/actions/send-action",
+    "sourcePath": "3.api/3.csharp/3.methods/core/actions/send-action.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "action",
+        "value": "\"Action Name\"",
+        "description": "Enter the name of the Action exactly as it appears in Streamer.bot"
+      },
+      {
+        "name": "bot",
+        "value": true,
+        "description": "- `true`{lang=cs} - Send the Action using your **Twitch Bot** account\n- `false`{lang=cs} - Send the Action using your **Twitch Broadcaster** account\n"
+      },
+      {
+        "name": "fallback",
+        "value": true,
+        "description": "- `true`{lang=cs} - (If `bot` bool is set to `True`), this is the same behaviour as if you had Bot as your preferred account.\n- `false`{lang=cs} - (If `bot` bool is set to `True`), it will try to send using **only** the Bot account, and do **nothing** if it can't (i.e, not logged in).\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandAddToAllUserCooldowns",
+    "name": "CommandAddToAllUserCooldowns",
+    "description": "Will add time(seconds) to all current user cooldowns of a command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-add-to-all-user-cooldowns",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-add-to-all-user-cooldowns",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-add-to-all-user-cooldowns.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandAddToGlobalCooldown",
+    "name": "CommandAddToGlobalCooldown",
+    "description": "Will add time(seconds) to current global cooldown of a command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-add-to-global-cooldown",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-add-to-global-cooldown",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-add-to-global-cooldown.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandAddToUserCooldown",
+    "name": "CommandAddToUserCooldown",
+    "description": "Will add time(seconds) to the specified user's cooldown of a command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-add-to-user-cooldown",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-add-to-user-cooldown",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-add-to-user-cooldown.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandGetCounter",
+    "name": "CommandGetCounter",
+    "description": "Returns the total number of command uses, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-get-counter",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-get-counter",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-get-counter.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandGetUserCounterById",
+    "name": "CommandGetUserCounterById",
+    "description": "Returns the total number of times a user has executed the specified command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-get-user-counter-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-get-user-counter-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-get-user-counter-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandGetUserCounter",
+    "name": "CommandGetUserCounter",
+    "description": "Returns the total number of times a user has executed the specified command",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-get-user-counter",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-get-user-counter",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-get-user-counter.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandRemoveAllUserCooldowns",
+    "name": "CommandRemoveAllUserCooldowns",
+    "description": "Remove all user cooldowns associated with the specified command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-remove-all-user-cooldowns",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-remove-all-user-cooldowns",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-remove-all-user-cooldowns.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandRemoveGlobalCooldown",
+    "name": "CommandRemoveGlobalCooldown",
+    "description": "Remove global cooldown associated with the specified command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-remove-global-cooldown",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-remove-global-cooldown",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-remove-global-cooldown.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandRemoveUserCooldown",
+    "name": "CommandRemoveUserCooldown",
+    "description": "Remove the specified user's cooldown of a command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-remove-user-cooldown",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-remove-user-cooldown",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-remove-user-cooldown.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandResetAllUserCooldowns",
+    "name": "CommandResetAllUserCooldowns",
+    "description": "Reset all users cooldowns on all platforms associated with the specified command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-reset-all-user-cooldowns",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-reset-all-user-cooldowns",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-reset-all-user-cooldowns.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandResetAllUserCounters",
+    "name": "CommandResetAllUserCounters",
+    "description": "Resets all user counters associated with the specified command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-reset-all-user-counters",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-reset-all-user-counters",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-reset-all-user-counters.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandResetCounter",
+    "name": "CommandResetCounter",
+    "description": "Resets the total counter for the given command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-reset-counter",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-reset-counter",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-reset-counter.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandResetGlobalCooldown",
+    "name": "CommandResetGlobalCooldown",
+    "description": "Resets global cooldown of command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-reset-global-cooldown",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-reset-global-cooldown",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-reset-global-cooldown.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandResetUserCooldown",
+    "name": "CommandResetUserCooldown",
+    "description": "Reset the specified user's cooldown of a command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-reset-user-cooldown",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-reset-user-cooldown",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-reset-user-cooldown.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandResetUserCounter",
+    "name": "CommandResetUserCounter",
+    "description": "Resets the counter for a specified user for the given command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-reset-user-counter",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-reset-user-counter",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-reset-user-counter.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandResetUsersCounters",
+    "name": "CommandResetUsersCounters",
+    "description": "Resets the total counter for all users of a platform for the given command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-reset-users-counters",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-reset-users-counters",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-reset-users-counters.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandSetGlobalCooldownDuration",
+    "name": "CommandSetGlobalCooldownDuration",
+    "description": "Set the global cooldown duration of a command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-set-global-cooldown-duration",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-set-global-cooldown-duration",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-set-global-cooldown-duration.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandSetUserCooldownDuration",
+    "name": "CommandSetUserCooldownDuration",
+    "description": "Set the user cooldown duration of a command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-set-user-cooldown-duration",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-set-user-cooldown-duration",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-set-user-cooldown-duration.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "DisableCommand",
+    "name": "DisableCommand",
+    "description": "Disables a command, by ID",
+    "version": null,
+    "route": "/api/csharp/methods/core/commands/disable-command",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/disable-command",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/disable-command.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "EnableCommand",
+    "name": "EnableCommand",
+    "description": "Enables a command, by ID",
+    "version": null,
+    "route": "/api/csharp/methods/core/commands/enable-command",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/enable-command",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/enable-command.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetCommands",
+    "name": "GetCommands",
+    "description": "Returns all commands associated with Streamer.bot instance",
+    "version": "0.2.5",
+    "route": "/api/csharp/methods/core/commands/get-commands",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/get-commands",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/get-commands.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetEventType",
+    "name": "GetEventType",
+    "description": "Fetch the value of the `__source` variable",
+    "version": null,
+    "route": "/api/csharp/methods/core/events/get-event-type",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/events/get-event-type",
+    "sourcePath": "3.api/3.csharp/3.methods/core/events/get-event-type.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetSource",
+    "name": "GetSource",
+    "description": "Fetch the value of the `eventSource` variable",
+    "version": null,
+    "route": "/api/csharp/methods/core/events/get-source",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/events/get-source",
+    "sourcePath": "3.api/3.csharp/3.methods/core/events/get-source.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ClearNonPersistedGlobals",
+    "name": "ClearNonPersistedGlobals",
+    "description": "Remove all non-persisted global variables",
+    "version": null,
+    "route": "/api/csharp/methods/core/globals/clear-non-persisted-globals",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/globals/clear-non-persisted-globals",
+    "sourcePath": "3.api/3.csharp/3.methods/core/globals/clear-non-persisted-globals.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ClearNonPersistedUserGlobals",
+    "name": "ClearNonPersistedUserGlobals",
+    "description": "Remove all non-persisted global user variables",
+    "version": null,
+    "route": "/api/csharp/methods/core/globals/clear-non-persisted-user-globals",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/globals/clear-non-persisted-user-globals",
+    "sourcePath": "3.api/3.csharp/3.methods/core/globals/clear-non-persisted-user-globals.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetGlobalVarValues",
+    "name": "GetGlobalVarValues",
+    "description": "Fetch a list of all global variable values",
+    "version": null,
+    "route": "/api/csharp/methods/core/globals/get-global-var-values",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/globals/get-global-var-values",
+    "sourcePath": "3.api/3.csharp/3.methods/core/globals/get-global-var-values.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "persisted",
+        "import": "core/globals/persisted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetGlobalVar",
+    "name": "GetGlobalVar",
+    "description": "Fetch a global variable by name",
+    "version": null,
+    "route": "/api/csharp/methods/core/globals/get-global-var",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/globals/get-global-var",
+    "sourcePath": "3.api/3.csharp/3.methods/core/globals/get-global-var.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "varName",
+        "import": "core/globals/name"
+      },
+      {
+        "name": "persisted",
+        "import": "core/globals/persisted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetUserVar",
+    "name": "GetUserVar",
+    "description": "Use [Twitch](/api/csharp/methods/twitch/globals) and [YouTube](/api/csharp/methods/youtube/globals) methods instead",
+    "version": null,
+    "route": "/api/csharp/methods/core/globals/get-user-var",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/globals/get-user-var",
+    "sourcePath": "3.api/3.csharp/3.methods/core/globals/get-user-var.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "varName",
+        "import": "core/globals/name"
+      },
+      {
+        "name": "persisted",
+        "import": "core/globals/persisted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "SetGlobalVar",
+    "name": "SetGlobalVar",
+    "description": "Set the value for a global variable",
+    "version": null,
+    "route": "/api/csharp/methods/core/globals/set-global-var",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/globals/set-global-var",
+    "sourcePath": "3.api/3.csharp/3.methods/core/globals/set-global-var.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "varName",
+        "import": "core/globals/name"
+      },
+      {
+        "name": "persisted",
+        "import": "core/globals/persisted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "SetUserVar",
+    "name": "SetUserVar",
+    "description": "Deprecated method to set a user variable",
+    "version": null,
+    "route": "/api/csharp/methods/core/globals/set-user-var",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/globals/set-user-var",
+    "sourcePath": "3.api/3.csharp/3.methods/core/globals/set-user-var.md",
+    "headings": [],
+    "summary": "**This method is deprecated as of Streamer.bot v0.2.0**\n<br>\nPlease use the Twitch and YouTube methods to set user variables specific to those platforms.",
+    "parameters": [
+      {
+        "name": "varName",
+        "import": "core/globals/name"
+      },
+      {
+        "name": "persisted",
+        "import": "core/globals/persisted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "UnsetAllUsersVar",
+    "name": "UnsetAllUsersVar",
+    "description": "Unset a user variable for **all** users",
+    "version": "0.2.1",
+    "route": "/api/csharp/methods/core/globals/unset-all-users-var",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/globals/unset-all-users-var",
+    "sourcePath": "3.api/3.csharp/3.methods/core/globals/unset-all-users-var.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "varName",
+        "import": "core/globals/name"
+      },
+      {
+        "name": "persisted",
+        "import": "core/globals/persisted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "UnsetGlobalVar",
+    "name": "UnsetGlobalVar",
+    "description": "Remove a global variable by name",
+    "version": null,
+    "route": "/api/csharp/methods/core/globals/unset-global-var",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/globals/unset-global-var",
+    "sourcePath": "3.api/3.csharp/3.methods/core/globals/unset-global-var.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "varName",
+        "import": "core/globals/name"
+      },
+      {
+        "name": "persisted",
+        "import": "core/globals/persisted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "UnsetUserVar",
+    "name": "UnsetUserVar",
+    "description": "Use [Twitch](/api/csharp/methods/twitch/globals) and [YouTube](/api/csharp/methods/youtube/globals) methods instead",
+    "version": null,
+    "route": "/api/csharp/methods/core/globals/unset-user-var",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/globals/unset-user-var",
+    "sourcePath": "3.api/3.csharp/3.methods/core/globals/unset-user-var.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "varName",
+        "import": "core/globals/name"
+      },
+      {
+        "name": "persisted",
+        "import": "core/globals/persisted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "UnsetUser",
+    "name": "UnsetUser",
+    "description": "Use [Twitch](/api/csharp/methods/twitch/globals) and [YouTube](/api/csharp/methods/youtube/globals) methods instead",
+    "version": null,
+    "route": "/api/csharp/methods/core/globals/unset-user",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/globals/unset-user",
+    "sourcePath": "3.api/3.csharp/3.methods/core/globals/unset-user.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "persisted",
+        "import": "core/globals/persisted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Between",
+    "name": "Between",
+    "description": "Returns a random int value between(including) min and max",
+    "version": null,
+    "route": "/api/csharp/methods/core/misc/between",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/misc/between",
+    "sourcePath": "3.api/3.csharp/3.methods/core/misc/between.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetVersion",
+    "name": "GetVersion",
+    "description": "Returns the SemVersion of the current Streamer.bot installation",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/misc/get-version",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/misc/get-version",
+    "sourcePath": "3.api/3.csharp/3.methods/core/misc/get-version.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "NextDouble",
+    "name": "NextDouble",
+    "description": "Returns a double type between 0 and 1. Often used for random percentages",
+    "version": null,
+    "route": "/api/csharp/methods/core/misc/next-double",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/misc/next-double",
+    "sourcePath": "3.api/3.csharp/3.methods/core/misc/next-double.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Wait",
+    "name": "Wait",
+    "description": "Will make the code wait for specified amount of time, in ms",
+    "version": null,
+    "route": "/api/csharp/methods/core/misc/wait",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/misc/wait",
+    "sourcePath": "3.api/3.csharp/3.methods/core/misc/wait.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "SetArgument",
+    "name": "SetArgument",
+    "description": "Set an [argument](/guide/variables) to be used in subsequent sub-actions",
+    "version": null,
+    "route": "/api/csharp/methods/core/set-argument",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/set-argument",
+    "sourcePath": "3.api/3.csharp/3.methods/core/set-argument.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "variableName",
+        "required": true,
+        "description": "Name of the argument you are assigning a value to",
+        "default": "\"myArgName\""
+      },
+      {
+        "name": "value",
+        "required": true,
+        "description": "Value assigned to the argument",
+        "default": "\"Hello World!\""
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "StopAllSoundPlayback",
+    "name": "StopAllSoundPlayback",
+    "description": "Stops all sounds from playing that were started by Streamer.bot",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/sounds/stop-all-sound-playback",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/sounds/stop-all-sound-playback",
+    "sourcePath": "3.api/3.csharp/3.methods/core/sounds/stop-all-sound-playback.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "StopSoundPlayback",
+    "name": "StopSoundPlayback",
+    "description": "Stops the currently playing sound from Streamer.bot, by name",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/sounds/stop-sound-playback",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/sounds/stop-sound-playback",
+    "sourcePath": "3.api/3.csharp/3.methods/core/sounds/stop-sound-playback.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "KeyboardPress",
+    "name": "KeyboardPress",
+    "description": "Simulate a keyboard input",
+    "version": null,
+    "route": "/api/csharp/methods/core/system/keyboard-press",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/system/keyboard-press",
+    "sourcePath": "3.api/3.csharp/3.methods/core/system/keyboard-press.md",
+    "headings": [],
+    "summary": "This CPH method uses the SendKeys method.\n\nThe keyPress string argument needs to be enclosed in curly brackets {}.\n\nTo use key combinations such as :kbd{value=\"Shift\"}, :kbd{value=\"meta\"} and :kbd{value=\"Alt\"}, you can use code modifiers listed in the link below.",
+    "parameters": [
+      {
+        "name": "keyPress",
+        "type": "string",
+        "required": true,
+        "description": "The keystroke to send.\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "DisableTimerById",
+    "name": "DisableTimerById",
+    "description": "Disables selected timer, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/timers/disable-timer-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/timers/disable-timer-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/core/timers/disable-timer-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "EnableTimerById",
+    "name": "EnableTimerById",
+    "description": "Enables selected timer, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/timers/enable-timer-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/timers/enable-timer-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/core/timers/enable-timer-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetTimerState",
+    "name": "GetTimerState",
+    "description": "Get the state of an existing timer",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/timers/get-timer-state",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/timers/get-timer-state",
+    "sourcePath": "3.api/3.csharp/3.methods/core/timers/get-timer-state.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "SetTimerInterval",
+    "name": "SetTimerInterval",
+    "description": "Set the interval of an existing timer, in seconds",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/timers/set-timer-interval",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/timers/set-timer-interval",
+    "sourcePath": "3.api/3.csharp/3.methods/core/timers/set-timer-interval.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "RegisterCustomTrigger",
+    "name": "RegisterCustomTrigger",
+    "description": "Register a custom trigger",
+    "version": "0.2.0",
+    "route": "/api/csharp/methods/core/triggers/register-custom-trigger",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/triggers/register-custom-trigger",
+    "sourcePath": "3.api/3.csharp/3.methods/core/triggers/register-custom-trigger.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "triggerName",
+        "type": "string",
+        "required": true,
+        "description": "Name of the trigger shown in the context menu\n"
+      },
+      {
+        "name": "eventName",
+        "type": "string",
+        "required": true,
+        "description": "Define the name of the event for later use in [TriggerCodeEvent](/api/csharp/methods/core/triggers/trigger-code-event) method\n"
+      },
+      {
+        "name": "categories",
+        "type": "String[]",
+        "required": true,
+        "description": "Define the categories in the context menu in which the trigger will be shown\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TriggerCodeEvent",
+    "name": "TriggerCodeEvent",
+    "description": "Triggers a custom code event name",
+    "version": "0.2.5",
+    "route": "/api/csharp/methods/core/triggers/trigger-code-event",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/triggers/trigger-code-event",
+    "sourcePath": "3.api/3.csharp/3.methods/core/triggers/trigger-code-event.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TriggerEvent",
+    "name": "TriggerEvent",
+    "description": "Trigger custom events that are defined with the [Custom Event Trigger](/api/triggers/custom/custom)",
+    "version": "0.2.0",
+    "route": "/api/csharp/methods/core/triggers/trigger-event",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/triggers/trigger-event",
+    "sourcePath": "3.api/3.csharp/3.methods/core/triggers/trigger-event.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "eventName",
+        "type": "string",
+        "required": true,
+        "description": "Name of the custom event trigger defined with a UI custom trigger\n"
+      },
+      {
+        "name": "useArgs",
+        "type": "bool",
+        "required": false,
+        "description": "Forward the currently available arguments to the custom trigger\n",
+        "default": true
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TryGetArg",
+    "name": "TryGetArg",
+    "description": "Load an [argument](/guide/variables) and parse it into a C# variable type",
+    "version": "0.2.3",
+    "route": "/api/csharp/methods/core/try-get-arg",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/try-get-arg",
+    "sourcePath": "3.api/3.csharp/3.methods/core/try-get-arg.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "AddGroup",
+    "name": "AddGroup",
+    "description": "Creates a new group with the given name",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/users/add-group",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/users/add-group",
+    "sourcePath": "3.api/3.csharp/3.methods/core/users/add-group.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "groupName",
+        "import": "core/users/group-name"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "AddUserIdToGroup",
+    "name": "AddUserIdToGroup",
+    "description": "Add a user, by ID, to a group",
+    "version": "0.2.3",
+    "route": "/api/csharp/methods/core/users/add-user-id-to-group",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/users/add-user-id-to-group",
+    "sourcePath": "3.api/3.csharp/3.methods/core/users/add-user-id-to-group.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "userId",
+        "import": "core/users/id"
+      },
+      {
+        "name": "platform",
+        "import": "core/platform"
+      },
+      {
+        "name": "groupName",
+        "import": "core/users/group-name"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "AddUserToGroup",
+    "name": "AddUserToGroup",
+    "description": "Add a user, by username (login name), to a group",
+    "version": "0.2.3",
+    "route": "/api/csharp/methods/core/users/add-user-to-group",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/users/add-user-to-group",
+    "sourcePath": "3.api/3.csharp/3.methods/core/users/add-user-to-group.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "userName",
+        "import": "core/users/username"
+      },
+      {
+        "name": "platform",
+        "import": "core/platform"
+      },
+      {
+        "name": "groupName",
+        "import": "core/users/group-name"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ClearUsersFromGroup",
+    "name": "ClearUsersFromGroup",
+    "description": "Remove all users from a group",
+    "version": "0.2.3",
+    "route": "/api/csharp/methods/core/users/clear-users-from-group",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/users/clear-users-from-group",
+    "sourcePath": "3.api/3.csharp/3.methods/core/users/clear-users-from-group.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "groupName",
+        "import": "core/users/group-name"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "DeleteGroup",
+    "name": "DeleteGroup",
+    "description": "Deletes the group matching the provided name",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/users/delete-group",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/users/delete-group",
+    "sourcePath": "3.api/3.csharp/3.methods/core/users/delete-group.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "groupName",
+        "import": "core/users/group-name"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetGroups",
+    "name": "GetGroups",
+    "description": "Returns a list of all available groups",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/users/get-groups",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/users/get-groups",
+    "sourcePath": "3.api/3.csharp/3.methods/core/users/get-groups.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GroupExists",
+    "name": "GroupExists",
+    "description": "Returns bool verifying existence of a group, by name",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/users/group-exists",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/users/group-exists",
+    "sourcePath": "3.api/3.csharp/3.methods/core/users/group-exists.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "groupName",
+        "import": "core/users/group-name"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "RemoveUserFromGroup",
+    "name": "RemoveUserFromGroup",
+    "description": "Remove a user, by username (login name), from a group",
+    "version": "0.2.3",
+    "route": "/api/csharp/methods/core/users/remove-user-from-group",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/users/remove-user-from-group",
+    "sourcePath": "3.api/3.csharp/3.methods/core/users/remove-user-from-group.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "userName",
+        "import": "core/users/username"
+      },
+      {
+        "name": "platform",
+        "import": "core/platform"
+      },
+      {
+        "name": "groupName",
+        "import": "core/users/group-name"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "RemoveUserIdFromGroup",
+    "name": "RemoveUserIdFromGroup",
+    "description": "Remove a user, by ID, from a group",
+    "version": "0.2.3",
+    "route": "/api/csharp/methods/core/users/remove-user-id-from-group",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/users/remove-user-id-from-group",
+    "sourcePath": "3.api/3.csharp/3.methods/core/users/remove-user-id-from-group.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "userId",
+        "import": "core/users/id"
+      },
+      {
+        "name": "platform",
+        "import": "core/platform"
+      },
+      {
+        "name": "groupName",
+        "import": "core/users/group-name"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "UserIdInGroup",
+    "name": "UserIdInGroup",
+    "description": "Check if a user, by ID, is a member of a group",
+    "version": "0.2.3",
+    "route": "/api/csharp/methods/core/users/user-id-in-group",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/users/user-id-in-group",
+    "sourcePath": "3.api/3.csharp/3.methods/core/users/user-id-in-group.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "userId",
+        "import": "core/users/id"
+      },
+      {
+        "name": "platform",
+        "import": "core/platform"
+      },
+      {
+        "name": "groupName",
+        "import": "core/users/group-name"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "UserInGroup",
+    "name": "UserInGroup",
+    "description": "Check if a user, by username (login name), is a member of a group",
+    "version": "0.2.3",
+    "route": "/api/csharp/methods/core/users/user-in-group",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/users/user-in-group",
+    "sourcePath": "3.api/3.csharp/3.methods/core/users/user-in-group.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "userName",
+        "import": "core/users/username"
+      },
+      {
+        "name": "platform",
+        "import": "core/platform"
+      },
+      {
+        "name": "groupName",
+        "import": "core/users/group-name"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "UsersInGroup",
+    "name": "UsersInGroup",
+    "description": "Fetch a list of users in a group",
+    "version": "0.2.3",
+    "route": "/api/csharp/methods/core/users/users-in-group",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/users/users-in-group",
+    "sourcePath": "3.api/3.csharp/3.methods/core/users/users-in-group.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "groupName",
+        "import": "core/users/group-name"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "WebsocketBroadcastJson",
+    "name": "WebsocketBroadcastJson",
+    "description": "Send a JSON payload to all clients connected to the Streamer.bot [WebSocket Server](/api/websocket/requests)",
+    "version": null,
+    "route": "/api/csharp/methods/core/websocket/websocket-broadcast-json",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/websocket/websocket-broadcast-json",
+    "sourcePath": "3.api/3.csharp/3.methods/core/websocket/websocket-broadcast-json.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "data",
+        "description": "The stringified JSON payload to send to clients",
+        "default": "\"{\\\"foo\\\":\\\"bar\\\"}\""
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "WebsocketBroadcastString",
+    "name": "WebsocketBroadcastString",
+    "description": "Send a text string to all clients connected to the Streamer.bot [WebSocket Server](/api/websocket/requests)",
+    "version": null,
+    "route": "/api/csharp/methods/core/websocket/websocket-broadcast-string",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/websocket/websocket-broadcast-string",
+    "sourcePath": "3.api/3.csharp/3.methods/core/websocket/websocket-broadcast-string.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "data",
+        "description": "The text to send to connected clients",
+        "default": "\"Hello, world!\""
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "WebsocketConnect",
+    "name": "WebsocketConnect",
+    "description": "Connect a configured WebSocket client",
+    "version": null,
+    "route": "/api/csharp/methods/core/websocket/websocket-connect",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/websocket/websocket-connect",
+    "sourcePath": "3.api/3.csharp/3.methods/core/websocket/websocket-connect.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "connection",
+        "import": "core/websocket/custom-clients/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "WebsocketCustomServerBroadcast",
+    "name": "WebsocketCustomServerBroadcast",
+    "description": "Broadcast a message to a custom WebSocket server",
+    "version": null,
+    "route": "/api/csharp/methods/core/websocket/websocket-custom-server-broadcast",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/websocket/websocket-custom-server-broadcast",
+    "sourcePath": "3.api/3.csharp/3.methods/core/websocket/websocket-custom-server-broadcast.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "data",
+        "description": "Data to be sent to connected clients\n\nJSON must be stringified.\n",
+        "default": "\"Hello, world!\""
+      },
+      {
+        "name": "connection",
+        "import": "websocket/custom-servers/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "WebsocketCustomServerCloseAllSessions",
+    "name": "WebsocketCustomServerCloseAllSessions",
+    "description": "Disconnect all client sessions from a custom WebSocket server",
+    "version": null,
+    "route": "/api/csharp/methods/core/websocket/websocket-custom-server-close-all-sessions",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/websocket/websocket-custom-server-close-all-sessions",
+    "sourcePath": "3.api/3.csharp/3.methods/core/websocket/websocket-custom-server-close-all-sessions.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "connection",
+        "import": "core/websocket/custom-servers/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "WebsocketCustomServerCloseSession",
+    "name": "WebsocketCustomServerCloseSession",
+    "description": "Disconnect a session from a custom WebSocket server",
+    "version": null,
+    "route": "/api/csharp/methods/core/websocket/websocket-custom-server-close-session",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/websocket/websocket-custom-server-close-session",
+    "sourcePath": "3.api/3.csharp/3.methods/core/websocket/websocket-custom-server-close-session.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "sessionId",
+        "description": "The unique id of the client session to disconnect",
+        "default": "\"JdHd4aVd\""
+      },
+      {
+        "name": "connection",
+        "import": "core/websocket/custom-servers/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "WebsocketCustomServerGetConnectionByName",
+    "name": "WebsocketCustomServerGetConnectionByName",
+    "description": "Get the connection index of a custom WebSocket server",
+    "version": null,
+    "route": "/api/csharp/methods/core/websocket/websocket-custom-server-get-connection-by-name",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/websocket/websocket-custom-server-get-connection-by-name",
+    "sourcePath": "3.api/3.csharp/3.methods/core/websocket/websocket-custom-server-get-connection-by-name.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "name",
+        "description": "The configured name of the WebSocket server",
+        "default": "\"My WebSocket Server\""
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "WebsocketCustomServerIsListening",
+    "name": "WebsocketCustomServerIsListening",
+    "description": "Check if a custom WebSocket server is currently listening for connections",
+    "version": null,
+    "route": "/api/csharp/methods/core/websocket/websocket-custom-server-is-listening",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/websocket/websocket-custom-server-is-listening",
+    "sourcePath": "3.api/3.csharp/3.methods/core/websocket/websocket-custom-server-is-listening.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "connection",
+        "import": "core/websocket/custom-servers/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "WebsocketCustomServerStart",
+    "name": "WebsocketCustomServerStart",
+    "description": "Start a custom WebSocket server",
+    "version": null,
+    "route": "/api/csharp/methods/core/websocket/websocket-custom-server-start",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/websocket/websocket-custom-server-start",
+    "sourcePath": "3.api/3.csharp/3.methods/core/websocket/websocket-custom-server-start.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "connection",
+        "import": "core/websocket/custom-servers/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "WebsocketCustomServerStop",
+    "name": "WebsocketCustomServerStop",
+    "description": "Stop a custom WebSocket server",
+    "version": null,
+    "route": "/api/csharp/methods/core/websocket/websocket-custom-server-stop",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/websocket/websocket-custom-server-stop",
+    "sourcePath": "3.api/3.csharp/3.methods/core/websocket/websocket-custom-server-stop.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "connection",
+        "import": "core/websocket/custom-servers/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "WebsocketDisconnect",
+    "name": "WebsocketDisconnect",
+    "description": "Disconnect a configured WebSocket client",
+    "version": null,
+    "route": "/api/csharp/methods/core/websocket/websocket-disconnect",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/websocket/websocket-disconnect",
+    "sourcePath": "3.api/3.csharp/3.methods/core/websocket/websocket-disconnect.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "connection",
+        "import": "core/websocket/custom-clients/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "WebsocketIsConnected",
+    "name": "WebsocketIsConnected",
+    "description": "Check if a configured WebSocket client is connected",
+    "version": null,
+    "route": "/api/csharp/methods/core/websocket/websocket-is-connected",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/websocket/websocket-is-connected",
+    "sourcePath": "3.api/3.csharp/3.methods/core/websocket/websocket-is-connected.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "connection",
+        "import": "core/websocket/custom-clients/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "WebsocketSend",
+    "name": "WebsocketSend",
+    "description": "Send data over a configured WebSocket client",
+    "version": null,
+    "route": "/api/csharp/methods/core/websocket/websocket-send",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/websocket/websocket-send",
+    "sourcePath": "3.api/3.csharp/3.methods/core/websocket/websocket-send.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "data",
+        "description": "The data to send",
+        "default": "\"Hello, world!\""
+      },
+      {
+        "name": "connection",
+        "import": "core/websocket/custom-clients/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "DiscordPostTextToWebhook",
+    "name": "DiscordPostTextToWebhook",
+    "description": "Send simple text content to Discord webhook",
+    "version": null,
+    "route": "/api/csharp/methods/integrations/discord/discord-post-text-to-webhook",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/integrations/discord/discord-post-text-to-webhook",
+    "sourcePath": "3.api/3.csharp/3.methods/integrations/discord/discord-post-text-to-webhook.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetKickUserVarById",
+    "name": "GetKickUserVarById",
+    "description": "Gets the value of a specific Kick user variable by the user's ID",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/get-kick-user-var-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/get-kick-user-var-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/get-kick-user-var-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetKickUserVar",
+    "name": "GetKickUserVar",
+    "description": "Gets the value of a specific Kick user variable by the user's name",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/get-kick-user-var",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/get-kick-user-var",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/get-kick-user-var.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "IncrementAllKickUsersVarById",
+    "name": "IncrementAllKickUsersVarById",
+    "description": "Increments the values of Kick user variables for a list of user IDs.",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/increment-all-kick-users-var-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/increment-all-kick-users-var-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/increment-all-kick-users-var-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "userIds",
+        "description": "List of user IDs to increment the variable for. If a user ID does not exist, it will be ignored.\nExample: `[\"123456789\", \"987654321\"]`\n"
+      },
+      {
+        "name": "varName",
+        "description": "Name of the user variable"
+      },
+      {
+        "name": "value",
+        "description": "Value of how much the user variables should be incremented by"
+      },
+      {
+        "name": "persisted",
+        "description": "- `true` - Persisted user variables will be affected\n- `false` - Non-persisted user variable will be affected"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "IncrementAllKickUsersVar",
+    "name": "IncrementAllKickUsersVar",
+    "description": "Increments the value of a specific user global variable for all Kick users who have it set",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/increment-all-kick-users-var",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/increment-all-kick-users-var",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/increment-all-kick-users-var.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "varName",
+        "description": "Name of the user variable"
+      },
+      {
+        "name": "value",
+        "description": "Value of how much the user variables should be incremented by"
+      },
+      {
+        "name": "persisted",
+        "description": "- `true` - Persisted user variables will be affected\n- `false` - Non-persisted user variable will be affected"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "IncrementOrCreateKickUsersVarById",
+    "name": "IncrementOrCreateKickUsersVarById",
+    "description": "Increments the values of Kick user variables for a list of user IDs. If the variable does not exist for a user, it will be created and set to the incremented value.",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/increment-or-create-kick-users-var-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/increment-or-create-kick-users-var-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/increment-or-create-kick-users-var-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "userIds",
+        "description": "List of user IDs to increment the variable for. If a user ID does not exist, it will be ignored.\nExample: `[\"123456789\", \"987654321\"]`\n"
+      },
+      {
+        "name": "varName",
+        "description": "Name of the user variable"
+      },
+      {
+        "name": "value",
+        "description": "Value of how much the user variables should be incremented by"
+      },
+      {
+        "name": "persisted",
+        "description": "- `true` - Persisted user variables will be affected\n- `false` - Non-persisted user variable will be affected"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "KickBanUser",
+    "name": "KickBanUser",
+    "description": "Bans the selected Kick user for the selected reason",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/kick-ban-user",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/kick-ban-user",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/kick-ban-user.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "KickGetBot",
+    "name": "KickGetBot",
+    "description": "Returns user info for the Kick bot account (if one exists)",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/kick-get-bot",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/kick-get-bot",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/kick-get-bot.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "KickGetBroadcaster",
+    "name": "KickGetBroadcaster",
+    "description": "Returns user info for the Kick Broadcaster account (if one exists)",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/kick-get-broadcaster",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/kick-get-broadcaster",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/kick-get-broadcaster.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "KickReplyToMessage",
+    "name": "KickReplyToMessage",
+    "description": "Send a reply to a specific Kick chat message",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/kick-reply-to-message",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/kick-reply-to-message",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/kick-reply-to-message.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "message",
+        "default": "\"Hello, world!\"",
+        "description": "Enter the message contents"
+      },
+      {
+        "name": "replyId",
+        "default": "args[\"messageId\"]",
+        "description": "Enter the unique ID of the message to reply to"
+      },
+      {
+        "name": "useBot",
+        "default": true,
+        "description": "- `true`{lang=cs} - Send the reply using your **Kick Bot** account\n- `false`{lang=cs} - Send the reply using your **Kick Broadcaster** account\n"
+      },
+      {
+        "name": "fallback",
+        "default": true,
+        "description": "- `true`{lang=cs} - (If `bot` bool is set to `True`), this is the same behavior as if you had Bot as your preferred account.\n- `false`{lang=cs} - (If `bot` bool is set to `True`), it will try to send using **only** the Bot account, and do **nothing** if it can't (i.e, not logged in).\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "KickSetCategory",
+    "name": "KickSetCategory",
+    "description": "Sets the category for the current Kick broadcast",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/kick-set-category",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/kick-set-category",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/kick-set-category.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "KickSetTitle",
+    "name": "KickSetTitle",
+    "description": "Sets the title for the current Kick broadcast",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/kick-set-title",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/kick-set-title",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/kick-set-title.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "KickTimeoutUser",
+    "name": "KickTimeoutUser",
+    "description": "Times out the selected Kick user for the selected duration",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/kick-timeout-user",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/kick-timeout-user",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/kick-timeout-user.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "KickUnbanUser",
+    "name": "KickUnbanUser",
+    "description": "Unbans the selected Kick user",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/kick-unban-user",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/kick-unban-user",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/kick-unban-user.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "SendKickMessage",
+    "name": "SendKickMessage",
+    "description": "Sends a chat message to the Kick chat",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/send-kick-message",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/send-kick-message",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/send-kick-message.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "SetKickUserVarById",
+    "name": "SetKickUserVarById",
+    "description": "Sets the value of a specific Kick user variable by the user's ID",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/set-kick-user-var-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/set-kick-user-var-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/set-kick-user-var-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "SetKickUserVar",
+    "name": "SetKickUserVar",
+    "description": "Sets the value of a specific Kick user variable by the user's name",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/set-kick-user-var",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/set-kick-user-var",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/set-kick-user-var.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "SetKickUsersVarById",
+    "name": "SetKickUsersVarById",
+    "description": "Sets the value of a specific user Kick variable for a list of users by their IDs",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/set-kick-users-var-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/set-kick-users-var-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/set-kick-users-var-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "UnsetKickUserVarById",
+    "name": "UnsetKickUserVarById",
+    "description": "Permanently deletes the value of a specific Kick user variable by the user's ID",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/unset-kick-user-var-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/unset-kick-user-var-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/unset-kick-user-var-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "UnsetKickUserVar",
+    "name": "UnsetKickUserVar",
+    "description": "Permanently deletes the value of a specific Kick user variable by the user's name",
+    "version": "1.0.0",
+    "route": "/api/csharp/methods/kick/unset-kick-user-var",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/unset-kick-user-var",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/unset-kick-user-var.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "MeldStudioConnect",
+    "name": "MeldStudioConnect",
+    "description": "Connects a configured Meld Studio instance",
+    "version": "0.2.5",
+    "route": "/api/csharp/methods/meld/meld-studio-connect",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/meld/meld-studio-connect",
+    "sourcePath": "3.api/3.csharp/3.methods/meld/meld-studio-connect.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "connectionIdx",
+        "type": "number",
+        "default": -1,
+        "description": "Enter the connection index number (`-1` is a fallback for the `Default` connection)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "MeldStudioDisconnect",
+    "name": "MeldStudioDisconnect",
+    "description": "Disconnects a configured Meld Studio instance",
+    "version": "0.2.5",
+    "route": "/api/csharp/methods/meld/meld-studio-disconnect",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/meld/meld-studio-disconnect",
+    "sourcePath": "3.api/3.csharp/3.methods/meld/meld-studio-disconnect.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "connectionIdx",
+        "type": "number",
+        "default": -1,
+        "description": "Enter the connection index number (`-1` is a fallback for the `Default` connection)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "MeldStudioGetConnectionByName",
+    "name": "MeldStudioGetConnectionByName",
+    "description": "Gets the name of the currently connected instance of Meld Studio",
+    "version": "0.2.5",
+    "route": "/api/csharp/methods/meld/meld-studio-get-connection-by-name",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/meld/meld-studio-get-connection-by-name",
+    "sourcePath": "3.api/3.csharp/3.methods/meld/meld-studio-get-connection-by-name.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "name",
+        "type": "string",
+        "default": "\"Meld Studio Main\"",
+        "description": "Enter the connection name exactly as it appears in Streamer.bot"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "MeldStudioHideLayerByName",
+    "name": "MeldStudioHideLayerByName",
+    "description": "Hides the selected Meld Studio Layer by name",
+    "version": "0.2.5",
+    "route": "/api/csharp/methods/meld/meld-studio-hide-layer-by-name",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/meld/meld-studio-hide-layer-by-name",
+    "sourcePath": "3.api/3.csharp/3.methods/meld/meld-studio-hide-layer-by-name.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "sceneName",
+        "type": "string",
+        "default": "\"Gaming\"",
+        "description": "Enter the Scene Name"
+      },
+      {
+        "name": "layerName",
+        "type": "string",
+        "default": "\"Alerts\"",
+        "description": "Enter the Layer Name"
+      },
+      {
+        "name": "connectionIdx",
+        "type": "number",
+        "default": -1,
+        "description": "Enter the connection index number (`-1` is a fallback for the `Default` connection)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "MeldStudioIsConnected",
+    "name": "MeldStudioIsConnected",
+    "description": "Checks if a configured Meld Studio instance is connected",
+    "version": "0.2.5",
+    "route": "/api/csharp/methods/meld/meld-studio-is-connected",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/meld/meld-studio-is-connected",
+    "sourcePath": "3.api/3.csharp/3.methods/meld/meld-studio-is-connected.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "connectionIdx",
+        "type": "number",
+        "default": -1,
+        "description": "Enter the connection index number (`-1` is a fallback for the `Default` connection)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "MeldStudioShowLayerByName",
+    "name": "MeldStudioShowLayerByName",
+    "description": "Shows the selected Meld Studio Layer by name",
+    "version": "0.2.5",
+    "route": "/api/csharp/methods/meld/meld-studio-show-layer-by-name",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/meld/meld-studio-show-layer-by-name",
+    "sourcePath": "3.api/3.csharp/3.methods/meld/meld-studio-show-layer-by-name.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "sceneName",
+        "type": "string",
+        "default": "\"Gaming\"",
+        "description": "Enter the Scene Name"
+      },
+      {
+        "name": "layerName",
+        "type": "string",
+        "default": "\"Alerts\"",
+        "description": "Enter the Layer Name"
+      },
+      {
+        "name": "connectionIdx",
+        "type": "number",
+        "default": -1,
+        "description": "Enter the connection index number (`-1` is a fallback for the `Default` connection)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "MeldStudioShowSceneByName",
+    "name": "MeldStudioShowSceneByName",
+    "description": "Shows the selected Meld Studio Scene by name",
+    "version": "0.2.5",
+    "route": "/api/csharp/methods/meld/meld-studio-show-scene-by-name",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/meld/meld-studio-show-scene-by-name",
+    "sourcePath": "3.api/3.csharp/3.methods/meld/meld-studio-show-scene-by-name.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "sceneName",
+        "type": "string",
+        "default": "\"Gaming\"",
+        "description": "Enter the Scene Name"
+      },
+      {
+        "name": "connectionIdx",
+        "type": "number",
+        "default": -1,
+        "description": "Enter the connection index number (`-1` is a fallback for the `Default` connection)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "MeldStudioShowScene",
+    "name": "MeldStudioShowScene",
+    "description": "Shows the selected Meld Studio Scene by ID",
+    "version": "0.2.5",
+    "route": "/api/csharp/methods/meld/meld-studio-show-scene",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/meld/meld-studio-show-scene",
+    "sourcePath": "3.api/3.csharp/3.methods/meld/meld-studio-show-scene.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "sceneId",
+        "type": "text",
+        "description": "Enter the Scene Id"
+      },
+      {
+        "name": "connectionIdx",
+        "type": "number",
+        "default": -1,
+        "description": "Enter the connection index number (`-1` is a fallback for the `Default` connection)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ObsHideFilter",
+    "name": "ObsHideFilter",
+    "description": "Disable an OBS filter",
+    "version": null,
+    "route": "/api/csharp/methods/obs-studio/filters/obs-hide-filter",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/obs-studio/filters/obs-hide-filter",
+    "sourcePath": "3.api/3.csharp/3.methods/obs-studio/filters/obs-hide-filter.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "scene",
+        "import": "obs-studio/scene"
+      },
+      {
+        "name": "source",
+        "import": "obs-studio/source"
+      },
+      {
+        "name": "filterName",
+        "import": "obs-studio/filter-name"
+      },
+      {
+        "name": "connection",
+        "import": "obs-studio/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ObsHideScenesFilters",
+    "name": "ObsHideScenesFilters",
+    "description": "Disable all filters for a given scene",
+    "version": null,
+    "route": "/api/csharp/methods/obs-studio/filters/obs-hide-scenes-filters",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/obs-studio/filters/obs-hide-scenes-filters",
+    "sourcePath": "3.api/3.csharp/3.methods/obs-studio/filters/obs-hide-scenes-filters.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "scene",
+        "import": "obs-studio/scene"
+      },
+      {
+        "name": "connection",
+        "import": "obs-studio/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ObsHideSourcesFilters",
+    "name": "ObsHideSourcesFilters",
+    "description": "Disable all filters for a given scene and source",
+    "version": null,
+    "route": "/api/csharp/methods/obs-studio/filters/obs-hide-sources-filters",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/obs-studio/filters/obs-hide-sources-filters",
+    "sourcePath": "3.api/3.csharp/3.methods/obs-studio/filters/obs-hide-sources-filters.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "scene",
+        "import": "obs-studio/scene"
+      },
+      {
+        "name": "source",
+        "import": "obs-studio/source"
+      },
+      {
+        "name": "connection",
+        "import": "obs-studio/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ObsIsFilterEnabled",
+    "name": "ObsIsFilterEnabled",
+    "description": "Check if a filter is enabled for a given scene/source",
+    "version": null,
+    "route": "/api/csharp/methods/obs-studio/filters/obs-is-filter-enabled",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/obs-studio/filters/obs-is-filter-enabled",
+    "sourcePath": "3.api/3.csharp/3.methods/obs-studio/filters/obs-is-filter-enabled.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "scene",
+        "import": "obs-studio/scene"
+      },
+      {
+        "name": "source",
+        "import": "obs-studio/source"
+      },
+      {
+        "name": "filterName",
+        "import": "obs-studio/filter-name"
+      },
+      {
+        "name": "connection",
+        "import": "obs-studio/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ObsSetFilterState",
+    "name": "ObsSetFilterState",
+    "description": "Modify the visibility state of a filter",
+    "version": null,
+    "route": "/api/csharp/methods/obs-studio/filters/obs-set-filter-state",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/obs-studio/filters/obs-set-filter-state",
+    "sourcePath": "3.api/3.csharp/3.methods/obs-studio/filters/obs-set-filter-state.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "scene",
+        "import": "obs-studio/scene"
+      },
+      {
+        "name": "source",
+        "import": "obs-studio/source"
+      },
+      {
+        "name": "filterName",
+        "import": "obs-studio/filter-name"
+      },
+      {
+        "name": "state",
+        "import": "obs-studio/filter-state"
+      },
+      {
+        "name": "connection",
+        "import": "obs-studio/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ObsSetRandomFilterState",
+    "name": "ObsSetRandomFilterState",
+    "description": "Modify the state of a random filter within a scene or source",
+    "version": null,
+    "route": "/api/csharp/methods/obs-studio/filters/obs-set-random-filter-state",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/obs-studio/filters/obs-set-random-filter-state",
+    "sourcePath": "3.api/3.csharp/3.methods/obs-studio/filters/obs-set-random-filter-state.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "scene",
+        "import": "obs-studio/scene"
+      },
+      {
+        "name": "source",
+        "import": "obs-studio/source"
+      },
+      {
+        "name": "filterName",
+        "import": "obs-studio/filter-name"
+      },
+      {
+        "name": "state",
+        "import": "obs-studio/filter-state"
+      },
+      {
+        "name": "connection",
+        "import": "obs-studio/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ObsShowFilter",
+    "name": "ObsShowFilter",
+    "description": "Enable an OBS filter",
+    "version": null,
+    "route": "/api/csharp/methods/obs-studio/filters/obs-show-filter",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/obs-studio/filters/obs-show-filter",
+    "sourcePath": "3.api/3.csharp/3.methods/obs-studio/filters/obs-show-filter.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "scene",
+        "import": "obs-studio/scene"
+      },
+      {
+        "name": "source",
+        "import": "obs-studio/source"
+      },
+      {
+        "name": "filterName",
+        "import": "obs-studio/filter-name"
+      },
+      {
+        "name": "connection",
+        "import": "obs-studio/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ObsToggleFilter",
+    "name": "ObsToggleFilter",
+    "description": "Toggle the state of an OBS filter",
+    "version": null,
+    "route": "/api/csharp/methods/obs-studio/filters/obs-toggle-filter",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/obs-studio/filters/obs-toggle-filter",
+    "sourcePath": "3.api/3.csharp/3.methods/obs-studio/filters/obs-toggle-filter.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "scene",
+        "import": "obs-studio/scene"
+      },
+      {
+        "name": "source",
+        "import": "obs-studio/source"
+      },
+      {
+        "name": "filterName",
+        "import": "obs-studio/filter-name"
+      },
+      {
+        "name": "connection",
+        "import": "obs-studio/connection"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ObsCreateRecordChapter",
+    "name": "ObsCreateRecordChapter",
+    "description": "Creates OBS Chapter marker while recording",
+    "version": "0.2.5",
+    "route": "/api/csharp/methods/obs-studio/obs-create-record-chapter",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/obs-studio/obs-create-record-chapter",
+    "sourcePath": "3.api/3.csharp/3.methods/obs-studio/obs-create-record-chapter.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "chapterName",
+        "type": "string",
+        "description": "Enter the name for chapter to create"
+      },
+      {
+        "name": "connection",
+        "type": "number",
+        "default": 0,
+        "description": "Enter the connection index number (`0` is a fallback for the `Default` connection)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "DisableReward",
+    "name": "DisableReward",
+    "description": "Disable a Twitch Channel Point Reward, owned by Streamer.bot",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/channel-reward/disable-reward",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/disable-reward",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/disable-reward.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "EnableReward",
+    "name": "EnableReward",
+    "description": "Enable a Twitch Channel Point Reward, owned by Streamer.bot",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/channel-reward/enable-reward",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/enable-reward",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/enable-reward.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "PauseReward",
+    "name": "PauseReward",
+    "description": "Pause a Twitch Channel Point Reward, owned by Streamer.bot",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/channel-reward/pause-reward",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/pause-reward",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/pause-reward.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchGetChannelPointsUsedByUserId",
+    "name": "TwitchGetChannelPointsUsedByUserId",
+    "description": "Get the amount of channel points used by a user. Tracks only the redeems that Streamer.bot has seen.",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/channel-reward/twitch-get-channel-points-used-by-user-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/twitch-get-channel-points-used-by-user-id",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/twitch-get-channel-points-used-by-user-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "userId",
+        "type": "string",
+        "description": "Twitch Id of the user",
+        "default": "\"1234567\""
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchGetRewardCounter",
+    "name": "TwitchGetRewardCounter",
+    "description": "Get the counter of a Twitch reward, by id",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/channel-reward/twitch-get-reward-counter",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/twitch-get-reward-counter",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/twitch-get-reward-counter.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchGetRewardUserCounterById",
+    "name": "TwitchGetRewardUserCounterById",
+    "description": "Returns reward count of the given reward for a specified Twitch user, by id",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/twitch/channel-reward/twitch-get-reward-user-counter-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/twitch-get-reward-user-counter-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/twitch-get-reward-user-counter-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      },
+      {
+        "name": "userId",
+        "import": "core/users/id"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchGetRewardUserCounter",
+    "name": "TwitchGetRewardUserCounter",
+    "description": "Returns reward count of the given reward for a specified Twitch user",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/twitch/channel-reward/twitch-get-reward-user-counter",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/twitch-get-reward-user-counter",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/twitch-get-reward-user-counter.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      },
+      {
+        "name": "userName",
+        "import": "core/users/username"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchGetRewardUserCounters",
+    "name": "TwitchGetRewardUserCounters",
+    "description": "Returns a list of Twitch Reward Counters",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/channel-reward/twitch-get-reward-user-counters",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/twitch-get-reward-user-counters",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/twitch-get-reward-user-counters.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      },
+      {
+        "name": "persisted",
+        "type": "boolean",
+        "default": true,
+        "description": "If true will use the persisted user counters of the reward, if not the non-persisted."
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchGetRewards",
+    "name": "TwitchGetRewards",
+    "description": "Returns a list of Twitch Reward",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/channel-reward/twitch-get-rewards",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/twitch-get-rewards",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/twitch-get-rewards.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchRedemptionCancel",
+    "name": "TwitchRedemptionCancel",
+    "description": "Will refund the Twitch reward and removing it from the reward queue",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/channel-reward/twitch-redemption-cancel",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/twitch-redemption-cancel",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/twitch-redemption-cancel.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchRedemptionFulfill",
+    "name": "TwitchRedemptionFulfill",
+    "description": "Mark Twitch reward as resolved, which makes the redeem non refundable and removes it from reward queue",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/channel-reward/twitch-redemption-fulfill",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/twitch-redemption-fulfill",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/twitch-redemption-fulfill.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchResetRewardCounter",
+    "name": "TwitchResetRewardCounter",
+    "description": "Reset counter for the specified reward, by id",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/channel-reward/twitch-reset-reward-counter",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/twitch-reset-reward-counter",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/twitch-reset-reward-counter.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchResetRewardUserCounters",
+    "name": "TwitchResetRewardUserCounters",
+    "description": "Reset reward user counters for the specified reward, by id",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/channel-reward/twitch-reset-reward-user-counters",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/twitch-reset-reward-user-counters",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/twitch-reset-reward-user-counters.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchResetUserRewardCounter",
+    "name": "TwitchResetUserRewardCounter",
+    "description": "Reset user reward counters for the specified reward id and user Id",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/channel-reward/twitch-reset-user-reward-counter",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/twitch-reset-user-reward-counter",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/twitch-reset-user-reward-counter.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchResetUserRewardCounters",
+    "name": "TwitchResetUserRewardCounters",
+    "description": "Reset all user reward counters for the specified user, by id",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/channel-reward/twitch-reset-user-reward-counters",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/twitch-reset-user-reward-counters",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/twitch-reset-user-reward-counters.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "UpdateRewardMaxPerStream",
+    "name": "UpdateRewardMaxPerStream",
+    "description": "Updates the total maximum amount of redemptions per stream for the specified reward",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/twitch/channel-reward/update-reward-max-per-stream",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/update-reward-max-per-stream",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/update-reward-max-per-stream.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      },
+      {
+        "name": "redeems",
+        "type": "number",
+        "description": "Amount of maximum redemptions per stream",
+        "default": 1
+      },
+      {
+        "name": "additive",
+        "type": "boolean",
+        "description": "- `true`  - Will add the value of `redeems` parameter to the current amount of max redeems\n- `false` - Will set the current amount of max redeems to the value of `redeems` parameter\n",
+        "default": false
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "UpdateRewardMaxPerUserPerStream",
+    "name": "UpdateRewardMaxPerUserPerStream",
+    "description": "Updates the total maximum amount of redemptions per stream, per user, for the specified reward",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/twitch/channel-reward/update-reward-max-per-user-per-stream",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/channel-reward/update-reward-max-per-user-per-stream",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/channel-reward/update-reward-max-per-user-per-stream.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "rewardId",
+        "import": "twitch/rewards/id"
+      },
+      {
+        "name": "redeems",
+        "type": "number",
+        "description": "Amount of maximum redemptions per stream",
+        "default": 1
+      },
+      {
+        "name": "additive",
+        "type": "boolean",
+        "description": "- `true`  - Will add the value of `redeems` parameter to the current amount of max redeems per user\n- `false` - Will set the current amount of max redeems per user to the value of `redeems` parameter\n",
+        "default": false
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "SendMessage",
+    "name": "SendMessage",
+    "description": "Sends a Twitch chat message using either Twitch Broadcaster or Twitch Bot account",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/chat/send-message",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/chat/send-message",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/chat/send-message.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "message",
+        "default": "\"Hello, world!\"",
+        "description": "Enter the message contents"
+      },
+      {
+        "name": "useBot",
+        "default": true,
+        "description": "- `true`{lang=cs} - Send the message using your **Twitch Bot** account\n- `false`{lang=cs} - Send the message using your **Twitch Broadcaster** account\n"
+      },
+      {
+        "name": "fallback",
+        "version": "0.2.5",
+        "default": true,
+        "description": "- `true`{lang=cs} - (If `bot` bool is set to `True`), this is the same behaviour as if you had Bot as your preferred account.\n- `false`{lang=cs} - (If `bot` bool is set to `True`), it will try to send using **only** the Bot account, and do **nothing** if it can't (i.e, not logged in).\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "SendWhisper",
+    "name": "SendWhisper",
+    "description": "Send a Twitch Whipser to another user.\n\nThere are Twich limitations you have to consider before using this method:\n- The user sending the whisper must have a verified phone number.\n- The API may silently drop whispers that it suspects of violating Twitch policies.\n- Rate Limits: You may whisper to a maximum of 40 unique recipients per day. Within the per day limit, you may whisper a maximum of 3 whispers per second and a maximum of 100 whispers per minute.\n",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/chat/send-whisper",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/chat/send-whisper",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/chat/send-whisper.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "userName",
+        "default": "\"streamerdotbot\"",
+        "description": "Login name of the user you want to send a whisper to"
+      },
+      {
+        "name": "message",
+        "default": "\"Hello, world!\"",
+        "description": "Enter the message contents"
+      },
+      {
+        "name": "bot",
+        "default": true,
+        "description": "- `true`{lang=cs} - Send the message using your **Twitch Bot** account\n- `false`{lang=cs} - Send the message using your **Twitch Broadcaster** account\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchAnnounce",
+    "name": "TwitchAnnounce",
+    "description": "Sends a Twitch chat message using either Twitch Broadcaster or Twitch Bot account",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/chat/twitch-announce",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/chat/twitch-announce",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/chat/twitch-announce.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "message",
+        "default": "\"Hello, world!\"",
+        "description": "Enter the message contents"
+      },
+      {
+        "name": "useBot",
+        "default": true,
+        "description": "- `true`{lang=cs} - Send the message using your **Twitch Bot** account\n- `false`{lang=cs} - Send the message using your **Twitch Broadcaster** account\n"
+      },
+      {
+        "name": "color",
+        "default": "Default",
+        "description": "Select the color for the announcement. Valid values are:\n- `default` – Standard color\n- `blue`\n- `green`\n- `orange`\n- `purple`\n"
+      },
+      {
+        "name": "fallback",
+        "version": "0.2.5",
+        "default": true,
+        "description": "- `true`{lang=cs} - (If `bot` bool is set to `True`), this is the same behaviour as if you had Bot as your preferred account.\n- `false`{lang=cs} - (If `bot` bool is set to `True`), it will try to send using **only** the Bot account, and do **nothing** if it can't (i.e, not logged in).\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchClearChatMessages",
+    "name": "TwitchClearChatMessages",
+    "description": "Clear Twitch Chat",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/chat/twitch-clear-chat-messages",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/chat/twitch-clear-chat-messages",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/chat/twitch-clear-chat-messages.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "bot",
+        "default": true,
+        "description": "- `true`{lang=cs} - Clear all messages with bot account\n- `false`{lang=cs} - Clear all messages with broadcaster account\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchDeleteChatMessage",
+    "name": "TwitchDeleteChatMessage",
+    "description": "Delete Twitch message via message id",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/chat/twitch-delete-chat-message",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/chat/twitch-delete-chat-message",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/chat/twitch-delete-chat-message.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "messageId",
+        "default": "\"abcde12345\"",
+        "description": "Id of the message you want to delete"
+      },
+      {
+        "name": "bot",
+        "default": true,
+        "description": "- `true`{lang=cs} - Delete the message with bot account\n- `false`{lang=cs} - Delete the message with broadcaster account\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchGetPinnedMessage",
+    "name": "TwitchGetPinnedMessage",
+    "description": "Gets the current pinned chat message",
+    "version": "1.0.5",
+    "route": "/api/csharp/methods/twitch/chat/twitch-get-pinned-message",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/chat/twitch-get-pinned-message",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/chat/twitch-get-pinned-message.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchPinChatMessage",
+    "name": "TwitchPinChatMessage",
+    "description": "Pins a chat message in Twitch",
+    "version": "1.0.5",
+    "route": "/api/csharp/methods/twitch/chat/twitch-pin-chat-message",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/chat/twitch-pin-chat-message",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/chat/twitch-pin-chat-message.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "messageId",
+        "description": "Twitch chat message ID to pin"
+      },
+      {
+        "name": "duration",
+        "default": null,
+        "description": "The duration to pin the chat message for.\n- `null` for the pin to last till the end of the stream\n- between `30` and `1800` - duration in seconds\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchReplyToMessage",
+    "name": "TwitchReplyToMessage",
+    "description": "Send a reply to a specific Twitch chat message",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/chat/twitch-reply-to-message",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/chat/twitch-reply-to-message",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/chat/twitch-reply-to-message.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "message",
+        "default": "\"Hello, world!\"",
+        "description": "Enter the message contents"
+      },
+      {
+        "name": "replyId",
+        "default": "args[\"msgId\"]",
+        "description": "Enter the unique ID of the message to reply to"
+      },
+      {
+        "name": "useBot",
+        "default": true,
+        "description": "- `true`{lang=cs} - Send the reply using your **Twitch Bot** account\n- `false`{lang=cs} - Send the reply using your **Twitch Broadcaster** account\n"
+      },
+      {
+        "name": "fallback",
+        "version": "0.2.5",
+        "default": true,
+        "description": "- `true`{lang=cs} - (If `bot` bool is set to `True`), this is the same behaviour as if you had Bot as your preferred account.\n- `false`{lang=cs} - (If `bot` bool is set to `True`), it will try to send using **only** the Bot account, and do **nothing** if it can't (i.e, not logged in).\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchSendAndPinMessage",
+    "name": "TwitchSendAndPinMessage",
+    "description": "Send a chat message and automatically pin it for 20 minutes",
+    "version": "1.0.5",
+    "route": "/api/csharp/methods/twitch/chat/twitch-send-and-pin-message",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/chat/twitch-send-and-pin-message",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/chat/twitch-send-and-pin-message.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "message",
+        "description": "The message to send to chat and pin"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchUnpinMessage",
+    "name": "TwitchUnpinMessage",
+    "description": "Unpin the pinned chat message",
+    "version": "1.0.5",
+    "route": "/api/csharp/methods/twitch/chat/twitch-unpin-message",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/chat/twitch-unpin-message",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/chat/twitch-unpin-message.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchUpdatePinnedMessageDuration",
+    "name": "TwitchUpdatePinnedMessageDuration",
+    "description": "Update the duration of a pinned chat message",
+    "version": "1.0.5",
+    "route": "/api/csharp/methods/twitch/chat/twitch-update-pinned-message-duration",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/chat/twitch-update-pinned-message-duration",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/chat/twitch-update-pinned-message-duration.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "duration",
+        "default": null,
+        "description": "The duration to pin the chat message for.\n- `null` for the pin to last till the end of the stream\n- between `30` and `1800` - duration in seconds\n"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CreateClip",
+    "name": "CreateClip",
+    "description": "Create a Twitch Clip",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/clips/create-clip",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/clips/create-clip",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/clips/create-clip.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "title",
+        "description": "If `null`, will match the stream title at the time of creation."
+      },
+      {
+        "name": "duration",
+        "description": "Clip duration in seconds (min. 5, max 60)."
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CreateStreamMarker",
+    "name": "CreateStreamMarker",
+    "description": "Create a Stream Marker on Twitch",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/clips/create-stream-marker",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/clips/create-stream-marker",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/clips/create-stream-marker.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetAllClips",
+    "name": "GetAllClips",
+    "description": "Fetch all clips for the connected Twitch Broadcaster. The list is in descending order by view count.",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/clips/get-all-clips",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/clips/get-all-clips",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/clips/get-all-clips.md",
+    "headings": [],
+    "summary": "Clip data is always sorted by view count (descending) due to Twitch API limitations\n\nA maximum of 1,000 clips can be returned",
+    "parameters": [
+      {
+        "name": "isFeatured",
+        "import": "twitch/clips/is-featured"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetClipsForGame",
+    "name": "GetClipsForGame",
+    "description": "Fetch clips for a specific game on Twitch",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/clips/get-clips-for-game",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/clips/get-clips-for-game",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/clips/get-clips-for-game.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "count",
+        "import": "twitch/clips/count"
+      },
+      {
+        "name": "isFeatured",
+        "import": "twitch/clips/is-featured"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetClipsForUserById",
+    "name": "GetClipsForUserById",
+    "description": "Fetch clips for a Twitch user, by user ID",
+    "version": "0.2.3",
+    "route": "/api/csharp/methods/twitch/clips/get-clips-for-user-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/clips/get-clips-for-user-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/clips/get-clips-for-user-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "count",
+        "import": "twitch/clips/count"
+      },
+      {
+        "name": "isFeatured",
+        "import": "twitch/clips/is-featured"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetClipsForUser",
+    "name": "GetClipsForUser",
+    "description": "Fetch clips for a Twitch user, by username",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/clips/get-clips-for-user",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/clips/get-clips-for-user",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/clips/get-clips-for-user.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "count",
+        "import": "twitch/clips/count"
+      },
+      {
+        "name": "isFeatured",
+        "import": "twitch/clips/is-featured"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetClips",
+    "name": "GetClips",
+    "description": "Fetch a number of clips for the connected Twitch Broadcaster",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/clips/get-clips",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/clips/get-clips",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/clips/get-clips.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "count",
+        "import": "twitch/clips/count"
+      },
+      {
+        "name": "isFeatured",
+        "import": "twitch/clips/is-featured"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetTwitchUserVarById",
+    "name": "GetTwitchUserVarById",
+    "description": "Get the value of a user global variable for a specific Twitch user, by ID",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/globals/get-twitch-user-var-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/globals/get-twitch-user-var-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/globals/get-twitch-user-var-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "userId",
+        "import": "core/users/id"
+      },
+      {
+        "name": "varName",
+        "import": "core/globals/name"
+      },
+      {
+        "name": "persisted",
+        "import": "core/globals/persisted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetTwitchUserVar",
+    "name": "GetTwitchUserVar",
+    "description": "Get the value of a user global variable for a specific Twitch user, by username",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/globals/get-twitch-user-var",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/globals/get-twitch-user-var",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/globals/get-twitch-user-var.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "userName",
+        "import": "core/users/username"
+      },
+      {
+        "name": "varName",
+        "import": "core/globals/name"
+      },
+      {
+        "name": "persisted",
+        "import": "core/globals/persisted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetTwitchUsersVar",
+    "name": "GetTwitchUsersVar",
+    "description": "Get a list of all Twitch users with a given variable, along with their values",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/globals/get-twitch-users-var",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/globals/get-twitch-users-var",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/globals/get-twitch-users-var.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "varName",
+        "import": "core/globals/name"
+      },
+      {
+        "name": "persisted",
+        "import": "core/globals/persisted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "IncrementAllTwitchUsersVar",
+    "name": "IncrementAllTwitchUsersVar",
+    "description": "Increments the value of a specific user global variable for all Twitch users",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/twitch/globals/increment-all-twitch-users-var",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/globals/increment-all-twitch-users-var",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/globals/increment-all-twitch-users-var.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "varName",
+        "description": "Name of the user variable"
+      },
+      {
+        "name": "value",
+        "description": "Value of how much the user variables should be incremented by"
+      },
+      {
+        "name": "persisted",
+        "description": "- `true` - Persisted user variables will be affected\n- `false` - Non-persisted user variable will be affected"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "IncrementOrCreateTwitchUsersVarById",
+    "name": "IncrementOrCreateTwitchUsersVarById",
+    "description": "Increments the values of Twitch user variables for a list of user IDs.\nIf a variable does not exist for a user, a new one is created.\n",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/twitch/globals/increment-or-create-twitch-users-var-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/globals/increment-or-create-twitch-users-var-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/globals/increment-or-create-twitch-users-var-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "userIds",
+        "descriptions": "A List<string> of the user ids you want to increment the variables of"
+      },
+      {
+        "name": "varName",
+        "description": "Name of the user variable"
+      },
+      {
+        "name": "value",
+        "description": "Value of how much the user variables should be increased by"
+      },
+      {
+        "name": "persisted",
+        "description": "- `true` - Persisted user variables will be affected\n- `false` - Non-persisted user variable will be affected"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "IncrementTwitchUsersVarById",
+    "name": "IncrementTwitchUsersVarById",
+    "description": "Increments the values of Twitch user variables for a list of user IDs.\nWill only increment if variable exists\n",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/twitch/globals/increment-twitch-users-var-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/globals/increment-twitch-users-var-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/globals/increment-twitch-users-var-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "userIds",
+        "descriptions": "A List<string> of the user ids you want to increment the variables of"
+      },
+      {
+        "name": "varName",
+        "description": "Name of the user variable"
+      },
+      {
+        "name": "value",
+        "description": "Value of how much the user variables should be increased by"
+      },
+      {
+        "name": "persisted",
+        "description": "- `true` - Persisted user variables will be affected\n- `false` - Non-persisted user variable will be affected"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchAddBlockedTerm",
+    "name": "TwitchAddBlockedTerm",
+    "description": "Adds selected term to the Twitch blocked list",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/twitch/moderation/twitch-add-blocked-term",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/moderation/twitch-add-blocked-term",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/moderation/twitch-add-blocked-term.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchApproveAutoHeldMessage",
+    "name": "TwitchApproveAutoHeldMessage",
+    "description": "Approve a message held by Auto Mod",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/twitch/moderation/twitch-approve-auto-held-message",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/moderation/twitch-approve-auto-held-message",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/moderation/twitch-approve-auto-held-message.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchDenyAutoHeldMessage",
+    "name": "TwitchDenyAutoHeldMessage",
+    "description": "Deny a message held by Auto Mod",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/twitch/moderation/twitch-deny-auto-held-message",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/moderation/twitch-deny-auto-held-message",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/moderation/twitch-deny-auto-held-message.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchGetBlockedTerms",
+    "name": "TwitchGetBlockedTerms",
+    "description": "Returns a list of terms currently blocked on the Broadcaster's Twitch Channel",
+    "version": "0.2.5",
+    "route": "/api/csharp/methods/twitch/moderation/twitch-get-blocked-terms",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/moderation/twitch-get-blocked-terms",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/moderation/twitch-get-blocked-terms.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchRemoveBlockedTerm",
+    "name": "TwitchRemoveBlockedTerm",
+    "description": "Removes selected term from the Twitch blocked list",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/twitch/moderation/twitch-remove-blocked-term",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/moderation/twitch-remove-blocked-term",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/moderation/twitch-remove-blocked-term.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchWarnUser",
+    "name": "TwitchWarnUser",
+    "description": "Warns specified Twitch user for the given reason",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/twitch/moderation/twitch-warn-user",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/moderation/twitch-warn-user",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/moderation/twitch-warn-user.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchGetBot",
+    "name": "TwitchGetBot",
+    "description": "Get info for the connected Twitch bot account",
+    "version": "0.2.3",
+    "route": "/api/csharp/methods/twitch/twitch-get-bot",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/twitch-get-bot",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/twitch-get-bot.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchGetBroadcaster",
+    "name": "TwitchGetBroadcaster",
+    "description": "Get Twitch user information of connected broadcaster",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/user/twitch-get-broadcaster",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/user/twitch-get-broadcaster",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/user/twitch-get-broadcaster.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchGetExtendedUserInfoById",
+    "name": "TwitchGetExtendedUserInfoById",
+    "description": "Get Twitch extended user information of specified user id",
+    "version": null,
+    "route": "/api/csharp/methods/twitch/user/twitch-get-extended-user-info-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/user/twitch-get-extended-user-info-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/user/twitch-get-extended-user-info-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "IncrementAllYouTubeUsersVar",
+    "name": "IncrementAllYouTubeUsersVar",
+    "description": "Increments the value of a specific user global variable for all YouTube users",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/increment-all-you-tube-users-var",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/increment-all-you-tube-users-var",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/increment-all-you-tube-users-var.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "IncrementOrCreateYouTubeUsersVarById",
+    "name": "IncrementOrCreateYouTubeUsersVarById",
+    "description": "Increments the values of YouTube user variables for a list of user IDs.\nIf a variable does not exist for a user, a new one is created.\n",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/increment-or-create-you-tube-users-var-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/increment-or-create-you-tube-users-var-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/increment-or-create-you-tube-users-var-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "IncrementYouTubeUsersVarById",
+    "name": "IncrementYouTubeUsersVarById",
+    "description": "Increments the values of YouTube user variables for a list of user IDs.\nWill only increment if variable exists\n",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/increment-you-tube-users-var-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/increment-you-tube-users-var-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/increment-you-tube-users-var-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "SendYouTubeMessageToLatestMonitored",
+    "name": "SendYouTubeMessageToLatestMonitored",
+    "description": "Sends a chat message to the most recently monitored YouTube broadcast",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/send-you-tube-message-to-latest-monitored",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/send-you-tube-message-to-latest-monitored",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/send-you-tube-message-to-latest-monitored.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeAddTags",
+    "name": "YouTubeAddTags",
+    "description": "Add tags for a specific YouTube broadcast with the given ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-add-tags",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-add-tags",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-add-tags.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeBanUserById",
+    "name": "YouTubeBanUserById",
+    "description": "Bans the selected YouTube user from the given broadcast, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-ban-user-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-ban-user-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-ban-user-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeBanUserByName",
+    "name": "YouTubeBanUserByName",
+    "description": "Bans the selected YouTube user from the given broadcast, by name",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-ban-user-by-name",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-ban-user-by-name",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-ban-user-by-name.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeClearTags",
+    "name": "YouTubeClearTags",
+    "description": "Clears all tags for a specific YouTube broadcast with the given ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-clear-tags",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-clear-tags",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-clear-tags.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeGetBot",
+    "name": "YouTubeGetBot",
+    "description": "Returns user info for the YouTube bot account (if one exists)",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-get-bot",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-get-bot",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-get-bot.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeGetBroadcaster",
+    "name": "YouTubeGetBroadcaster",
+    "description": "Returns the user info for the YouTube broadcaster",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-get-broadcaster",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-get-broadcaster",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-get-broadcaster.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeGetLatestMonitoredBroadcast",
+    "name": "YouTubeGetLatestMonitoredBroadcast",
+    "description": "Retrieves 'Broadcast Information' on the most recently monitored YouTube broadcast.",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-get-latest-monitored-broadcast",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-get-latest-monitored-broadcast",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-get-latest-monitored-broadcast.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeGetMonitoredBroadcasts",
+    "name": "YouTubeGetMonitoredBroadcasts",
+    "description": "Retrieves 'Broadcast Information' on all currently monitored YouTube broadcasts.",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-get-monitored-broadcasts",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-get-monitored-broadcasts",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-get-monitored-broadcasts.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeRemoveTags",
+    "name": "YouTubeRemoveTags",
+    "description": "Remove selected tags for a specific YouTube broadcast with the given ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-remove-tags",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-remove-tags",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-remove-tags.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeSetCategory",
+    "name": "YouTubeSetCategory",
+    "description": "Sets the YouTube category for the selected broadcast",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-set-category",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-set-category",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-set-category.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeSetDescription",
+    "name": "YouTubeSetDescription",
+    "description": "Sets the YouTube description for the selected broadcast",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-set-description",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-set-description",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-set-description.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeSetMetaData",
+    "name": "YouTubeSetMetaData",
+    "description": "Sets the YouTube meta data for the selected broadcast",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-set-meta-data",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-set-meta-data",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-set-meta-data.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeSetPrivacy",
+    "name": "YouTubeSetPrivacy",
+    "description": "Updates the privacy setting of the specified YouTube broadcast",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-set-privacy",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-set-privacy",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-set-privacy.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "privacy",
+        "value": "\"public\"",
+        "description": "Enter either `public`, `private`, or `unlisted`"
+      },
+      {
+        "name": "broadcastId",
+        "value": "\"U-4CGMhr2O0\"",
+        "description": "Requires specifiying which broadcast to update"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeSetTitle",
+    "name": "YouTubeSetTitle",
+    "description": "Sets the YouTube title for the selected broadcast",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-set-title",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-set-title",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-set-title.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeTimeoutUserById",
+    "name": "YouTubeTimeoutUserById",
+    "description": "Times out the selected YouTube user for the selected duration, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-timeout-user-by-id",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-timeout-user-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-timeout-user-by-id.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "YouTubeTimeoutUserByName",
+    "name": "YouTubeTimeoutUserByName",
+    "description": "Times out the selected YouTube user for the selected duration, by name",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/youtube/you-tube-timeout-user-by-name",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/youtube/you-tube-timeout-user-by-name",
+    "sourcePath": "3.api/3.csharp/3.methods/youtube/you-tube-timeout-user-by-name.md",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  }
+]

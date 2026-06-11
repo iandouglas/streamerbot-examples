@@ -1,0 +1,310 @@
+[
+  {
+    "title": "Introduction",
+    "name": null,
+    "description": "Get started with C# code actions in Streamer.bot",
+    "version": null,
+    "route": "/api/csharp/guide/intro",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/guide/intro",
+    "sourcePath": "3.api/3.csharp/0.guide/0.intro.md",
+    "headings": [
+      "CPHInline Class",
+      "`Execute()`",
+      "Custom Methods",
+      "Window Actions",
+      "Video Tutorials"
+    ],
+    "summary": "CPHInline Class\n\nCPH refers to the original development name of Streamer.bot, ChannelPointsHandler\n\nWhen you add a new Execute C# Code sub-action, you will be greeted with the following code snippet:",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "cs",
+        "label": "",
+        "code": "using System;\n\npublic class CPHInline\n{\n    public bool Execute()\n    {\n        // your main code goes here\n        return true;\n    }\n}"
+      },
+      {
+        "language": "cs",
+        "label": "Example.cs",
+        "code": "public bool Execute()\n{\n    CPH.LogInfo(\"Hello from C#\");\n    return true;\n}"
+      },
+      {
+        "language": "cs",
+        "label": "Example.cs",
+        "code": "public bool Execute()\n{\n  if (someCondition) {\n    CPH.LogInfo(\"This action will now stop executing further sub-actions.\");\n    return false; // Stop execution of further sub-actions\n  }\n\n  return true; // Allow further execution\n}"
+      },
+      {
+        "language": "cs",
+        "label": "Example.cs",
+        "code": "public bool Execute()\n{\n    CPH.LogInfo(\"Starting execution...\");\n    CustomMethod();\n    return true;\n}\n\npublic void CustomMethod()\n{\n    CPH.LogInfo(\"Hello from a custom method!\");\n}"
+      }
+    ],
+    "codeBlockCount": 4
+  },
+  {
+    "title": "Arguments & Variables",
+    "name": null,
+    "description": "Access arguments & variables in your C# code actions",
+    "version": null,
+    "route": "/api/csharp/guide/variables",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/guide/variables",
+    "sourcePath": "3.api/3.csharp/0.guide/1.variables.md",
+    "headings": [
+      "Accessing Arguments",
+      "Global Variables",
+      "Get/Set Global",
+      "Handling Default Values",
+      "Complex Data Types",
+      "Custom Serializer",
+      "Special Arguments",
+      "Event Source & Event Type"
+    ],
+    "summary": "All C# actions have access to a Dictionary<string, object>{lang=cs} propertry named args{lang=cs}\n\nThis property contains all variables from the current argument stack, including variables from the event trigger or any custom arguments you may have populated with previous sub-actions.\n\nAccessing Arguments",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "cs",
+        "label": "TryGetArg",
+        "code": "// If %rawInput% exists, store it in rawInput\n  CPH.TryGetArg(\"rawInput\", out string rawInput);\n\n  // Log the result\n  CPH.LogInfo($\"Variable rawInput: {rawInput}\");"
+      },
+      {
+        "language": "cs",
+        "label": "ContainsKey",
+        "code": "string myVariable = args.ContainsKey(\"myVariable\") ? args[\"myVariable\"] : null;\n\n  // Log the result\n  CPH.LogInfo($\"Variable myVariable: {myVariable}\");"
+      },
+      {
+        "language": "cs",
+        "label": "TryGetValue",
+        "code": "// If arg doesn't exist, return false to stop execution\n    if (!args.TryGetValue(\"rawInput\", out object rawInputObj))\n      return false;\n\n    // Parse string value\n    string rawInput = rawInputObj?.ToString();\n\n    // Log the result\n    CPH.LogInfo($\"Variable rawInput: {rawInput}\");"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "string myString = CPH.GetGlobalVar<string>(\"myGlobalVar\", true);"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "CPH.SetGlobalVar(\"myGlobalVar\", \"some new value\", true);"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "string myString = CPH.GetGlobalVar<string>(\"myGlobalVar\", true);\nif (myString == null)\n{\n   //Do whatever would happen when the variable \"test\" would not exist\n}"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "// Attempt to get global variable, if it does not exist, set it to \"defaultValue\"\nstring myGlobalVar = CPH.GetGlobalVar<string>(\"myGlobalVar\") ?? \"defaultValue\";"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "// Using Nullable<T>\nint myInt = CPH.GetGlobalVar<Nullable<int>>(\"myGlobalVar\", true) ?? 0;\nList<int> myIntList = CPH.GetGlobalVar<Nullable<List<int>>(\"testList\",true) ?? new List<int>();\n\n// Using T?\nint myInt = CPH.GetGlobalVar<int?>(\"myGlobalVar\", true) ?? 0;\nList<int> myIntList = CPH.GetGlobalVar<List<int>?>(\"testList\",true) ?? new List<int>();"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "Dictionary<string,List<List<string>>> test = new Dictionary<string,List<List<string>>>();\n//...\nCPH.SetGlobalVar(\"complex\", test, false);\nDictionary<string,List<List<string>>> testReturn= CPH.GetGlobalVar<Dictionary<string,List<List<string>>>>(\"complex\", false)"
+      },
+      {
+        "language": "cs",
+        "label": "",
+        "code": "//Use the Newtonsoft.Json library\nusing Newtonsoft.Json;\n//...\n//Custom class\npublic class TestClass\n{\n  private string userName {get;set;}\n  private Dictionary<string,string> userThings {get;set;}\n}\n//... Let's say I have a list of TestClass objects\nList<TestClass> testList = new List<TestClass>(){...};\nstring jsonSaveString = JsonConvert.SerializeObject(testList);\nCPH.SetGlobalVar(\"savingClass\", jsonSaveString, true);\n\n//... Deserializing saved JSON string\nstring savedString = CPH.GetGlobalVar<string>(\"savingClass\", true);\nList<TestClass> savedList = JsonConvert.DeserializeObject<List<TestClass>>(savedString);"
+      }
+    ],
+    "codeBlockCount": 10
+  },
+  {
+    "title": "Lyfecycle Methods",
+    "name": null,
+    "description": "Learn how to utilize the Init and Dispose lifecycle methods in your C# code actions",
+    "version": null,
+    "route": "/api/csharp/guide/lifecycle-methods",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/guide/lifecycle-methods",
+    "sourcePath": "3.api/3.csharp/0.guide/2.lifecycle-methods.md",
+    "headings": [
+      "`Init()`",
+      "`Dispose()`"
+    ],
+    "summary": "In addition to the Execute() method, you can also implement the lifecycle methods outlined below.\n\nAll lifecycle methods are **optional**\n\nInit()\nThe Init(){lang=cs} method is executed when your code is first compiled, including during Streamer.bot startup.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "cs",
+        "label": "Signature.cs",
+        "code": "public void Init();"
+      },
+      {
+        "language": "cs",
+        "label": "Example.cs",
+        "code": "using System;\n\n  public class CPHInline\n  {\n      public bool Execute()\n      {\n          // your main code goes here\n          return true;\n      }\n\n      public void Init()\n      {\n          // place your init code here\n      }\n  }"
+      },
+      {
+        "language": "cs",
+        "label": "Signature.cs",
+        "code": "public void Dispose();"
+      },
+      {
+        "language": "cs",
+        "label": "Example.cs",
+        "code": "using System;\n\n  public class CPHInline\n  {\n      public bool Execute()\n      {\n          // your main code goes here\n          return true;\n      }\n\n      public void Dispose()\n      {\n          // place your dispose code here\n      }\n  }"
+      }
+    ],
+    "codeBlockCount": 4
+  },
+  {
+    "title": "Using Custom Methods",
+    "name": null,
+    "description": "Learn how to define and use custom methods in your C# code actions",
+    "version": null,
+    "route": "/api/csharp/guide/custom-methods",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/guide/custom-methods",
+    "sourcePath": "3.api/3.csharp/0.guide/3.custom-methods.md",
+    "headings": [
+      "Adding Custom Methods",
+      "Sharing Methods Between Actions",
+      "Execute Method Sub-Action",
+      "C# ExecuteMethod"
+    ],
+    "summary": "In addition to the Execute(){lang=cs} method, you can also define your own custom methods within the CPHInline{lang=cs} class.\n\nAdding Custom Methods\n\nTo add a custom method, simply define a new method within your CPHInline{lang=cs} class.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "cs",
+        "label": "Example.cs",
+        "code": "public bool Execute()\n{\n    CustomMethod(); // Call your custom method [!code highlight]\n\n    int sum = Add(5, 10); // Call another custom method that takes parameters [!code highlight]\n\n    return true;\n}\n\npublic void CustomMethod()\n{\n    CPH.LogInfo(\"This is a custom method!\"); // You can even use CPH methods here!\n}\n\npublic int Add(int a, int b)\n{\n    return a + b; // This method takes two integers and returns their sum\n}"
+      },
+      {
+        "language": "cs",
+        "label": "Example.cs",
+        "code": "public bool CustomMethod()\n{\n    CPH.LogInfo(\"This is a custom method that can be called from other actions!\");\n    return true; // Return true to indicate success\n}"
+      },
+      {
+        "language": "cs",
+        "label": "Example.cs",
+        "code": "public bool Execute()\n{\n    CPH.ExecuteMethod(\"YourActionName\", \"CustomMethod\"); // [!code highlight]\n    return true;\n}"
+      }
+    ],
+    "codeBlockCount": 3
+  },
+  {
+    "title": "Sharing Extensions",
+    "name": null,
+    "description": "Best practices when creating C# extensions to share with the community",
+    "version": null,
+    "route": "/api/csharp/guide/extensions",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/guide/extensions",
+    "sourcePath": "3.api/3.csharp/0.guide/3.extensions.md",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Debugging",
+    "name": null,
+    "description": "How to debug C# code actions in Streamer.bot",
+    "version": null,
+    "route": "/api/csharp/guide/debugging",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/guide/debugging",
+    "sourcePath": "3.api/3.csharp/0.guide/4.debugging.md",
+    "headings": [
+      "Compiling Log",
+      "References"
+    ],
+    "summary": ":wip\n\nCompiling Log\n\nThis view allows you to see the output from the compiler when you attempt to compile your code.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Custom DLLs",
+    "name": null,
+    "description": "How to use custom DLLs in your C# code actions.",
+    "version": null,
+    "route": "/api/csharp/recipes/custom-dlls",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/recipes/custom-dlls",
+    "sourcePath": "3.api/3.csharp/1.recipes/custom-dlls.md",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Using HTTPClient",
+    "name": null,
+    "description": "How to use the HTTPClient class in your C# code actions.",
+    "version": null,
+    "route": "/api/csharp/recipes/http-client",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/recipes/http-client",
+    "sourcePath": "3.api/3.csharp/1.recipes/http-client.md",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Visual Studio Code",
+    "name": null,
+    "description": "Configure Visual Studio Code for writing C# code for Streamer.bot with linting and autocomplete.",
+    "version": null,
+    "route": "/api/csharp/recipes/visual-studio-code",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/recipes/visual-studio-code",
+    "sourcePath": "3.api/3.csharp/1.recipes/visual-studio-code.md",
+    "headings": [
+      "Prerequisites",
+      "Setup Guide",
+      "Create a new Streamer.bot Project Folder",
+      "Create a `.csproj` File",
+      "Create a .cs File",
+      "`.cs` Notes",
+      "Debugging",
+      "Copying Code to Streamer.bot",
+      "Select your Action",
+      "Copy your C# Code",
+      "Additional Steps",
+      "File Template Snippet"
+    ],
+    "summary": "**VSCode Extension now available!** :br\nThis extension automates the process of setting up a Streamer.bot C# project directory with IntelliSense, while also providing hover documentation for CPH methods. Installation includes the base C# extension dependency.\n\nWrite Streamer.bot C# code with IntelliSense and documentation\n\n<small>by FajitaOfTreason</small>",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "xml",
+        "label": "StreamerBot.csproj",
+        "code": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <TargetFramework>net481</TargetFramework>\n    <LangVersion>13.0</LangVersion>\n    <Nullable>enable</Nullable>\n    <UseWPF>true</UseWPF>\n    <DefineConstants>EXTERNAL_EDITOR</DefineConstants>\n    <NoWarn>CS0114</NoWarn>\n\n    <!-- Set the following directory with your Streamer.bot install location -->\n    <StreamerBotPath>C:/path/to/streamer.bot-directory</StreamerBotPath>\n  </PropertyGroup>\n  <ItemGroup>\n    <!-- Automatically include in every CS file -->\n    <Using Include=\"Streamer.bot.Plugin.Interface\" />\n    <Using Include=\"Streamer.bot.Plugin.Interface.Model\" />\n    <Using Include=\"Streamer.bot.Plugin.Interface.Enums\" />\n    <Using Include=\"Streamer.bot.Common.Events\" />\n\n    <!-- Use forward slashes for cross-platform compatibility -->\n    <Reference Include=\"$(StreamerBotPath)/Streamer.bot.Plugin.Interface.dll\" />\n    <Reference Include=\"$(StreamerBotPath)/Streamer.bot.Common.dll\" />\n    <Reference Include=\"$(StreamerBotPath)/Twitch.Common.dll\" />\n\n    <Reference Include=\"$(StreamerBotPath)/NAudio*.dll\" />\n    <Reference Include=\"$(StreamerBotPath)/Wpf*.dll\" />\n    <Reference Include=\"$(StreamerBotPath)/Newtonsoft.Json.dll\" />\n    <Reference Include=\"$(StreamerBotPath)/System.*.dll\" />\n\n    <Reference Include=\"System.Web\" />\n    <Reference Include=\"System.Net.Http\" />\n\n    <!-- Uncomment the following line to reference all DLLs in the streamerbot directory -->\n    <!-- <Reference Include=\"$(StreamerBotPath)/**/*.dll\" /> -->\n  </ItemGroup>\n</Project>"
+      },
+      {
+        "language": "cs",
+        "label": "UniqueClassName.cs",
+        "code": "using System;\n\n/*----- Class name should match <filename>.cs -----*/\n#if EXTERNAL_EDITOR\npublic class UniqueClassName : CPHInlineBase\n#else\npublic class CPHInline\n#endif\n/*--------------------------------------------*/\n{\n    public bool Execute()\n    {\n        // Add your code here\n        return true;\n    }\n}"
+      },
+      {
+        "language": "json",
+        "label": "",
+        "code": "{\n  \"Execute C# Sub-Action Template\": {\n    \"scope\": \"csharp\",\n    \"isFileTemplate\": true,\n    \"prefix\": \"streamer.bot-file-template\",\n    \"description\": \"New Execute C# Sub-Action for Streamer.bot\",\n    \"body\": [\n      \"using System;\",\n      \"\",\n      \"/*----- Class name should match FileName -----*/\",\n      \"#if EXTERNAL_EDITOR\",\n      \"public class ${TM_FILENAME_BASE} : CPHInlineBase\",\n      \"#else\",\n      \"public class CPHInline\",\n      \"#endif\",\n      \"/*--------------------------------------------*/\",\n      \"{\",\n      \"    public bool Execute()\",\n      \"    {\",\n      \"        ${0:// Add your code here}\",\n      \"        return true;\",\n      \"    }\",\n      \"}\"\n    ]\n  }\n}"
+      }
+    ],
+    "codeBlockCount": 3
+  }
+]

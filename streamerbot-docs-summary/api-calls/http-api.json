@@ -1,0 +1,315 @@
+[
+  {
+    "title": "HTTP Server Configuration",
+    "name": null,
+    "description": "Configure the HTTP Server in Streamer.bot",
+    "version": null,
+    "route": "/api/http/guide/configuration",
+    "sourceUrl": "https://docs.streamer.bot/api/http/guide/configuration",
+    "sourcePath": "3.api/5.http/0.guide/0.configuration.md",
+    "headings": [
+      "Parameters"
+    ],
+    "summary": "!HTTP Server Configuration\n\nIn Streamer.bot, navigate to **Servers/Clients > HTTP Server**\n\nParameters",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Executing Actions",
+    "name": null,
+    "description": "Execute your actions via HTTP requests",
+    "version": null,
+    "route": "/api/http/guide/executing-actions",
+    "sourceUrl": "https://docs.streamer.bot/api/http/guide/executing-actions",
+    "sourcePath": "3.api/5.http/0.guide/1.executing-actions.md",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Serving Files",
+    "name": null,
+    "description": "Serve static files or directories over HTTP",
+    "version": "1.0.0",
+    "route": "/api/http/guide/serving-files",
+    "sourceUrl": "https://docs.streamer.bot/api/http/guide/serving-files",
+    "sourcePath": "3.api/5.http/0.guide/2.serving-files.md",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "HTTP Server",
+    "name": null,
+    "description": "Explore the HTTP API and/or serve local files with Streamer.bot",
+    "version": null,
+    "route": "/api/http",
+    "sourceUrl": "https://docs.streamer.bot/api/http",
+    "sourcePath": "3.api/5.http/0.index.md",
+    "headings": [],
+    "summary": "Learn how to configure and use the HTTP server in Streamer.bot\n  \n  \n    Documentation for all HTTP server requests",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "ClearCredits",
+    "name": null,
+    "description": "Clear the credits via HTTP in Streamer.bot",
+    "version": null,
+    "route": "/api/http/requests/clear-credits",
+    "sourceUrl": "https://docs.streamer.bot/api/http/requests/clear-credits",
+    "sourcePath": "3.api/5.http/1.requests/clear-credits.md",
+    "headings": [
+      "Request",
+      "Response",
+      "Example"
+    ],
+    "summary": "Request\n\nNo parameters\n\nResponse",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "bash",
+        "label": "Terminal",
+        "code": "curl -X GET http://127.0.0.1:7474/ClearCredits"
+      },
+      {
+        "language": "js",
+        "label": "js",
+        "code": "const response = await fetch('http://127.0.0.1:7474/ClearCredits', {\n    method: 'GET'\n  });\n  console.log(response.status); // 204"
+      },
+      {
+        "language": "py",
+        "label": "py",
+        "code": "import requests\n  response = requests.get('http://127.0.0.1:7474/ClearCredits')\n  print(response.status_code)  # 204"
+      }
+    ],
+    "codeBlockCount": 3
+  },
+  {
+    "title": "ClearFirstWordsCache",
+    "name": null,
+    "description": "Clear the first words cache via HTTP in Streamer.bot",
+    "version": null,
+    "route": "/api/http/requests/clear-first-words-cache",
+    "sourceUrl": "https://docs.streamer.bot/api/http/requests/clear-first-words-cache",
+    "sourcePath": "3.api/5.http/1.requests/clear-first-words-cache.md",
+    "headings": [
+      "Request",
+      "Response",
+      "Example"
+    ],
+    "summary": "Request\n\nNo parameters\n\nResponse",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "bash",
+        "label": "Terminal",
+        "code": "curl -X GET http://127.0.0.1:7474/ClearFirstWordsCache"
+      },
+      {
+        "language": "js",
+        "label": "js",
+        "code": "const response = await fetch('http://127.0.0.1:7474/ClearFirstWordsCache', {\n    method: 'GET'\n  });\n  console.log(response.status); // 204"
+      },
+      {
+        "language": "py",
+        "label": "py",
+        "code": "import requests\n  response = requests.get('http://127.0.0.1:7474/ClearFirstWordsCache')\n  print(response.status_code)  # 204"
+      }
+    ],
+    "codeBlockCount": 3
+  },
+  {
+    "title": "DoAction",
+    "name": null,
+    "description": "Trigger an action in Streamer.bot via HTTP",
+    "version": null,
+    "route": "/api/http/requests/do-action",
+    "sourceUrl": "https://docs.streamer.bot/api/http/requests/do-action",
+    "sourcePath": "3.api/5.http/1.requests/do-action.md",
+    "headings": [
+      "Request",
+      "Parameters",
+      "Response",
+      "Example"
+    ],
+    "summary": "Request\n\nRequest body application/json{.text-muted}\n\nParameters",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "json",
+        "label": "Body",
+        "code": "// Content-Type: application/json\n  {\n    \"action\": {\n      \"id\": \"<guid>\",\n      \"name\": \"<name>\"\n    },\n    \"args\": {\n      \"key\": \"value\"\n    }\n  }"
+      },
+      {
+        "language": "json",
+        "label": "Execute by ID",
+        "code": "// Execute action by ID\n  {\n    \"action\": { \"id\": \"4af4bdef-f396-521f-a1a5-02983ae638cb\"}\n  }"
+      },
+      {
+        "language": "json",
+        "label": "Execute by Name",
+        "code": "// Execute action by name\n  {\n    \"action\": { \"name\": \"My Action\" }\n  }"
+      },
+      {
+        "language": "bash",
+        "label": "Terminal",
+        "code": "curl -X POST http://127.0.0.1:7474/DoAction \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"action\": {\n        \"id\": \"your-action-guid\",\n        \"name\": \"Your Action Name\"\n      },\n      \"args\": {\n        \"customArg\": \"customValue\"\n      }\n    }'"
+      },
+      {
+        "language": "js",
+        "label": "js",
+        "code": "const response = await fetch('http://127.0.0.1:7474/DoAction', {\n    method: 'POST',\n    headers: {\n      'Content-Type': 'application/json'\n    },\n    body: JSON.stringify({\n      action: {\n        id: 'your-action-guid',\n        name: 'Your Action Name'\n      },\n      args: {\n        customArg: 'customValue'\n      }\n    })\n  });\n  console.log(response.status); // 204"
+      },
+      {
+        "language": "py",
+        "label": "py",
+        "code": "import requests\n  import json\n\n  data = {\n    \"action\": {\n      \"id\": \"your-action-guid\",\n      \"name\": \"Your Action Name\"\n    },\n    \"args\": {\n      \"customArg\": \"customValue\"\n    }\n  }\n\n  response = requests.post(\n    'http://127.0.0.1:7474/DoAction',\n    headers={'Content-Type': 'application/json'},\n    data=json.dumps(data)\n  )\n  print(response.status_code)  # 204"
+      }
+    ],
+    "codeBlockCount": 6
+  },
+  {
+    "title": "GetActions",
+    "name": null,
+    "description": "Retrieve the list of actions via HTTP in Streamer.bot",
+    "version": null,
+    "route": "/api/http/requests/get-actions",
+    "sourceUrl": "https://docs.streamer.bot/api/http/requests/get-actions",
+    "sourcePath": "3.api/5.http/1.requests/get-actions.md",
+    "headings": [
+      "Request",
+      "Response",
+      "Example"
+    ],
+    "summary": "Request\n\nNo parameters\n\nResponse",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "json",
+        "label": "",
+        "code": "{\n  \"actions\": [\n    {\n      \"id\": \"<action guid>\",\n      \"name\": \"<action name>\"\n    }\n  ]\n}"
+      },
+      {
+        "language": "bash",
+        "label": "Terminal",
+        "code": "curl -X GET http://127.0.0.1:7474/GetActions"
+      },
+      {
+        "language": "js",
+        "label": "js",
+        "code": "const response = await fetch('http://127.0.0.1:7474/GetActions');\n  const data = await response.json();\n  console.log(data);"
+      },
+      {
+        "language": "py",
+        "label": "py",
+        "code": "import requests\n  response = requests.get('http://127.0.0.1:7474/GetActions')\n  data = response.json()\n  print(data)"
+      }
+    ],
+    "codeBlockCount": 4
+  },
+  {
+    "title": "GetCredits",
+    "name": null,
+    "description": "Retrieve the current credits data via HTTP in Streamer.bot",
+    "version": null,
+    "route": "/api/http/requests/get-credits",
+    "sourceUrl": "https://docs.streamer.bot/api/http/requests/get-credits",
+    "sourcePath": "3.api/5.http/1.requests/get-credits.md",
+    "headings": [
+      "Request",
+      "Response",
+      "Example"
+    ],
+    "summary": "Request\n\nNo parameters\n\nResponse",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "json",
+        "label": "",
+        "code": "{\n  \"Events\": {\n    \"Follows\": [],\n    \"Cheers\": [],\n    \"Subs\": [],\n    \"ReSubs\": [],\n    \"GiftSubs\": [],\n    \"GiftBombs\": [],\n    \"Raided\": [],\n    \"RewardRedemptions\": [],\n    \"GoalContributions\": [],\n    \"GameUpdates\": [],\n    \"Pyramids\": []\n  },\n  \"HypeTrainConductor\": [],\n  \"HypeTrainContributors\": [],\n  \"User\": {\n    \"Editors\": [],\n    \"Moderator\": [],\n    \"Subscriber\": [],\n    \"VIPs\": [],\n    \"Users\": [],\n    \"regulars\": []\n  },\n  \"Custom\": {},\n  \"TopBits\": {\n    \"All\": [],\n    \"Month\": [],\n    \"Week\": []\n  },\n  \"TopChannelRewards\": []\n}"
+      },
+      {
+        "language": "bash",
+        "label": "Terminal",
+        "code": "curl -X GET http://127.0.0.1:7474/GetCredits"
+      },
+      {
+        "language": "js",
+        "label": "js",
+        "code": "const response = await fetch('http://127.0.0.1:7474');\n  const data = await response.json();\n  console.log(data);"
+      },
+      {
+        "language": "py",
+        "label": "py",
+        "code": "import requests\n  response = requests.get('http://127.0.0.1:7474')\n  data = response.json()\n  print(data)"
+      }
+    ],
+    "codeBlockCount": 4
+  },
+  {
+    "title": "TestCredits",
+    "name": null,
+    "description": "Test the credits data via HTTP in Streamer.bot",
+    "version": null,
+    "route": "/api/http/requests/test-credits",
+    "sourceUrl": "https://docs.streamer.bot/api/http/requests/test-credits",
+    "sourcePath": "3.api/5.http/1.requests/test-credits.md",
+    "headings": [
+      "Request",
+      "Response",
+      "Example"
+    ],
+    "summary": "Request\n\nNo parameters\n\nResponse",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "json",
+        "label": "",
+        "code": "{\n  \"Events\": {\n    \"Follows\": [],\n    \"Cheers\": [],\n    \"Subs\": [],\n    \"ReSubs\": [],\n    \"GiftSubs\": [],\n    \"GiftBombs\": [],\n    \"Raided\": [],\n    \"RewardRedemptions\": [],\n    \"GoalContributions\": [],\n    \"GameUpdates\": [],\n    \"Pyramids\": []\n  },\n  \"HypeTrainConductor\": [],\n  \"HypeTrainContributors\": [],\n  \"User\": {\n    \"Editors\": [],\n    \"Moderator\": [],\n    \"Subscriber\": [],\n    \"VIPs\": [],\n    \"Users\": [],\n    \"regulars\": []\n  },\n  \"Custom\": {},\n  \"TopBits\": {\n    \"All\": [],\n    \"Month\": [],\n    \"Week\": []\n  },\n  \"TopChannelRewards\": []\n}"
+      },
+      {
+        "language": "bash",
+        "label": "Terminal",
+        "code": "curl -X GET http://127.0.0.1:7474/TestCredits"
+      },
+      {
+        "language": "js",
+        "label": "js",
+        "code": "const response = await fetch('http://127.0.0.1:7474/TestCredits');\n  const data = await response.json();\n  console.log(data);"
+      },
+      {
+        "language": "py",
+        "label": "py",
+        "code": "import requests\n  response = requests.get('http://127.0.0.1:7474/TestCredits')\n  data = response.json()\n  print(data)"
+      }
+    ],
+    "codeBlockCount": 4
+  }
+]

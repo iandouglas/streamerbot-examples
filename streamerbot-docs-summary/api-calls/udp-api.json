@@ -1,0 +1,60 @@
+[
+  {
+    "title": "UDP Server Configuration",
+    "name": null,
+    "description": "Configure the UDP Server in Streamer.bot",
+    "version": null,
+    "route": "/api/udp/guide/configuration",
+    "sourceUrl": "https://docs.streamer.bot/api/udp/guide/configuration",
+    "sourcePath": "3.api/6.udp/0.guide/0.configuration.md",
+    "headings": [
+      "Parameters"
+    ],
+    "summary": "Enable software on your local machine to interact with Streamer.bot using UDP broadcasts.\n\nCheck out the Streamer.bot **Voice Attack plugin**, which utilizes the UDP Server\n\n!UDP Server Configuration{caption-alt}",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "UDP Server",
+    "name": null,
+    "description": "Interact with Streamer.bot via UDP",
+    "version": null,
+    "route": "/api/udp",
+    "sourceUrl": "https://docs.streamer.bot/api/udp",
+    "sourcePath": "3.api/6.udp/0.index.md",
+    "headings": [],
+    "summary": "Learn how to configure and use the UDP server in Streamer.bot\n  \n  \n    Documentation for all UDP server requests",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "DoAction (UDP)",
+    "name": null,
+    "description": "Trigger an action in Streamer.bot via UDP",
+    "version": null,
+    "route": "/api/udp/requests/do-action",
+    "sourceUrl": "https://docs.streamer.bot/api/udp/requests/do-action",
+    "sourcePath": "3.api/6.udp/1.requests/do-action.md",
+    "headings": [
+      "`DoAction`"
+    ],
+    "summary": "DoAction\nExecute an action on the Streamer.bot instance\n\nYou can specify either one of the action id or name, you do not need both.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "json",
+        "label": "↗️ Request Format",
+        "code": "{\n    \"request\": \"DoAction\",\n    \"action\": {\n      \"id\": \"<guid>\",\n      \"name\": \"<name>\"\n    },\n    \"args\": {\n      \"key\": \"value\"\n    }\n  }"
+      }
+    ],
+    "codeBlockCount": 1
+  }
+]
