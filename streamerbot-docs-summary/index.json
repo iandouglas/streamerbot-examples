@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-11T23:10:07.570101+00:00",
+  "generatedAt": "2026-06-11T23:18:34.204011+00:00",
   "officialDocs": {
     "site": "https://docs.streamer.bot/",
     "repo": "https://github.com/Streamerbot/docs",
@@ -35,6 +35,7 @@
     "examples": "api-calls/examples.json",
     "csharpBestPractices": "csharp-patterns/best-practices.md",
     "interactiveControls": "csharp-patterns/interactive-controls.md",
+    "quickReference": "QUICK-REFERENCE.md",
     "worklog": "WORKLOG.md"
   },
   "highlights": {

@@ -93,6 +93,22 @@ def assert_routes_and_urls(path: Path) -> None:
             raise AssertionError(f"Invalid source URL in {path}: {source_url!r}")
 
 
+def assert_markdown_contains(path: Path, expected_text: str) -> None:
+    """Assert that a markdown artifact contains required reference text.
+
+    Args:
+        path: Markdown file path to inspect.
+        expected_text: Required text fragment.
+
+    Returns:
+        None.
+    """
+
+    content = path.read_text(encoding="utf-8")
+    if expected_text not in content:
+        raise AssertionError(f"Expected text {expected_text!r} not found in {path}")
+
+
 def main() -> None:
     """Run validation checks across all generated summary artifacts.
 
@@ -133,6 +149,9 @@ def main() -> None:
     assert_routes_and_urls(ROOT / index_data["files"]["httpApi"])
     assert_routes_and_urls(ROOT / index_data["files"]["websocketApi"])
     assert_routes_and_urls(ROOT / index_data["files"]["udpApi"])
+
+    assert_markdown_contains(ROOT / index_data["files"]["quickReference"], "api-calls/csharp-methods.json")
+    assert_markdown_contains(ROOT / index_data["files"]["quickReference"], "api-calls/triggers.json")
 
     if index_data["counts"]["csharpMethods"] < 100:
         raise AssertionError("Expected at least 100 C# methods in the local dataset")
