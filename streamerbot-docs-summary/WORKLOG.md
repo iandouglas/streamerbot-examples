@@ -5,4 +5,4 @@
 - [x] Extract API calls, parameters, and C# usage details.
 - [x] Write structured summaries for fast local lookup.
 - [x] Validate generated files for later parsing.
-- [ ] Commit each completed step with a focused message.
+- [x] Commit each completed step with a focused message.
