@@ -4,25 +4,21 @@ This setup will retrieve a random joke from an API that Ian wrote and constantly
 
 ## Setup
 
-Import the code from `import_code.txt` into Streamer.bot 0.2.x using the Import feature. This will create a new action called "Dad Joke API to Twitch Chat" with sub-actions that retrieve a joke, parse it, and send it to Twitch Chat, which you can easily reformat.
+Import the code from `import_code.txt` into Streamer.bot 0.2.x using the Import feature. This will create a new command called !dadjoke and associated action for that command to retrieve a joke and write it to Twitch chat. No authentication needed. You can alter the command to rate-limit how frequently people can grab a joke.
 
-## Compiling
+## No compiling
 
-After you import the code, double-click on the "Execute Code" sub-action and click the "Compile" button. If you get a compiler error, click on the "Find Refs" button and try to "Compile" again.
-
-If it still fails, you'll need to click on the "References" tab in the interface, right click somewhere in the panel and choose "Add reference from file", navigate to where you have Streamer.bot installed, and choose the "Newtwonsoft.Json.dll" file. Then try to compile again.
-
-If compiling succeeds, click the "Save and Compile" button.
+The new version doesn't use any C# code, and uses built-in Streamer.bot controls to fetch a dad joke and to write it to Twitch Chat. You can expand this to send to other platforms by adding other sub-actions.
 
 ## Pledge of Clean Humor
 
-The only jokes in this API are jokes that I have been telling my own kids for many years. While there may be some mild crude humor about farts or poking fun at the idea of death, I have completely avoided any known-to-me racial humor or derogatory terms.
+The only jokes in this API are jokes that I have been telling my own kids for many years. While there may be some mild crude humor about farts or poking fun at the idea of death, I have completely avoided any known-to-me racial humor or derogatory terms. There are a few 'dark' humor jokes in there but they are still teenager-appropriate.
 
 If you find a joke that is inappropriate, please contact me and let me know why, and I will consider removing it. I won't promise removal.
 
 ## Using it
 
-The imported code will look for two triggers: `!dadjoke` as a chat command, and a channel point redemption. You can remove either of these triggers and set it up however you like with whichever permissions you need.
+The imported code will look for a single triggers: `!dadjoke` as a chat command. You can alter the Streamer.bot command to add other permissions or restrictions, or add/replace the trigger on the action to use a channel point redeem or other means for your users to access the jokes.
 
 ## Copyright on use
 
@@ -30,9 +26,9 @@ These jokes are found all over the internet, some were written or modified by me
 
 ## Rate Limiting
 
-I reserve the right to rate limit the API at any time without notice.
+I reserve the right to rate limit the API or web site of dadjokes736.com at any time without notice.
 
 ## Troubleshooting
 
-If you have trouble setting this up, head over to [my Discord community](https://tig.fyi/discord) for help.
+If you have trouble setting this up, head over to [my Discord community](https://736.fyi/discord) for help.
 
