@@ -4,7 +4,7 @@ This setup will retrieve a random joke from an API that Ian wrote and constantly
 
 ## Setup
 
-Import the code from `import_code.txt` into Streamer.bot 0.2.x using the Import feature. This will create a new command called !dadjoke and associated action for that command to retrieve a joke and write it to Twitch chat. No authentication needed. You can alter the command to rate-limit how frequently people can grab a joke.
+Import the code from `import_code.txt` into Streamer.bot using the Import feature. This will create a new command called !dadjoke and associated action for that command to retrieve a joke and write it to Twitch chat. No authentication needed. You can alter the command to rate-limit how frequently people can grab a joke.
 
 ## No compiling
 
