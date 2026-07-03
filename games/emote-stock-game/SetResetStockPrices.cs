@@ -48,6 +48,7 @@ public class CPHInline
             stocks[key]["currentPrice"] = price;
         }
 
+
         CPH.SetGlobalVar("EmoteStockGame_prices", stocks, true);
 		return true;
 	}
