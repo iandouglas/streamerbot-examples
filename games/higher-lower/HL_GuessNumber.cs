@@ -6,10 +6,8 @@ public class CPHInline
 {
     public bool Execute()
     {
-        if (!CPH.TryGetArg("user", out string user))
+        if (!CPH.TryGetArg("user", out string userName))
             return false;
-        if (!CPH.TryGetArg("userName", out string userName))
-            userName = user;
         if (!CPH.TryGetArg("userType", out string userType))
             userType = "twitch";
         if (!CPH.TryGetArg("rawInput", out string rawInput))
@@ -20,20 +18,24 @@ public class CPHInline
 
         bool gameActive = CPH.GetGlobalVar<bool>("hl_game_active", false);
         if (!gameActive)
-            return true;
+            return false;
 
         string phase = CPH.GetGlobalVar<string>("hl_phase", false) ?? "";
         if (phase != "guess")
-            return true;
+            return false;
 
-        if (!CPH.UserInGroup(userName, platform, "higher-lower-group"))
-            return true;
+        if (!CPH.UserInGroup(userName, platform, "higher-lower-group")) {
+            // CPH.SendMessage($"sorry {userName} you're not in the game right now");
+            return false;
+        }
 
         string trimmed = rawInput.Trim();
         int rangeTop = CPH.GetGlobalVar<int>("hl_range_top", false);
-        if (rangeTop < 10) rangeTop = 100;
-        if (!int.TryParse(trimmed, out int guess) || guess < 1 || guess > rangeTop)
-            return true;
+        if (rangeTop < 10) rangeTop = 10;
+        if (!int.TryParse(trimmed, out int guess) || guess < 1 || guess > rangeTop) {
+            CPH.SendMessage($"Sorry {userName} that number was out of range");
+            return false;
+        }
 
         int round = CPH.GetGlobalVar<int>("hl_round", false);
         string guessMode = CPH.GetGlobalVar<string>("hl_guess_mode", false) ?? "first";
@@ -51,7 +53,7 @@ public class CPHInline
             }
             else
             {
-                CPH.SendMessage($"@{user}, you already submitted a guess this round!", true);
+                CPH.SendMessage($"@{userName}, you already submitted a guess this round!", true);
             }
             return true;
         }

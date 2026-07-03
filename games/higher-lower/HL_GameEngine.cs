@@ -73,6 +73,16 @@ public class CPHInline
         CPH.SendMessage($"A Higher or Lower game has started! Type !join to enter. You have {joinTimer} seconds! ({gameRounds} rounds, {startingPoints} {currencyName} prize pool per player, 1-{rangeTop})", true);
 
         ObsSetText($"Higher or Lower! Type !join to enter!\n{joinTimer}s remaining!");
+
+        int bonus = CPH.GetGlobalVar<int>("hl_exact_bonus", false);
+        if (bonus < 0) bonus = 1000;
+        string guessMode = CPH.GetGlobalVar<string>("hl_guess_mode", false) ?? "first";
+
+        CPH.SendMessage($"Everyone who joins will have a few seconds to type a number in chat. Only your {guessMode} guess will be stored. Everyone's numbers will be averaged together each round.", true);
+        CPH.SendMessage($"If the average is lower than the target number, you'll be told to guess HIGHER, so next round pick a number larger than the average guess.", true);
+        CPH.SendMessage($"If the average was higher than the target number, you'll be told to guess LOWER, so next round pick a number lower than the average guess.", true);
+        CPH.SendMessage($"If anyone guesses the EXACT number during the game, they'll win an additional {bonus} {GetCurrencyName()}!", true);
+
         ObsShow();
 
         int elapsed = 0;
@@ -111,16 +121,7 @@ public class CPHInline
         CPH.SetGlobalVar("hl_number_guessed", false, false);
         CPH.SetGlobalVar("hl_round", 1, false);
 
-        int bonus = CPH.GetGlobalVar<int>("hl_exact_bonus", false);
-        if (bonus < 0) bonus = 1000;
-        string guessMode = CPH.GetGlobalVar<string>("hl_guess_mode", false) ?? "first";
-
         CPH.SendMessage($"Game on! {joinedCount} player(s) are playing. The number is between 1 and {rangeTop}. Starting round 1 in 15 seconds...", true);
-
-        CPH.SendMessage($"Everyone who joined will have a few seconds to type a number in chat. Only your {guessMode} guess will be stored. Everyone's numbers will be averaged together each round.", true);
-        CPH.SendMessage($"If the average is lower than the target number, you'll be told to guess HIGHER, so next round pick a number larger than the average guess.", true);
-        CPH.SendMessage($"If the average was higher than the target number, you'll be told to guess LOWER, so next round pick a number lower than the average guess.", true);
-        CPH.SendMessage($"If anyone guesses the EXACT number during the game, they'll win an additional {bonus} {GetCurrencyName()}!", true);
 
         string joinplural = joinedCount == 1 ? "" : "s";
         ObsSetText($"Game on! {joinedCount} player{joinplural}!\nWe'll start the game in 15s...");
@@ -177,13 +178,7 @@ public class CPHInline
                 round++;
                 CPH.SendMessage($"Next round starting in 5 seconds...", true);
                 int wait = 5000;
-                while (wait > 0)
-                {
-                    CPH.Wait(wait);
-                    CPH.SendMessage($"Next round starting in {wait / 1000} seconds...", true);
-                    wait -= 1000;
-                }
-                CPH.Wait(5000);
+                CPH.Wait(wait);
             }
         }
 
@@ -206,7 +201,7 @@ public class CPHInline
         List<string> allUsers = GetGroupUserNames("higher-lower-group");
         var exactGuessers = GetExactGuessers();
         int bonus = CPH.GetGlobalVar<int>("hl_exact_bonus", false);
-        if (bonus < 0) bonus = 1000;
+        if (bonus < 0) bonus = 0;
 
         Dictionary<string, int> awards = new Dictionary<string, int>();
         Dictionary<string, int> userRounds = new Dictionary<string, int>();
@@ -232,7 +227,7 @@ public class CPHInline
             AwardPoints(kvp.Key, kvp.Value);
         }
 
-        if (allUsers.Count <= 25)
+        if (allUsers.Count <= 10)
         {
             foreach (string user in allUsers)
             {
@@ -240,8 +235,9 @@ public class CPHInline
                 int points = awards.ContainsKey(user) ? awards[user] : 0;
                 bool isExactGuesser = exactGuessers.Contains(user);
 
-                if (points == 0 && !isExactGuesser)
+                if (points == 0 && !isExactGuesser) {
                     continue;
+                }
 
                 string msg = $"@{user} was awarded";
                 if (points > 0)
@@ -388,7 +384,10 @@ public class CPHInline
             currencyName = "points";
 
         int current = CPH.GetTwitchUserVar<int>(userName, currencyName, true);
+        if (current == null)
+            current = 0;
         current += points;
+        CPH.SendMessage($"we just gave {userName} {points} points, they have {current} total points");
         CPH.SetTwitchUserVar(userName, currencyName, current, true);
 
         CPH.LogInfo($"[HigherLower] Awarded {points} {currencyName} to {userName} (total: {current})");

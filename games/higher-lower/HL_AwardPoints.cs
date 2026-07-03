@@ -17,7 +17,7 @@ public class CPHInline
         current += points;
         CPH.SetTwitchUserVar(userName, currencyName, current, true);
 
-        CPH.LogInfo($"Awarded {points} {currencyName} to {userName} (total: {current})");
+        // CPH.LogInfo($"Awarded {points} {currencyName} to {userName} (total: {current})");
         return true;
     }
 }
