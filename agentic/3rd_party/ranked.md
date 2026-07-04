@@ -16,4 +16,5 @@ The scoring rubric is:
 | Rank | Repository | Latest Commit | C# LOC | Recency | Size | Capability | Total | Notes |
 |------|------------|---------------|--------|---------|------|------------|-------|-------|
 | 1 | [13bis-Partage_StreamerBot](./13bis-Partage_StreamerBot.md) | 2025-04-22 | 179 | 50 | 5 | 12 | 67 | Two import-string action sets: content-warning system + Mastodon poster with image/alt-text. |
-| 2 | [TakeJoshyy-StreamerBot-ImportString-Decoder](./TakeJoshyy-StreamerBot-ImportString-Decoder.md) | 2025-04-27 | 0 | 50 | 0 | 10 | 60 | Browser-based import-string decoder; no C# code, but enables analysis of other repos' imports. |
+| 2 | [Abion47-streamerbot-tangia](./Abion47-streamerbot-tangia.md) | 2025-03-14 | 40 | 50 | 5 | 0 | 55 | Empty .NET 4.7.2 console scaffold; suggests future Tangia integration. |
+| 3 | [TakeJoshyy-StreamerBot-ImportString-Decoder](./TakeJoshyy-StreamerBot-ImportString-Decoder.md) | 2025-04-27 | 0 | 50 | 0 | 10 | 60 | Browser-based import-string decoder; no C# code, but enables analysis of other repos' imports. |
