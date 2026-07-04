@@ -4,9 +4,9 @@ Use this folder first before going back to the online docs.
 
 ## Primary entrypoints
 
-- `./streamerbot-docs-summary/index.json` — master manifest of all generated files.
-- `./streamerbot-docs-summary/all-pages.json` — full local searchable page catalog.
-- `./streamerbot-docs-summary/overview.md` — tool overview and high-level guidance.
+- `./agentic/streamerbot-docs-summary/index.json` — master manifest of all generated files.
+- `./agentic/streamerbot-docs-summary/all-pages.json` — full local searchable page catalog.
+- `./agentic/streamerbot-docs-summary/overview.md` — tool overview and high-level guidance.
 
 ## When the question is about...
 

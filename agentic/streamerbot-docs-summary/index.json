@@ -1,17 +1,12 @@
 {
-  "generatedAt": "2026-07-04T01:56:51.826586+00:00",
+  "generatedAt": "2026-07-04T02:28:41.498759+00:00",
   "sources": {
     "officialDocs": {
       "site": "https://docs.streamer.bot/",
       "repo": "https://github.com/Streamerbot/docs",
-      "localRoot": "streamerbot-docs",
+      "localRoot": "agentic/streamerbot-docs",
       "revision": "35b2b63f7b8ae6e606ecd148e4c12e855ad928cc",
       "branches": [
-        {
-          "name": "origin",
-          "shortHash": "35b2b63",
-          "subject": "add missing variables for twitch rewards (#427)"
-        },
         {
           "name": "origin/Mustached-Maniac-patch-1",
           "shortHash": "3aee155",
@@ -42,14 +37,9 @@
     "wiki": {
       "site": "https://github.com/Streamerbot/streamerbot-wiki/wiki",
       "repo": "https://github.com/Streamerbot/streamerbot-wiki",
-      "localRoot": "streamerbot-wiki",
+      "localRoot": "agentic/streamerbot-wiki",
       "revision": "fa8dfae4a250ffe9174b5928accc76fc9685336c",
       "branches": [
-        {
-          "name": "origin",
-          "shortHash": "fa8dfae4",
-          "subject": "docs: update Sub-Actions"
-        },
         {
           "name": "origin/main",
           "shortHash": "fa8dfae4",

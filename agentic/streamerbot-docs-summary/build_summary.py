@@ -20,14 +20,14 @@ from typing import Any
 import yaml
 from yaml import YAMLError
 
-WORKSPACE_ROOT = Path(__file__).resolve().parent.parent
-OUTPUT_ROOT = WORKSPACE_ROOT / "streamerbot-docs-summary"
+AGENTIC_ROOT = Path(__file__).resolve().parent.parent
+OUTPUT_ROOT = AGENTIC_ROOT / "streamerbot-docs-summary"
 
-DOCS_REPO_ROOT = WORKSPACE_ROOT / "streamerbot-docs"
+DOCS_REPO_ROOT = AGENTIC_ROOT / "streamerbot-docs"
 DOCS_SOURCE_ROOT = DOCS_REPO_ROOT / "streamerbot"
 DOCS_API_ROOT = DOCS_SOURCE_ROOT / "3.api"
 
-WIKI_REPO_ROOT = WORKSPACE_ROOT / "streamerbot-wiki"
+WIKI_REPO_ROOT = AGENTIC_ROOT / "streamerbot-wiki"
 
 
 # ---------------------------------------------------------------------------
@@ -98,11 +98,10 @@ def build_doc_route(path: Path) -> str:
 def build_wiki_route(path: Path) -> str:
     """Convert a wiki file path into a wiki page route."""
 
-    relative = path.relative_to(WIKI_REPO_ROOT)
     stem = path.stem
-    # GitHub wiki URLs use the file stem with spaces as dashes, but the repo
-    # stores files with dashes already. Keep the stem as-is.
-    return "/" + stem
+    # GitHub wiki URLs use the file stem with spaces replaced by dashes.
+    route_stem = stem.replace(" ", "-")
+    return "/" + route_stem
 
 
 def clean_markdown_text(text: str) -> str:
@@ -417,8 +416,9 @@ def git_branches(repo_root: Path) -> list[dict[str, str]]:
             continue
         ref, short_hash = parts[0], parts[1]
         subject = parts[2] if len(parts) > 2 else ""
-        # Skip the duplicate HEAD symref.
-        if ref.endswith("/HEAD"):
+        # Skip the HEAD symref, which git reports as either "origin/HEAD"
+        # or the bare remote name depending on version/configuration.
+        if "/" not in ref or ref.endswith("/HEAD"):
             continue
         branches.append(
             {
@@ -747,9 +747,9 @@ def build_quick_reference_markdown() -> str:
             "",
             "## Primary entrypoints",
             "",
-            "- `./streamerbot-docs-summary/index.json` — master manifest of all generated files.",
-            "- `./streamerbot-docs-summary/all-pages.json` — full local searchable page catalog.",
-            "- `./streamerbot-docs-summary/overview.md` — tool overview and high-level guidance.",
+            "- `./agentic/streamerbot-docs-summary/index.json` — master manifest of all generated files.",
+            "- `./agentic/streamerbot-docs-summary/all-pages.json` — full local searchable page catalog.",
+            "- `./agentic/streamerbot-docs-summary/overview.md` — tool overview and high-level guidance.",
             "",
             "## When the question is about...",
             "",
@@ -917,14 +917,14 @@ def build_index(
             "officialDocs": {
                 "site": "https://docs.streamer.bot/",
                 "repo": "https://github.com/Streamerbot/docs",
-                "localRoot": "streamerbot-docs",
+                "localRoot": "agentic/streamerbot-docs",
                 "revision": git_revision(DOCS_REPO_ROOT),
                 "branches": branches.get("streamerbot-docs", []),
             },
             "wiki": {
                 "site": "https://github.com/Streamerbot/streamerbot-wiki/wiki",
                 "repo": "https://github.com/Streamerbot/streamerbot-wiki",
-                "localRoot": "streamerbot-wiki",
+                "localRoot": "agentic/streamerbot-wiki",
                 "revision": git_revision(WIKI_REPO_ROOT),
                 "branches": branches.get("streamerbot-wiki", []),
             },

@@ -3,7 +3,13 @@
 venv
 __pycache__
 
+# Legacy nested git mirrors (now live under agentic/)
 streamerbot-docs
 streamerbot-typescript-websocket-client
 streamerbot-wiki
 
+# Agentic nested git mirrors — these are independent repositories and should not
+# be committed as gitlinks to the parent project.
+agentic/streamerbot-docs
+agentic/streamerbot-typescript-websocket-client
+agentic/streamerbot-wiki

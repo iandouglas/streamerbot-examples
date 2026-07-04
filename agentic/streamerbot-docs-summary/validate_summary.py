@@ -73,6 +73,21 @@ def assert_markdown_contains(path: Path, expected_text: str) -> None:
         raise AssertionError(f"Expected text {expected_text!r} not found in {path}")
 
 
+def assert_local_root_paths(index_data: dict[str, Any]) -> None:
+    """Assert that manifest localRoot paths point inside agentic/."""
+
+    docs_root = index_data["sources"]["officialDocs"].get("localRoot", "")
+    wiki_root = index_data["sources"]["wiki"].get("localRoot", "")
+    if not docs_root.startswith("agentic/"):
+        raise AssertionError(
+            f"Expected docs localRoot under agentic/, got {docs_root!r}"
+        )
+    if not wiki_root.startswith("agentic/"):
+        raise AssertionError(
+            f"Expected wiki localRoot under agentic/, got {wiki_root!r}"
+        )
+
+
 def main() -> None:
     """Run validation checks across all generated summary artifacts."""
 
@@ -124,6 +139,9 @@ def main() -> None:
     assert_routes_and_urls(ROOT / index_data["files"]["websocketApi"])
     assert_routes_and_urls(ROOT / index_data["files"]["udpApi"])
     assert_routes_and_urls(ROOT / index_data["files"]["wikiPages"])
+
+    # Local roots point under agentic/.
+    assert_local_root_paths(index_data)
 
     # Key Markdown artifacts reference the right datasets.
     assert_markdown_contains(
