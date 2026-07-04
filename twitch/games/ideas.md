@@ -42,6 +42,25 @@
 
 these will require players to !join so we know whose chat messages to watch or not
 
+
+### whack-a-mole
+
+inspired by @shindigs
+
+- players join
+- a board is drawn on the screen, 4 x 4 squares, all empty
+- once game starts, a random number of players will be drawn to show up on the board
+    - their names are only there for a few moments, the disappear again
+- if someone types the coordinates (row/col) where a name appears:
+    - that username in that coordinate gets 'whacked'
+    - that username is timed out for 10 seconds
+    - the user who typed in the coordinates wins 100 points
+- if a player gets timed out 3 times, they're out of the game
+- play continues until there's only one player remaining on the board
+- player at the end wins 1000 bonus points
+
+
+
 ### mastermind
 
 - starting the game will look like "!game mastermind 3" meaning we'll play 3 games, each round will have a 60-second countdown to begin
