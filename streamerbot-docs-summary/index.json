@@ -1,27 +1,92 @@
 {
-  "generatedAt": "2026-06-11T23:18:34.204011+00:00",
-  "officialDocs": {
-    "site": "https://docs.streamer.bot/",
-    "repo": "https://github.com/Streamerbot/docs",
-    "revision": "538dbedbe32ee3067bf889473cc5b41f8518dfa3"
+  "generatedAt": "2026-07-04T01:56:51.826586+00:00",
+  "sources": {
+    "officialDocs": {
+      "site": "https://docs.streamer.bot/",
+      "repo": "https://github.com/Streamerbot/docs",
+      "localRoot": "streamerbot-docs",
+      "revision": "35b2b63f7b8ae6e606ecd148e4c12e855ad928cc",
+      "branches": [
+        {
+          "name": "origin",
+          "shortHash": "35b2b63",
+          "subject": "add missing variables for twitch rewards (#427)"
+        },
+        {
+          "name": "origin/Mustached-Maniac-patch-1",
+          "shortHash": "3aee155",
+          "subject": "Add files via upload"
+        },
+        {
+          "name": "origin/Mustached-Maniac-patch-2",
+          "shortHash": "8613d6d",
+          "subject": "Rename timeout-user.png to timeout-user-old.png"
+        },
+        {
+          "name": "origin/dev",
+          "shortHash": "246510a",
+          "subject": "update integrations"
+        },
+        {
+          "name": "origin/imgbot",
+          "shortHash": "db0c84e",
+          "subject": "[ImgBot] Optimize images"
+        },
+        {
+          "name": "origin/main",
+          "shortHash": "35b2b63",
+          "subject": "add missing variables for twitch rewards (#427)"
+        }
+      ]
+    },
+    "wiki": {
+      "site": "https://github.com/Streamerbot/streamerbot-wiki/wiki",
+      "repo": "https://github.com/Streamerbot/streamerbot-wiki",
+      "localRoot": "streamerbot-wiki",
+      "revision": "fa8dfae4a250ffe9174b5928accc76fc9685336c",
+      "branches": [
+        {
+          "name": "origin",
+          "shortHash": "fa8dfae4",
+          "subject": "docs: update Sub-Actions"
+        },
+        {
+          "name": "origin/main",
+          "shortHash": "fa8dfae4",
+          "subject": "docs: update Sub-Actions"
+        }
+      ]
+    }
   },
   "counts": {
-    "allPages": 1228,
+    "allPages": 2154,
+    "docsPages": 1239,
+    "wikiPages": 915,
+    "api": 1070,
+    "guide": 49,
+    "getStarted": 7,
+    "examples": 15,
+    "changelogs": 62,
     "csharpGuides": 9,
     "csharpMethods": 195,
     "csharpClasses": 29,
     "csharpEnums": 6,
-    "subActions": 345,
-    "triggers": 408,
+    "subActions": 351,
+    "triggers": 411,
     "httpPages": 10,
     "websocketPages": 10,
     "udpPages": 3,
-    "guidePages": 54,
-    "examplePages": 15
+    "guidePages": 56,
+    "examplePages": 15,
+    "commandPages": 60,
+    "triggerPages": 818,
+    "timerPages": 6,
+    "queuePages": 1
   },
   "files": {
     "overview": "overview.md",
     "allPages": "all-pages.json",
+    "workBranches": "work-branches.json",
     "csharpMethods": "api-calls/csharp-methods.json",
     "csharpGuides": "api-calls/csharp-guides.json",
     "csharpClasses": "api-calls/csharp-classes.json",
@@ -33,9 +98,15 @@
     "udpApi": "api-calls/udp-api.json",
     "guidePages": "api-calls/guide-pages.json",
     "examples": "api-calls/examples.json",
+    "wikiPages": "api-calls/wiki-pages.json",
+    "topicCommands": "topic-commands.json",
+    "topicTriggers": "topic-triggers.json",
+    "topicTimers": "topic-timers.json",
+    "topicQueues": "topic-queues.json",
     "csharpBestPractices": "csharp-patterns/best-practices.md",
     "interactiveControls": "csharp-patterns/interactive-controls.md",
     "quickReference": "QUICK-REFERENCE.md",
+    "noCodePackaging": "no-code-packaging.md",
     "worklog": "WORKLOG.md"
   },
   "highlights": {
@@ -43,7 +114,8 @@
       "Actions orchestrate work.",
       "Triggers supply event-driven execution.",
       "Variables carry event state and shared state.",
-      "Inline C# extends built-in sub-actions through the CPH API."
+      "Inline C# extends built-in sub-actions through the CPH API.",
+      "Commands, timers, and queues manage how viewers interact with the bot."
     ],
     "csharpGuidance": [
       "Use CPH.TryGetArg<T>() for safe argument access.",

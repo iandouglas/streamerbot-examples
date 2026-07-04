@@ -1,14 +1,16 @@
-# Streamer.bot Notes
+# Streamer.bot Expert Notes
 
 ## What Streamer.bot is
 
-Streamer.bot is an event-driven automation tool for livestreamers. The official docs position it around actions, triggers, variables, platform connections, stream app integrations, and an embedded C# execution surface for custom logic.
+Streamer.bot is an event-driven automation tool for livestreamers. The official docs position it around actions, triggers, variables, platform connections, stream app integrations, and an embedded C# execution surface for custom logic. The companion wiki adds practical walkthroughs, screenshots, and community recipes.
 
-## What the official docs cover
+## What the local docs snapshot covers
 
-- Total Streamer.bot markdown pages captured: **1228**
-- API reference pages captured: **1061**
-- Guide pages captured: **47**
+- Total markdown pages captured: **2154**
+- Official docs pages: **1239**
+- Wiki pages: **915**
+- API reference pages captured: **1070**
+- Guide pages captured: **49**
 - Get started pages captured: **7**
 - Example pages captured: **15**
 - Changelog pages captured: **62**
@@ -17,8 +19,8 @@ Streamer.bot is an event-driven automation tool for livestreamers. The official 
 
 - C# guide + recipe pages: **9**
 - C# method reference pages: **195**
-- Trigger reference pages: **408**
-- Sub-action reference pages: **345**
+- Trigger reference pages: **411**
+- Sub-action reference pages: **351**
 - HTTP API pages: **10**
 - WebSocket API pages: **10**
 - UDP API pages: **3**
@@ -42,9 +44,11 @@ Streamer.bot is an event-driven automation tool for livestreamers. The official 
 ## Important local files
 
 - `index.json`: top-level manifest for fast lookup.
-- `all-pages.json`: compact searchable catalog of all captured Streamer.bot docs pages.
+- `all-pages.json`: compact searchable catalog of all captured Streamer.bot docs + wiki pages.
 - `api-calls/*.json`: structured API datasets by area.
+- `topic-*.json` / `topic-*.md`: focused indexes for commands, triggers, timers, and queues.
 - `csharp-patterns/*.md`: opinionated notes for writing reliable inline Streamer.bot code.
+- `no-code-packaging.md`: guide for building projects that non-programmer streamers can install out-of-the-box.
 
 ## High-value guide areas
 
@@ -75,3 +79,18 @@ Streamer.bot is an event-driven automation tool for livestreamers. The official 
 - `AI Chat Command` — https://docs.streamer.bot/examples/ollama-chat-command
 - `Parse JSON Utility` — https://docs.streamer.bot/examples/parse-json-utility
 - `Quotes Commands for v1.0.0+` — https://docs.streamer.bot/examples/quotes-commands
+
+## Wiki highlights
+
+- `About` — https://github.com/Streamerbot/streamerbot-wiki/wiki/About
+- `Action Queues` — https://github.com/Streamerbot/streamerbot-wiki/wiki/Action-Queues
+- `Importing & Exporting` — https://github.com/Streamerbot/streamerbot-wiki/wiki/Importing-and-Exporting
+- `Actions` — https://github.com/Streamerbot/streamerbot-wiki/wiki/Actions
+- `Restore a Backup` — https://github.com/Streamerbot/streamerbot-wiki/wiki/Backup
+- `Connected` — https://github.com/Streamerbot/streamerbot-wiki/wiki/Connected
+- `Disconnected` — https://github.com/Streamerbot/streamerbot-wiki/wiki/Disconnected
+- `BroadcastCustomMessage` — https://github.com/Streamerbot/streamerbot-wiki/wiki/BroadcastCustomMessage
+- `Exiting` — https://github.com/Streamerbot/streamerbot-wiki/wiki/Exiting
+- `Heartbeat` — https://github.com/Streamerbot/streamerbot-wiki/wiki/Heartbeat
+- `MediaEnded` — https://github.com/Streamerbot/streamerbot-wiki/wiki/MediaEnded
+- `MediaNext` — https://github.com/Streamerbot/streamerbot-wiki/wiki/MediaNext

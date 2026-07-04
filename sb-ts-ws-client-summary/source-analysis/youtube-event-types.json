@@ -1,0 +1,4 @@
+{
+  "YouTubeUser": "id: string; name: string; url: string; profileImageUrl: string; isModerator: boolean; isOwner: boolean; isSponsor: boolean; isVerified: boolean;",
+  "YouTubeMessage": "eventId: string; message: string; publishedAt: string; user: YouTubeUser;"
+}

@@ -80,49 +80,108 @@ def parse_frontmatter(text: str) -> tuple[dict[str, Any], str]:
     return {}, text
 
 
+def _skip_type_parameters(source: str, start: int) -> int:
+    """If source[start] is '<', skip past the balanced generic type parameters."""
+    if start >= len(source) or source[start] != "<":
+        return start
+    depth = 0
+    for i in range(start, len(source)):
+        ch = source[i]
+        if ch == "<":
+            depth += 1
+        elif ch == ">":
+            depth -= 1
+            if depth == 0:
+                return i + 1
+    return start
+
+
+def _extract_balanced_signature(source: str, start: int) -> tuple[str, int]:
+    """Extract a balanced parenthesized signature starting at source[start].
+
+    Returns the signature text and the actual index where it begins.
+    """
+    actual_start = _skip_type_parameters(source, start)
+    if actual_start >= len(source) or source[actual_start] != "(":
+        return "", actual_start
+    depth = 0
+    for i in range(actual_start, len(source)):
+        ch = source[i]
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+            if depth == 0:
+                return source[actual_start : i + 1], actual_start
+    return source[actual_start:], actual_start
+
+
+def _extract_jsdoc(text: str, method_start: int) -> str:
+    """Return the nearest JSDoc block immediately before method_start."""
+    preceding = text[:method_start]
+    matches = list(re.finditer(r"/\*\*[\s\S]*?\*/", preceding))
+    if not matches:
+        return ""
+    last = matches[-1]
+    between = preceding[last.end() : method_start]
+    # If there is another method declaration between, the JSDoc likely belongs to it
+    if re.search(r"\b(public|private|protected|static)\s+", between):
+        return ""
+    return last.group(0)
+
+
+def _parse_jsdoc(jsdoc: str) -> tuple[str, list[dict[str, str]]]:
+    """Extract description and @param entries from a JSDoc block."""
+    description = ""
+    params: list[dict[str, str]] = []
+    if not jsdoc:
+        return description, params
+
+    lines = [line.strip().lstrip("*").strip() for line in jsdoc.splitlines()]
+    for line in lines:
+        if not line or line in ("/", "/*", "/**", "*/") or line.startswith("@"):
+            continue
+        description = line
+        break
+
+    for line in lines:
+        m = re.match(r"@param\s+(?P<name>\S+)\s*[-]?\s*(?P<desc>.*)", line)
+        if m:
+            params.append(
+                {"name": m.group("name"), "description": m.group("desc").strip()}
+            )
+    return description, params
+
+
 def extract_public_methods(client_ts: str) -> list[dict[str, Any]]:
     """Parse public methods from StreamerbotClient.ts along with JSDoc."""
     methods: list[dict[str, Any]] = []
 
-    # Find all public async/property declarations
-    pattern = re.compile(
-        r"(?P<jsdoc>(?:\s*/\*\*[\s\S]*?\*/)?)\s*"
-        r"public\s+(?:async\s+)?(?P<name>[a-zA-Z_$][\w$]*)\s*"
-        r"(?P<signature>\([^)]*\))"
-        r"(?::\s*(?P<return>[^\{]+))?",
+    # Find public method declarations (name + opening parenthesis)
+    decl_pattern = re.compile(
+        r"public\s+(?:async\s+)?([a-zA-Z_$][\w$]*)\s*(?=[\(<])",
         re.MULTILINE,
     )
 
-    for match in pattern.finditer(client_ts):
-        jsdoc = match.group("jsdoc") or ""
-        name = match.group("name")
-        signature = match.group("signature")
-        return_type = (match.group("return") or "").strip()
-
-        # Skip constructors and getters that aren't useful API surface
-        if name == "constructor" or name in ("authenticated", "ready"):
+    for match in decl_pattern.finditer(client_ts):
+        name = match.group(1)
+        if name in ("constructor", "authenticated", "ready"):
             continue
 
-        description = ""
-        for line in jsdoc.splitlines():
-            line = line.strip().lstrip("*").strip()
-            if line and not line.startswith("@"):
-                description = line
-                break
+        # Grab return type between end of signature and the opening brace
+        sig_start = match.end()
+        signature, actual_sig_start = _extract_balanced_signature(client_ts, sig_start)
+        after_sig = actual_sig_start + len(signature)
+        return_match = re.match(r"\s*:\s*([^\{;]+)", client_ts[after_sig:])
+        return_type = return_match.group(1).strip() if return_match else ""
 
-        params: list[dict[str, str]] = []
-        for line in jsdoc.splitlines():
-            line = line.strip().lstrip("*").strip()
-            m = re.match(r"@param\s+(?P<name>\S+)\s*[-]?\s*(?P<desc>.*)", line)
-            if m:
-                params.append(
-                    {"name": m.group("name"), "description": m.group("desc").strip()}
-                )
+        jsdoc = _extract_jsdoc(client_ts, match.start())
+        description, params = _parse_jsdoc(jsdoc)
 
         methods.append(
             {
                 "name": name,
-                "signature": f"{name}{signature}",
+                "signature": re.sub(r"\s+", " ", f"{name}{signature}").strip(),
                 "returnType": return_type,
                 "description": description,
                 "params": params,
@@ -130,7 +189,7 @@ def extract_public_methods(client_ts: str) -> list[dict[str, Any]]:
             }
         )
 
-    # De-duplicate and sort
+    # De-duplicate and sort by name
     seen: set[str] = set()
     unique: list[dict[str, Any]] = []
     for m in methods:
@@ -161,6 +220,49 @@ def extract_event_sources(events_const: str) -> dict[str, list[str]]:
         types = re.findall(r'"([^"]+)"', types_str)
         result[source] = types
     return dict(sorted(result.items()))
+
+
+def extract_type_definitions(path: Path) -> dict[str, str]:
+    """Extract top-level exported type/interface bodies from a TypeScript file."""
+    text = read_text(path)
+    result: dict[str, str] = {}
+
+    decl_pattern = re.compile(
+        r"export\s+(?:type|interface)\s+([A-Za-z0-9_]+)\s*(?:=\s*)?(?=[\{\(])"
+    )
+
+    for match in decl_pattern.finditer(text):
+        name = match.group(1)
+        start = match.end()
+        while start < len(text) and text[start] in "= \t\n":
+            start += 1
+        if start >= len(text) or text[start] != "{":
+            continue
+
+        depth = 0
+        for i in range(start, len(text)):
+            ch = text[i]
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    body = text[start + 1 : i]
+                    result[name] = re.sub(r"\s+", " ", body).strip()
+                    break
+    return result
+
+
+def extract_twitch_event_types() -> dict[str, str]:
+    return extract_type_definitions(
+        CLIENT_SRC / "ws" / "types" / "events" / "twitch.types.ts"
+    )
+
+
+def extract_youtube_event_types() -> dict[str, str]:
+    return extract_type_definitions(
+        CLIENT_SRC / "ws" / "types" / "events" / "youtube.types.ts"
+    )
 
 
 def extract_type_file(path: Path) -> dict[str, Any]:
@@ -219,6 +321,21 @@ def extract_vue_composables() -> dict[str, Any]:
     }
 
 
+def extract_toolkit() -> dict[str, Any]:
+    toolkit_root = SOURCE_ROOT / "apps" / "toolkit" / "src"
+    return {
+        "path": str(toolkit_root.relative_to(SOURCE_ROOT)),
+        "pages": sorted(
+            str(p.relative_to(toolkit_root)) for p in toolkit_root.rglob("*.vue")
+        ),
+        "store": str(
+            (toolkit_root / "stores" / "streamerbot.store.ts").relative_to(SOURCE_ROOT)
+        )
+        if (toolkit_root / "stores" / "streamerbot.store.ts").exists()
+        else None,
+    }
+
+
 def build_overview(counts: dict[str, Any]) -> str:
     return f"""# Streamer.bot TypeScript WebSocket Client Notes
 
@@ -238,6 +355,8 @@ Streamer.bot in real time.
 - Event types catalogued: **{counts["eventTypes"]}**
 - Type definition files catalogued: **{counts["typeFiles"]}**
 - Built-in examples captured: **{counts["examples"]}**
+- Twitch event payload types captured: **{counts["twitchEventTypes"]}**
+- YouTube event payload types captured: **{counts["youtubeEventTypes"]}**
 
 ## Core capabilities
 
@@ -261,9 +380,12 @@ Streamer.bot in real time.
 - `scraped-site/`: full mirror of the documentation site markdown source.
 - `source-analysis/methods.json`: every public method on `StreamerbotClient`.
 - `source-analysis/events.json`: every event source and type the client can subscribe to.
-- `source-analysis/types.json`: index of all TypeScript type definition files.
-- `QUICK-REFERENCE.md`: fast lookup for common tasks and snippets.
-- `usage-patterns/interactive-html-and-obs.md`: patterns for overlays, games, and OBS integration.
+- `source-analysis/twitch-event-types.json`: payload field reference for Twitch events.
+- `source-analysis/youtube-event-types.json`: payload field reference for YouTube events.
+- `source-analysis/toolkit.json`: structure of the official Streamer.bot Toolkit demo app.
+- `cookbook.md`: ready-to-adapt code recipes for overlays, games, and OBS.
+- `obs-integration.md`: OBS-aware overlay and remote-control patterns.
+- `usage-patterns/interactive-html-and-obs.md`: broader patterns for overlays, games, and OBS integration.
 
 ## Official resources
 
@@ -558,6 +680,9 @@ def main() -> None:
     type_summaries = extract_client_types()
     examples = extract_examples()
     vue_info = extract_vue_composables()
+    toolkit_info = extract_toolkit()
+    twitch_event_types = extract_twitch_event_types()
+    youtube_event_types = extract_youtube_event_types()
 
     # 3. Write structured data
     write_json(OUTPUT_ROOT / "source-analysis" / "methods.json", methods)
@@ -565,6 +690,14 @@ def main() -> None:
     write_json(OUTPUT_ROOT / "source-analysis" / "types.json", type_summaries)
     write_json(OUTPUT_ROOT / "source-analysis" / "examples.json", examples)
     write_json(OUTPUT_ROOT / "source-analysis" / "vue.json", vue_info)
+    write_json(OUTPUT_ROOT / "source-analysis" / "toolkit.json", toolkit_info)
+    write_json(
+        OUTPUT_ROOT / "source-analysis" / "twitch-event-types.json", twitch_event_types
+    )
+    write_json(
+        OUTPUT_ROOT / "source-analysis" / "youtube-event-types.json",
+        youtube_event_types,
+    )
 
     # 4. Build overview
     counts = {
@@ -574,6 +707,8 @@ def main() -> None:
         "eventTypes": total_event_types,
         "typeFiles": len(type_summaries),
         "examples": len(examples),
+        "twitchEventTypes": len(twitch_event_types),
+        "youtubeEventTypes": len(youtube_event_types),
     }
     write_text(OUTPUT_ROOT / "overview.md", build_overview(counts))
 
@@ -598,12 +733,17 @@ def main() -> None:
             "overview": "overview.md",
             "quickReference": "QUICK-REFERENCE.md",
             "usagePatterns": "usage-patterns/interactive-html-and-obs.md",
+            "cookbook": "cookbook.md",
+            "obsIntegration": "obs-integration.md",
             "docsMirror": "scraped-site/",
             "methods": "source-analysis/methods.json",
             "events": "source-analysis/events.json",
             "types": "source-analysis/types.json",
+            "twitchEventTypes": "source-analysis/twitch-event-types.json",
+            "youtubeEventTypes": "source-analysis/youtube-event-types.json",
             "examples": "source-analysis/examples.json",
             "vue": "source-analysis/vue.json",
+            "toolkit": "source-analysis/toolkit.json",
             "worklog": "WORKLOG.md",
         },
     }
@@ -622,8 +762,11 @@ Generated: {generated_at}
 4. Indexed all TypeScript type definition files in `packages/client/src/ws/types/`.
 5. Captured built-in examples from `examples/`.
 6. Indexed Vue integration source from `packages/vue/src/`.
-7. Generated `overview.md`, `QUICK-REFERENCE.md`, and `usage-patterns/interactive-html-and-obs.md`.
-8. Wrote `index.json` as the top-level manifest.
+7. Extracted Twitch and YouTube event payload type shapes into JSON.
+8. Indexed the official Toolkit demo app structure from `apps/toolkit/src/`.
+9. Added hand-written `cookbook.md` and `obs-integration.md` for practical recipes.
+10. Generated `overview.md`, `QUICK-REFERENCE.md`, and `usage-patterns/interactive-html-and-obs.md`.
+11. Wrote `index.json` as the top-level manifest.
 
 ## Notes for future updates
 

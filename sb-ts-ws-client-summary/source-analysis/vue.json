@@ -1,0 +1,13 @@
+{
+  "composables": [
+    "packages/vue/src/components/index.ts",
+    "packages/vue/src/composables/index.ts",
+    "packages/vue/src/composables/useGlobalVariable.ts",
+    "packages/vue/src/composables/useStreamerbot.ts",
+    "packages/vue/src/index.ts",
+    "packages/vue/src/utils/keys.util.ts"
+  ],
+  "components": [
+    "packages/vue/src/components/StreamerbotGlobalVariable.vue"
+  ]
+}

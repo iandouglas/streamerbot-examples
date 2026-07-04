@@ -5,8 +5,10 @@
     "description": "Configure the UDP Server in Streamer.bot",
     "version": null,
     "route": "/api/udp/guide/configuration",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/api/udp/guide/configuration",
     "sourcePath": "3.api/6.udp/0.guide/0.configuration.md",
+    "section": "api",
     "headings": [
       "Parameters"
     ],
@@ -23,8 +25,10 @@
     "description": "Interact with Streamer.bot via UDP",
     "version": null,
     "route": "/api/udp",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/api/udp",
     "sourcePath": "3.api/6.udp/0.index.md",
+    "section": "api",
     "headings": [],
     "summary": "Learn how to configure and use the UDP server in Streamer.bot\n  \n  \n    Documentation for all UDP server requests",
     "parameters": [],
@@ -39,8 +43,10 @@
     "description": "Trigger an action in Streamer.bot via UDP",
     "version": null,
     "route": "/api/udp/requests/do-action",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/api/udp/requests/do-action",
     "sourcePath": "3.api/6.udp/1.requests/do-action.md",
+    "section": "api",
     "headings": [
       "`DoAction`"
     ],

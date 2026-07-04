@@ -1,0 +1,242 @@
+[
+  {
+    "file": "packages/client/src/ws/types/events/events.const.ts",
+    "exports": [],
+    "consts": [
+      "StreamerbotEvents"
+    ]
+  },
+  {
+    "file": "packages/client/src/ws/types/events/index.ts",
+    "exports": [],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/events/twitch.types.ts",
+    "exports": [
+      "TwitchEvents",
+      "TwitchEmote",
+      "TwitchBadge",
+      "TwitchFollow",
+      "TwitchCheer",
+      "TwitchRaid",
+      "TwitchStreamUpdate",
+      "TwitchWhisper",
+      "TwitchBotWhisper",
+      "TwitchFirstWord",
+      "TwitchChatMessage",
+      "TwitchAdRun",
+      "TwitchAdMidRoll",
+      "TwitchSub",
+      "TwitchReSub",
+      "TwitchGiftSub",
+      "TwitchHypeTrainStart",
+      "TwitchHypeTrainUpdate",
+      "TwitchHypeTrainLevelUp",
+      "TwitchHypeTrainEnd",
+      "TwitchRewardRedemption",
+      "TwitchRewardRedemptionUpdated",
+      "TwitchRewardCreated",
+      "TwitchRewardUpdated",
+      "TwitchRewardDeleted",
+      "TwitchCommunityGoalContribution",
+      "TwitchCommunityGoalEnded",
+      "TwitchPollCreated",
+      "TwitchPollUpdated",
+      "TwitchPollCompleted",
+      "TwitchPredictionCreated",
+      "TwitchPredictionUpdated",
+      "TwitchPredictionCompleted",
+      "TwitchPredictionCanceled",
+      "TwitchPredictionLocked",
+      "TwitchViewerCountUpdate",
+      "TwitchCharityStarted",
+      "TwitchCharityDonation",
+      "TwitchCharityProgress",
+      "TwitchCharityCompleted",
+      "TwitchAnnouncement",
+      "TwitchPyramidBroken",
+      "TwitchPyramidSuccess",
+      "TwitchChatCleared",
+      "TwitchChatMessageDeleted",
+      "TwitchShieldModeBegin",
+      "TwitchShieldModeEnd",
+      "TwitchShoutoutCreated",
+      "TwitchUserTimedOut",
+      "TwitchUserBanned"
+    ],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/events/youtube.types.ts",
+    "exports": [
+      "YouTubeEvents",
+      "YouTubeUser",
+      "YouTubeMessage"
+    ],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/index.ts",
+    "exports": [],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/streamerbot-action.types.ts",
+    "exports": [
+      "StreamerbotAction"
+    ],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/streamerbot-auth.types.ts",
+    "exports": [
+      "StreamerbotHelloRequest"
+    ],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/streamerbot-broadcaster.types.ts",
+    "exports": [
+      "StreamerbotPlatform",
+      "TwitchBroadcaster",
+      "TwitchBot",
+      "YoutubeBroadcaster",
+      "YouTubeBot",
+      "TrovoBroadcaster",
+      "TrovoBot",
+      "VStreamBroadcaster",
+      "VStreamBot",
+      "BroadcasterPlatforms",
+      "BroadcasterPlatform",
+      "MonitoredYouTubeBroadcast",
+      "Emote"
+    ],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/streamerbot-command.types.ts",
+    "exports": [
+      "StreamerbotCommand"
+    ],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/streamerbot-credits.types.ts",
+    "exports": [
+      "StreamerbotCredits"
+    ],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/streamerbot-event.types.ts",
+    "exports": [
+      "StreamerbotEventsType",
+      "StreamerbotEventsTypeWriteable",
+      "StreamerbotEventSource",
+      "StreamerbotEventType",
+      "StreamerbotEventName",
+      "StreamerbotEventsSubscription",
+      "StreamerbotEventPayload",
+      "StreamerbotEventData",
+      "UnknownEventData",
+      "StreamerbotEventsBySource",
+      "VerifyEventSources",
+      "VerifyEventTypes"
+    ],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/streamerbot-global.types.ts",
+    "exports": [
+      "StreamerbotGlobalVariableName",
+      "StreamerbotVariableValue",
+      "StreamerbotGlobalVariable",
+      "StreamerbotUserGlobalVariable"
+    ],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/streamerbot-info.types.ts",
+    "exports": [
+      "StreamerbotInfo"
+    ],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/streamerbot-pronouns.types.ts",
+    "exports": [
+      "StreamerbotUserPronouns"
+    ],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/streamerbot-request.types.ts",
+    "exports": [
+      "StreamerbotRequestName",
+      "StreamerbotRequest"
+    ],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/streamerbot-response.types.ts",
+    "exports": [
+      "StreamerbotResponse",
+      "StreamerbotOkResponse",
+      "StreamerbotErrorResponse",
+      "MaybeStreamerbotResponse",
+      "SubscribeResponse",
+      "UnsubscribeResponse",
+      "GetEventsResponse",
+      "GetActionsResponse",
+      "DoActionResponse",
+      "GetBroadcasterResponse",
+      "GetMonitoredYouTubeBroadcastsResponse",
+      "GetCreditsResponse",
+      "TestCreditsResponse",
+      "ClearCreditsResponse",
+      "GetInfoResponse",
+      "GetActiveViewersResponse",
+      "ExecuteCodeTriggerResponse",
+      "GetCodeTriggersResponse",
+      "GetCommandsResponse",
+      "TwitchGetEmotesResponse",
+      "YouTubeGetEmotesResponse",
+      "GetGlobalsResponse",
+      "GetGlobalResponse",
+      "GetUserGlobalsResponse",
+      "GetUserGlobalResponse",
+      "SendMessageResponse",
+      "GetUserPronounsResponse",
+      "StreamerbotResponseTypes"
+    ],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/streamerbot-viewer.types.ts.ts",
+    "exports": [
+      "StreamerbotViewer"
+    ],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/util.types.ts",
+    "exports": [
+      "Prettify",
+      "DeepWriteable",
+      "DeepPartial",
+      "JsonObject",
+      "JsonArray",
+      "JsonPrimitive",
+      "JsonValue"
+    ],
+    "consts": []
+  },
+  {
+    "file": "packages/client/src/ws/types/websocket.types.ts",
+    "exports": [
+      "WebSocketStatus"
+    ],
+    "consts": []
+  }
+]

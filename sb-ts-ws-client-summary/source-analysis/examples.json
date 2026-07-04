@@ -1,0 +1,40 @@
+[
+  {
+    "name": "browser",
+    "path": "examples/browser",
+    "files": [
+      "index.html",
+      "script.js",
+      "style.css"
+    ]
+  },
+  {
+    "name": "nodejs",
+    "path": "examples/nodejs",
+    "files": [
+      "CHANGELOG.md",
+      "index.js",
+      "package.json"
+    ]
+  },
+  {
+    "name": "vite-vue-ts",
+    "path": "examples/vite-vue-ts",
+    "files": [
+      ".gitignore",
+      "CHANGELOG.md",
+      "README.md",
+      "index.html",
+      "package.json",
+      "public/vite.svg",
+      "src/App.vue",
+      "src/main.ts",
+      "src/style.css",
+      "src/vite-env.d.ts",
+      "tsconfig.app.json",
+      "tsconfig.json",
+      "tsconfig.node.json",
+      "vite.config.ts"
+    ]
+  }
+]

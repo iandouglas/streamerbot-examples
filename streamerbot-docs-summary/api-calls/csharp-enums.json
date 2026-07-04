@@ -5,8 +5,10 @@
     "description": "C# enum definition for EventSource",
     "version": null,
     "route": "/api/csharp/enums/event-source",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/api/csharp/enums/event-source",
     "sourcePath": "3.api/3.csharp/5.enums/event-source.md",
+    "section": "api",
     "headings": [
       "Usage Example",
       "Enum Values"
@@ -30,8 +32,10 @@
     "description": "C# enum definition for EventType",
     "version": null,
     "route": "/api/csharp/enums/event-type",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/api/csharp/enums/event-type",
     "sourcePath": "3.api/3.csharp/5.enums/event-type.md",
+    "section": "api",
     "headings": [
       "Usage Example",
       "Enum Values by Source",
@@ -102,8 +106,10 @@
     "description": "C# enum definition for Platform",
     "version": null,
     "route": "/api/csharp/enums/platform",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/api/csharp/enums/platform",
     "sourcePath": "3.api/3.csharp/5.enums/platform.md",
+    "section": "api",
     "headings": [
       "Namespace",
       "Definition",
@@ -128,8 +134,10 @@
     "description": "C# enum definition for StreamlabsDesktopOutputType",
     "version": null,
     "route": "/api/csharp/enums/streamlabs-desktop-output-type",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/api/csharp/enums/streamlabs-desktop-output-type",
     "sourcePath": "3.api/3.csharp/5.enums/streamlabs-desktop-output-type.md",
+    "section": "api",
     "headings": [
       "Namespace",
       "Definition",
@@ -154,8 +162,10 @@
     "description": "C# enum definition for TwitchBlockContext",
     "version": null,
     "route": "/api/csharp/enums/twitch-block-context",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/api/csharp/enums/twitch-block-context",
     "sourcePath": "3.api/3.csharp/5.enums/twitch-block-context.md",
+    "section": "api",
     "headings": [
       "Namespace",
       "Definition",
@@ -180,8 +190,10 @@
     "description": "C# enum definition for TwitchBlockReason",
     "version": null,
     "route": "/api/csharp/enums/twitch-block-reason",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/api/csharp/enums/twitch-block-reason",
     "sourcePath": "3.api/3.csharp/5.enums/twitch-block-reason.md",
+    "section": "api",
     "headings": [
       "Namespace",
       "Definition",

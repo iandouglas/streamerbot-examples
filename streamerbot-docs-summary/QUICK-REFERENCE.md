@@ -19,8 +19,13 @@ Use this folder first before going back to the online docs.
 - **UDP control** → `api-calls/udp-api.json`
 - **General docs/guides** → `api-calls/guide-pages.json`
 - **Official examples** → `api-calls/examples.json`
+- **Commands** → `topic-commands.json` / `topic-commands.md`
+- **Triggers/Events** → `topic-triggers.json` / `topic-triggers.md`
+- **Timers** → `topic-timers.json` / `topic-timers.md`
+- **Queues** → `topic-queues.json` / `topic-queues.md`
 - **Best-practice code style** → `csharp-patterns/best-practices.md`
 - **Interactive stream control design** → `csharp-patterns/interactive-controls.md`
+- **Packaging for non-programmers** → `no-code-packaging.md`
 
 ## Important reminders
 

@@ -1,0 +1,23 @@
+{
+  "path": "apps/toolkit/src",
+  "pages": [
+    "App.vue",
+    "components/ToolkitActionsHistoryDrawer.vue",
+    "components/ToolkitActionsViewer.vue",
+    "components/ToolkitActiveViewersPanel.vue",
+    "components/ToolkitChatPanel.vue",
+    "components/ToolkitCodePreview.vue",
+    "components/ToolkitConnectForm.vue",
+    "components/ToolkitConnectView.vue",
+    "components/ToolkitLogViewerDrawer.vue",
+    "components/ToolkitNavigationDrawer.vue",
+    "components/ToolkitToolbar.vue",
+    "pages/actions.vue",
+    "pages/broadcast.vue",
+    "pages/index.vue",
+    "pages/logs.vue",
+    "pages/settings.vue",
+    "pages/variables.vue"
+  ],
+  "store": "apps/toolkit/src/stores/streamerbot.store.ts"
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Speaking Queue",
+    "name": "Speaking Queue",
+    "description": "The Queue where the next TTS message is held",
+    "version": null,
+    "route": "/Speaking-Queue",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Speaking-Queue",
+    "sourcePath": "TwitchSpeaker/Tabs/Speaking-Queue.md",
+    "section": "queues",
+    "headings": [
+      "TwitchSpeaker Speaking Queue"
+    ],
+    "summary": "TwitchSpeaker Speaking Queue\n\nTwitch Speaker will read the Twitch chat as your stream is happening and new messages are being received in Twitch chat. Depending on the options chosen and how you have set up Twitch Speaker anything that requires to be spoken will be queued here while the current TTS message is being processed and spoken. Just like the screen capture below.\n\n!speaking-queuenew.png",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  }
+]

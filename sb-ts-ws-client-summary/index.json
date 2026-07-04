@@ -1,0 +1,33 @@
+{
+  "generatedAt": "2026-07-04T01:46:58.126652+00:00",
+  "officialSite": "https://streamerbot.github.io/client/",
+  "officialRepo": "https://github.com/Streamerbot/client",
+  "npmPackage": "@streamerbot/client",
+  "counts": {
+    "docsPages": 16,
+    "methods": 27,
+    "eventSources": 31,
+    "eventTypes": 369,
+    "typeFiles": 19,
+    "examples": 3,
+    "twitchEventTypes": 49,
+    "youtubeEventTypes": 2
+  },
+  "files": {
+    "overview": "overview.md",
+    "quickReference": "QUICK-REFERENCE.md",
+    "usagePatterns": "usage-patterns/interactive-html-and-obs.md",
+    "cookbook": "cookbook.md",
+    "obsIntegration": "obs-integration.md",
+    "docsMirror": "scraped-site/",
+    "methods": "source-analysis/methods.json",
+    "events": "source-analysis/events.json",
+    "types": "source-analysis/types.json",
+    "twitchEventTypes": "source-analysis/twitch-event-types.json",
+    "youtubeEventTypes": "source-analysis/youtube-event-types.json",
+    "examples": "source-analysis/examples.json",
+    "vue": "source-analysis/vue.json",
+    "toolkit": "source-analysis/toolkit.json",
+    "worklog": "WORKLOG.md"
+  }
+}

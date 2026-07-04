@@ -903,6 +903,8 @@ def build_index(
         "httpPages": len(manifests["http_pages"]),
         "websocketPages": len(manifests["websocket_pages"]),
         "udpPages": len(manifests["udp_pages"]),
+        "guidePages": len(manifests["guide_pages"]),
+        "examplePages": len(manifests["example_pages"]),
         "commandPages": len(manifests["topic_commands"]),
         "triggerPages": len(manifests["topic_triggers"]),
         "timerPages": len(manifests["topic_timers"]),

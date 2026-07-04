@@ -5,8 +5,10 @@
     "description": "Some basic examples for getting started with Streamer.bot!",
     "version": null,
     "route": "/examples",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/examples",
     "sourcePath": "4.examples/0.index.md",
+    "section": "examples",
     "headings": [
       "Additional Resources"
     ],
@@ -23,8 +25,10 @@
     "description": "Execute your Streamer.bot actions with AutoHotKey",
     "version": null,
     "route": "/examples/autohotkey",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/examples/autohotkey",
     "sourcePath": "4.examples/autohotkey.md",
+    "section": "examples",
     "headings": [
       "Prerequisites",
       "Instructions",
@@ -54,8 +58,10 @@
     "description": "Send custom messages to chat on a given interval",
     "version": null,
     "route": "/examples/chat-message-timer",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/examples/chat-message-timer",
     "sourcePath": "4.examples/chat-message-timer.md",
+    "section": "examples",
     "headings": [
       "Instructions",
       "Tips & Tricks"
@@ -73,8 +79,10 @@
     "description": "Configure some basic chat commands with Streamer.bot",
     "version": null,
     "route": "/examples/chatbot-commands",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/examples/chatbot-commands",
     "sourcePath": "4.examples/chatbot-commands.md",
+    "section": "examples",
     "headings": [
       "Overview",
       "Instructions",
@@ -94,8 +102,10 @@
     "description": "Create a simple counter to count up or down",
     "version": null,
     "route": "/examples/counter",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/examples/counter",
     "sourcePath": "4.examples/counter.md",
+    "section": "examples",
     "headings": [
       "Instructions",
       "Tips & Tricks"
@@ -113,8 +123,10 @@
     "description": "An example how to send OBS Raw requests and work with the responses in C#",
     "version": null,
     "route": "/examples/csharp_obsraw",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/examples/csharp_obsraw",
     "sourcePath": "4.examples/csharp_obsraw.md",
+    "section": "examples",
     "headings": [
       "Instructions"
     ],
@@ -197,8 +209,10 @@
     "description": "Example code for making POST requests with cURL in Streamer.bot",
     "version": null,
     "route": "/examples/curl-requests",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/examples/curl-requests",
     "sourcePath": "4.examples/curl-requests.md",
+    "section": "examples",
     "headings": [
       "Setup",
       "Load the import code",
@@ -221,8 +235,10 @@
     "description": "Integrate Python, Javascript, or other scripts into your Streamer.bot actions",
     "version": null,
     "route": "/examples/execute-scripts",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/examples/execute-scripts",
     "sourcePath": "4.examples/execute-scripts.md",
+    "section": "examples",
     "headings": [
       "Basic Math",
       "HTTP POST Requests",
@@ -252,8 +268,10 @@
     "description": "Send web requests manually using HTTPClient.",
     "version": null,
     "route": "/examples/http-post",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/examples/http-post",
     "sourcePath": "4.examples/http-post.md",
+    "section": "examples",
     "headings": [
       "Prerequisites",
       "Instructions",
@@ -298,8 +316,10 @@
     "description": "Create a basic AI chat command with Ollama and Python",
     "version": null,
     "route": "/examples/ollama-chat-command",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/examples/ollama-chat-command",
     "sourcePath": "4.examples/ollama-chat-command.md",
+    "section": "examples",
     "headings": [
       "Prerequisites",
       "Instructions",
@@ -336,8 +356,10 @@
     "description": "Example code for parsing arbitrary JSON data into Streamer.bot variables",
     "version": null,
     "route": "/examples/parse-json-utility",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/examples/parse-json-utility",
     "sourcePath": "4.examples/parse-json-utility.md",
+    "section": "examples",
     "headings": [
       "Setup",
       "Load the import code",
@@ -366,8 +388,10 @@
     "description": "An example how to get and add quotes using commands in Streamer.bot v1.0.0+",
     "version": "1.0.0",
     "route": "/examples/quotes-commands",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/examples/quotes-commands",
     "sourcePath": "4.examples/quotes-commands.md",
+    "section": "examples",
     "headings": [
       "Commands",
       "Get Quote",
@@ -404,8 +428,10 @@
     "description": "Easily communicate between multiple Streamer.bot instances",
     "version": null,
     "route": "/examples/remote-triggers",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/examples/remote-triggers",
     "sourcePath": "4.examples/remote-triggers.md",
+    "section": "examples",
     "headings": [
       "Prerequisites",
       "Instructions",
@@ -424,8 +450,10 @@
     "description": "Get started with a collection of starter extensions provided by the community!",
     "version": null,
     "route": "/examples/starter-pack",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/examples/starter-pack",
     "sourcePath": "4.examples/starter-pack.md",
+    "section": "examples",
     "headings": [
       "Introduction",
       "Setup",
@@ -468,8 +496,10 @@
     "description": "The quickest way to get a fully functioning bot that's customized to your channel!",
     "version": null,
     "route": "/examples/vrflad-fast-track",
+    "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/examples/vrflad-fast-track",
     "sourcePath": "4.examples/vrflad-fast-track.md",
+    "section": "examples",
     "headings": [],
     "summary": "Read more at vrflad.com!",
     "parameters": [],

@@ -1,0 +1,288 @@
+[
+  {
+    "name": "clearCredits",
+    "signature": "clearCredits()",
+    "returnType": "Promise<ClearCreditsResponse>",
+    "description": "Reset credits data",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "connect",
+    "signature": "connect(timeout: number = 10_000)",
+    "returnType": "Promise<void>",
+    "description": "Connect to a Streamer.bot WebSocket server",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "disconnect",
+    "signature": "disconnect(code: number = 1000, timeout: number = 1_000)",
+    "returnType": "Promise<void>",
+    "description": "Disconnect Streamer.bot WebSocket",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "doAction",
+    "signature": "doAction( action: string | Partial<Pick<StreamerbotAction, 'id' | 'name'>>, args?: Record<string, any>, options?: Partial<{ customEventResponse: boolean; }> )",
+    "returnType": "Promise<DoActionResponse<T>>",
+    "description": "Get all actions from your connected Streamer.bot instance",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "executeCodeTrigger",
+    "signature": "executeCodeTrigger( triggerName: string, args?: Record<string, any>, options?: Partial<{ customEventResponse: boolean; }> )",
+    "returnType": "Promise<ExecuteCodeTriggerResponse>",
+    "description": "Execute a custom code trigger",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "getActions",
+    "signature": "getActions()",
+    "returnType": "Promise<GetActionsResponse>",
+    "description": "Get all actions from your connected Streamer.bot instance",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "getActiveViewers",
+    "signature": "getActiveViewers()",
+    "returnType": "Promise<GetActiveViewersResponse>",
+    "description": "Returns all active viewers and their user information",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "getBroadcaster",
+    "signature": "getBroadcaster()",
+    "returnType": "Promise<GetBroadcasterResponse>",
+    "description": "Get the current broadcaster account information",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "getCodeTriggers",
+    "signature": "getCodeTriggers()",
+    "returnType": "Promise<GetCodeTriggersResponse>",
+    "description": "Get all custom code triggers",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "getCommands",
+    "signature": "getCommands()",
+    "returnType": "Promise<GetCommandsResponse>",
+    "description": "Get commands for the connected Streamer.bot instance",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "getCredits",
+    "signature": "getCredits()",
+    "returnType": "Promise<GetCreditsResponse>",
+    "description": "Get the current credits payload",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "getEmotes",
+    "signature": "getEmotes(platform: StreamerbotPlatform)",
+    "returnType": "Promise<TwitchGetEmotesResponse | YouTubeGetEmotesResponse>",
+    "description": "Get emotes for the selected platform",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "getEvents",
+    "signature": "getEvents()",
+    "returnType": "Promise<GetEventsResponse>",
+    "description": "Get all possible events that may be subscribed to",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "getGlobal",
+    "signature": "getGlobal(name: K, persisted = true)",
+    "returnType": "",
+    "description": "Get a global variable by name",
+    "params": [
+      {
+        "name": "name",
+        "description": "The name of the global variable to fetch"
+      },
+      {
+        "name": "persisted",
+        "description": "Whether the global variable is persisted"
+      }
+    ],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "getGlobals",
+    "signature": "getGlobals(persisted = true)",
+    "returnType": "Promise<GetGlobalsResponse>",
+    "description": "Get all global variables",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "getInfo",
+    "signature": "getInfo()",
+    "returnType": "Promise<GetInfoResponse>",
+    "description": "Get information about the connected Streamer.bot instance",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "getMonitoredYouTubeBroadcasts",
+    "signature": "getMonitoredYouTubeBroadcasts()",
+    "returnType": "Promise<GetMonitoredYouTubeBroadcastsResponse>",
+    "description": "Get all monitored YouTube broadcasts",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "getUserGlobal",
+    "signature": "getUserGlobal( platform: P, userId: U, name: K | null = null, persisted = true )",
+    "returnType": "",
+    "description": "Get user global variables",
+    "params": [
+      {
+        "name": "platform",
+        "description": "The platform to fetch globals for (twitch, youtube, trovo)"
+      },
+      {
+        "name": "userId",
+        "description": "The user ID to fetch globals for"
+      },
+      {
+        "name": "name",
+        "description": "Optional name of the global variable to fetch"
+      },
+      {
+        "name": "persisted",
+        "description": "Whether the global variable is persisted"
+      }
+    ],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "getUserGlobals",
+    "signature": "getUserGlobals( platform: P, name: K | null = null, persisted = true )",
+    "returnType": "Promise<GetUserGlobalsResponse<T, K, P>>",
+    "description": "Get user global variables",
+    "params": [
+      {
+        "name": "platform",
+        "description": "The platform to fetch globals for (twitch, youtube, trovo)"
+      },
+      {
+        "name": "name",
+        "description": "Optional name of the global user variable to fetch"
+      },
+      {
+        "name": "persisted",
+        "description": "Whether the global variable is persisted"
+      }
+    ],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "getUserPronouns",
+    "signature": "getUserPronouns( platform: StreamerbotPlatform, userLogin: string, )",
+    "returnType": "Promise<GetUserPronounsResponse>",
+    "description": "Retrieves the pronouns of a user from the specified platform.",
+    "params": [
+      {
+        "name": "platform",
+        "description": "The platform from which to retrieve the user's pronouns."
+      },
+      {
+        "name": "userLogin",
+        "description": "The login name of the user whose pronouns are to be retrieved."
+      }
+    ],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "on",
+    "signature": "on( event: TEvent extends StreamerbotEventName ? TEvent : StreamerbotEventName | '*', listener: (data: StreamerbotEventPayload<TEvent extends StreamerbotEventName ? TEvent : StreamerbotEventName>) => void )",
+    "returnType": "Promise<void>",
+    "description": "Helper method to handle custom event subscriptions",
+    "params": [
+      {
+        "name": "event",
+        "description": "The event name to subscribe to. Can be a specific event, source, or wildcard '*'."
+      },
+      {
+        "name": "listener",
+        "description": "The callback function that will be invoked when the event occurs."
+      }
+    ],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "request",
+    "signature": "request( request: StreamerbotRequest, id: string = '', timeout: number = 10_000 )",
+    "returnType": "Promise<T>",
+    "description": "Make a request to the Streamer.bot WebSocket,",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "send",
+    "signature": "send(data: Object)",
+    "returnType": "void",
+    "description": "Send a raw object to the Streamer.bot WebSocket",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "sendMessage",
+    "signature": "sendMessage( platform: StreamerbotPlatform, message: string, { bot = false, internal = true, ...options }: { bot?: boolean; internal?: boolean; replyId?: string; broadcastId?: string; } = {} )",
+    "returnType": "Promise<SendMessageResponse>",
+    "description": "Send chat messages",
+    "params": [
+      {
+        "name": "platform",
+        "description": "The platform to send the message to"
+      },
+      {
+        "name": "message",
+        "description": "The message content to send"
+      },
+      {
+        "name": "options",
+        "description": "Additional options for the message"
+      }
+    ],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "subscribe",
+    "signature": "subscribe(events: StreamerbotEventsSubscription | '*')",
+    "returnType": "Promise<SubscribeResponse>",
+    "description": "Subscribe to events from your connected Streamer.bot instance",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "testCredits",
+    "signature": "testCredits()",
+    "returnType": "Promise<TestCreditsResponse>",
+    "description": "Test credits by populating with fake data",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  },
+  {
+    "name": "unsubscribe",
+    "signature": "unsubscribe( events: StreamerbotEventsSubscription | '*' )",
+    "returnType": "Promise<UnsubscribeResponse>",
+    "description": "Unsubscribe from events you are currently subscribed to",
+    "params": [],
+    "source": "packages/client/src/ws/StreamerbotClient.ts"
+  }
+]

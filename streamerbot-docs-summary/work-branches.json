@@ -1,0 +1,46 @@
+{
+  "streamerbot-docs": [
+    {
+      "name": "origin",
+      "shortHash": "35b2b63",
+      "subject": "add missing variables for twitch rewards (#427)"
+    },
+    {
+      "name": "origin/Mustached-Maniac-patch-1",
+      "shortHash": "3aee155",
+      "subject": "Add files via upload"
+    },
+    {
+      "name": "origin/Mustached-Maniac-patch-2",
+      "shortHash": "8613d6d",
+      "subject": "Rename timeout-user.png to timeout-user-old.png"
+    },
+    {
+      "name": "origin/dev",
+      "shortHash": "246510a",
+      "subject": "update integrations"
+    },
+    {
+      "name": "origin/imgbot",
+      "shortHash": "db0c84e",
+      "subject": "[ImgBot] Optimize images"
+    },
+    {
+      "name": "origin/main",
+      "shortHash": "35b2b63",
+      "subject": "add missing variables for twitch rewards (#427)"
+    }
+  ],
+  "streamerbot-wiki": [
+    {
+      "name": "origin",
+      "shortHash": "fa8dfae4",
+      "subject": "docs: update Sub-Actions"
+    },
+    {
+      "name": "origin/main",
+      "shortHash": "fa8dfae4",
+      "subject": "docs: update Sub-Actions"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+name: Weekly Streamer.bot Docs Sync
+
+on:
+  schedule:
+    # Every Sunday at 08:00 UTC.
+    - cron: "0 8 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Sync docs and regenerate summary
+        run: |
+          bash agentic-setup-scripts/sync-streamerbot-docs.sh
+
+      - name: Commit updated summary
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add streamerbot-docs-summary/
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "docs: weekly sync of streamerbot-docs and streamerbot-wiki summaries"
+            git push
+          fi

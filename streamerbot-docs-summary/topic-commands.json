@@ -1,0 +1,2168 @@
+[
+  {
+    "title": "Commands",
+    "name": null,
+    "description": "Define and configure your chat commands",
+    "version": null,
+    "route": "/guide/core/commands",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/guide/core/commands",
+    "sourcePath": "2.guide/01.core/04.commands.md",
+    "section": "guide",
+    "headings": [
+      "Configuration",
+      "Options",
+      "Cooldowns",
+      "Permissions",
+      "Context Menu",
+      "`Add`",
+      "`Edit`",
+      "`Delete`",
+      "`Rename Group`",
+      "`Set Group`",
+      "`Enabled`",
+      "`Reset Counters`",
+      "`Reset User Counters`",
+      "`Add to Export`",
+      "`Copy Command Id`",
+      "Usage"
+    ],
+    "summary": "Chat commands in Streamer.bot are **platform-agnostic**, supporting Twitch, YouTube and Kick.\n\nConfiguration options give you fine-grained control over command text parsing, cooldowns, and user permissions.\n\nThis tutorial was created using an older version of Streamer.bot. Some details may differ from the current version.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Command Group State",
+    "name": null,
+    "description": "Get the current enabled state for all commands in a group",
+    "version": null,
+    "route": "/api/sub-actions/core/commands/get-command-group-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/commands/get-command-group-state",
+    "sourcePath": "3.api/1.sub-actions/core/commands/get-command-group-state.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [
+      {
+        "name": "commandGroupState",
+        "type": "number",
+        "description": "Current enabled state for the command group",
+        "value": "0 = Disabled | 1 = Enabled | 2 = Mixed"
+      },
+      {
+        "name": "commandsEnabled",
+        "type": "Dictionary<Guid, Guid>",
+        "description": "List of all commands currently *enabled* within this command group"
+      },
+      {
+        "name": "commandsDisabled",
+        "type": "Dictionary<Guid, Guid>",
+        "description": "List of all commands currently *disabled* within this command group"
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Command State",
+    "name": null,
+    "description": "Check the current enabled state of a command",
+    "version": null,
+    "route": "/api/sub-actions/core/commands/get-command-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/commands/get-command-state",
+    "sourcePath": "3.api/1.sub-actions/core/commands/get-command-state.md",
+    "section": "api",
+    "headings": [
+      "Parameters"
+    ],
+    "summary": "You could use this to check if a command is enabled or disabled. This value is stored in the Boolean variable commandState and can be True or False.\n\n!get_command_state_dialog_box.png\n\nParameters",
+    "parameters": [],
+    "variables": [
+      {
+        "name": "commandState",
+        "type": "bool",
+        "description": "The current enabled state of this command",
+        "value": true
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Commands",
+    "name": null,
+    "description": "Fetch a list of all configured commands",
+    "version": null,
+    "route": "/api/sub-actions/core/commands/get-commands",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/commands/get-commands",
+    "sourcePath": "3.api/1.sub-actions/core/commands/get-commands.md",
+    "section": "api",
+    "headings": [
+      "Handling Long Command Lists"
+    ],
+    "summary": "This sub-action is useful if you want to output a list of commands to your chat.\n\nThe Get Commands sub-action will not include commands that have their location set to Anywhere\n\nHandling Long Command Lists",
+    "parameters": [
+      {
+        "name": "Group",
+        "type": "Select",
+        "required": true,
+        "description": "The command group to get commands from. Use \"All\" to get commands from all groups.",
+        "default": "All"
+      },
+      {
+        "name": "Variable Name",
+        "type": "Text",
+        "required": true,
+        "description": "The variable name to store the resulting commands in."
+      },
+      {
+        "name": "Include All",
+        "type": "Toggle",
+        "description": "Include all commands regardless of their `Include` option checked or not.",
+        "default": false
+      },
+      {
+        "name": "Only Has Permission",
+        "type": "Toggle",
+        "description": "Only get commands for which the user has permissions.",
+        "default": false
+      },
+      {
+        "name": "Ignore Aliases",
+        "type": "Toggle",
+        "description": "When checked it will only use the first command alias you have defined in the command settings.",
+        "default": false
+      }
+    ],
+    "variables": [
+      {
+        "name": "<variableName>",
+        "type": "string",
+        "description": "Comma-separated string containing all commands matching your specified criteria",
+        "value": "!shoutout,!followage,!ban"
+      },
+      {
+        "name": "<variableName>List",
+        "type": "List",
+        "description": "C# List object containing all commands matching your specified criteria"
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "cs",
+        "label": "Split Commands Example.cs",
+        "code": "using System;\nusing System.Collections.Generic;\n\npublic class CPHInline\n{\n    public bool Execute()\n    {\n        // This is when the Variable Name in the Get Commands Sub-Action is `commands`\n        CPH.TryGetArg(\"commandsList\", out List<string> commands);\n        // Limit is 500 on Twitch, 200 on YouTube.. I took a few off as a safety measure.\n        const int maxMessageLength = 495;\n        string message = \"Commands Avaliable to you: \";\n        const string additionalCommandsMessage = \"Addional Commands for you: \";\n        const string commandSeparator = \", \";\n        const bool sendFromBot = false;\n\n        int commandsSent = 0;\n        while (commandsSent < commands.Count)\n        {\n            int currentMessageLength = message.Length;\n            bool fitsInMessage(string text) => currentMessageLength + text.Length < maxMessageLength;\n            List<string> commandsForMessage = [];\n            for (int i = commandsSent; i < commands.Count && fitsInMessage(commands[i]); i++)\n            {\n                commandsForMessage.Add(commands[i]);\n                currentMessageLength += commands[i].Length + commandSeparator.Length;\n            }\n\n            message += string.Join(commandSeparator, commandsForMessage);\n            // if you wish to send the message to Youtube, use CPH.SendYouTubeMessage(message, sendFromBot);\n            CPH.SendAction(message, sendFromBot);\n            commandsSent += commandsForMessage.Count;\n            message = additionalCommandsMessage;\n        }\n        return true;\n    }\n}"
+      }
+    ],
+    "codeBlockCount": 1
+  },
+  {
+    "title": "Set Command Group State",
+    "name": null,
+    "description": "Modify the enabled state of a command group",
+    "version": null,
+    "route": "/api/sub-actions/core/commands/set-command-group-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/commands/set-command-group-state",
+    "sourcePath": "3.api/1.sub-actions/core/commands/set-command-group-state.md",
+    "section": "api",
+    "headings": [
+      "Configuration"
+    ],
+    "summary": "Configuration\n\nSelect the command group you want to modify\n  \n  \n  Select the new state to apply to the selected command group",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Command State",
+    "name": null,
+    "description": "Modify the enabled state of a command",
+    "version": null,
+    "route": "/api/sub-actions/core/commands/set-command-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/commands/set-command-state",
+    "sourcePath": "3.api/1.sub-actions/core/commands/set-command-state.md",
+    "section": "api",
+    "headings": [
+      "Configuration"
+    ],
+    "summary": "Configuration\n\nSelect the command you want to modify\n  \n  \n  Select the new state to apply to the selected command",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Voice Control Command State",
+    "name": null,
+    "description": "Voice Control Sub-Actions Reference",
+    "version": null,
+    "route": "/api/sub-actions/core/voice-control/set-voice-control-command-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/voice-control/set-voice-control-command-state",
+    "sourcePath": "3.api/1.sub-actions/core/voice-control/set-voice-control-command-state.md",
+    "section": "api",
+    "headings": [
+      "Overview"
+    ],
+    "summary": "Overview\n!sb-vc-state.png\n\nTo do this navigate to the Actions tab, next you can either create a new action or use an existing one.\nNext in the Sub-Action's pane you will need to add this sub action so to do this we right-click in the Sub-Action pane next navigate the menus through the following Add Sub-Action the down the second menu to Voice Control the click on the Set Voice Control Command State action. Once selected a dialog box will appear like the one below.\n\n!set-vc-state.png",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Voice Control Command",
+    "name": null,
+    "description": "Voice Control Sub-Actions Reference",
+    "version": null,
+    "route": "/api/sub-actions/core/voice-control/set-voice-control-command",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/voice-control/set-voice-control-command",
+    "sourcePath": "3.api/1.sub-actions/core/voice-control/set-voice-control-command.md",
+    "section": "api",
+    "headings": [
+      "Overview",
+      "Pre-requirement",
+      "Setting up your voice command"
+    ],
+    "summary": "Overview\nWith the Streamer.bot (0.18 +) you can now assign an action to a voice control command, then trigger this with a keyword or sentence that you say.\nTo do this you need to make sure you have streamer.bot listening to you on the correct input device. The microphone that you are going to use.\n\nPre-requirement\nFirst open streamer.bot and then navigate the following tabs Voice Control then in the second row of tabs click Settings in this take provide you have a support speech recognition package installed it should be usable.\nYou will want the bot to start listening to you when you start the bot up so go ahead and enable the \"Auto Start Listen\" by checking the box just like the image below. Also in this tab on the bottom is the \"Audio Input Device\"\nwhen you have done this be sure the bot is listening by click the **Start Listening** button. click Save button at the top.\n\n!vc-setting-tab.png",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Send Command",
+    "name": null,
+    "description": "Send a command to Lumia Stream",
+    "version": "0.1.11",
+    "route": "/api/sub-actions/integrations/lumia-stream/send-command",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/integrations/lumia-stream/send-command",
+    "sourcePath": "3.api/1.sub-actions/integrations/lumia-stream/send-command.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Command",
+        "description": "Select the command to execute\n\n::tip\nNavigate to `Control Center -> Shortcuts` in Lumia Stream to view and edit your commands\n::\n",
+        "type": "Select",
+        "required": true
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Command Cooldown",
+    "name": null,
+    "description": "Trigger for when a Command is on Cooldown",
+    "version": null,
+    "route": "/api/triggers/core/commands/command-cooldown",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/core/commands/command-cooldown",
+    "sourcePath": "3.api/2.triggers/core/commands/command-cooldown.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Check out the Commands Guide for details on configuring your Commands",
+    "parameters": [
+      {
+        "name": "Commands",
+        "type": "Select",
+        "description": "Select the command to monitor for cooldowns\n\n::tip\nYou can quickly register a new command by clicking the `Create Command` button!\n::\n",
+        "required": true
+      }
+    ],
+    "variables": [
+      {
+        "name": "command",
+        "type": "string",
+        "description": "The command that was used",
+        "value": "!shoutout"
+      },
+      {
+        "name": "commandId",
+        "type": "Guid",
+        "description": "The id of the command"
+      },
+      {
+        "name": "commandSource",
+        "type": "string",
+        "description": "The command source",
+        "value": "twitch"
+      },
+      {
+        "name": "commandType",
+        "type": "string",
+        "description": "The type of the command",
+        "value": "message"
+      },
+      {
+        "name": "cooldownLeft",
+        "type": "number",
+        "description": "How much seconds are left for the cooldown, and the maximum of the global and user cooldown",
+        "value": 30
+      },
+      {
+        "name": "globalCooldownLeft",
+        "type": "number",
+        "description": "How much seconds are left for the global cooldown",
+        "value": 15
+      },
+      {
+        "name": "userCooldownLeft",
+        "type": "number",
+        "description": "How much seconds are left for the user cooldown",
+        "value": 30
+      }
+    ],
+    "commonVariables": [
+      {
+        "name": "user",
+        "type": "string",
+        "description": "The display name of the user",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "userName",
+        "type": "string",
+        "description": "The login name of the user",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "userId",
+        "type": "string",
+        "description": "Unique user identifier",
+        "value": 718933593
+      },
+      {
+        "name": "userType",
+        "type": "string",
+        "description": "Streaming service of this user",
+        "value": "twitch"
+      },
+      {
+        "name": "userGroups",
+        "version": "0.2.5",
+        "type": "string",
+        "description": "Comma-delimited list of groups the user is in",
+        "value": "Awesome Streamers,Discord Peeps,Top Contributors"
+      },
+      {
+        "name": "isSubscribed",
+        "type": "boolean",
+        "description": "Is this user subscribed?",
+        "value": true
+      },
+      {
+        "name": "subscriptionTier",
+        "type": "number",
+        "description": "The subscription tier (T1 = 1000, T2 = 2000, T3 = 3000) (only available if `isSubscribed` is `True`)",
+        "value": 3000
+      },
+      {
+        "name": "monthsSubscribed",
+        "type": "number",
+        "description": "The amount of months the user is subscribed",
+        "value": 3
+      },
+      {
+        "name": "isModerator",
+        "type": "boolean",
+        "description": "Is this user a moderator?",
+        "value": true
+      },
+      {
+        "name": "isVip",
+        "type": "boolean",
+        "description": "Is this user a VIP?",
+        "value": true
+      },
+      {
+        "name": "userPreviousActive",
+        "type": "DateTime",
+        "description": "When was this user last active?",
+        "value": "8/4/2023 10:56:06 AM"
+      },
+      {
+        "name": "badges",
+        "type": "List<Twitch.Common.Models.Badge>",
+        "description": "A C# accessible list of emotes used in the chat message",
+        "children": [
+          {
+            "name": "Name",
+            "type": "string",
+            "description": "The name of the badge",
+            "value": "moderator"
+          },
+          {
+            "name": "Version",
+            "type": "number",
+            "description": "The version of the badge",
+            "value": 1
+          },
+          {
+            "name": "ImageUrl",
+            "type": "string",
+            "description": "The image URL of the badge",
+            "value": "https://static-cdn.jtvnw.net/badges/v1/3267646d-33f0-4b17-b3df-f923a41db1d0/3"
+          }
+        ]
+      },
+      {
+        "name": "badgeCount",
+        "type": "number",
+        "description": "The count of badges this user has",
+        "value": 3
+      },
+      {
+        "name": "broadcastUser",
+        "type": "string",
+        "description": "The Twitch display name of the broadcaster account",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "broadcastUserName",
+        "type": "string",
+        "description": "The Twitch user name of the broadcaster account",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "broadcastUserId",
+        "type": "string",
+        "description": "The Twitch user ID of the broadcaster account",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "broadcastIsAffiliate",
+        "type": "boolean",
+        "description": "Is the broadcaster an affiliate?",
+        "value": false
+      },
+      {
+        "name": "broadcastIsPartner",
+        "type": "boolean",
+        "description": "Is the broadcaster a partner?",
+        "value": true
+      },
+      {
+        "name": "user",
+        "type": "string",
+        "description": "The display name of the user",
+        "value": "YouTubeUser123"
+      },
+      {
+        "name": "userName",
+        "type": "string",
+        "description": "The login name of the user",
+        "value": "youtubeuser123"
+      },
+      {
+        "name": "userId",
+        "type": "string",
+        "description": "Unique user identifier",
+        "value": "UCI9-KG2xoyh5z-g41IL2jqf"
+      },
+      {
+        "name": "userType",
+        "type": "string",
+        "description": "Streaming service of this user",
+        "value": "youtube"
+      },
+      {
+        "name": "isSubscribed",
+        "type": "bool",
+        "description": "Has the user been a member at any time, including the present?",
+        "value": true
+      },
+      {
+        "name": "isModerator",
+        "type": "bool",
+        "description": "Is this user a moderator?",
+        "value": true
+      },
+      {
+        "name": "userPreviousActive",
+        "type": "DateTime",
+        "description": "When was this user last active?",
+        "value": "8/4/2023 10:56:06 AM"
+      },
+      {
+        "name": "userProfileUrl",
+        "type": "string",
+        "description": "The user's YouTube profile image"
+      },
+      {
+        "name": "userIsSponsor",
+        "type": "boolean",
+        "description": "Indicates whether the viewer is a current channel member or not"
+      },
+      {
+        "name": "broadcastUsername",
+        "type": "string",
+        "description": "The YouTube user name of the broadcaster account",
+        "value": "youtubeuser123"
+      },
+      {
+        "name": "broadcastUserId",
+        "type": "string",
+        "description": "The YouTube user ID of the broadcaster account",
+        "value": "UCI9-KG2xoyh5z-g41IL2jqf"
+      },
+      {
+        "name": "broadcastUserProfileImage",
+        "type": "string",
+        "description": "The profile image of the broadcaster account",
+        "value": "https://yt3.ggpht.com/ytc/profile-image-id"
+      },
+      {
+        "name": "broadcastId",
+        "type": "string",
+        "description": "The broadcast ID from the livestream",
+        "value": "UCI9-KG2xoy"
+      },
+      {
+        "name": "user",
+        "type": "string",
+        "description": "The display name of the user",
+        "value": "KickUser123"
+      },
+      {
+        "name": "userName",
+        "type": "string",
+        "description": "The login name of the user",
+        "value": "kickuser123"
+      },
+      {
+        "name": "userId",
+        "type": "string",
+        "description": "Unique user identifier",
+        "value": 718933593
+      },
+      {
+        "name": "userType",
+        "type": "string",
+        "description": "Streaming service of this user",
+        "value": "kick"
+      },
+      {
+        "name": "userGroups",
+        "type": "string",
+        "description": "Comma-delimited list of groups the user is in",
+        "value": "Awesome Streamers,Discord Peeps,Top Contributors"
+      },
+      {
+        "name": "isSubscribed",
+        "type": "boolean",
+        "description": "Is this user subscribed?",
+        "value": true
+      },
+      {
+        "name": "isModerator",
+        "type": "boolean",
+        "description": "Is this user a moderator?",
+        "value": true
+      },
+      {
+        "name": "userPreviousActive",
+        "type": "DateTime",
+        "description": "When was this user last active?",
+        "value": "7/19/2025 4:56:06 PM"
+      },
+      {
+        "name": "broadcastUser",
+        "type": "string",
+        "description": "The Kick user name of the broadcaster account",
+        "value": "kickuser123"
+      },
+      {
+        "name": "broadcastUsername",
+        "type": "string",
+        "description": "The Kick user name of the broadcaster account",
+        "value": "kickuser123"
+      },
+      {
+        "name": "broadcastUserId",
+        "type": "string",
+        "description": "The Kick user ID of the broadcaster account",
+        "value": 11088894
+      },
+      {
+        "name": "broadcastUserProfileImage",
+        "type": "string",
+        "description": "The profile image of the broadcaster account",
+        "value": "https://files.kick.com/images/user/11088894/profile_image/conversion/4495b495-4753-455c-9434-7debf0b82ba3-fullsize.webp"
+      }
+    ],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Command Triggered",
+    "name": null,
+    "description": "Trigger for when a Command is Triggered",
+    "version": null,
+    "route": "/api/triggers/core/commands/command-triggered",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/core/commands/command-triggered",
+    "sourcePath": "3.api/2.triggers/core/commands/command-triggered.md",
+    "section": "api",
+    "headings": [
+      "Parameters"
+    ],
+    "summary": "Check out the Commands Guide for details on configuring your Commands\n\nParameters\n\nSelect a command from the Commands tab.",
+    "parameters": [],
+    "variables": [
+      {
+        "name": "command",
+        "type": "string",
+        "description": "The command that was used",
+        "value": "!shoutout"
+      },
+      {
+        "name": "commandId",
+        "type": "Guid",
+        "description": "The ID of the command"
+      },
+      {
+        "name": "commandName",
+        "type": "string",
+        "description": "The name of the command"
+      },
+      {
+        "name": "commandSource",
+        "type": "string",
+        "description": "The command source",
+        "value": "twitch"
+      },
+      {
+        "name": "commandType",
+        "type": "string",
+        "description": "The type of the command",
+        "value": "message"
+      },
+      {
+        "name": "msgId",
+        "type": "string",
+        "description": "The unique message id for this message"
+      },
+      {
+        "name": "rawInput",
+        "type": "string",
+        "description": "The message entered, if the command was a Starts With, this will be removed"
+      },
+      {
+        "name": "rawInputEscaped",
+        "type": "string",
+        "description": "The message escaped"
+      },
+      {
+        "name": "rawInputUrlEncoded",
+        "type": "string",
+        "description": "The message URL encoded"
+      },
+      {
+        "name": "input#",
+        "type": "string",
+        "description": "The `#` word of the message entered, spaces are delimiters and variable names are 0 indexed, so `input0` would give the first word, `input1` would give the second, and so on"
+      },
+      {
+        "name": "inputEscaped#",
+        "type": "string",
+        "description": "The indexed word escaped"
+      },
+      {
+        "name": "inputUrlEncoded#",
+        "type": "string",
+        "description": "The indexed word URL encoded"
+      },
+      {
+        "name": "counter",
+        "type": "number",
+        "description": "A running total of how many times a command has been run since application launch",
+        "value": 17
+      },
+      {
+        "name": "userCounter",
+        "type": "number",
+        "description": "A running total of how many times the command has been run by current user since application launch",
+        "value": 17
+      },
+      {
+        "name": "match.count",
+        "type": "int",
+        "description": "Only when the command mode = \"Regex\"\n\nThe number of match groups (named or unnamed) in the regex.\n\nNote that this is always 1 more than the number of parentheses groups, as the entire match is implicitly group 0.\n",
+        "value": 3
+      },
+      {
+        "name": "match[<index>]",
+        "type": "string",
+        "description": "Only when the command mode = \"Regex\"\n\nThe text matching each indexed capture group.\n\nIndex 0 is the entire matching text, and the first parenthesized group is 1.\n",
+        "value": "matching word"
+      },
+      {
+        "name": "<groupName>",
+        "type": "string",
+        "description": "Only when the command mode = \"Regex\"\n\nWhen using named capture groups (e.g, `(?'points'\\d+)` or `(?<points>\\d+)` ), each named capture group becomes an argument containing the text of the match.\n",
+        "value": "123"
+      }
+    ],
+    "commonVariables": [
+      {
+        "name": "isReply",
+        "type": "boolean",
+        "description": "Is this message a reply?",
+        "value": true
+      },
+      {
+        "name": "reply.msgId",
+        "type": "string",
+        "description": "The message id of the reply",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "reply.userId",
+        "type": "string",
+        "description": "The user id from the user who sent the reply",
+        "value": 718933593
+      },
+      {
+        "name": "reply.userLogin",
+        "type": "string",
+        "description": "The user login from the user who sent the reply",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "reply.userName",
+        "type": "string",
+        "description": "The user name from the user who sent the reply",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "reply.msgBody",
+        "type": "string",
+        "description": "The text content of the reply, **Spaces are replaced by `\\s`**",
+        "value": "My\\schat\\smessage"
+      },
+      {
+        "name": "reply.threadMsgId",
+        "type": "string",
+        "description": "The message id of the thread",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "reply.threadUserLogin",
+        "type": "string",
+        "description": "The user login name of the thread",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "user",
+        "type": "string",
+        "description": "The display name of the user",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "userName",
+        "type": "string",
+        "description": "The login name of the user",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "userId",
+        "type": "string",
+        "description": "Unique user identifier",
+        "value": 718933593
+      },
+      {
+        "name": "userType",
+        "type": "string",
+        "description": "Streaming service of this user",
+        "value": "twitch"
+      },
+      {
+        "name": "userGroups",
+        "version": "0.2.5",
+        "type": "string",
+        "description": "Comma-delimited list of groups the user is in",
+        "value": "Awesome Streamers,Discord Peeps,Top Contributors"
+      },
+      {
+        "name": "isSubscribed",
+        "type": "boolean",
+        "description": "Is this user subscribed?",
+        "value": true
+      },
+      {
+        "name": "subscriptionTier",
+        "type": "number",
+        "description": "The subscription tier (T1 = 1000, T2 = 2000, T3 = 3000) (only available if `isSubscribed` is `True`)",
+        "value": 3000
+      },
+      {
+        "name": "monthsSubscribed",
+        "type": "number",
+        "description": "The amount of months the user is subscribed",
+        "value": 3
+      },
+      {
+        "name": "isModerator",
+        "type": "boolean",
+        "description": "Is this user a moderator?",
+        "value": true
+      },
+      {
+        "name": "isVip",
+        "type": "boolean",
+        "description": "Is this user a VIP?",
+        "value": true
+      },
+      {
+        "name": "userPreviousActive",
+        "type": "DateTime",
+        "description": "When was this user last active?",
+        "value": "8/4/2023 10:56:06 AM"
+      },
+      {
+        "name": "badges",
+        "type": "List<Twitch.Common.Models.Badge>",
+        "description": "A C# accessible list of emotes used in the chat message",
+        "children": [
+          {
+            "name": "Name",
+            "type": "string",
+            "description": "The name of the badge",
+            "value": "moderator"
+          },
+          {
+            "name": "Version",
+            "type": "number",
+            "description": "The version of the badge",
+            "value": 1
+          },
+          {
+            "name": "ImageUrl",
+            "type": "string",
+            "description": "The image URL of the badge",
+            "value": "https://static-cdn.jtvnw.net/badges/v1/3267646d-33f0-4b17-b3df-f923a41db1d0/3"
+          }
+        ]
+      },
+      {
+        "name": "badgeCount",
+        "type": "number",
+        "description": "The count of badges this user has",
+        "value": 3
+      },
+      {
+        "name": "broadcastUser",
+        "type": "string",
+        "description": "The Twitch display name of the broadcaster account",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "broadcastUserName",
+        "type": "string",
+        "description": "The Twitch user name of the broadcaster account",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "broadcastUserId",
+        "type": "string",
+        "description": "The Twitch user ID of the broadcaster account",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "broadcastIsAffiliate",
+        "type": "boolean",
+        "description": "Is the broadcaster an affiliate?",
+        "value": false
+      },
+      {
+        "name": "broadcastIsPartner",
+        "type": "boolean",
+        "description": "Is the broadcaster a partner?",
+        "value": true
+      },
+      {
+        "name": "user",
+        "type": "string",
+        "description": "The display name of the user",
+        "value": "YouTubeUser123"
+      },
+      {
+        "name": "userName",
+        "type": "string",
+        "description": "The login name of the user",
+        "value": "youtubeuser123"
+      },
+      {
+        "name": "userId",
+        "type": "string",
+        "description": "Unique user identifier",
+        "value": "UCI9-KG2xoyh5z-g41IL2jqf"
+      },
+      {
+        "name": "userType",
+        "type": "string",
+        "description": "Streaming service of this user",
+        "value": "youtube"
+      },
+      {
+        "name": "isSubscribed",
+        "type": "bool",
+        "description": "Has the user been a member at any time, including the present?",
+        "value": true
+      },
+      {
+        "name": "isModerator",
+        "type": "bool",
+        "description": "Is this user a moderator?",
+        "value": true
+      },
+      {
+        "name": "userPreviousActive",
+        "type": "DateTime",
+        "description": "When was this user last active?",
+        "value": "8/4/2023 10:56:06 AM"
+      },
+      {
+        "name": "userProfileUrl",
+        "type": "string",
+        "description": "The user's YouTube profile image"
+      },
+      {
+        "name": "userIsSponsor",
+        "type": "boolean",
+        "description": "Indicates whether the viewer is a current channel member or not"
+      },
+      {
+        "name": "broadcastUsername",
+        "type": "string",
+        "description": "The YouTube user name of the broadcaster account",
+        "value": "youtubeuser123"
+      },
+      {
+        "name": "broadcastUserId",
+        "type": "string",
+        "description": "The YouTube user ID of the broadcaster account",
+        "value": "UCI9-KG2xoyh5z-g41IL2jqf"
+      },
+      {
+        "name": "broadcastUserProfileImage",
+        "type": "string",
+        "description": "The profile image of the broadcaster account",
+        "value": "https://yt3.ggpht.com/ytc/profile-image-id"
+      },
+      {
+        "name": "broadcastId",
+        "type": "string",
+        "description": "The broadcast ID from the livestream",
+        "value": "UCI9-KG2xoy"
+      },
+      {
+        "name": "user",
+        "type": "string",
+        "description": "The display name of the user",
+        "value": "KickUser123"
+      },
+      {
+        "name": "userName",
+        "type": "string",
+        "description": "The login name of the user",
+        "value": "kickuser123"
+      },
+      {
+        "name": "userId",
+        "type": "string",
+        "description": "Unique user identifier",
+        "value": 718933593
+      },
+      {
+        "name": "userType",
+        "type": "string",
+        "description": "Streaming service of this user",
+        "value": "kick"
+      },
+      {
+        "name": "userGroups",
+        "type": "string",
+        "description": "Comma-delimited list of groups the user is in",
+        "value": "Awesome Streamers,Discord Peeps,Top Contributors"
+      },
+      {
+        "name": "isSubscribed",
+        "type": "boolean",
+        "description": "Is this user subscribed?",
+        "value": true
+      },
+      {
+        "name": "isModerator",
+        "type": "boolean",
+        "description": "Is this user a moderator?",
+        "value": true
+      },
+      {
+        "name": "userPreviousActive",
+        "type": "DateTime",
+        "description": "When was this user last active?",
+        "value": "7/19/2025 4:56:06 PM"
+      },
+      {
+        "name": "broadcastUser",
+        "type": "string",
+        "description": "The Kick user name of the broadcaster account",
+        "value": "kickuser123"
+      },
+      {
+        "name": "broadcastUsername",
+        "type": "string",
+        "description": "The Kick user name of the broadcaster account",
+        "value": "kickuser123"
+      },
+      {
+        "name": "broadcastUserId",
+        "type": "string",
+        "description": "The Kick user ID of the broadcaster account",
+        "value": 11088894
+      },
+      {
+        "name": "broadcastUserProfileImage",
+        "type": "string",
+        "description": "The profile image of the broadcaster account",
+        "value": "https://files.kick.com/images/user/11088894/profile_image/conversion/4495b495-4753-455c-9434-7debf0b82ba3-fullsize.webp"
+      }
+    ],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Command",
+    "name": null,
+    "description": "Trigger for a Voice Control Command",
+    "version": "0.2.0",
+    "route": "/api/triggers/core/voice-control/command",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/core/voice-control/command",
+    "sourcePath": "3.api/2.triggers/core/voice-control/command.md",
+    "section": "api",
+    "headings": [
+      "Parameters"
+    ],
+    "summary": "Parameters\n\nSelect a command from the Voice Control tab.\n\n- Select Any to trigger on **any command**",
+    "parameters": [],
+    "variables": [
+      {
+        "name": "spokenText",
+        "type": "string",
+        "description": "The full spoken phrase detected, *including the trigger phrase*"
+      },
+      {
+        "name": "spokenTextConfidence",
+        "type": "number",
+        "description": "Voice Recognition confidence raw value"
+      },
+      {
+        "name": "spokenTextConfidencePercent",
+        "type": "number",
+        "description": "Confidence value as a percentage"
+      },
+      {
+        "name": "altPhraseText#",
+        "type": "string",
+        "description": "The text of an alternative phrase"
+      },
+      {
+        "name": "altPhraseConfidence#",
+        "type": "number",
+        "description": "The confidence of an alternative phrase"
+      },
+      {
+        "name": "altPhraseConfidencePercent#",
+        "type": "number",
+        "description": "The percentage of the confidence from an alternative phrase"
+      },
+      {
+        "name": "spokenTextInput",
+        "type": "string",
+        "description": "Detected spoken phrase with trigger command stripped <br> (Only works with `Start` based commands)"
+      },
+      {
+        "name": "spokenCommand",
+        "type": "string",
+        "description": "Detected Trigger command"
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandAddToAllUserCooldowns",
+    "name": "CommandAddToAllUserCooldowns",
+    "description": "Will add time(seconds) to all current user cooldowns of a command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-add-to-all-user-cooldowns",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-add-to-all-user-cooldowns",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-add-to-all-user-cooldowns.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandAddToGlobalCooldown",
+    "name": "CommandAddToGlobalCooldown",
+    "description": "Will add time(seconds) to current global cooldown of a command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-add-to-global-cooldown",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-add-to-global-cooldown",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-add-to-global-cooldown.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandAddToUserCooldown",
+    "name": "CommandAddToUserCooldown",
+    "description": "Will add time(seconds) to the specified user's cooldown of a command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-add-to-user-cooldown",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-add-to-user-cooldown",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-add-to-user-cooldown.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandGetCounter",
+    "name": "CommandGetCounter",
+    "description": "Returns the total number of command uses, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-get-counter",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-get-counter",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-get-counter.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandGetUserCounterById",
+    "name": "CommandGetUserCounterById",
+    "description": "Returns the total number of times a user has executed the specified command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-get-user-counter-by-id",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-get-user-counter-by-id",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-get-user-counter-by-id.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandGetUserCounter",
+    "name": "CommandGetUserCounter",
+    "description": "Returns the total number of times a user has executed the specified command",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-get-user-counter",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-get-user-counter",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-get-user-counter.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandRemoveAllUserCooldowns",
+    "name": "CommandRemoveAllUserCooldowns",
+    "description": "Remove all user cooldowns associated with the specified command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-remove-all-user-cooldowns",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-remove-all-user-cooldowns",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-remove-all-user-cooldowns.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandRemoveGlobalCooldown",
+    "name": "CommandRemoveGlobalCooldown",
+    "description": "Remove global cooldown associated with the specified command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-remove-global-cooldown",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-remove-global-cooldown",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-remove-global-cooldown.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandRemoveUserCooldown",
+    "name": "CommandRemoveUserCooldown",
+    "description": "Remove the specified user's cooldown of a command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-remove-user-cooldown",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-remove-user-cooldown",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-remove-user-cooldown.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandResetAllUserCooldowns",
+    "name": "CommandResetAllUserCooldowns",
+    "description": "Reset all users cooldowns on all platforms associated with the specified command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-reset-all-user-cooldowns",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-reset-all-user-cooldowns",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-reset-all-user-cooldowns.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandResetAllUserCounters",
+    "name": "CommandResetAllUserCounters",
+    "description": "Resets all user counters associated with the specified command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-reset-all-user-counters",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-reset-all-user-counters",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-reset-all-user-counters.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandResetCounter",
+    "name": "CommandResetCounter",
+    "description": "Resets the total counter for the given command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-reset-counter",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-reset-counter",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-reset-counter.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandResetGlobalCooldown",
+    "name": "CommandResetGlobalCooldown",
+    "description": "Resets global cooldown of command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-reset-global-cooldown",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-reset-global-cooldown",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-reset-global-cooldown.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandResetUserCooldown",
+    "name": "CommandResetUserCooldown",
+    "description": "Reset the specified user's cooldown of a command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-reset-user-cooldown",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-reset-user-cooldown",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-reset-user-cooldown.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandResetUserCounter",
+    "name": "CommandResetUserCounter",
+    "description": "Resets the counter for a specified user for the given command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-reset-user-counter",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-reset-user-counter",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-reset-user-counter.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandResetUsersCounters",
+    "name": "CommandResetUsersCounters",
+    "description": "Resets the total counter for all users of a platform for the given command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-reset-users-counters",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-reset-users-counters",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-reset-users-counters.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandSetGlobalCooldownDuration",
+    "name": "CommandSetGlobalCooldownDuration",
+    "description": "Set the global cooldown duration of a command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-set-global-cooldown-duration",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-set-global-cooldown-duration",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-set-global-cooldown-duration.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandSetUserCooldownDuration",
+    "name": "CommandSetUserCooldownDuration",
+    "description": "Set the user cooldown duration of a command, by ID",
+    "version": "0.2.4",
+    "route": "/api/csharp/methods/core/commands/command-set-user-cooldown-duration",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/command-set-user-cooldown-duration",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/command-set-user-cooldown-duration.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "DisableCommand",
+    "name": "DisableCommand",
+    "description": "Disables a command, by ID",
+    "version": null,
+    "route": "/api/csharp/methods/core/commands/disable-command",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/disable-command",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/disable-command.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "EnableCommand",
+    "name": "EnableCommand",
+    "description": "Enables a command, by ID",
+    "version": null,
+    "route": "/api/csharp/methods/core/commands/enable-command",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/enable-command",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/enable-command.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "GetCommands",
+    "name": "GetCommands",
+    "description": "Returns all commands associated with Streamer.bot instance",
+    "version": "0.2.5",
+    "route": "/api/csharp/methods/core/commands/get-commands",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/commands/get-commands",
+    "sourcePath": "3.api/3.csharp/3.methods/core/commands/get-commands.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandCounter",
+    "name": "CommandCounter",
+    "description": "C# class definition for CommandCounter",
+    "version": null,
+    "route": "/api/csharp/classes/command-counter",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/classes/command-counter",
+    "sourcePath": "3.api/3.csharp/4.classes/command-counter.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "CommandData",
+    "name": "CommandData",
+    "description": "C# class definition for CommandData",
+    "version": null,
+    "route": "/api/csharp/classes/command-data",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/classes/command-data",
+    "sourcePath": "3.api/3.csharp/4.classes/command-data.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Chatbot Commands",
+    "name": null,
+    "description": "Configure some basic chat commands with Streamer.bot",
+    "version": null,
+    "route": "/examples/chatbot-commands",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/examples/chatbot-commands",
+    "sourcePath": "4.examples/chatbot-commands.md",
+    "section": "examples",
+    "headings": [
+      "Overview",
+      "Instructions",
+      "Load the import code",
+      "Confirm the Import"
+    ],
+    "summary": "Overview\n\nIf you are coming from another bot platform, you are probably used to having some basic commands available out of the box.\n\n**Streamer.bot ships with a blank slate**, but a few simple actions can provide similar functionality.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "AI Chat Command",
+    "name": null,
+    "description": "Create a basic AI chat command with Ollama and Python",
+    "version": null,
+    "route": "/examples/ollama-chat-command",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/examples/ollama-chat-command",
+    "sourcePath": "4.examples/ollama-chat-command.md",
+    "section": "examples",
+    "headings": [
+      "Prerequisites",
+      "Instructions",
+      "Import Code",
+      "Tips & Tricks",
+      "Extended Examples"
+    ],
+    "summary": "You can utilize the Run a Program sub-action to execute scripts with Streamer.bot\n\n:read-more{to=\"/api/sub-actions/core/system/run-a-program\"}\n\n**Requires Streamer.bot v0.2.5-beta.2 or later**\n<br>\nA bug in previous versions of Streamer.bot prevented capturing of stdout from scripts",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "bash",
+        "label": "Command Prompt",
+        "code": "ollama run llama3.1"
+      },
+      {
+        "language": "python",
+        "label": "Streamer.bot\\data\\scripts\\ollama-example.py",
+        "code": "import sys\n    import ollama\n\n    # Load the prompt from command line arguments\n    prompt = \" \".join(sys.argv[1:])\n\n    # Generate text using llama3.1 model\n    response = ollama.generate(model=\"llama3.1\", prompt=prompt)\n\n    # Print the response as a single line, truncated at 500 characters\n    output = response[\"response\"].replace(\"\\n\", \" \")\n    print(output[0:499])"
+      },
+      {
+        "language": "bash",
+        "label": "Command Prompt",
+        "code": "pip install ollama"
+      }
+    ],
+    "codeBlockCount": 3
+  },
+  {
+    "title": "Quotes Commands for v1.0.0+",
+    "name": null,
+    "description": "An example how to get and add quotes using commands in Streamer.bot v1.0.0+",
+    "version": "1.0.0",
+    "route": "/examples/quotes-commands",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/examples/quotes-commands",
+    "sourcePath": "4.examples/quotes-commands.md",
+    "section": "examples",
+    "headings": [
+      "Commands",
+      "Get Quote",
+      "Creating an action",
+      "Adding the \"!quote\" command trigger",
+      "Check whether input is empty or not",
+      "Get a random quote and send the message",
+      "Check whether input is a number or not",
+      "Get a specific quote and send the message",
+      "Add Quote",
+      "Creating an action",
+      "Adding the \"!quoteadd\" command trigger",
+      "Check if the rawInput of the command is empty or not",
+      "Adding the quote itself",
+      "Check if the quote was added successfully",
+      "Delete Quote",
+      "Creating an action",
+      "Adding the \"!quotedel\" command trigger",
+      "Check whether input is empty or not",
+      "Delete Quote",
+      "Check whether the quote was actually deleted by the input",
+      "Import Code"
+    ],
+    "summary": "This guide is only for **Streamer.bot v1.0.0** and above!\n\nIn Streamer.bot v1.0.0+, the built-in quote command \"!quote\" has been removed.\nThis allows for more customization and flexibility in how quotes are retrieved and displayed.\nWith that the \"Show Quote\" trigger will also not work anymore.\n\nThe following example shows how to:",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Commands",
+    "name": "Commands",
+    "description": "Define and configure chat commands with Streamer.bot",
+    "version": null,
+    "route": "/Commands",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Commands",
+    "sourcePath": "Commands.md",
+    "section": "commands",
+    "headings": [
+      "Overview",
+      "Context Menu",
+      "Edit Command Dialogue",
+      "Mode",
+      "Location",
+      "Command(s)",
+      "Group",
+      "Action",
+      "Options",
+      "Source(s)",
+      "Counters",
+      "Cooldowns",
+      "Permissions",
+      "Grant Type",
+      "Variables"
+    ],
+    "summary": "Overview\n!commands-018.png\n\nThis tab is used to view and define chat commands you want Streamer.bot to watch for and the actions each should perform.\n\n<kbd>Right-click</kbd> anywhere in the pane to show the context menu. This will show diffrent options depending what was highlighted.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Quick Start - Chatbot Example",
+    "name": "Quick Start - Chatbot Example",
+    "description": "Learn how to configure some basic chat commands with Streamer.bot",
+    "version": null,
+    "route": "/Commands",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Commands",
+    "sourcePath": "Quick-Start/Commands.md",
+    "section": "commands",
+    "headings": [
+      "Overview",
+      "Commands",
+      "Import Code"
+    ],
+    "summary": "Overview\nIf you are coming from another bot platform, you are probably used to having some basic commands available out of the box.\n\nStreamer.bot ships with a blank slate - but a few simple actions can provide similar functionality.\n\nBelow, you will find a code to import them directly into your setup for immediate use and also explanations on why the workflows are set up this way so you can build more advanced actions if you want them.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "",
+        "label": "",
+        "code": "TlM0RR+LCAAAAAAABADtW99z47YRfs9M/gfGM34Lzvj9I2/Xa5tmpum0TdKXTqazABa2JpLoSpTvbq7537sg7TMl63Kmc5Zjx36wKIIgicW33+4HrN59/lnTHF3gaj1rl0dfNfLL/sQSFkjfjv6xmaWfmu86WHUNa16dQRfbrvnTG1icz/FouBZSR33XdPm/6/emeTd8UNMs15tkq0PS4FjgkjMNQTBQObAgJdcqaGVlGu7Vd/rvBjf14cvNfH59FpcQ51jv1602ODr/Js03Gf+8ahd/ma27dvWWLikwX4+uuRrNF2mF0NFNrptOV+3m/JYj7TvA/DW8Xf9zs7z5mBUsc7t42ZvjZmtql2mzWuGyu9l2w4RbZuwvWbebVcLv357j+1l633YBq1m1Th3H0XbTMANRpOh0RuYQPdM8GgagLQvGZe4tRi3UTsfXODs9q6/KX/Dtlm54B7Nz+sqSW9P2S1M3vN8y45v6lOuzP3/5IRtsVvM6mrOuO19/dXIC57MXabVZprNzMv1PL5bYnXSvZ106O+knmkx6ckwTeordD2tcHR/tt9rfLtEBKbWbZfdqFyMjO3onVYogWciAhGSdyY7FsqwyKifQ2hKm2lFw7j6lJcVtLNnhm/pOR9+fYXM57qa0q2ZsruY1rJtLj2naZXO8baBdc56vsCDhO78cLqtD3mfDgpZjIgQ68nymTUwsxFQIleCCUDEkxOk2/JQWlCMLXh3+uOusX9dH9B7749jH53M4X2MetQ6NV1Oxy43SRWGjs0wqRTaIhrDlrGZ0EKwpQkYIh+HGTJP6GIlxDOU6hmZGqB3uN3/bHNdTxwO246qFnGC9lw1uC18uik6c5gpysExbm+hIFOYV9zllKdE+MHxvRQDDYAA4eqU8C8gJfY5wGHi0zNsCIngaabBTByPF/sHsRqapUeG+PTEbVNooYOAzZSnFUYLiimJghA3BKKFQHsYTC717+/oJpCk7SPhompKCQ8dlYTxzmgJZAgPrgGjRF+G91VrFyWnKB+B4gOB6vOnD6Nt201xN6S4J9XF1aPxjJao7kpKmfBqKEsRHGJnOFomUQDFFFk02elOy/O3E1I+QknaBWCkUZhQ3NJhkWKQwyaL1MoDQCSD9Xkipzl2OlLiX7MgjrKL0wFjLopKgneHWGH1QUlqtHyMr3V44DMPsnW3bVatK+JiCuLLRq95X9zoqRisMYTtCn/wGZNFzxaznyUkneXaTsf2gAmKXz64zrzNSD8dbFjlu9oCov9tteQ69hiwTMFEjs/YAzNfMBbyiPDqYUvAO5nsgnnNCG8zRMSK1StokJn0GyzAHYZJyTpddFfpkea7YkJSyhpXgKas2SjMv0bEYEEsCDymbQ/LcbHn6GHnuV2VfWSQTnFdMKErBtKUjr6RnWmHKUYZM+v9xZl9ncIFNxGXzfnJv5GG9QByaX57iX9vl6V1zMWUhGe+QJa8CuTWpK0rNkKFxuZSiizCT3frBOMoWyr8iFmZdSuSXlFMGGiADcFlwStIyit8LR6mUg/ckkXMRmmwhBNFT1Myk5HUBzMIeaBl73T56cpq6gm2NBhkdSRopqiiQhEEMgeUsSpQFybUmr1Q8wAr2FTn9fY6wxua0bdIZ0qy1m2577RW65ipbHTLTF93FeDG7T0dpmr9p5i2RW3eGi4Ymr6e79Vm7meema9sv7shhFAGCKNkyF6ys1iaoaxIgKgQKCZZrZScL8ftb5Lpvx09KKldIdQmMJMKSJ0avqtTTXwoCbPJwIMfvoHviAuxihiQQenSeTFdgQ+9f0F+Qs5dE3zKS6tISJYuOpjKUyA1XCYOZvBH2IPprx6AZU7XpAq/MuDnvZvRtugWHjnuNJ5xNOllHyUBlBVONR0KM0pskjLTR5vzgxrtVbvMx453CnUy3ePs1fMB04J2meMWZd0lUrUd5FFekbyxEZ3LQJk/Ooz616dSnMF036+Z3s933tef+ZWGnTPYBWEES/DpR2AeRDUPpvEyGG8pCH9p4ekr0rzD5qjke8HLc/K/px96f6Y+OGzr3Q++IdHLwyHrZv3p2W9O5Ec/deR+WQrmJFNAcGkpnFRQWBLl0ojRW5WR5NvCwMd7cXqeIEIP1YCkZF0RNgXJziEEyl5XVMlsJdvIC+GPVKaTiSWc6w6z2rhZ7aBZ0UCxCUIYcx3pfDpOudAiLp52t1BH+Z4GLSG55cjxbnm86/jGqq32+HbrspTvuIUohOEs6eKY1ER9oEZkXFC20dPTBH5rubiV2LmDeI4ueBXHdQDMnxDRtaaoFmkurNYWg1FTI5GYbLyOTRB+1DyWxLOqme11OCbo4xrNHCIkbuFP4DI9VkXBvALGQIkmiEETIxaOIikGQKqUUYxIH2hbaThYfj4uPq0bqGHaqRoaI++mqRjK30ZHzMmGJmHXgidEcBSayz7ZwcNE8nqoRCiIUYmgwGghzmktCn8qSFZk5YU+DDr+bDdpChGQjmUEpmk4dnKQUv9AUO12sQglKH6hqZFe4PR5ffAgtm5VWwUearWwpokii0YAps6px0UXIJj64pvhVG7F1+zUiLinoXuDAZJdC4o4U5kWRQSRg0tS0hKdaPpw18zoK1Fppfpfa14Nr/0s9nnnhGh0TkpPbylhX83JkPJHqSSkXnL4O9JunsPoxXDnw0KgrdVssyMf3VvEPC/c7Lsz3vNY5rhazrsNcIbj7Yu8b97725ZZ4jk5rY2vqmxnNT2KgaIJKQZ4CCZg4XnceWXKHdGbLnjhvEOqi7U/ysbn6cR/t/3XAYOdv7vIrhtS289y+Xr68vsU26c/bBJd0KkZvfrpsV/iHtrv2xu0hnNefaqy7Xvrjah8XXzXwG53qtHyw4+a6sU7Ou59H94Q1fofL9awjLrnZ83TeRpi/uhzw9pOHu+5rmRyeSEUsu8vtI/6hqHw4rHrvFHogKHBP/+oPK7wlUlSBO5koKTJjmfapsbpTrT0G6sSS8megPnGgCs+jC6UwYVCQeKZ/vsLDu+i9l4g8u/sD6p5i5i1WnVZ1/QzWJw5W7nNJySBLlFzWlR7JAIjBcoieC5WKF/cP1q0i1zFaJ5bjPqP1iaM1C6VkDbCq8Fp8T+zlecnMkCIqHr1Hbu8brdulimO0TiyqfEbrE0crOJ91rUyM3Camda57QjISmaGU1okAyt8fWreK1sYwnVhXNwWm/Bmmjw+mlrJTjNYxkP2PEqOtxWeqp9ekBXhXxD3CdKfEaozUiYVgz4T6xJEqLClqyz1DJ/pf80QGSWAV3jEHnhVEc39I3dld3wLqtBKAZ6A+caBiRIeU8DGiVSIub2o9b01bs7cuIi9alnsE6va+1BioEzeyn4H6xIHKPU+ec8cUT5EiLB2F4AOFWZ8FojTg7jH239hC3VJT03Z6n6F6CKjWjx8//+zn/wOv0J8px0oAAA=="
+      }
+    ],
+    "codeBlockCount": 1
+  },
+  {
+    "title": "Message",
+    "name": "Message",
+    "description": "Websocket Events Reference - command",
+    "version": null,
+    "route": "/Message",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Message",
+    "sourcePath": "Servers-Clients/WebSocket-Server/Events/command/Message.md",
+    "section": "commands",
+    "headings": [],
+    "summary": "---\n\n- <i class=\"mdi mdi-chevron-left\"></i>**Websocket Events *Go Back***\n{.btn-grid .my-5}",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "json",
+        "label": "",
+        "code": "{\n  \"command\": \"!test\",\n  \"counter\": 1,\n  \"userCounter\": 1,\n  \"message\": \"\",\n  \"user\": {\n  \t\"display\": \"ik1497\",\n    \"id\": \"695682330\",\n    \"name\": \"ik1497\",\n    \"role\": 4,\n    \"subscribed\": true,\n    \"type\": \"twitch\"\n  }\n}"
+      }
+    ],
+    "codeBlockCount": 1
+  },
+  {
+    "title": "MessageCooldown",
+    "name": "MessageCooldown",
+    "description": "Websocket Events Reference - command",
+    "version": null,
+    "route": "/MessageCooldown",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/MessageCooldown",
+    "sourcePath": "Servers-Clients/WebSocket-Server/Events/command/MessageCooldown.md",
+    "section": "commands",
+    "headings": [],
+    "summary": "---\n\n- <i class=\"mdi mdi-chevron-left\"></i>**Websocket Events *Go Back***\n{.btn-grid .my-5}",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "json",
+        "label": "",
+        "code": "{\n  \"command\": \"!test\",\n  \"cooldownLeft\": 5,\n  \"globalCooldownLeft\": 3,\n  \"userCooldownLeft\": 5\n  \"counter\": 1,\n  \"userCounter\": 1,\n  \"message\": \"\",\n  \"user\": { \n    \"display\": \"Ik1497Bot\",\n    \"id\": \"750146097\",\n    \"name\": \"ik1497bot\",\n    \"role\": 3,\n    \"subscribed\": false,\n    \"type\": \"twitch\"\n  }\n}"
+      }
+    ],
+    "codeBlockCount": 1
+  },
+  {
+    "title": "Command",
+    "name": "Command",
+    "description": "Websocket Events Reference - speechToText",
+    "version": null,
+    "route": "/Command",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Command",
+    "sourcePath": "Servers-Clients/WebSocket-Server/Events/speechToText/Command.md",
+    "section": "commands",
+    "headings": [],
+    "summary": "---\n\n- <i class=\"mdi mdi-chevron-left\"></i>**Websocket Events *Go Back***\n{.btn-grid .my-5}",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "json",
+        "label": "",
+        "code": "{\n  \"text\": \"test\",\n  \"confidence\": 0.622180641,\n  \"alternatives\": [\n    {\n      \"text\": \"test\",\n      \"confidence\": 0.622180641\n    }\n  ]\n}"
+      }
+    ],
+    "codeBlockCount": 1
+  },
+  {
+    "title": "Commands",
+    "name": "Commands",
+    "description": "C# Available Methods Reference",
+    "version": null,
+    "route": "/Commands",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Commands",
+    "sourcePath": "Sub-Actions/Code/CSharp/Available-Methods/Commands.md",
+    "section": "commands",
+    "headings": [
+      "Enable/Disable Commands",
+      "Set Commands Cooldowns",
+      "Add to Commands Cooldowns",
+      "Reset Commands Cooldowns",
+      "Remove Command Cooldowns"
+    ],
+    "summary": "Enable/Disable Commands\n\nSet Commands Cooldowns\n\nAdd to Commands Cooldowns",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "csharp",
+        "label": "",
+        "code": "void EnableCommand(string id);\nvoid DisableCommand(string id);"
+      },
+      {
+        "language": "csharp",
+        "label": "",
+        "code": "void CommandSetGlobalCooldownDuration(string id, int seconds);\nvoid CommandSetUserCooldownDuration(string id, int seconds);"
+      },
+      {
+        "language": "csharp",
+        "label": "",
+        "code": "void CommandAddToGlobalCooldown(string id, int seconds);\nvoid CommandAddToUserCooldown(string id, string userId, int seconds);\nvoid CommandAddToAllUserCooldowns(string id, int seconds);"
+      },
+      {
+        "language": "csharp",
+        "label": "",
+        "code": "void CommandResetGlobalCooldown(string id);\nvoid CommandResetUserCooldown(string id, string userId);\nvoid CommandResetAllUserCooldowns(string id);"
+      },
+      {
+        "language": "csharp",
+        "label": "",
+        "code": "void CommandRemoveGlobalCooldown(string id);\nvoid CommandRemoveUserCooldown(string id, string userId);\nvoid CommandRemoveAllUserCooldowns(string id);"
+      }
+    ],
+    "codeBlockCount": 5
+  },
+  {
+    "title": "Get Command Group State",
+    "name": "Get Command Group State",
+    "description": "Commands Sub-Actions Reference",
+    "version": null,
+    "route": "/Get-Command-Group-State",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Get-Command-Group-State",
+    "sourcePath": "Sub-Actions/Commands/Get-Command-Group-State.md",
+    "section": "commands",
+    "headings": [
+      "Variables"
+    ],
+    "summary": "Variables\nThe following variables will be available after execution of this sub-action:\n\nName | Description\n----:|:------------\ncommandGroupState | Boolean for command group enabled state <br> True / False\ncommandsEnabled | Dictionary<Guid, Guid> of command ID, action IDs, of commands that are enabled\ncommandsDisabled | Dictionary<Guid, Guid> of command ID, action IDs, of commands that are disabled\n{.vars-table}\n\n---",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Command State",
+    "name": "Get Command State",
+    "description": "Commands Sub-Actions Reference",
+    "version": null,
+    "route": "/Get-Command-State",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Get-Command-State",
+    "sourcePath": "Sub-Actions/Commands/Get-Command-State.md",
+    "section": "commands",
+    "headings": [
+      "Overview",
+      "Configuration",
+      "Command",
+      "Variables"
+    ],
+    "summary": "Overview\nThis will gather information on a single command's state.\n\nYou could use this to check if a command is enabled or disabled. This value is stored in the Boolean variable commandState and can be True or False.\n\n!get_command_state_dialog_box.png",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Commands",
+    "name": "Get Commands",
+    "description": "Commands Sub-Actions Reference",
+    "version": null,
+    "route": "/Get-Commands",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Get-Commands",
+    "sourcePath": "Sub-Actions/Commands/Get-Commands.md",
+    "section": "commands",
+    "headings": [
+      "Import Code",
+      "Variables"
+    ],
+    "summary": "This sub action allows you to populate the commands and output them to your twitch chat. Just like the one below \n!get_all_commands_output_.png\n\nTo do this all you need to do is create an action and give it a name next go to the sub action window on the right and then right click to get the option menu to open now navigate through the following Add Action then Commands then click the Get Commands Option. Just like the image below. \n!commands_menu.png\n\nOnce you have done this a dialog box will appear from here you can select the group of commands you want to be outputted to the user that requested the commands list in your twitch chat. Various options will be displayed depending on how you have grouped your commands in the Commands tab.\n> Note: Due to a limitation on Twitch if your total commands exceed 500 Characters the message to the Twitch chat will **NOT** be sent!!! \n{.is-info}",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [
+      {
+        "language": "sb",
+        "label": "",
+        "code": "TlM0RR+LCAAAAAAABACVVE1vnDAQvVfqf7CQclu3BoOB3FY59FZVVW5VDsYeZ5EMbGy8ySrKfy+GRXztSskJe974ed4bD+/fvyEUnMDYsqmDexTu+kDNK+h2QTBsuWg72HaRf36P0Pvw6aBS+jxGIQ15nuJMhhzHMs+7VUFxqiCLwkTlBciBqz/04sB5/tppPUWh5oUGz9caB1N8LOahqSpeSzsjejaNO97AuH7lZ/vXeVmKaztjNF1qU+17VVtUNLVwxkDdbrGNEws3ljXttZ7K6aETN6XX+PuiSGyqHjythXYS/PmVFz184PYPmKq0l55tM4amCMZJQaTEjNMEx6liOCcxxUwIBYUUWSb46uZXKJ8PXjb5QZZIez76kkMS0nWxEt48MkU/dre8aeHNswc/K0CPB7CAuAHUHgCNViB+4qX2JqG2QefG3SN0N4J3q3KPBhR0nZJ7IRrX94tcc4LmcUyAAWZURjiOshDnImM4kkokImE0idnXndhdbfviTS8cij7jkG2cEfA43EGuP59pMlc6VRbTUGQUR5GSOA6THPOoG0ipICIUFEvJl3UmN3RuKrioJDOV4/JpPUC/PEk/RU/zudOaHy3IGTqAPdGQOfw7RvDjP2NyCCfABAAA"
+      }
+    ],
+    "codeBlockCount": 1
+  },
+  {
+    "title": "Set Command Group State",
+    "name": "Set Command Group State",
+    "description": "Commands Sub-Actions Reference",
+    "version": null,
+    "route": "/Set-Command-Group-State",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Set-Command-Group-State",
+    "sourcePath": "Sub-Actions/Commands/Set-Command-Group-State.md",
+    "section": "commands",
+    "headings": [
+      "Overview",
+      "Configuration",
+      "Command",
+      "State"
+    ],
+    "summary": "Overview\nEnable, Disable or Toggle the state of the selected command group\n\nConfiguration\nCommand\nThe command group you wish to alter the state of\n\nState\nThe new state to apply, either Enabled, Disabled, or Toggle",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Command State",
+    "name": "Set Command State",
+    "description": null,
+    "version": null,
+    "route": "/Set-Command-State",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Set-Command-State",
+    "sourcePath": "Sub-Actions/Commands/Set-Command-State.md",
+    "section": "commands",
+    "headings": [
+      "Overview",
+      "Configuration",
+      "Command",
+      "State"
+    ],
+    "summary": "Overview\nEnable, Disable or Toggle the state of the selected command\n\nConfiguration\nCommand\nThe command you wish to alter the state of\n\nState\nThe new state to apply, either Enabled, Disabled, or Toggle",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Commands Sub-Actions",
+    "name": "Commands Sub-Actions",
+    "description": "Reference of all Commands Sub-Actions",
+    "version": null,
+    "route": "/Commands",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Commands",
+    "sourcePath": "Sub-Actions/Commands.md",
+    "section": "commands",
+    "headings": [],
+    "summary": "* **Get Commands *Populate variables to list command groups***\n* **Set Command Group State *Enable / Disable all commands in a group***\n* **Set Command State *Enable / Disable a single command***\n* **Get Command Group State *Check Enabled state of all commands in a group***\n* **Get Command State *Check Enabled state of a single command***\n{.btn-grid .my-5}\n\n---\n\n- <i class=\"mdi mdi-chevron-left\"></i>**Sub-Actions Reference *Go Back***\n- <i class=\"mdi mdi-code-braces primary--text\"></i> **C# *Sub-actions reference for custom code execution***\n{.btn-grid .my-5}",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Send Command",
+    "name": "Send Command",
+    "description": "Lumia Stream Sub-Action Reference",
+    "version": null,
+    "route": "/Send-Command",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Send-Command",
+    "sourcePath": "Sub-Actions/Lumia-Stream/Send-Command.md",
+    "section": "commands",
+    "headings": [
+      "Overview",
+      "Configuration",
+      "Command"
+    ],
+    "summary": "Overview\n!overview.png\n\nControl Center -> Shortcuts You can see and add commands here.\n\n!overview-extra-1.png",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Perform Command",
+    "name": "Perform Command",
+    "description": "General Sub-Actions Reference",
+    "version": null,
+    "route": "/Perform-Command",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Perform-Command",
+    "sourcePath": "Sub-Actions/System/Perform-Command.md",
+    "section": "commands",
+    "headings": [
+      "Overview",
+      "Configuration",
+      "Command",
+      "Working Directory",
+      "Arguments",
+      "Wait",
+      "Environment Variables"
+    ],
+    "summary": "Overview\n\nWith this sub-action, you can run an exe, batch file, cmdlet, Powershell script, URI, or anything you can normally run via the <kbd>Win+R</kbd>, Windows Run dialog, or command prompt.\n\nA common usage for this action, is using the LIV URI for switching camera profiles liv-app://camera/set/#",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Voice Control Command State",
+    "name": "Set Voice Control Command State",
+    "description": "Voice Control Sub-Actions Reference",
+    "version": null,
+    "route": "/Set-Voice-Control-Command-State",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Set-Voice-Control-Command-State",
+    "sourcePath": "Sub-Actions/Voice-Control/Set-Voice-Control-Command-State.md",
+    "section": "commands",
+    "headings": [
+      "Overview"
+    ],
+    "summary": "Overview\n!sb-vc-state.png\n\nTo do this navigate to the Actions tab, next you can either create a new action or use an existing one.\nNext in the Sub-Action's pane you will need to add this sub action so to do this we Right Click in the Sub-Action pane next navigate the menus through the following Add Sub-Action the down the second menu to Voice Control the click on the Set Voice Control Command State action. Once selected a dialog box will appear like the one below.\n\n!set-vc-state.png",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Voice Control Command",
+    "name": "Set Voice Control Command",
+    "description": "Voice Control Sub-Actions Reference",
+    "version": null,
+    "route": "/Set-Voice-Control-Command",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Set-Voice-Control-Command",
+    "sourcePath": "Sub-Actions/Voice-Control/Set-Voice-Control-Command.md",
+    "section": "commands",
+    "headings": [
+      "Overview",
+      "Pre-requirement",
+      "Setting up your voice command"
+    ],
+    "summary": "Overview\nWith the Streamer.bot (0.18 +) you can now assign an action to a voice control command, then trigger this with a keyword or sentence that you say.\nTo do this you need to make sure you have streamer.bot listening to you on the correct input device. The microphone that you are going to use.\n\nPre-requirement \nFirst open streamer.bot and then navigate the following tabs Voice Control then in the second row of tabs click Settings in this take provide you have a support speech recognition package installed it should be usable.\nYou will want the bot to start listening to you when you start the bot up so go ahead and enable the \"Auto Start Listen\" by checking the box just like the image below. Also in this tab on the bottom is the \"Audio Input Device\"\nwhen you have done this be sure the bot is listening by click the **Start Listening** button. click Save button at the top.\n\n!vc-setting-tab.png",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Command Cooldown",
+    "name": "Command Cooldown",
+    "description": "Commands Triggers Reference",
+    "version": null,
+    "route": "/Command-Cooldown",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Command-Cooldown",
+    "sourcePath": "Triggers/Core/Commands/Command-Cooldown.md",
+    "section": "commands",
+    "headings": [
+      "Overview",
+      "Configuration",
+      "Commands",
+      "Variables"
+    ],
+    "summary": "Overview\nThis triggers when your command is on a cooldown and someone tries to use it.\n\nFor a detailed guide on how Commands work in Streamer.bot see this page.\n\nConfiguration\nCommands\nSelect a command from the Commands tab.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Command Triggered",
+    "name": "Command Triggered",
+    "description": "Commands Triggers Reference",
+    "version": null,
+    "route": "/Command-Triggered",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Command-Triggered",
+    "sourcePath": "Triggers/Core/Commands/Command-Triggered.md",
+    "section": "commands",
+    "headings": [
+      "Overview",
+      "Configuration",
+      "Commands",
+      "Variables"
+    ],
+    "summary": "Overview\nThis triggers when someone uses your command.\n\nFor a detailed guide on how Commands work in Streamer.bot see this page.\n\nConfiguration\nCommands\nSelect a command from the Commands tab.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Commands",
+    "name": "Commands",
+    "description": "Core Triggers Reference",
+    "version": null,
+    "route": "/Commands",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Commands",
+    "sourcePath": "Triggers/Core/Commands.md",
+    "section": "commands",
+    "headings": [],
+    "summary": "- <i class=\"mdi mdi-clock-alert primary--text\"></i> **Command Cooldown *When someone sends a command in chat while it is in cooldown***\n- <i class=\"mdi mdi-comment-alert primary--text\"></i> **Command Triggered *When someone sends a command in chat while it isn't in cooldown***\n{.btn-grid .my-5}\n\n---\n\n- <i class=\"mdi mdi-chevron-left\"></i>**Triggers Reference *Go Back***\n{.btn-grid .my-5}",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Command",
+    "name": "Command",
+    "description": "Voice Control Triggers Reference",
+    "version": null,
+    "route": "/Command",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Command",
+    "sourcePath": "Triggers/Core/Voice-Control/Command.md",
+    "section": "commands",
+    "headings": [
+      "Overview",
+      "Configuration",
+      "Voice Control",
+      "Variables"
+    ],
+    "summary": "Overview\nThis triggers when a voice control command is successfully used.\n\nFor a detailed guide on how Voice Control works in Streamer.bot see this page.\n\nConfiguration\nVoice Control\nSelect any or a specific command from the Voice Control tab.",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Commands",
+    "name": "Commands",
+    "description": "TwitchSpeaker Commands Reference",
+    "version": null,
+    "route": "/Commands",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Commands",
+    "sourcePath": "TwitchSpeaker/Commands.md",
+    "section": "commands",
+    "headings": [],
+    "summary": "List off all commands you can use in your Twitch chat:\n\nName | Description\n----:|:------------\n!tts status | Just gives a status of the current app state.\n!tts voices | How many voices (and by type) are available.\n!tts pause/resume | Pauses/resume speaking.\n!tts clear | Well clear all pending phrases to be spoken.\n!tts stop | Will immediately stop speaking if something is being said.\n!tts mode [all Toggle between needing a command to speak and saying everything.\n!tts commands | List all available custom commands.\n!tts [off Clears, stops and disables speaking.\n!tts [on Enables speaking.\n!tts ignore [add Sets the ignore status of the specified user.\n!tts ignored | List currently ignored users.\n!tts reg [add Add or remove user from being a regular.\n!tts events [on Toggle speaking of all events (subs, cheer, etc).\n!tts random reset [username] | Resets a user back to there default voice, typically used if sticky random is enabled.\n!tts set sticky [on Sets the sticky mode, if users are set to random, there first spoken voice will stick for the duration, unless reset using the above.\n!tts assign last [username] | Will assign the last used voice to the user specified.\n!tts [about Sends to chat the information about your TwitchSpeaker instance.\n\n---",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Custom Commands",
+    "name": "Custom Commands",
+    "description": "TwitchSpeaker Documentation",
+    "version": null,
+    "route": "/Custom-Commands",
+    "sourceRepo": "streamerbot-wiki",
+    "sourceUrl": "https://github.com/Streamerbot/streamerbot-wiki/wiki/Custom-Commands",
+    "sourcePath": "TwitchSpeaker/Tabs/Custom-Commands.md",
+    "section": "commands",
+    "headings": [],
+    "summary": "!overview.png\n\nCustom commands let your Moderators, Subscribers, VIP's, Regulars and Everyone have a unique command/voice, this can be done be filling out a command in the Command field e.g. !say and for the Voice Alias field just simply choose one from the list and lastly you can limit this command to certain people so some can and others can't use it, here you can just modify everything like you want it.\n\n---",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  }
+]
