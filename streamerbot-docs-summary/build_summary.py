@@ -1,4 +1,11 @@
-"""Build a local summary set from the official Streamer.bot docs repo."""
+"""Build a local expert summary set from Streamer.bot docs and wiki sources.
+
+This script ingests:
+- ./streamerbot-docs   (official docs site source)
+- ./streamerbot-wiki   (community wiki source)
+
+and emits searchable JSON and readable Markdown into ./streamerbot-docs-summary.
+"""
 
 from __future__ import annotations
 
@@ -13,49 +20,36 @@ from typing import Any
 import yaml
 from yaml import YAMLError
 
-
 WORKSPACE_ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_ROOT = WORKSPACE_ROOT / "streamerbot-docs-summary"
-SOURCE_ROOT = Path("/tmp/opencode/streamerbot-docs-official/streamerbot")
-API_ROOT = SOURCE_ROOT / "3.api"
+
+DOCS_REPO_ROOT = WORKSPACE_ROOT / "streamerbot-docs"
+DOCS_SOURCE_ROOT = DOCS_REPO_ROOT / "streamerbot"
+DOCS_API_ROOT = DOCS_SOURCE_ROOT / "3.api"
+
+WIKI_REPO_ROOT = WORKSPACE_ROOT / "streamerbot-wiki"
+
+
+# ---------------------------------------------------------------------------
+# Low-level helpers
+# ---------------------------------------------------------------------------
 
 
 def read_text(path: Path) -> str:
-    """Return UTF-8 text for a source file.
-
-    Args:
-        path: Filesystem path to read.
-
-    Returns:
-        The full file contents as a string.
-    """
+    """Return UTF-8 text for a source file."""
 
     return path.read_text(encoding="utf-8")
 
 
 def load_yaml_file(path: Path) -> dict[str, Any]:
-    """Load a YAML file into a dictionary.
-
-    Args:
-        path: YAML file path.
-
-    Returns:
-        Parsed YAML content or an empty dictionary.
-    """
+    """Load a YAML file into a dictionary."""
 
     data = yaml.safe_load(read_text(path))
     return data if isinstance(data, dict) else {}
 
 
 def split_front_matter(text: str) -> tuple[dict[str, Any], str]:
-    """Split markdown front matter from the body text.
-
-    Args:
-        text: Raw markdown file contents.
-
-    Returns:
-        A tuple of parsed front matter and markdown body text.
-    """
+    """Split markdown front matter from the body text."""
 
     match = re.match(r"\A---\n(.*?)\n---\n?(.*)\Z", text, flags=re.DOTALL)
     if match is None:
@@ -67,14 +61,7 @@ def split_front_matter(text: str) -> tuple[dict[str, Any], str]:
 
 
 def parse_front_matter_yaml(text: str) -> dict[str, Any]:
-    """Parse docs front matter and tolerate common authoring mistakes.
-
-    Args:
-        text: Raw front matter text between --- markers.
-
-    Returns:
-        Parsed front matter as a dictionary.
-    """
+    """Parse docs front matter and tolerate common authoring mistakes."""
 
     try:
         data = yaml.safe_load(text) or {}
@@ -89,29 +76,15 @@ def parse_front_matter_yaml(text: str) -> dict[str, Any]:
 
 
 def strip_numeric_prefix(value: str) -> str:
-    """Remove docs ordering prefixes from a path segment.
-
-    Args:
-        value: File or directory segment that may begin with a numeric prefix.
-
-    Returns:
-        The normalized segment without ordering prefixes.
-    """
+    """Remove docs ordering prefixes from a path segment."""
 
     return re.sub(r"^\d+\.", "", value)
 
 
 def build_doc_route(path: Path) -> str:
-    """Convert a docs repo file path into a website route.
+    """Convert a docs repo file path into a website route."""
 
-    Args:
-        path: Markdown or YAML file path beneath the official docs root.
-
-    Returns:
-        A website route such as /api/csharp/methods.
-    """
-
-    relative = path.relative_to(SOURCE_ROOT)
+    relative = path.relative_to(DOCS_SOURCE_ROOT)
     parts = [strip_numeric_prefix(part) for part in relative.parts]
     stem = Path(parts[-1]).stem
     stem = strip_numeric_prefix(stem)
@@ -122,15 +95,18 @@ def build_doc_route(path: Path) -> str:
     return route.replace("//", "/")
 
 
+def build_wiki_route(path: Path) -> str:
+    """Convert a wiki file path into a wiki page route."""
+
+    relative = path.relative_to(WIKI_REPO_ROOT)
+    stem = path.stem
+    # GitHub wiki URLs use the file stem with spaces as dashes, but the repo
+    # stores files with dashes already. Keep the stem as-is.
+    return "/" + stem
+
+
 def clean_markdown_text(text: str) -> str:
-    """Remove heavy markdown syntax for lightweight summaries.
-
-    Args:
-        text: Markdown body content.
-
-    Returns:
-        Simplified text suitable for search-friendly summaries.
-    """
+    """Remove heavy markdown syntax for lightweight summaries."""
 
     text = re.sub(r"```.*?```", "", text, flags=re.DOTALL)
     text = re.sub(r"::[^\n]*", "", text)
@@ -143,30 +119,22 @@ def clean_markdown_text(text: str) -> str:
 
 
 def extract_headings(text: str) -> list[str]:
-    """Extract markdown headings from body content.
+    """Extract markdown headings from body content."""
 
-    Args:
-        text: Markdown body content.
-
-    Returns:
-        Ordered heading labels without hash prefixes.
-    """
-
-    return [match.strip() for match in re.findall(r"^#{1,6}\s+(.+)$", text, flags=re.MULTILINE)]
+    return [
+        match.strip()
+        for match in re.findall(r"^#{1,6}\s+(.+)$", text, flags=re.MULTILINE)
+    ]
 
 
 def extract_code_blocks(text: str) -> list[dict[str, str]]:
-    """Extract fenced code blocks from markdown.
-
-    Args:
-        text: Markdown body content.
-
-    Returns:
-        A list of code block dictionaries with language, label, and code text.
-    """
+    """Extract fenced code blocks from markdown."""
 
     blocks: list[dict[str, str]] = []
-    pattern = re.compile(r"```(?P<lang>[^\s\[]+)?(?:\s*\[(?P<label>[^\]]+)\])?\n(?P<code>.*?)```", re.DOTALL)
+    pattern = re.compile(
+        r"```(?P<lang>[^\s\[]+)?(?:\s*\[(?P<label>[^\]]+)\])?\n(?P<code>.*?)```",
+        re.DOTALL,
+    )
     for match in pattern.finditer(text):
         blocks.append(
             {
@@ -179,64 +147,45 @@ def extract_code_blocks(text: str) -> list[dict[str, str]]:
 
 
 def extract_summary(text: str, limit: int = 3) -> str:
-    """Build a compact summary from the first non-empty paragraphs.
-
-    Args:
-        text: Markdown body content.
-        limit: Maximum number of paragraphs to include.
-
-    Returns:
-        A condensed summary string.
-    """
+    """Build a compact summary from the first non-empty paragraphs."""
 
     cleaned = clean_markdown_text(text)
-    paragraphs = [paragraph.strip() for paragraph in cleaned.split("\n\n") if paragraph.strip()]
+    paragraphs = [
+        paragraph.strip() for paragraph in cleaned.split("\n\n") if paragraph.strip()
+    ]
     return "\n\n".join(paragraphs[:limit])
 
 
 def load_parameter_imports() -> dict[str, dict[str, Any]]:
-    """Load reusable parameter definitions from the official API docs.
-
-    Returns:
-        Mapping of import keys to parameter metadata.
-    """
+    """Load reusable parameter definitions from the official API docs."""
 
     imports: dict[str, dict[str, Any]] = {}
-    for path in API_ROOT.rglob("*.yml"):
+    for path in DOCS_API_ROOT.rglob("*.yml"):
         if "/.parameters/" not in path.as_posix():
             continue
-        relative = path.relative_to(API_ROOT)
+        relative = path.relative_to(DOCS_API_ROOT)
         key = str(relative).replace(".parameters/", "").replace(".yml", "")
         imports[key] = load_yaml_file(path)
     return imports
 
 
 def load_variable_pages() -> dict[str, dict[str, Any]]:
-    """Load variable definition pages used by triggers and sub-actions.
-
-    Returns:
-        Mapping of variable page names to parsed metadata.
-    """
+    """Load variable definition pages used by triggers and sub-actions."""
 
     pages: dict[str, dict[str, Any]] = {}
-    variables_root = API_ROOT / ".variables"
-    for path in variables_root.rglob("*.md"):
-        data, _ = split_front_matter(read_text(path))
-        name = path.stem
-        pages[name] = data
+    variables_root = DOCS_API_ROOT / ".variables"
+    if variables_root.exists():
+        for path in variables_root.rglob("*.md"):
+            data, _ = split_front_matter(read_text(path))
+            name = path.stem
+            pages[name] = data
     return pages
 
 
-def resolve_parameters(parameters: Any, parameter_imports: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
-    """Resolve inline and imported parameter definitions.
-
-    Args:
-        parameters: Raw front matter parameter list.
-        parameter_imports: Lookup table for reusable parameter definitions.
-
-    Returns:
-        A normalized list of parameter dictionaries.
-    """
+def resolve_parameters(
+    parameters: Any, parameter_imports: dict[str, dict[str, Any]]
+) -> list[dict[str, Any]]:
+    """Resolve inline and imported parameter definitions."""
 
     if not isinstance(parameters, list):
         return []
@@ -250,16 +199,10 @@ def resolve_parameters(parameters: Any, parameter_imports: dict[str, dict[str, A
     return resolved
 
 
-def resolve_variables(values: Any, variable_pages: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
-    """Resolve direct and common variable references for docs pages.
-
-    Args:
-        values: Raw variable or commonVariables front matter value.
-        variable_pages: Lookup table for variable reference pages.
-
-    Returns:
-        A normalized list of variable dictionaries.
-    """
+def resolve_variables(
+    values: Any, variable_pages: dict[str, dict[str, Any]]
+) -> list[dict[str, Any]]:
+    """Resolve direct and common variable references for docs pages."""
 
     if not isinstance(values, list):
         return []
@@ -277,15 +220,13 @@ def resolve_variables(values: Any, variable_pages: dict[str, dict[str, Any]]) ->
     return resolved
 
 
-def infer_section(relative_path: str) -> str:
-    """Infer the high-level docs section from a relative file path.
+# ---------------------------------------------------------------------------
+# Source collection
+# ---------------------------------------------------------------------------
 
-    Args:
-        relative_path: Repo-relative documentation path string.
 
-    Returns:
-        High-level section name for grouping.
-    """
+def infer_docs_section(relative_path: str) -> str:
+    """Infer the high-level docs section from a relative file path."""
 
     if relative_path.startswith("3.api/"):
         return "api"
@@ -297,38 +238,81 @@ def infer_section(relative_path: str) -> str:
         return "examples"
     if relative_path.startswith("5.changelogs/"):
         return "changelogs"
+    if relative_path.startswith("faq/"):
+        return "faq"
     return "other"
 
 
-def collect_pages() -> list[dict[str, Any]]:
-    """Collect and normalize official Streamer.bot markdown pages.
+def infer_wiki_section(relative_path: str, title: str) -> str:
+    """Infer a wiki section from the file path or title."""
 
-    Returns:
-        A list of normalized page dictionaries for downstream summaries.
-    """
+    lower = (relative_path + " " + title).lower()
+    topic_map = [
+        ("commands", ["commands", "command"]),
+        ("triggers", ["triggers", "trigger", "events"]),
+        ("actions", ["actions", "action", "sub-action"]),
+        ("variables", ["variables", "variable"]),
+        ("timers", ["timers", "timer", "timed"]),
+        ("queues", ["queues", "queue"]),
+        ("csharp", ["csharp", "c#", "inline"]),
+        ("broadcasters", ["obs", "broadcasters", "streamdeck", "polypop"]),
+        (
+            "integrations",
+            [
+                "integrations",
+                "integration",
+                "streamelements",
+                "kofi",
+                "pulsoid",
+                "voicemod",
+                "midi",
+            ],
+        ),
+        ("platforms", ["twitch", "youtube", "platforms"]),
+        ("settings", ["settings", "backup", "update"]),
+        ("quick-start", ["quick-start", "install", "linux"]),
+        ("plugins", ["plugins", "plugin"]),
+        ("servers-clients", ["websocket", "http", "udp", "servers", "clients"]),
+    ]
+    for section, keywords in topic_map:
+        if any(keyword in lower for keyword in keywords):
+            return section
+    return "other"
+
+
+def collect_docs_pages() -> list[dict[str, Any]]:
+    """Collect and normalize official Streamer.bot markdown pages."""
 
     parameter_imports = load_parameter_imports()
     variable_pages = load_variable_pages()
     pages: list[dict[str, Any]] = []
 
-    for path in sorted(SOURCE_ROOT.rglob("*.md")):
+    for path in sorted(DOCS_SOURCE_ROOT.rglob("*.md")):
         text = read_text(path)
         front_matter, body = split_front_matter(text)
-        relative_path = str(path.relative_to(SOURCE_ROOT))
+        relative_path = str(path.relative_to(DOCS_SOURCE_ROOT))
         code_blocks = extract_code_blocks(body)
+        route = build_doc_route(path)
         page = {
+            "sourceRepo": "streamerbot-docs",
             "sourcePath": relative_path,
-            "sourceUrl": f"https://docs.streamer.bot{build_doc_route(path)}",
-            "route": build_doc_route(path),
-            "section": infer_section(relative_path),
+            "sourceUrl": f"https://docs.streamer.bot{route}",
+            "route": route,
+            "section": infer_docs_section(relative_path),
             "title": front_matter.get("title") or front_matter.get("name") or path.stem,
             "name": front_matter.get("name"),
             "description": front_matter.get("description", ""),
             "version": front_matter.get("version"),
             "frontMatter": front_matter,
-            "parameters": resolve_parameters(front_matter.get("parameters"), parameter_imports),
-            "variables": resolve_variables(front_matter.get("variables"), variable_pages),
-            "commonVariables": resolve_variables(front_matter.get("commonVariables"), variable_pages),
+            "parameters": resolve_parameters(
+                front_matter.get("parameters"), parameter_imports
+            ),
+            "variables": resolve_variables(
+                front_matter.get("variables"), variable_pages
+            ),
+            "commonVariables": resolve_variables(
+                front_matter.get("commonVariables"), variable_pages
+            ),
             "headings": extract_headings(body),
             "summary": extract_summary(body),
             "codeBlocks": code_blocks,
@@ -340,12 +324,57 @@ def collect_pages() -> list[dict[str, Any]]:
     return pages
 
 
-def docs_git_revision() -> str:
-    """Read the git revision of the cloned official docs repo.
+def collect_wiki_pages() -> list[dict[str, Any]]:
+    """Collect and normalize Streamer.bot wiki markdown pages."""
 
-    Returns:
-        The current commit hash or an empty string if unavailable.
-    """
+    pages: list[dict[str, Any]] = []
+    if not WIKI_REPO_ROOT.exists():
+        return pages
+
+    for path in sorted(WIKI_REPO_ROOT.rglob("*.md")):
+        # Skip loose test files and non-content assets.
+        if path.name in {"test.md", "home.md", "README.md"}:
+            continue
+        text = read_text(path)
+        front_matter, body = split_front_matter(text)
+        relative_path = str(path.relative_to(WIKI_REPO_ROOT))
+        route = build_wiki_route(path)
+        title = front_matter.get("title") or path.stem.replace("-", " ").replace(
+            "_", " "
+        )
+        code_blocks = extract_code_blocks(body)
+        page = {
+            "sourceRepo": "streamerbot-wiki",
+            "sourcePath": relative_path,
+            "sourceUrl": f"https://github.com/Streamerbot/streamerbot-wiki/wiki{route}",
+            "route": route,
+            "section": infer_wiki_section(relative_path, title),
+            "title": title,
+            "name": title,
+            "description": front_matter.get("description", ""),
+            "version": front_matter.get("version"),
+            "frontMatter": front_matter,
+            "parameters": [],
+            "variables": [],
+            "commonVariables": [],
+            "headings": extract_headings(body),
+            "summary": extract_summary(body),
+            "codeBlocks": code_blocks,
+            "codeBlockCount": len(code_blocks),
+            "body": body.strip(),
+        }
+        pages.append(page)
+
+    return pages
+
+
+# ---------------------------------------------------------------------------
+# Git metadata
+# ---------------------------------------------------------------------------
+
+
+def git_revision(repo_root: Path) -> str:
+    """Read the current git HEAD revision for a repository."""
 
     try:
         result = subprocess.run(
@@ -353,36 +382,75 @@ def docs_git_revision() -> str:
             check=True,
             capture_output=True,
             text=True,
-            cwd=SOURCE_ROOT.parent,
+            cwd=repo_root,
         )
     except (OSError, subprocess.CalledProcessError):
         return ""
     return result.stdout.strip()
 
 
+def git_branches(repo_root: Path) -> list[dict[str, str]]:
+    """List all remote-tracking branches with their current commit."""
+
+    branches: list[dict[str, str]] = []
+    if not repo_root.exists():
+        return branches
+    try:
+        result = subprocess.run(
+            [
+                "git",
+                "branch",
+                "-r",
+                "--format=%(refname:short)	%(objectname:short)	%(subject)",
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+            cwd=repo_root,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return branches
+
+    for line in result.stdout.strip().splitlines():
+        parts = line.split("\t", 2)
+        if len(parts) < 2:
+            continue
+        ref, short_hash = parts[0], parts[1]
+        subject = parts[2] if len(parts) > 2 else ""
+        # Skip the duplicate HEAD symref.
+        if ref.endswith("/HEAD"):
+            continue
+        branches.append(
+            {
+                "name": ref,
+                "shortHash": short_hash,
+                "subject": subject,
+            }
+        )
+    return branches
+
+
+# ---------------------------------------------------------------------------
+# Filtering and slimming
+# ---------------------------------------------------------------------------
+
+
 def filter_pages(pages: list[dict[str, Any]], prefix: str) -> list[dict[str, Any]]:
-    """Filter normalized pages by source path prefix.
-
-    Args:
-        pages: All normalized page dictionaries.
-        prefix: Prefix to match beneath the official docs root.
-
-    Returns:
-        Matching page dictionaries.
-    """
+    """Filter normalized pages by source path prefix."""
 
     return [page for page in pages if page["sourcePath"].startswith(prefix)]
 
 
+def filter_by_section(
+    pages: list[dict[str, Any]], section: str
+) -> list[dict[str, Any]]:
+    """Filter normalized pages by inferred section/topic."""
+
+    return [page for page in pages if page.get("section") == section]
+
+
 def slim_page(page: dict[str, Any]) -> dict[str, Any]:
-    """Reduce a full page record to a compact searchable structure.
-
-    Args:
-        page: Full normalized page dictionary.
-
-    Returns:
-        Compact dictionary for JSON export.
-    """
+    """Reduce a full page record to a compact searchable structure."""
 
     return {
         "title": page["title"],
@@ -390,8 +458,10 @@ def slim_page(page: dict[str, Any]) -> dict[str, Any]:
         "description": page["description"],
         "version": page["version"],
         "route": page["route"],
+        "sourceRepo": page["sourceRepo"],
         "sourceUrl": page["sourceUrl"],
         "sourcePath": page["sourcePath"],
+        "section": page.get("section"),
         "headings": page["headings"],
         "summary": page["summary"],
         "parameters": page["parameters"],
@@ -402,49 +472,38 @@ def slim_page(page: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+# ---------------------------------------------------------------------------
+# Writers
+# ---------------------------------------------------------------------------
+
+
 def write_json(path: Path, data: Any) -> None:
-    """Write JSON with deterministic formatting.
-
-    Args:
-        path: Output file path.
-        data: JSON-serializable value.
-
-    Returns:
-        None.
-    """
+    """Write JSON with deterministic formatting."""
 
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        json.dumps(data, indent=2, sort_keys=False, ensure_ascii=False, default=str) + "\n",
+        json.dumps(data, indent=2, sort_keys=False, ensure_ascii=False, default=str)
+        + "\n",
         encoding="utf-8",
     )
 
 
 def write_markdown(path: Path, content: str) -> None:
-    """Write UTF-8 markdown text to disk.
-
-    Args:
-        path: Output markdown path.
-        content: Markdown content.
-
-    Returns:
-        None.
-    """
+    """Write UTF-8 markdown text to disk."""
 
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content.rstrip() + "\n", encoding="utf-8")
 
 
-def build_overview_markdown(pages: list[dict[str, Any]], manifests: dict[str, list[dict[str, Any]]]) -> str:
-    """Create a human-readable project overview from normalized docs.
+# ---------------------------------------------------------------------------
+# Markdown synthesizers
+# ---------------------------------------------------------------------------
 
-    Args:
-        pages: All normalized page dictionaries.
-        manifests: Grouped API and guide collections.
 
-    Returns:
-        Markdown overview text.
-    """
+def build_overview_markdown(
+    pages: list[dict[str, Any]], manifests: dict[str, list[dict[str, Any]]]
+) -> str:
+    """Create a human-readable project overview from normalized docs."""
 
     sections = Counter(page["section"] for page in pages)
     csharp_guides = manifests["csharp_guides"]
@@ -456,17 +515,20 @@ def build_overview_markdown(pages: list[dict[str, Any]], manifests: dict[str, li
     http_pages = manifests["http_pages"]
     websocket_pages = manifests["websocket_pages"]
     udp_pages = manifests["udp_pages"]
+    wiki_pages = manifests["wiki_pages"]
 
     lines = [
-        "# Streamer.bot Notes",
+        "# Streamer.bot Expert Notes",
         "",
         "## What Streamer.bot is",
         "",
-        "Streamer.bot is an event-driven automation tool for livestreamers. The official docs position it around actions, triggers, variables, platform connections, stream app integrations, and an embedded C# execution surface for custom logic.",
+        "Streamer.bot is an event-driven automation tool for livestreamers. The official docs position it around actions, triggers, variables, platform connections, stream app integrations, and an embedded C# execution surface for custom logic. The companion wiki adds practical walkthroughs, screenshots, and community recipes.",
         "",
-        "## What the official docs cover",
+        "## What the local docs snapshot covers",
         "",
-        f"- Total Streamer.bot markdown pages captured: **{len(pages)}**",
+        f"- Total markdown pages captured: **{len(pages)}**",
+        f"- Official docs pages: **{len([p for p in pages if p['sourceRepo'] == 'streamerbot-docs'])}**",
+        f"- Wiki pages: **{len(wiki_pages)}**",
         f"- API reference pages captured: **{sections['api']}**",
         f"- Guide pages captured: **{sections['guide']}**",
         f"- Get started pages captured: **{sections['get-started']}**",
@@ -502,9 +564,11 @@ def build_overview_markdown(pages: list[dict[str, Any]], manifests: dict[str, li
         "## Important local files",
         "",
         "- `index.json`: top-level manifest for fast lookup.",
-        "- `all-pages.json`: compact searchable catalog of all captured Streamer.bot docs pages.",
+        "- `all-pages.json`: compact searchable catalog of all captured Streamer.bot docs + wiki pages.",
         "- `api-calls/*.json`: structured API datasets by area.",
+        "- `topic-*.json` / `topic-*.md`: focused indexes for commands, triggers, timers, and queues.",
         "- `csharp-patterns/*.md`: opinionated notes for writing reliable inline Streamer.bot code.",
+        "- `no-code-packaging.md`: guide for building projects that non-programmer streamers can install out-of-the-box.",
         "",
         "## High-value guide areas",
         "",
@@ -517,15 +581,15 @@ def build_overview_markdown(pages: list[dict[str, Any]], manifests: dict[str, li
     for page in examples[:12]:
         lines.append(f"- `{page['title']}` — {page['sourceUrl']}")
 
+    lines.extend(["", "## Wiki highlights", ""])
+    for page in wiki_pages[:12]:
+        lines.append(f"- `{page['title']}` — {page['sourceUrl']}")
+
     return "\n".join(lines)
 
 
 def build_csharp_practices_markdown() -> str:
-    """Create a concise best-practices note for Streamer.bot inline C#.
-
-    Returns:
-        Markdown guidance focused on safe, performant inline code.
-    """
+    """Create a concise best-practices note for Streamer.bot inline C#."""
 
     return "\n".join(
         [
@@ -578,15 +642,15 @@ def build_csharp_practices_markdown() -> str:
             "    /// </returns>",
             "    public bool Execute()",
             "    {",
-            "        if (!CPH.TryGetArg(\"user\", out string user) || string.IsNullOrWhiteSpace(user))",
+            '        if (!CPH.TryGetArg("user", out string user) || string.IsNullOrWhiteSpace(user))',
             "            return false;",
             "",
-            "        int count = CPH.GetGlobalVar<int?>(\"interactionCount\", true) ?? 0;",
+            '        int count = CPH.GetGlobalVar<int?>("interactionCount", true) ?? 0;',
             "        count++;",
-            "        CPH.SetGlobalVar(\"interactionCount\", count, true);",
+            '        CPH.SetGlobalVar("interactionCount", count, true);',
             "",
-            "        CPH.LogInfo($\"Interaction from {user}; count={count}\");",
-            "        CPH.RunAction(\"Post Interaction Overlay\", false);",
+            '        CPH.LogInfo($"Interaction from {user}; count={count}");',
+            '        CPH.RunAction("Post Interaction Overlay", false);',
             "        return true;",
             "    }",
             "}",
@@ -607,7 +671,7 @@ def build_csharp_practices_markdown() -> str:
             "    /// </returns>",
             "    public bool Execute()",
             "    {",
-            "        if (!CPH.TryGetArg(\"rawInput\", out string rawInput))",
+            '        if (!CPH.TryGetArg("rawInput", out string rawInput))',
             "            return false;",
             "",
             "        return HandleInput(rawInput);",
@@ -616,7 +680,7 @@ def build_csharp_practices_markdown() -> str:
             "    /// <summary>",
             "    /// Handles a validated user input string and emits a log entry for later troubleshooting.",
             "    /// </summary>",
-            "    /// <param name=\"rawInput\">Non-null command or chat input provided by the current action context.</param>",
+            '    /// <param name="rawInput">Non-null command or chat input provided by the current action context.</param>',
             "    /// <returns>",
             "    /// True when the input is accepted; otherwise false to halt downstream execution.",
             "    /// </returns>",
@@ -625,7 +689,7 @@ def build_csharp_practices_markdown() -> str:
             "        if (string.IsNullOrWhiteSpace(rawInput))",
             "            return false;",
             "",
-            "        CPH.LogInfo($\"Handling input: {rawInput}\");",
+            '        CPH.LogInfo($"Handling input: {rawInput}");',
             "        return true;",
             "    }",
             "}",
@@ -635,11 +699,7 @@ def build_csharp_practices_markdown() -> str:
 
 
 def build_interactive_controls_markdown() -> str:
-    """Create design notes for interactive streamer controls using official APIs.
-
-    Returns:
-        Markdown guidance for Twitch and YouTube interaction design.
-    """
+    """Create design notes for interactive streamer controls using official APIs."""
 
     return "\n".join(
         [
@@ -671,16 +731,13 @@ def build_interactive_controls_markdown() -> str:
             "- Check `api-calls/sub-actions.json` for built-in action building blocks.",
             "- Check `api-calls/csharp-methods.json` for inline code methods.",
             "- Check `api-calls/http-api.json`, `websocket-api.json`, and `udp-api.json` for remote entrypoints.",
+            "- Check `topic-commands.json`, `topic-triggers.json`, `topic-timers.json`, and `topic-queues.json` for focused references.",
         ]
     )
 
 
 def build_quick_reference_markdown() -> str:
-    """Create a durable lookup note for future Streamer.bot questions.
-
-    Returns:
-        Markdown that points to the most useful local summary artifacts by task.
-    """
+    """Create a durable lookup note for future Streamer.bot questions."""
 
     return "\n".join(
         [
@@ -705,8 +762,13 @@ def build_quick_reference_markdown() -> str:
             "- **UDP control** → `api-calls/udp-api.json`",
             "- **General docs/guides** → `api-calls/guide-pages.json`",
             "- **Official examples** → `api-calls/examples.json`",
+            "- **Commands** → `topic-commands.json` / `topic-commands.md`",
+            "- **Triggers/Events** → `topic-triggers.json` / `topic-triggers.md`",
+            "- **Timers** → `topic-timers.json` / `topic-timers.md`",
+            "- **Queues** → `topic-queues.json` / `topic-queues.md`",
             "- **Best-practice code style** → `csharp-patterns/best-practices.md`",
             "- **Interactive stream control design** → `csharp-patterns/interactive-controls.md`",
+            "- **Packaging for non-programmers** → `no-code-packaging.md`",
             "",
             "## Important reminders",
             "",
@@ -723,19 +785,115 @@ def build_quick_reference_markdown() -> str:
     )
 
 
-def build_index(pages: list[dict[str, Any]], manifests: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
-    """Build the top-level summary manifest.
+def build_no_code_packaging_markdown() -> str:
+    """Create a guide for shipping Streamer.bot projects that non-coders can install."""
 
-    Args:
-        pages: All normalized page dictionaries.
-        manifests: Grouped collections already prepared for export.
+    return "\n".join(
+        [
+            "# Packaging Streamer.bot Projects for Non-Programmer Streamers",
+            "",
+            "The goal is for a streamer to copy an import string, paste it into Streamer.bot, and have a working project with sensible defaults and easy configuration.",
+            "",
+            "## One-paste install",
+            "",
+            "- Generate a Streamer.bot import string for every release. Put it in `import_code.txt` in the project folder.",
+            "- Keep the import self-contained: actions, commands, timers, queues, variables, and OBS sources/browser sources it needs.",
+            "- Test the import in a clean Streamer.bot profile before publishing.",
+            "",
+            "## Configuration without code",
+            "",
+            "- Surface all tunables through Streamer.bot globals (e.g., `ProjectName::Enabled`, `ProjectName::CooldownSeconds`).",
+            "- Provide a single 'Settings' action that validates and sets those globals with clear labels.",
+            "- Use chat commands only for runtime control; first-time setup should happen through the Settings action or a simple JSON config file read by a C# sub-action.",
+            "- Document every global in the README with copy-paste names so streamers do not have to guess.",
+            "",
+            "## Friendly defaults",
+            "",
+            "- Default to safe, low-risk values (long cooldowns, moderator-only commands, disabled optional features).",
+            "- Add a 'First Time Setup' command that prints the current configuration and usage instructions.",
+            "- Prefer built-in sub-actions over custom C# when a built-in one exists; it makes the project easier to audit and modify.",
+            "",
+            "## Compact, powerful C# when needed",
+            "",
+            "- Keep C# blocks small and focused on one job: parse input, read/write globals, decide what to do, return true/false.",
+            "- Let actions handle presentation: chat messages, OBS visibility, sound playback, overlays.",
+            "- Expose helper methods inside the CPHInline class so complex logic can be unit-tested mentally by reading one screen.",
+            "- Log configuration errors clearly so a streamer can report them without reading code.",
+            "",
+            "## Commands, triggers, timers, queues",
+            "",
+            "- Commands: use groups and clear names. Provide aliases only when they do not conflict with common bot commands.",
+            "- Triggers: subscribe only to events the project actually uses; avoid catch-all triggers that fire constantly.",
+            "- Timers: randomize interval slightly or use the built-in timer sub-action to avoid chat-pattern predictability.",
+            "- Queues: name queues after the project so they are easy to find. Document whether a queue is meant to be paused/resumed manually.",
+            "",
+            "## Distribution checklist",
+            "",
+            "- [ ] README explains what the project does and who it is for.",
+            "- [ ] `import_code.txt` is present and tested on the target Streamer.bot version.",
+            "- [ ] `README.md` has a 'Quick Start' section: paste, configure globals, enable.",
+            "- [ ] A list of required permissions (Twitch scopes, OBS connection, etc.) is included.",
+            "- [ ] Troubleshooting section covers the most common failure modes.",
+            "- [ ] Optional: a preview video or screenshots of the setup steps.",
+            "",
+            "## Reference these local files while building",
+            "",
+            "- `topic-commands.json` / `topic-commands.md`",
+            "- `topic-triggers.json` / `topic-triggers.md`",
+            "- `topic-timers.json` / `topic-timers.md`",
+            "- `topic-queues.json` / `topic-queues.md`",
+            "- `api-calls/csharp-methods.json`",
+            "- `api-calls/sub-actions.json`",
+        ]
+    )
 
-    Returns:
-        Manifest dictionary for index.json.
-    """
+
+def build_topic_markdown(
+    title: str, description: str, pages: list[dict[str, Any]]
+) -> str:
+    """Build a focused topic overview from a filtered page list."""
+
+    lines = [
+        f"# {title}",
+        "",
+        description,
+        "",
+        f"## Pages captured ({len(pages)})",
+        "",
+    ]
+    for page in pages[:40]:
+        lines.append(
+            f"- [`{page['title']}`]({page['sourceUrl']}) — {page.get('description', '') or page.get('summary', '').splitlines()[0] if page.get('summary') else ''}"
+        )
+    if len(pages) > 40:
+        lines.append(
+            f"- … and {len(pages) - 40} more. See `topic-{title.lower().replace(' ', '-').replace('/', '-')}.json`."
+        )
+    lines.append("")
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
+# Index builder
+# ---------------------------------------------------------------------------
+
+
+def build_index(
+    pages: list[dict[str, Any]],
+    manifests: dict[str, list[dict[str, Any]]],
+    branches: dict[str, list[dict[str, str]]],
+) -> dict[str, Any]:
+    """Build the top-level summary manifest."""
 
     counts = {
         "allPages": len(pages),
+        "docsPages": len([p for p in pages if p["sourceRepo"] == "streamerbot-docs"]),
+        "wikiPages": len(manifests["wiki_pages"]),
+        "api": sum(1 for p in pages if p.get("section") == "api"),
+        "guide": sum(1 for p in pages if p.get("section") == "guide"),
+        "getStarted": sum(1 for p in pages if p.get("section") == "get-started"),
+        "examples": sum(1 for p in pages if p.get("section") == "examples"),
+        "changelogs": sum(1 for p in pages if p.get("section") == "changelogs"),
         "csharpGuides": len(manifests["csharp_guides"]),
         "csharpMethods": len(manifests["csharp_methods"]),
         "csharpClasses": len(manifests["csharp_classes"]),
@@ -745,21 +903,35 @@ def build_index(pages: list[dict[str, Any]], manifests: dict[str, list[dict[str,
         "httpPages": len(manifests["http_pages"]),
         "websocketPages": len(manifests["websocket_pages"]),
         "udpPages": len(manifests["udp_pages"]),
-        "guidePages": len(manifests["guide_pages"]),
-        "examplePages": len(manifests["example_pages"]),
+        "commandPages": len(manifests["topic_commands"]),
+        "triggerPages": len(manifests["topic_triggers"]),
+        "timerPages": len(manifests["topic_timers"]),
+        "queuePages": len(manifests["topic_queues"]),
     }
 
     return {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
-        "officialDocs": {
-            "site": "https://docs.streamer.bot/",
-            "repo": "https://github.com/Streamerbot/docs",
-            "revision": docs_git_revision(),
+        "sources": {
+            "officialDocs": {
+                "site": "https://docs.streamer.bot/",
+                "repo": "https://github.com/Streamerbot/docs",
+                "localRoot": "streamerbot-docs",
+                "revision": git_revision(DOCS_REPO_ROOT),
+                "branches": branches.get("streamerbot-docs", []),
+            },
+            "wiki": {
+                "site": "https://github.com/Streamerbot/streamerbot-wiki/wiki",
+                "repo": "https://github.com/Streamerbot/streamerbot-wiki",
+                "localRoot": "streamerbot-wiki",
+                "revision": git_revision(WIKI_REPO_ROOT),
+                "branches": branches.get("streamerbot-wiki", []),
+            },
         },
         "counts": counts,
         "files": {
             "overview": "overview.md",
             "allPages": "all-pages.json",
+            "workBranches": "work-branches.json",
             "csharpMethods": "api-calls/csharp-methods.json",
             "csharpGuides": "api-calls/csharp-guides.json",
             "csharpClasses": "api-calls/csharp-classes.json",
@@ -771,9 +943,15 @@ def build_index(pages: list[dict[str, Any]], manifests: dict[str, list[dict[str,
             "udpApi": "api-calls/udp-api.json",
             "guidePages": "api-calls/guide-pages.json",
             "examples": "api-calls/examples.json",
+            "wikiPages": "api-calls/wiki-pages.json",
+            "topicCommands": "topic-commands.json",
+            "topicTriggers": "topic-triggers.json",
+            "topicTimers": "topic-timers.json",
+            "topicQueues": "topic-queues.json",
             "csharpBestPractices": "csharp-patterns/best-practices.md",
             "interactiveControls": "csharp-patterns/interactive-controls.md",
             "quickReference": "QUICK-REFERENCE.md",
+            "noCodePackaging": "no-code-packaging.md",
             "worklog": "WORKLOG.md",
         },
         "highlights": {
@@ -782,6 +960,7 @@ def build_index(pages: list[dict[str, Any]], manifests: dict[str, list[dict[str,
                 "Triggers supply event-driven execution.",
                 "Variables carry event state and shared state.",
                 "Inline C# extends built-in sub-actions through the CPH API.",
+                "Commands, timers, and queues manage how viewers interact with the bot.",
             ],
             "csharpGuidance": [
                 "Use CPH.TryGetArg<T>() for safe argument access.",
@@ -793,49 +972,180 @@ def build_index(pages: list[dict[str, Any]], manifests: dict[str, list[dict[str,
     }
 
 
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+
 def main() -> None:
-    """Generate all local summary artifacts from the official docs clone.
+    """Generate all local summary artifacts from the docs and wiki clones."""
 
-    Returns:
-        None.
-    """
+    if not DOCS_SOURCE_ROOT.exists():
+        raise SystemExit(f"Official docs root not found: {DOCS_SOURCE_ROOT}")
 
-    if not SOURCE_ROOT.exists():
-        raise SystemExit(f"Official docs root not found: {SOURCE_ROOT}")
+    docs_pages = collect_docs_pages()
+    wiki_pages = collect_wiki_pages()
+    all_pages = docs_pages + wiki_pages
 
-    pages = collect_pages()
+    # Topic-focused filters (cross docs + wiki).
+    topic_commands = [
+        slim_page(p)
+        for p in all_pages
+        if infer_wiki_section(p["sourcePath"], p["title"]) == "commands"
+    ]
+    topic_triggers = [
+        slim_page(p)
+        for p in all_pages
+        if infer_wiki_section(p["sourcePath"], p["title"]) == "triggers"
+    ]
+    topic_timers = [
+        slim_page(p)
+        for p in all_pages
+        if infer_wiki_section(p["sourcePath"], p["title"]) == "timers"
+    ]
+    topic_queues = [
+        slim_page(p)
+        for p in all_pages
+        if infer_wiki_section(p["sourcePath"], p["title"]) == "queues"
+    ]
+
     manifests = {
-        "all_pages": [slim_page(page) for page in pages],
-        "csharp_guides": [slim_page(page) for page in filter_pages(pages, "3.api/3.csharp/0.guide/") + filter_pages(pages, "3.api/3.csharp/1.recipes/")],
-        "csharp_methods": [slim_page(page) for page in filter_pages(pages, "3.api/3.csharp/3.methods/")],
-        "csharp_classes": [slim_page(page) for page in filter_pages(pages, "3.api/3.csharp/4.classes/")],
-        "csharp_enums": [slim_page(page) for page in filter_pages(pages, "3.api/3.csharp/5.enums/")],
-        "sub_actions": [slim_page(page) for page in filter_pages(pages, "3.api/1.sub-actions/")],
-        "triggers": [slim_page(page) for page in filter_pages(pages, "3.api/2.triggers/")],
-        "http_pages": [slim_page(page) for page in filter_pages(pages, "3.api/5.http/")],
-        "websocket_pages": [slim_page(page) for page in filter_pages(pages, "3.api/4.websocket/")],
-        "udp_pages": [slim_page(page) for page in filter_pages(pages, "3.api/6.udp/")],
-        "guide_pages": [slim_page(page) for page in filter_pages(pages, "2.guide/") + filter_pages(pages, "1.get-started/")],
-        "example_pages": [slim_page(page) for page in filter_pages(pages, "4.examples/")],
+        "all_pages": [slim_page(page) for page in all_pages],
+        "wiki_pages": [slim_page(page) for page in wiki_pages],
+        "csharp_guides": [
+            slim_page(page)
+            for page in filter_pages(docs_pages, "3.api/3.csharp/0.guide/")
+            + filter_pages(docs_pages, "3.api/3.csharp/1.recipes/")
+        ],
+        "csharp_methods": [
+            slim_page(page)
+            for page in filter_pages(docs_pages, "3.api/3.csharp/3.methods/")
+        ],
+        "csharp_classes": [
+            slim_page(page)
+            for page in filter_pages(docs_pages, "3.api/3.csharp/4.classes/")
+        ],
+        "csharp_enums": [
+            slim_page(page)
+            for page in filter_pages(docs_pages, "3.api/3.csharp/5.enums/")
+        ],
+        "sub_actions": [
+            slim_page(page) for page in filter_pages(docs_pages, "3.api/1.sub-actions/")
+        ],
+        "triggers": [
+            slim_page(page) for page in filter_pages(docs_pages, "3.api/2.triggers/")
+        ],
+        "http_pages": [
+            slim_page(page) for page in filter_pages(docs_pages, "3.api/5.http/")
+        ],
+        "websocket_pages": [
+            slim_page(page) for page in filter_pages(docs_pages, "3.api/4.websocket/")
+        ],
+        "udp_pages": [
+            slim_page(page) for page in filter_pages(docs_pages, "3.api/6.udp/")
+        ],
+        "guide_pages": [
+            slim_page(page)
+            for page in filter_pages(docs_pages, "2.guide/")
+            + filter_pages(docs_pages, "1.get-started/")
+        ],
+        "example_pages": [
+            slim_page(page) for page in filter_pages(docs_pages, "4.examples/")
+        ],
+        "topic_commands": topic_commands,
+        "topic_triggers": topic_triggers,
+        "topic_timers": topic_timers,
+        "topic_queues": topic_queues,
     }
 
+    branches = {
+        "streamerbot-docs": git_branches(DOCS_REPO_ROOT),
+        "streamerbot-wiki": git_branches(WIKI_REPO_ROOT),
+    }
+
+    # Core datasets.
     write_json(OUTPUT_ROOT / "all-pages.json", manifests["all_pages"])
-    write_json(OUTPUT_ROOT / "api-calls" / "csharp-guides.json", manifests["csharp_guides"])
-    write_json(OUTPUT_ROOT / "api-calls" / "csharp-methods.json", manifests["csharp_methods"])
-    write_json(OUTPUT_ROOT / "api-calls" / "csharp-classes.json", manifests["csharp_classes"])
-    write_json(OUTPUT_ROOT / "api-calls" / "csharp-enums.json", manifests["csharp_enums"])
+    write_json(OUTPUT_ROOT / "work-branches.json", branches)
+    write_json(
+        OUTPUT_ROOT / "api-calls" / "csharp-guides.json", manifests["csharp_guides"]
+    )
+    write_json(
+        OUTPUT_ROOT / "api-calls" / "csharp-methods.json", manifests["csharp_methods"]
+    )
+    write_json(
+        OUTPUT_ROOT / "api-calls" / "csharp-classes.json", manifests["csharp_classes"]
+    )
+    write_json(
+        OUTPUT_ROOT / "api-calls" / "csharp-enums.json", manifests["csharp_enums"]
+    )
     write_json(OUTPUT_ROOT / "api-calls" / "sub-actions.json", manifests["sub_actions"])
     write_json(OUTPUT_ROOT / "api-calls" / "triggers.json", manifests["triggers"])
     write_json(OUTPUT_ROOT / "api-calls" / "http-api.json", manifests["http_pages"])
-    write_json(OUTPUT_ROOT / "api-calls" / "websocket-api.json", manifests["websocket_pages"])
+    write_json(
+        OUTPUT_ROOT / "api-calls" / "websocket-api.json", manifests["websocket_pages"]
+    )
     write_json(OUTPUT_ROOT / "api-calls" / "udp-api.json", manifests["udp_pages"])
     write_json(OUTPUT_ROOT / "api-calls" / "guide-pages.json", manifests["guide_pages"])
     write_json(OUTPUT_ROOT / "api-calls" / "examples.json", manifests["example_pages"])
-    write_markdown(OUTPUT_ROOT / "overview.md", build_overview_markdown(pages, manifests))
+    write_json(OUTPUT_ROOT / "api-calls" / "wiki-pages.json", manifests["wiki_pages"])
+
+    # Topic-focused datasets.
+    write_json(OUTPUT_ROOT / "topic-commands.json", manifests["topic_commands"])
+    write_json(OUTPUT_ROOT / "topic-triggers.json", manifests["topic_triggers"])
+    write_json(OUTPUT_ROOT / "topic-timers.json", manifests["topic_timers"])
+    write_json(OUTPUT_ROOT / "topic-queues.json", manifests["topic_queues"])
+
+    # Readable summaries.
+    write_markdown(
+        OUTPUT_ROOT / "overview.md", build_overview_markdown(all_pages, manifests)
+    )
     write_markdown(OUTPUT_ROOT / "QUICK-REFERENCE.md", build_quick_reference_markdown())
-    write_markdown(OUTPUT_ROOT / "csharp-patterns" / "best-practices.md", build_csharp_practices_markdown())
-    write_markdown(OUTPUT_ROOT / "csharp-patterns" / "interactive-controls.md", build_interactive_controls_markdown())
-    write_json(OUTPUT_ROOT / "index.json", build_index(pages, manifests))
+    write_markdown(
+        OUTPUT_ROOT / "no-code-packaging.md", build_no_code_packaging_markdown()
+    )
+    write_markdown(
+        OUTPUT_ROOT / "topic-commands.md",
+        build_topic_markdown(
+            "Commands",
+            "Chat commands: how they are defined, matched, grouped, cooled down, and wired to actions.",
+            manifests["topic_commands"],
+        ),
+    )
+    write_markdown(
+        OUTPUT_ROOT / "topic-triggers.md",
+        build_topic_markdown(
+            "Triggers & Events",
+            "Triggers fire actions in response to Twitch, YouTube, OBS, timer, and custom events.",
+            manifests["topic_triggers"],
+        ),
+    )
+    write_markdown(
+        OUTPUT_ROOT / "topic-timers.md",
+        build_topic_markdown(
+            "Timers",
+            "Timed actions that run on an interval or randomized schedule.",
+            manifests["topic_timers"],
+        ),
+    )
+    write_markdown(
+        OUTPUT_ROOT / "topic-queues.md",
+        build_topic_markdown(
+            "Action Queues",
+            "Action queues let you serialize, pause, resume, and manage concurrent action execution.",
+            manifests["topic_queues"],
+        ),
+    )
+    write_markdown(
+        OUTPUT_ROOT / "csharp-patterns" / "best-practices.md",
+        build_csharp_practices_markdown(),
+    )
+    write_markdown(
+        OUTPUT_ROOT / "csharp-patterns" / "interactive-controls.md",
+        build_interactive_controls_markdown(),
+    )
+
+    # Top-level manifest.
+    write_json(OUTPUT_ROOT / "index.json", build_index(all_pages, manifests, branches))
 
 
 if __name__ == "__main__":

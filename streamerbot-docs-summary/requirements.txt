@@ -1,0 +1,4 @@
+# Dependencies for the Streamer.bot documentation summary builder.
+# Install with: python3 -m pip install -r requirements.txt
+
+PyYAML>=6.0

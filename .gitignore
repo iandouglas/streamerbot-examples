@@ -1,0 +1,9 @@
+*.pyc
+.venv
+venv
+__pycache__
+
+streamerbot-docs
+streamerbot-typescript-websocket-client
+streamerbot-wiki
+
