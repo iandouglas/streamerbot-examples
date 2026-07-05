@@ -22,8 +22,8 @@
     },
     {
       "name": "origin/main",
-      "shortHash": "35b2b63",
-      "subject": "add missing variables for twitch rewards (#427)"
+      "shortHash": "8242370",
+      "subject": "Clarify 'duration' parameter description in speak.md (#428)"
     }
   ],
   "streamerbot-wiki": [

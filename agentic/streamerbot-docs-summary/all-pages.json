@@ -12249,7 +12249,7 @@
       },
       {
         "name": "duration",
-        "description": "The duration of the speech, when the delay option is used",
+        "description": "The duration of the speech in milliseconds. Only available when the Delay or Silent options are used.",
         "type": "number"
       }
     ],
