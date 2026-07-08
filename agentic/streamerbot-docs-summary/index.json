@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-04T03:16:59.638065+00:00",
+  "generatedAt": "2026-07-05T09:00:41.391927+00:00",
   "sources": {
     "officialDocs": {
       "site": "https://docs.streamer.bot/",
       "repo": "https://github.com/Streamerbot/docs",
       "localRoot": "agentic/streamerbot-docs",
-      "revision": "35b2b63f7b8ae6e606ecd148e4c12e855ad928cc",
+      "revision": "8242370ba620177b926b4c442ec330b720b3568c",
       "branches": [
         {
           "name": "origin/Mustached-Maniac-patch-1",
@@ -29,8 +29,8 @@
         },
         {
           "name": "origin/main",
-          "shortHash": "35b2b63",
-          "subject": "add missing variables for twitch rewards (#427)"
+          "shortHash": "8242370",
+          "subject": "Clarify 'duration' parameter description in speak.md (#428)"
         }
       ]
     },
