@@ -1,39 +1,46 @@
 # Twitch Ad Awareness
 
-Streamer.bot has a way to notify you if ads are going to start, in one-minute intervals, from 1 minute ahead to 5 minutes ahead. This mechanism is also informed, by Twitch, how long the ads will last.
+Streamer.bot can notify you about upcoming Twitch ads at one-minute intervals before they start, and also tells you how long the ads will last.
 
-This set of actions and C# code will write a chat message to Twitch chat that ads are going to start, and how long they will last, as well as send a Twitch Chat when ads are over.
+This set of actions and C# code will write chat messages when ads are about to start, when they start, and when they finish. It uses the shared helper DLL `iandouglas736.dll` for time helpers and cross-platform chat sending.
+
+## Requirements
+
+Install the shared helper DLL following the main [`README.md`](../../README.md) or [`dlls-needed/README.md`](../../dlls-needed/README.md).
+
+## Files
+
+| File | Purpose |
+|---|---|
+| `ad-awareness.cs` | Triggered by the `Twitch → Ads` event. Stores ad timing and enables the watch timer. |
+| `ad-watch-logic.cs` | Runs on the timer. Sends the "ads starting" and "ads over" messages and resets the timer. |
 
 ## Setup
 
-Import the code from `import_code.txt` into Streamer.bot using the Import feature.
+1. Create the actions manually in Streamer.bot.
+2. Open the `ad awareness` action and paste `ad-awareness.cs` into the **Execute C# Code** sub-action.
+3. Open the `ad watch logic` action and paste `ad-watch-logic.cs` into its **Execute C# Code** sub-action.
+4. Click **Compile** on each.
+5. Trigger the `Twitch → Ads` event to test (right-click the trigger and choose **Test Trigger**).
 
-### "ad awareness" action
+## Customizing messages
 
-This action will be triggered by the "Twitch > Ads" source and is set to notifying chat one minute ahead of time, but you can enable one or more of these by double-clicking on the trigger and picking however many alerts you want to show up in chat.
+Edit these lines in `ad-watch-logic.cs`:
 
-#### Check and compile the C# code
+- Line sending `"Ads have started, see you in ..."` — message shown when ads begin.
+- Line sending `"Ads are over KAPOW Welcome back to the stream!"` — message shown when ads end.
 
-Double-click on the "Execute Code" sub-action.
+You can swap `KAPOW` for any Twitch emote you prefer. On YouTube/Kick, the text will appear without the emote.
 
-The code gets the alert data from Twitch about the ads: when they're going to start and how long they'll last. The C# code stores a few temporary values in memory in Streamer.bot and then activates a necessary timer and secondary action called "ad watch logic" that does all the work from there.
+## How it works
 
-Click the "Compile" button at the bottom of the code window, and then the "Save and Compile" button to close the window. If the "Compile" button gives you an errors, try clicking the "Find Refs" button, then the "Compile" button again. If you still have trouble, come ask in my [Discord community](https://736.fyi/discord) for free help.
+- `ad-awareness.cs` reads the ad notification from Twitch, computes start and finish epoch times, and stores them in non-persisted global variables.
+- It enables the `ad awareness timer` and the `ad watch logic` action.
+- `ad-watch-logic.cs` runs repeatedly on that timer. It checks the current time against the stored epochs and:
+  - Schedules the timer to fire right when ads start.
+  - Sends the "ads have started" message when ads begin.
+  - Sends the "ads are over" message when ads end, then disables itself.
 
-You can right-click on the "Twitch > Ads" trigger and pick the "Test Trigger" at the top to watch your Twitch chat to see what will happen.
+## Support
 
-### "ad water logic" action
-
-This is the heart of the ad awareness.
-
-This action uses and resets some timers. Line 44 is the message that prints to chat as ads are starting. Line 48 is the message that prints when the ads are over. You can customize these and write in the names of your own emotes if you want.
-
-#### Run some C# code
-
-Double-click on the "Execute Code" sub-action.
-
-The message sent to Twitch Chat is on line 13 and uses the "HeyGuys" global Twitch icon as a "wave" greeting. You can customize this string however you like.
-
-Click the "Compile" button at the bottom of the code window, and then the "Save and Compile" button to close the window. If the "Compile" button gives you an errors, try clicking the "Find Refs" button, then the "Compile" button again. If you still have trouble, come ask in my [Discord community](https://736.fyi/discord) for free help.
-
-You can right-click on the "Twitch > Ads" trigger and pick the "Test Trigger" at the top to watch your Twitch chat to see what will happen.
+If you need help, join [my Discord community](https://736.fyi/discord) and I'll provide free support.

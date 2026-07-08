@@ -1,43 +1,56 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using id736 = iandouglas736;
 
 public class CPHInline
 {
-    public void SendMessage(string username, string message, string msgId, bool fromBot=true)
-    {
-        if(msgId != "")
-            CPH.TwitchReplyToMessage($"TwitchSings {message}", msgId, fromBot, true);
-        else
-            CPH.SendMessage($"TwitchSings @{username}: {message}", fromBot);
-    }
 	public bool Execute()
 	{
-        string msgId ;
-        CPH.TryGetArg("msgId", out msgId);
-		CPH.TryGetArg("userName", out string username);
+		id736.Chat.SetContext(CPH);
+		id736.Points.SetContext(CPH);
 
-        Dictionary<string, Dictionary<string, int>> stockPrices = CPH.GetGlobalVar<Dictionary<string, Dictionary<string, int>>>("EmoteStockGame_prices", true);
-        Dictionary<string, int> stocks = CPH.GetTwitchUserVar<Dictionary<string, int>>(username, "stocks", true);
-        int points = CPH.GetTwitchUserVar<int>(username, "points", true);
+		string msgId = args.ContainsKey("msgId") ? args["msgId"].ToString() : null;
+		string userName = id736.Chat.GetCurrentUserName();
+		string platform = id736.Chat.GetCurrentPlatform();
 
-        if (stocks == null) {
-            string msg = $"Sorry, you don't own any stock, but you do have {points} points to buy some.";
-            SendMessage(username, msg, msgId, true);
-            return false;
-        }
+		if (string.IsNullOrWhiteSpace(userName))
+		{
+			CPH.LogWarn("[StockGame] could not determine username");
+			return false;
+		}
 
-        var keys = Enumerable.ToList((IEnumerable<string>)stocks.Keys);
+		string stockPricesJson = CPH.GetGlobalVar<string>("EmoteStockGame_prices", true);
+		var stockPrices = id736.Data.FromJson<Dictionary<string, Dictionary<string, int>>>(stockPricesJson)
+			?? new Dictionary<string, Dictionary<string, int>>(StringComparer.OrdinalIgnoreCase);
 
-        string stockMsg = "Current stocks: ";
-        foreach (var key in keys)
-        {
-            if (stocks[key] > 0)
-                stockMsg += $" ... {stocks[key]} x {key} (value ${stockPrices[key]["currentPrice"] * stocks[key]})";
-        }
-        stockMsg += $"; you have {points} points.";
+		var stocks = id736.Points.GetDictionary(userName, platform, "stocks");
+		int points = id736.Points.Get(userName, platform, "points");
 
-        SendMessage(username, stockMsg, msgId, false);
+		if (stocks == null || stocks.Count == 0)
+		{
+			id736.Chat.SendReplyOrMessage($"Sorry, you don't own any stock, but you do have {points} points to buy some.", msgId);
+			return false;
+		}
+
+		var parts = new List<string>();
+		foreach (var kvp in stocks)
+		{
+			string stockName = kvp.Key;
+			int quantity = kvp.Value;
+			if (quantity <= 0)
+				continue;
+
+			int currentPrice = stockPrices.ContainsKey(stockName) ? stockPrices[stockName]["currentPrice"] : 0;
+			int value = currentPrice * quantity;
+			parts.Add($"{quantity} x {stockName} (value {value}pts)");
+		}
+
+		string stockMsg = parts.Count > 0
+			? $"Current stocks: {string.Join(" ... ", parts)}; you have {points} points."
+			: $"You don't own any stock right now, but you have {points} points.";
+
+		id736.Chat.SendReplyOrMessage(stockMsg, msgId);
 		return true;
 	}
 }

@@ -1,23 +1,34 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using id736 = iandouglas736;
 
 public class CPHInline
 {
 	public bool Execute()
 	{
-        Dictionary<string, Dictionary<string, int>> stocks = CPH.GetGlobalVar<Dictionary<string, Dictionary<string, int>>>("EmoteStockGame_prices", true);
+		id736.Chat.SetContext(CPH);
 
-        var keys = Enumerable.ToList((IEnumerable<string>)stocks.Keys);
+		string stockPricesJson = CPH.GetGlobalVar<string>("EmoteStockGame_prices", true);
+		var stocks = id736.Data.FromJson<Dictionary<string, Dictionary<string, int>>>(stockPricesJson)
+			?? new Dictionary<string, Dictionary<string, int>>(StringComparer.OrdinalIgnoreCase);
 
-        string priceMsg = "TwitchSings Current stocks: ";
-        foreach (var key in keys)
-        {
-            priceMsg += $"{key} : ${stocks[key]["currentPrice"]} ... ";
-        }
+		if (stocks.Count == 0)
+		{
+			id736.Chat.SendMessage("No stocks are available right now. The market hasn't opened yet!");
+			return false;
+		}
 
-        priceMsg += "to see your stock portfolio use !holdings";
-        CPH.SendMessage(priceMsg, false);
+		string platform = id736.Chat.GetCurrentPlatform();
+		string emote = platform == "twitch" ? "TwitchSings " : "";
+
+		var priceParts = stocks
+			.OrderBy(kvp => kvp.Key, StringComparer.OrdinalIgnoreCase)
+			.Select(kvp => $"{kvp.Key} : {kvp.Value["currentPrice"]}pts")
+			.ToList();
+
+		string message = $"{emote}Current stocks: {string.Join(" ... ", priceParts)} -- use !holdings to see your portfolio";
+		id736.Chat.SendMessage(message, false);
 		return true;
 	}
 }

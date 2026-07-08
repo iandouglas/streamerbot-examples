@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using id736 = iandouglas736;
 
 public class CPHInline
 {
     public bool Execute()
     {
+        id736.Chat.SetContext(CPH);
+
         if (!CPH.TryGetArg("rawInput", out string target))
             return false;
 
@@ -14,26 +16,28 @@ public class CPHInline
             return false;
 
         List<string> queue = CPH.GetGlobalVar<List<string>>("shoutoutQueue", true);
-        if (queue == null) {
-            queue = new();
-        }
+        if (queue == null)
+            queue = new List<string>();
 
         if (queue.Contains(target))
             return true;
 
         queue.Add(target);
 
-        long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        long now = id736.Time.NowEpoch();
         long lastShoutoutEpoch = CPH.GetGlobalVar<long>("lastShoutoutEpoch", true);
-        if (lastShoutoutEpoch != null && (now - lastShoutoutEpoch < 120)) {
-            string msgId = "";
-	    	CPH.TryGetArg("msgId", out msgId);
-            CPH.TwitchReplyToMessage("shoutout queued, thanks!", msgId, true);
+        if (lastShoutoutEpoch > 0 && (now - lastShoutoutEpoch < 120))
+        {
+            string msgId = args.ContainsKey("msgId") ? args["msgId"].ToString() : null;
+            id736.Chat.SendReplyOrMessage("shoutout queued, thanks!", msgId);
         }
 
         CPH.SetGlobalVar("shoutoutQueue", queue, true);
-        CPH.SetTimerInterval("shoutout timer", 2);
-        CPH.EnableTimer("shoutout timer");
+        CPH.EnableAction("!so (timer)");
+
+        // Ensure the timer context is set, then start/reset the shoutout timer to 2 seconds.
+        id736.Timers.SetContext(CPH);
+        id736.Timers.ResetTimerById("shoutout timer", 2);
         return true;
     }
 }

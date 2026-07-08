@@ -1,65 +1,74 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using id736 = iandouglas736;
 
 public class CPHInline
 {
-    public void SendReply(string username, string message, string msgId="", bool fromBot=true)
-    {
-        if (msgId != "") {
-            message = $"TwitchSings {message}";
-            CPH.TwitchReplyToMessage(message, msgId, fromBot);
-            return;
-        }
-        message = $"TwitchSings @{username}: ";
-        CPH.SendMessage(message, fromBot);
-    }
 	public bool Execute()
 	{
-        string msgId = "";
-		CPH.TryGetArg("msgId", out msgId);
-		CPH.TryGetArg("userName", out string username);
+		id736.Chat.SetContext(CPH);
+		id736.Points.SetContext(CPH);
 
-        Dictionary<string, Dictionary<string, int>> stockPrices = CPH.GetGlobalVar<Dictionary<string, Dictionary<string, int>>>("EmoteStockGame_prices", true);
-        Dictionary<string, int> stocks = CPH.GetTwitchUserVar<Dictionary<string, int>>(username, "stocks", true);
-        if (stocks == null) {
-            stocks = new();
-        }
-        int points = CPH.GetTwitchUserVar<int>(username, "points", true);
+		string msgId = args.ContainsKey("msgId") ? args["msgId"].ToString() : null;
+		string userName = id736.Chat.GetCurrentUserName();
+		string platform = id736.Chat.GetCurrentPlatform();
 
-        if (!CPH.TryGetArg("match[2]", out string stockName))
-        {
-            SendReply(username, $"Sorry I don't have a matching stock to buy.", msgId, true);
-            return false;
-        }
+		if (string.IsNullOrWhiteSpace(userName))
+		{
+			CPH.LogWarn("[StockGame] could not determine username");
+			return false;
+		}
 
-        if (!CPH.TryGetArg("match[4]", out string quantityRaw))
-        {
-            SendReply(username, $"Sorry, I couldn't understand how many stock you wanted to buy.", msgId, true);
-            return false;
-        }
-        if (! int.TryParse(quantityRaw, out int stockQuantity))
-        {
-            SendReply(username, $"Sorry, that quantity doesn't look like a number number.", msgId, true);
-            return false;
-        }
-        int cost = stockPrices[stockName]["currentPrice"] * stockQuantity;
+		string stockPricesJson = CPH.GetGlobalVar<string>("EmoteStockGame_prices", true);
+		var stockPrices = id736.Data.FromJson<Dictionary<string, Dictionary<string, int>>>(stockPricesJson)
+			?? new Dictionary<string, Dictionary<string, int>>(StringComparer.OrdinalIgnoreCase);
 
-        if (cost > points) {
-            SendReply(username, $"Sorry, you don't have enough points to buy that many stock.", msgId, true);
-            return false;
-        }
+		var stocks = id736.Points.GetDictionary(userName, platform, "stocks");
+		int points = id736.Points.Get(userName, platform, "points");
 
-        if (stocks.Count == 0 || ! stocks.ContainsKey(stockName)) {
-            stocks[stockName] = 0 ;
-        }
-        stocks[stockName] += stockQuantity ;
+		if (!CPH.TryGetArg("match[2]", out string stockName))
+		{
+			id736.Chat.SendReplyOrMessage("Sorry, I don't have a matching stock to buy.", msgId);
+			return false;
+		}
 
-        points -= cost;
-        CPH.SetTwitchUserVar(username, "stocks", stocks, true);
-        CPH.SetTwitchUserVar(username, "points", points, true);
+		if (!stockPrices.ContainsKey(stockName))
+		{
+			id736.Chat.SendReplyOrMessage($"Sorry, '{stockName}' is not a valid stock.", msgId);
+			return false;
+		}
 
-        SendReply(username, $"TheIlluminati You have bought {quantityRaw} of {stockName} for ${cost} points TheIlluminati", msgId, true);
+		if (!CPH.TryGetArg("match[4]", out string quantityRaw))
+		{
+			id736.Chat.SendReplyOrMessage("Sorry, I couldn't understand how many stock you wanted to buy.", msgId);
+			return false;
+		}
+
+		if (!int.TryParse(quantityRaw, out int stockQuantity) || stockQuantity <= 0)
+		{
+			id736.Chat.SendReplyOrMessage("Sorry, that quantity doesn't look like a valid number.", msgId);
+			return false;
+		}
+
+		int cost = stockPrices[stockName]["currentPrice"] * stockQuantity;
+
+		if (cost > points)
+		{
+			id736.Chat.SendReplyOrMessage($"Sorry, you don't have enough points to buy {stockQuantity} shares of {stockName}.", msgId);
+			return false;
+		}
+
+		if (!stocks.ContainsKey(stockName))
+			stocks[stockName] = 0;
+
+		stocks[stockName] += stockQuantity;
+		points -= cost;
+
+		id736.Points.SetDictionary(userName, platform, "stocks", stocks);
+		id736.Points.Set(userName, platform, "points", points);
+
+		string emote = platform == "twitch" ? "TheIlluminati" : "";
+		id736.Chat.SendReplyOrMessage($"{emote}You have bought {stockQuantity} shares of {stockName} for ${cost} points. You have {points} points left. {emote}", msgId);
 
 		return true;
 	}

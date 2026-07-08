@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using id736 = iandouglas736;
 
 public class CPHInline
 {
@@ -10,7 +11,7 @@ public class CPHInline
         CPH.TryGetArg("adLength", out long adLengthSeconds);
         TryGetUtcDateTimeArg("nextAdAt", out DateTime nextAdAtUtc);
 
-        long nowEpoch = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        long nowEpoch = id736.Time.NowEpoch();
         long adStartAtEpoch = new DateTimeOffset(nextAdAtUtc).ToUnixTimeSeconds();
         long adFinishedAtEpoch = new DateTimeOffset(nextAdAtUtc.AddSeconds(adLengthSeconds)).ToUnixTimeSeconds();
 

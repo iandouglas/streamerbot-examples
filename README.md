@@ -4,7 +4,63 @@ This is a respository of things I've built or tweaked for [Streamer.bot](https:/
 
 ## How to use it
 
-Each folder will have a README with instructions, and an 'import_code.txt' file containing the import text that will work in Streamer.bot 1.x. I will not be generating exports for Streamer.bot versions before 1.0 any more. Each folder will also include any C# code needed to build your own actions, subactions, etc along the way or if you want to make any modifications/improvements. Please make a pull request to the code if you add something helpful!
+Each folder has a README with setup instructions. Most examples include `.cs` files that you paste into an **Execute C# Code** sub-action inside Streamer.bot. We no longer ship `import_code.txt` import strings; instead, the READMEs walk you through creating the action, trigger, and sub-actions step by step.
+
+> **Stuck?** Come ask for free help in [my Discord community](https://736.fyi/discord). I hang out there regularly and I'm happy to troubleshoot setup, compilation errors, or anything else.
+
+If you make a helpful improvement, please open a pull request!
+
+## iandouglas736 Helper DLL
+
+Many of the newer examples in this repo use a shared helper DLL called `iandouglas736.dll`. It provides common, cross-platform helpers for:
+
+- Sending chat messages on the right platform (Twitch, YouTube, Kick)
+- Managing user groups across platforms
+- Awarding points/currency in the correct platform's user variables
+- Enabling or disabling commands per platform
+- Reading media file durations
+- Converting JSON to nested dictionaries
+- Reading public Google Sheets as nested dictionaries
+
+### Why a DLL?
+
+Streamer.bot runs each `Execute C# Code` sub-action in its own isolated class. That makes it hard to share helper methods between actions without duplicating code. The DLL lets me write reusable helpers once and call them from any action.
+
+### Quick start in C#
+
+The DLL's namespace is `iandouglas736`. You can reference helpers directly:
+
+```csharp
+using iandouglas736;
+
+Chat.SetContext(CPH);
+Chat.SendMessage("Hello chat!");
+```
+
+Or use a short alias if you prefer:
+
+```csharp
+using id736 = iandouglas736;
+
+id736.Chat.SetContext(CPH);
+id736.Chat.SendMessage("Hello chat!");
+```
+
+### Where to get the DLL
+
+- **Source code:** [`./DLL`](./DLL) — open-source, same license as this repo.
+- **Compile instructions:** See [`DLL/README.md`](./DLL/README.md).
+- **Pre-built binaries and required dependencies:** See [`./dlls-needed`](./dlls-needed).
+
+### Quick install
+
+1. Copy `iandouglas736.dll` (and any optional media DLLs you need) into a folder on your PC. A common choice is your **Streamer.bot installation folder** or a `DLLs` subfolder inside it. All referenced DLLs must live in the same folder.
+2. In Streamer.bot, go to **Settings → C# Compile Settings**.
+3. In the **Common References** area, right-click and choose **Add Reference**.
+4. Select `iandouglas736.dll` and any media DLLs you want to use.
+5. Click **OK** and restart Streamer.bot if needed.
+
+See [`dlls-needed/README.md`](./dlls-needed/README.md) for a complete list of files and where to put them.
 
 ## Yes, it's open-source
 
