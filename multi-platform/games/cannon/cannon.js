@@ -393,15 +393,17 @@ function updateDisplayQueue() {
 
 /**
  * Animate each display queue entry toward its target slot.
+ * @param {number} dt - Seconds since last frame.
  */
-function animateDisplayQueue() {
-  const speed = 8; // pixels per frame toward target.
+function animateDisplayQueue(dt) {
+  const speed = 480; // pixels per second toward target.
   for (const item of gameState.displayQueue) {
     const dy = item.targetY - item.currentY;
-    if (Math.abs(dy) <= speed) {
+    const step = speed * dt;
+    if (Math.abs(dy) <= step) {
       item.currentY = item.targetY;
     } else {
-      item.currentY += Math.sign(dy) * speed;
+      item.currentY += Math.sign(dy) * step;
     }
   }
 }
@@ -460,20 +462,22 @@ function drawOutlinedText(text, x, y, font, align = 'center') {
  * Draw the player currently dropping into the cannon during the fuse.
  * The icon stays upright while it is loaded; rotation only begins once it
  * is fired as a projectile.
+ * @param {number} dt - Seconds since last frame.
  */
-function drawFiringEntry() {
+function drawFiringEntry(dt) {
   if (!gameState.loadingEntry) return;
 
   const pivot = getCannonPivot();
   const entry = gameState.loadingEntry;
   const targetY = pivot.y;
-  const speed = 10;
+  const speed = 600; // pixels per second.
+  const step = speed * dt;
   const dy = targetY - entry.currentY;
 
-  if (Math.abs(dy) <= speed) {
+  if (Math.abs(dy) <= step) {
     entry.currentY = targetY;
   } else {
-    entry.currentY += Math.sign(dy) * speed;
+    entry.currentY += Math.sign(dy) * step;
   }
 
   const x = gameState.cannonSide === 'left'
@@ -490,7 +494,7 @@ function drawFiringEntry() {
   drawOutlinedText(entry.name, x, y - PROJECTILE_SIZE / 2 - 12, 'bold 20px sans-serif');
 
   // Once the loading entry reaches the cannon pivot, the fuse can fire it.
-  if (entry.currentY === targetY && !entry.ready) {
+  if (Math.abs(entry.currentY - targetY) < 1 && !entry.ready) {
     entry.ready = true;
   }
 }
@@ -506,11 +510,11 @@ function easeInQuad(t) {
 
 /**
  * Draw active projectiles, handle wall bounce, and detect landings.
+ * @param {number} dt - Seconds since last frame.
  */
-function updateAndDrawProjectiles() {
+function updateAndDrawProjectiles(dt) {
   for (let i = gameState.projectiles.length - 1; i >= 0; i--) {
     const p = gameState.projectiles[i];
-    const dt = 1 / 60;
     p.time += dt;
 
     let x = p.startX + p.velocityX * p.time;
@@ -815,7 +819,7 @@ function launchProjectile(entry) {
     velocityY,
     time: 0,
     rotation: 0,
-    rotationSpeed: (Math.random() * 4 + 2) * (Math.random() < 0.5 ? -1 : 1),
+    rotationSpeed: (Math.random() * 3 + 1.5) * (Math.random() < 0.5 ? -1 : 1),
     bounces: 0,
     wind: gameState.wind
   };
@@ -1028,15 +1032,22 @@ function handleEvent(data) {
 
 /**
  * Main animation loop.
+ * Uses time-based animation so the game runs at the same speed regardless of
+ * the browser source frame rate.
  */
-function gameLoop() {
+let lastFrameTime = 0;
+function gameLoop(timestamp) {
+  if (!lastFrameTime) lastFrameTime = timestamp;
+  const dt = Math.min((timestamp - lastFrameTime) / 1000, 0.1); // seconds, clamped to avoid huge jumps.
+  lastFrameTime = timestamp;
+
   // Handle pause expiration.
   if (gameState.paused && Date.now() >= gameState.pauseEnd) {
     endPause();
     gameState.scoreText = null;
   }
 
-  animateDisplayQueue();
+  animateDisplayQueue(dt);
 
   // Clear the canvas.
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1050,10 +1061,10 @@ function gameLoop() {
   }
 
   drawQueue();
-  drawFiringEntry();
+  drawFiringEntry(dt);
 
   if (!gameState.paused) {
-    updateAndDrawProjectiles();
+    updateAndDrawProjectiles(dt);
   }
 
   drawLandedShots();
@@ -1067,13 +1078,13 @@ function gameLoop() {
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     connectStreamerbot();
-    gameLoop();
+    requestAnimationFrame(gameLoop);
     document.addEventListener('click', unlockAudio, { once: true });
     document.addEventListener('touchstart', unlockAudio, { once: true });
   });
 } else {
   connectStreamerbot();
-  gameLoop();
+  requestAnimationFrame(gameLoop);
   document.addEventListener('click', unlockAudio, { once: true });
   document.addEventListener('touchstart', unlockAudio, { once: true });
 }
