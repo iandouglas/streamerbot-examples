@@ -774,6 +774,11 @@ function connectStreamerbot() {
 
   streamerbotClient = new StreamerbotClient(clientOptions);
 
+  // Let Streamer.bot know the browser has loaded so it can clear any stale queue.
+  streamerbotClient.doAction('cannon-browser-loaded').catch((err) => {
+    console.warn('[cannon] Failed to notify browser loaded:', err);
+  });
+
   streamerbotClient.on('General.Custom', (payload) => {
     // Streamer.bot wraps the broadcast in an envelope; our actual data is in payload.data.
     const data = payload && typeof payload === 'object' && 'data' in payload ? payload.data : payload;
