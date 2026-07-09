@@ -114,17 +114,20 @@ public class CPHInline
         CPH.LogDebug($"[cannon-fire] EnableGameTimer name={timerName}, guid={timerGuid}");
 
         // The id736.Timers helpers call CPH's *ById methods, which require a GUID.
-        // If we have already captured the GUID, use the DLL helpers directly.
+        // If setup already looked up the GUID, use the DLL helpers directly.
         if (!string.IsNullOrWhiteSpace(timerGuid))
         {
             CPH.LogDebug($"[cannon-fire] Enabling/resetting timer '{timerGuid}' to {intervalSeconds}s via DLL.");
             id736.Timers.Enable(timerGuid);
             id736.Timers.ResetTimerById(timerGuid, intervalSeconds, keepEnabled: true);
+            // Interval is already applied; tell tick not to reset again.
+            CPH.SetGlobalVar("cannon_timer_interval", 0, false);
         }
         else if (!string.IsNullOrWhiteSpace(timerName))
         {
             // No GUID captured yet. Use CPH's name-based EnableTimer so the timer fires
-            // once; cannon-game-tick will then capture the GUID from the timerId argument.
+            // once; cannon-game-tick will then capture the GUID from the timerId argument
+            // and apply the requested interval itself.
             CPH.LogDebug($"[cannon-fire] No GUID yet; enabling timer by name '{timerName}' via CPH.EnableTimer.");
             CPH.EnableTimer(timerName);
             CPH.SetGlobalVar("cannon_timer_interval", intervalSeconds, false);

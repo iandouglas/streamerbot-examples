@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 using id736 = iandouglas736;
 
 public class CPHInline
@@ -30,7 +32,11 @@ public class CPHInline
         CPH.SetGlobalVar("cannon_obs_scene", obsScene, false);
         CPH.SetGlobalVar("cannon_obs_source", obsSource, false);
         CPH.SetGlobalVar("cannon_timer_name", timerName, false);
-        CPH.SetGlobalVar("cannon_timer_guid", "", false);
+
+        // Look up the configured timer by name and store its GUID so the game can
+        // enable/disable/reset it using CPH's ById timer methods.
+        string timerGuid = LookupTimerGuid(timerName);
+        CPH.SetGlobalVar("cannon_timer_guid", timerGuid, false);
 
         // Reset game state in non-persistent global variables.
         CPH.SetGlobalVar("cannon_setup_sent", false, false);
@@ -50,5 +56,31 @@ public class CPHInline
         CPH.LogDebug("[cannon-setup] OBS source hidden. Setup finished.");
 
         return true;
+    }
+
+    private string LookupTimerGuid(string timerName)
+    {
+        CPH.LogDebug($"[cannon-setup] Looking up timer GUID for '{timerName}'.");
+
+        try
+        {
+            string jsonTimers = CPH.Natives.GetTimers();
+            JArray timers = JArray.Parse(jsonTimers);
+            JToken targetTimer = timers.FirstOrDefault(t => t["name"]?.ToString() == timerName);
+
+            if (targetTimer != null)
+            {
+                string timerGuid = targetTimer["id"]?.ToString() ?? "";
+                CPH.LogDebug($"[cannon-setup] Found timer '{timerName}' with GUID: {timerGuid}");
+                return timerGuid;
+            }
+        }
+        catch (Exception ex)
+        {
+            CPH.LogDebug($"[cannon-setup] Exception looking up timer GUID: {ex.Message}");
+        }
+
+        CPH.LogDebug($"[cannon-setup] Timer '{timerName}' not found; GUID will be empty.");
+        return "";
     }
 }
