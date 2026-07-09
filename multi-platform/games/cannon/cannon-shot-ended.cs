@@ -42,6 +42,7 @@ public class CPHInline
 
         // Mark the shot as complete so the next queued player can fire.
         CPH.SetGlobalVar("cannon_firing", false, false);
+        CPH.SetGlobalVar("cannon_firing_started", 0L, false);
         CPH.LogDebug("[cannon-ended] cannon_firing reset to false.");
 
         // Mark activity and slow the timer to the hide-delay interval.

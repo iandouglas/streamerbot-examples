@@ -66,6 +66,7 @@ public class CPHInline
             CPH.SetGlobalVar("cannon_wind", _random.NextDouble() * 40.0 - 20.0, false);
             CPH.SetGlobalVar("cannon_side", _random.Next(2) == 0 ? "left" : "right", false);
             CPH.SetGlobalVar("cannon_firing", false, false);
+            CPH.SetGlobalVar("cannon_firing_started", 0L, false);
         }
 
         // --- wind update every 7 seconds ---
@@ -99,6 +100,18 @@ public class CPHInline
         var queue = id736.Data.JsonToNestedList(queueJson) ?? new List<object>();
         CPH.LogDebug($"[cannon-tick] Queue count={queue.Count}, queueJson={queueJson}");
 
+        // Server-side safety: if the browser never reported the shot ending, reset
+        // the firing flag after a long timeout so the queue can continue.
+        bool firing = CPH.GetGlobalVar<bool>("cannon_firing", false);
+        long firingStarted = CPH.GetGlobalVar<long>("cannon_firing_started", false);
+        if (firing && firingStarted > 0 && (now - firingStarted) > 10000)
+        {
+            CPH.LogDebug("[cannon-tick] Firing flag timed out without browser response; resetting.");
+            firing = false;
+            CPH.SetGlobalVar("cannon_firing", false, false);
+            CPH.SetGlobalVar("cannon_firing_started", 0L, false);
+        }
+
         if (queue.Count > 0)
         {
             // Tell the browser the current queue order.
@@ -106,7 +119,6 @@ public class CPHInline
             SendEvent("queue", new Dictionary<string, object> { { "players", queue } });
 
             // Fire the first player if the browser is not currently busy.
-            bool firing = CPH.GetGlobalVar<bool>("cannon_firing", false);
             CPH.LogDebug($"[cannon-tick] cannon_firing={firing}");
             if (!firing)
             {
@@ -114,6 +126,7 @@ public class CPHInline
                 queue.RemoveAt(0);
                 CPH.SetGlobalVar("cannon_queue", id736.Data.ToJson(queue), false);
                 CPH.SetGlobalVar("cannon_firing", true, false);
+                CPH.SetGlobalVar("cannon_firing_started", now, false);
 
                 CPH.LogDebug($"[cannon-tick] Firing player: {id736.Data.ToJson(player)}");
                 SendEvent("fire", new Dictionary<string, object> { { "player", player } });
