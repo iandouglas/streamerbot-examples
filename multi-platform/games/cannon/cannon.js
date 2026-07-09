@@ -660,25 +660,29 @@ function connectStreamerbot() {
     host: '127.0.0.1',
     port: 8080,
     endpoint: '/',
-    autoReconnect: true
-  });
-
-  streamerbotClient.on('open', () => {
-    const msg = '[cannon] WebSocket connected.';
-    console.log(msg);
-    debugOverlay(msg);
-  });
-
-  streamerbotClient.on('close', () => {
-    const msg = '[cannon] WebSocket disconnected.';
-    console.warn(msg);
-    debugOverlay(msg);
-  });
-
-  streamerbotClient.on('error', (err) => {
-    const msg = `[cannon] WebSocket error: ${err?.message || err}`;
-    console.error(msg, err);
-    debugOverlay(msg);
+    autoReconnect: true,
+    onConnect: () => {
+      const msg = '[cannon] WebSocket connected.';
+      console.log(msg);
+      debugOverlay(msg);
+    },
+    onDisconnect: () => {
+      const msg = '[cannon] WebSocket disconnected.';
+      console.warn(msg);
+      debugOverlay(msg);
+    },
+    onError: (err) => {
+      const msg = `[cannon] WebSocket error: ${err?.message || err}`;
+      console.error(msg, err);
+      debugOverlay(msg);
+    },
+    onData: (raw) => {
+      const source = raw?.event?.source || '?';
+      const type = raw?.event?.type || '?';
+      const msg = `[cannon] Raw data: ${source}.${type}`;
+      console.log(msg, raw);
+      debugOverlay(msg);
+    }
   });
 
   streamerbotClient.on('General.Custom', ({ data }) => {
@@ -687,12 +691,6 @@ function connectStreamerbot() {
     console.log(msg, data);
     debugOverlay(msg);
     handleEvent(data);
-  });
-
-  streamerbotClient.on('*', (raw) => {
-    const msg = `[cannon] Raw event: ${raw?.event?.source}.${raw?.event?.type}`;
-    console.log(msg, raw);
-    debugOverlay(msg);
   });
 }
 
