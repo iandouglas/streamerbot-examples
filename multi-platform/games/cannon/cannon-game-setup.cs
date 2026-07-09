@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using id736 = iandouglas736;
 
@@ -62,17 +63,38 @@ public class CPHInline
     {
         CPH.LogDebug($"[cannon-setup] Looking up timer GUID for '{timerName}'.");
 
+        // Allow the caller to override the Streamer.bot internal API URL.
+        if (!CPH.TryGetArg("timerApiUrl", out string apiUrl) || string.IsNullOrWhiteSpace(apiUrl))
+            apiUrl = "http://127.0.0.1:7474";
+
+        CPH.LogDebug($"[cannon-setup] Timer API URL: {apiUrl}");
+
         try
         {
-            string jsonTimers = CPH.Natives.GetTimers();
-            JArray timers = JArray.Parse(jsonTimers);
-            JToken targetTimer = timers.FirstOrDefault(t => t["name"]?.ToString() == timerName);
-
-            if (targetTimer != null)
+            using (HttpClient client = new HttpClient())
             {
-                string timerGuid = targetTimer["id"]?.ToString() ?? "";
-                CPH.LogDebug($"[cannon-setup] Found timer '{timerName}' with GUID: {timerGuid}");
-                return timerGuid;
+                // Fetch the timer data synchronously from the local API.
+                HttpResponseMessage response = client.GetAsync(apiUrl).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonResponse = response.Content.ReadAsStringAsync().Result;
+                    JObject data = JObject.Parse(jsonResponse);
+
+                    // Streamer.bot API wraps lists inside a "timers" array.
+                    JArray timers = (JArray)data["timers"];
+                    JToken targetTimer = timers?.FirstOrDefault(t => t["name"]?.ToString() == timerName);
+
+                    if (targetTimer != null)
+                    {
+                        string timerGuid = targetTimer["id"]?.ToString() ?? "";
+                        CPH.LogDebug($"[cannon-setup] Found timer '{timerName}' with GUID: {timerGuid}");
+                        return timerGuid;
+                    }
+                }
+                else
+                {
+                    CPH.LogDebug($"[cannon-setup] Timer API returned status {(int)response.StatusCode}.");
+                }
             }
         }
         catch (Exception ex)
