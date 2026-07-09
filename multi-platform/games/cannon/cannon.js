@@ -491,6 +491,8 @@ function updateAndDrawProjectiles() {
       // Report shot result back to Streamer.bot (hit or miss).
       reportShotEnded(p.name, score, p.platform);
     } else if (x < 0 || x > canvas.width) {
+      // Off-screen miss: report it so Streamer.bot can fire the next player.
+      reportShotEnded(p.name, -1, p.platform);
       gameState.projectiles.splice(i, 1);
     }
   }
@@ -539,13 +541,22 @@ function showScore(x, y, score) {
 
 /**
  * Draw previously landed shots. Icons are right-side up.
+ * Misses (score < 0) are faded to 40% opacity.
  */
 function drawLandedShots() {
   for (const shot of gameState.landedShots) {
     const img = getPlayerImage(shot);
-    ctx.drawImage(img, shot.x - PROJECTILE_SIZE / 2, shot.y - PROJECTILE_SIZE / 2, PROJECTILE_SIZE, PROJECTILE_SIZE);
+    const isMiss = shot.score < 0;
 
+    ctx.save();
+    ctx.globalAlpha = isMiss ? 0.4 : 1.0;
+    ctx.drawImage(img, shot.x - PROJECTILE_SIZE / 2, shot.y - PROJECTILE_SIZE / 2, PROJECTILE_SIZE, PROJECTILE_SIZE);
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha = isMiss ? 0.4 : 1.0;
     drawOutlinedText(shot.name, shot.x, shot.y - PROJECTILE_SIZE / 2 - 12, 'bold 22px sans-serif');
+    ctx.restore();
 
     if (shot.score >= 0) {
       drawOutlinedText(`${shot.score} pts`, shot.x, shot.y - PROJECTILE_SIZE / 2 - 40, 'bold 18px sans-serif');
