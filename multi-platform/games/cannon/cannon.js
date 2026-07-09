@@ -334,12 +334,16 @@ function drawFuse(progress) {
 /**
  * Draw the player queue above the cannon.
  * The player currently being fired is hidden from the queue.
+ * Names are drawn to the side of the icon, away from the cannon base.
  */
 function drawQueue() {
   const base = getCannonBasePos();
   const startY = canvas.height - 260;
+  const nameOffset = PROJECTILE_SIZE / 2 + 10;
+  const isLeft = gameState.cannonSide === 'left';
 
-  ctx.textAlign = 'center';
+  ctx.textAlign = isLeft ? 'left' : 'right';
+  ctx.textBaseline = 'middle';
   let drawn = 0;
   for (let i = 0; i < gameState.queue.length; i++) {
     const entry = gameState.queue[i];
@@ -348,19 +352,22 @@ function drawQueue() {
     }
 
     const img = getPlayerImage(entry);
-    const x = base.x;
+    const iconX = base.x;
     const y = startY - drawn * 70;
     drawn++;
 
     ctx.save();
-    ctx.translate(x, y);
+    ctx.translate(iconX, y);
     ctx.globalAlpha = 0.9;
     ctx.drawImage(img, -PROJECTILE_SIZE / 2, -PROJECTILE_SIZE / 2, PROJECTILE_SIZE, PROJECTILE_SIZE);
     ctx.globalAlpha = 1.0;
     ctx.restore();
 
-    drawOutlinedText(entry.name, x, y + PROJECTILE_SIZE / 2 + 24, 'bold 20px sans-serif');
+    const nameX = isLeft ? iconX + nameOffset : iconX - nameOffset;
+    drawOutlinedText(entry.name, nameX, y, 'bold 20px sans-serif');
   }
+
+  ctx.textBaseline = 'alphabetic';
 }
 
 /**
