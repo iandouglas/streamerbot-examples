@@ -460,6 +460,9 @@ function updateAndDrawProjectiles() {
     // Landing on the target/floor level.
     if (y >= gameState.targetY) {
       const score = calculateScore(x);
+      const msg = `[cannon] Projectile landed at x=${x.toFixed(1)} y=${y.toFixed(1)} score=${score}`;
+      console.log(msg);
+      debugOverlay(msg);
 
       /** @type {LandedShot} */
       const landed = {
@@ -484,6 +487,9 @@ function updateAndDrawProjectiles() {
       reportShotEnded(p.name, score, p.platform);
     } else if (x < 0 || x > canvas.width) {
       // Off-screen miss: report it so Streamer.bot can fire the next player.
+      const msg = `[cannon] Projectile off-screen at x=${x.toFixed(1)} y=${y.toFixed(1)}`;
+      console.log(msg);
+      debugOverlay(msg);
       reportShotEnded(p.name, -1, p.platform);
       gameState.projectiles.splice(i, 1);
     }
@@ -571,11 +577,24 @@ function drawScorePopup() {
  * @param {string} platform - Platform id.
  */
 function reportShotEnded(name, score, platform) {
-  if (!streamerbotClient) return;
+  if (!streamerbotClient) {
+    const msg = '[cannon] Cannot report shot ended: streamerbotClient not initialized.';
+    console.warn(msg);
+    debugOverlay(msg);
+    return;
+  }
+  if (typeof streamerbotClient.doAction !== 'function') {
+    const msg = '[cannon] Cannot report shot ended: doAction is not available.';
+    console.warn(msg);
+    debugOverlay(msg);
+    return;
+  }
+
   const args = { userName: name, score, platform };
   const msg = `[cannon] Reporting shot ended: ${JSON.stringify(args)}`;
   console.log(msg);
   debugOverlay(msg);
+
   streamerbotClient.doAction('cannon-shot-ended', args)
     .then((res) => {
       const okMsg = `[cannon] Shot-ended action reported: ${JSON.stringify(res)}`;
@@ -583,9 +602,23 @@ function reportShotEnded(name, score, platform) {
       debugOverlay(okMsg);
     })
     .catch((err) => {
-      const failMsg = `Failed to report shot ended: ${err?.message || err}`;
+      const failMsg = `[cannon] Failed to report shot ended: ${err?.message || err}`;
       console.warn(failMsg, err);
       debugOverlay(failMsg);
+
+      // Retry once after a short delay in case the request was dropped.
+      setTimeout(() => {
+        const retryMsg = '[cannon] Retrying shot-ended report...';
+        console.log(retryMsg);
+        debugOverlay(retryMsg);
+        streamerbotClient.doAction('cannon-shot-ended', args)
+          .then(() => debugOverlay('[cannon] Shot-ended retry succeeded.'))
+          .catch((err2) => {
+            const fail2 = `[cannon] Shot-ended retry failed: ${err2?.message || err2}`;
+            console.warn(fail2, err2);
+            debugOverlay(fail2);
+          });
+      }, 500);
     });
 }
 
