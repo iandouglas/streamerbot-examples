@@ -106,6 +106,8 @@ const gameState = {
   targetY: canvas.height - TARGET_HEIGHT / 2,
   wind: 0,
   queue: [],
+  displayQueue: [],
+  loadingEntry: null,
   projectiles: [],
   landedShots: [],
   paused: false,
@@ -335,28 +337,74 @@ function drawFuse(progress) {
 }
 
 /**
+ * Compute the base Y coordinate for a queue slot. Slot 0 is the bottom slot
+ * directly above the cannon; higher indices stack upward.
+ * @param {number} slot - Slot index.
+ * @returns {number} Y coordinate.
+ */
+function getQueueSlotY(slot) {
+  return canvas.height - 260 - slot * 70;
+}
+
+/**
+ * Synchronize the animated display queue with the logical queue from C#.
+ * Existing entries keep their current Y and animate to their new slot.
+ * Missing entries are removed; new entries start above the stack and drop in.
+ */
+function updateDisplayQueue() {
+  const startY = getQueueSlotY(0);
+  const incoming = gameState.queue.slice();
+  const outgoing = gameState.displayQueue.slice();
+  const next = [];
+
+  for (let i = 0; i < incoming.length; i++) {
+    const entry = incoming[i];
+    const prevIndex = outgoing.findIndex((item) => item.entry.name === entry.name);
+    let currentY;
+    if (prevIndex >= 0) {
+      currentY = outgoing[prevIndex].currentY;
+      outgoing.splice(prevIndex, 1);
+    } else {
+      // New entry: drop in from above the top slot.
+      currentY = startY - i * 70 - 70;
+    }
+    next.push({ entry, targetY: getQueueSlotY(i), currentY });
+  }
+
+  gameState.displayQueue = next;
+}
+
+/**
+ * Animate each display queue entry toward its target slot.
+ */
+function animateDisplayQueue() {
+  const speed = 8; // pixels per frame toward target.
+  for (const item of gameState.displayQueue) {
+    const dy = item.targetY - item.currentY;
+    if (Math.abs(dy) <= speed) {
+      item.currentY = item.targetY;
+    } else {
+      item.currentY += Math.sign(dy) * speed;
+    }
+  }
+}
+
+/**
  * Draw the player queue above the cannon.
- * The player currently being fired is hidden from the queue.
- * Names are drawn to the side of the icon, away from the cannon base.
+ * The player currently being fired is animated down from the queue into the
+ * cannon, while the remaining names stay in their slots and shift smoothly.
  */
 function drawQueue() {
   const base = getCannonBasePos();
-  const startY = canvas.height - 260;
   const nameOffset = PROJECTILE_SIZE / 2 + 10;
   const isLeft = gameState.cannonSide === 'left';
 
   ctx.textBaseline = 'middle';
-  let drawn = 0;
-  for (let i = 0; i < gameState.queue.length; i++) {
-    const entry = gameState.queue[i];
-    if (gameState.firingEntry && entry.name === gameState.firingEntry.name) {
-      continue;
-    }
-
+  for (const item of gameState.displayQueue) {
+    const entry = item.entry;
     const img = getPlayerImage(entry);
     const iconX = base.x;
-    const y = startY - drawn * 70;
-    drawn++;
+    const y = item.currentY;
 
     ctx.save();
     ctx.translate(iconX, y);
@@ -393,26 +441,41 @@ function drawOutlinedText(text, x, y, font, align = 'center') {
 
 /**
  * Draw the player currently dropping into the cannon during the fuse.
- * The name is shown above the drop path, not overlapping the cannon.
+ * The icon stays upright while it is loaded; rotation only begins once it
+ * is fired as a projectile.
  */
 function drawFiringEntry() {
-  if (!gameState.firingEntry || gameState.fuseProgress <= 0) return;
+  if (!gameState.loadingEntry) return;
 
-  const base = getCannonBasePos();
   const pivot = getCannonPivot();
-  const startY = canvas.height - 260;
-  const t = easeInQuad(gameState.fuseProgress);
-  const x = base.x;
-  const y = startY + (pivot.y - startY) * t;
+  const entry = gameState.loadingEntry;
+  const targetY = pivot.y;
+  const speed = 10;
+  const dy = targetY - entry.currentY;
 
-  const img = getPlayerImage(gameState.firingEntry);
+  if (Math.abs(dy) <= speed) {
+    entry.currentY = targetY;
+  } else {
+    entry.currentY += Math.sign(dy) * speed;
+  }
+
+  const x = gameState.cannonSide === 'left'
+    ? pivot.x - 15
+    : pivot.x + 15;
+  const y = entry.currentY;
+
+  const img = getPlayerImage(entry);
   ctx.save();
   ctx.translate(x, y);
-  ctx.rotate(gameState.fuseProgress * Math.PI * 4);
   ctx.drawImage(img, -PROJECTILE_SIZE / 2, -PROJECTILE_SIZE / 2, PROJECTILE_SIZE, PROJECTILE_SIZE);
   ctx.restore();
 
-  drawOutlinedText(gameState.firingEntry.name, x, y - PROJECTILE_SIZE / 2 - 12, 'bold 20px sans-serif');
+  drawOutlinedText(entry.name, x, y - PROJECTILE_SIZE / 2 - 12, 'bold 20px sans-serif');
+
+  // Once the loading entry reaches the cannon pivot, the fuse can fire it.
+  if (entry.currentY === targetY && !entry.ready) {
+    entry.ready = true;
+  }
 }
 
 /**
@@ -649,6 +712,16 @@ function animateFire(entry) {
   // Aim the cannon barrel at the player's chosen angle during the fuse.
   gameState.cannonAngle = clamp(entry.angle, 1, 90);
 
+  // Move the fired player from the display queue into the loading slot.
+  // The icon will drop down to the cannon pivot without spinning.
+  const displayIndex = gameState.displayQueue.findIndex((item) => item.entry.name === entry.name);
+  let startY = getQueueSlotY(0);
+  if (displayIndex >= 0) {
+    const item = gameState.displayQueue.splice(displayIndex, 1)[0];
+    startY = item.currentY;
+  }
+  gameState.loadingEntry = { ...entry, currentY: startY, ready: false };
+
   const timer = setInterval(() => {
     const elapsed = Date.now() - gameState.fuseStartTime;
     gameState.fuseProgress = elapsed / FUSE_DURATION;
@@ -657,6 +730,7 @@ function animateFire(entry) {
       clearInterval(timer);
       gameState.fuseProgress = 0;
       gameState.firingEntry = null;
+      gameState.loadingEntry = null;
       launchProjectile(entry);
     }
   }, 16);
@@ -880,6 +954,7 @@ function handleEvent(data) {
           break;
         }
         gameState.queue = data.players.map(p => normalizePlayer(p));
+        updateDisplayQueue();
       }
       break;
 
@@ -890,9 +965,6 @@ function handleEvent(data) {
     case 'fire':
       if (!gameState.paused && gameState.projectiles.length === 0 && data.player) {
         const player = normalizePlayer(data.player);
-        // Remove the fired player from the on-screen queue immediately so their
-        // name doesn't linger above the cannon while the fuse runs.
-        gameState.queue = gameState.queue.filter((entry) => entry.name !== player.name);
         animateFire(player);
       }
       break;
@@ -920,6 +992,8 @@ function gameLoop() {
     endPause();
     gameState.scoreText = null;
   }
+
+  animateDisplayQueue();
 
   // Clear the canvas.
   ctx.clearRect(0, 0, canvas.width, canvas.height);
