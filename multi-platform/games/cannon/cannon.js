@@ -1,4 +1,5 @@
 let audioContext;
+let audioUnlocked = false;
 
 /**
  * Initialize the Web Audio API context.
@@ -9,11 +10,26 @@ function initAudio() {
       audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
     if (audioContext.state === 'suspended') {
-      audioContext.resume();
+      audioContext.resume().catch((err) => console.warn('Audio resume failed:', err));
     }
   } catch (e) {
     console.error('Web Audio API is not supported in this browser');
   }
+}
+
+/**
+ * Unlock audio playback on the first user interaction.
+ * Browsers block autoplay until the page has been clicked or touched.
+ */
+function unlockAudio() {
+  if (audioUnlocked) return;
+  audioUnlocked = true;
+  initAudio();
+  // Play a silent buffer to fully unlock the audio element.
+  const silent = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQQAAAAAAA==');
+  silent.play().catch(() => {});
+  console.log('[cannon] Audio unlocked by user interaction.');
+  debugOverlay('[cannon] Audio unlocked.');
 }
 
 /**
@@ -25,6 +41,7 @@ function playAudioFile(path) {
   const audio = new Audio(path);
   audio.play().catch((err) => {
     console.warn('Audio playback failed:', err);
+    debugOverlay(`Audio failed: ${err?.message || err}`);
   });
 }
 
@@ -1051,8 +1068,12 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     connectStreamerbot();
     gameLoop();
+    document.addEventListener('click', unlockAudio, { once: true });
+    document.addEventListener('touchstart', unlockAudio, { once: true });
   });
 } else {
   connectStreamerbot();
   gameLoop();
+  document.addEventListener('click', unlockAudio, { once: true });
+  document.addEventListener('touchstart', unlockAudio, { once: true });
 }

@@ -31,17 +31,18 @@ public class CPHInline
         // Score is -1 for a miss, 0-100 for a hit.
         if (score >= 0)
         {
+            id736.Chat.SendMessage($"🎯 {userName} scored {score} points!");
+            CPH.LogDebug($"[cannon-ended] Chat message sent for score {score}.");
+
             try
             {
                 id736.Points.SetContext(CPH);
                 int total = id736.Points.Add(userName, platform, "cannon_points", score);
-                id736.Chat.SendMessage($"🎯 {userName} scored {score} points! Total: {total}");
-                CPH.LogDebug($"[cannon-ended] Chat message sent for score {score}, total {total}.");
+                CPH.LogDebug($"[cannon-ended] Added {score} points to {userName}; total={total}.");
             }
             catch (Exception ex)
             {
-                id736.Chat.SendMessage($"🎯 {userName} scored {score} points!");
-                CPH.LogDebug($"[cannon-ended] Points add failed ({ex.Message}); sent score-only chat message.");
+                CPH.LogDebug($"[cannon-ended] Points add failed ({ex.Message}).");
             }
         }
         else
