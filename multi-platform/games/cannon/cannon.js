@@ -621,7 +621,8 @@ function launchProjectile(entry) {
   playAudioFile(gameState.audioPaths.fire || 'assets/sounds/cannon-fire.mp3');
 
   const angleRad = entry.angle * Math.PI / 180;
-  const powerPx = entry.power * 11;
+  // Scale power so 50% power reaches roughly two-thirds of the 1920px screen.
+  const powerPx = entry.power * 22;
 
   // For the right-side cannon, the barrel SVG is flipped horizontally, so the
   // muzzle still points away from the pivot. Use the same angle sign and let
