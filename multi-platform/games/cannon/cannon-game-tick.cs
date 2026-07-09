@@ -84,6 +84,17 @@ public class CPHInline
         }
 
         // --- queue management ---
+        // If the browser reloaded recently, clear any stale queue so old names don't reappear.
+        long browserLoadedAt = CPH.GetGlobalVar<long>("cannon_browser_loaded_at", false);
+        long msSinceBrowserLoad = now - browserLoadedAt;
+        CPH.LogDebug($"[cannon-tick] msSinceBrowserLoad={msSinceBrowserLoad}");
+        if (browserLoadedAt > 0 && msSinceBrowserLoad >= 0 && msSinceBrowserLoad < 2000)
+        {
+            CPH.LogDebug("[cannon-tick] Browser reloaded recently; clearing stale queue.");
+            CPH.SetGlobalVar("cannon_queue", "[]", false);
+            CPH.SetGlobalVar("cannon_browser_loaded_at", 0L, false);
+        }
+
         string queueJson = CPH.GetGlobalVar<string>("cannon_queue", false) ?? "[]";
         var queue = id736.Data.JsonToNestedList(queueJson) ?? new List<object>();
         CPH.LogDebug($"[cannon-tick] Queue count={queue.Count}, queueJson={queueJson}");
