@@ -187,6 +187,14 @@ function drawTarget() {
 }
 
 /**
+ * Fixed dimensions for SVG game assets.
+ */
+const ASSET_DIMS = {
+  cannonBase: { width: 180, height: 110 },
+  cannonBarrel: { width: 170, height: 70 }
+};
+
+/**
  * Get the cannon base anchor position (bottom center of the base image).
  * @returns {{x: number, y: number}} Base position.
  */
@@ -199,11 +207,13 @@ function getCannonBasePos() {
 
 /**
  * Get the pivot point around which the barrel rotates.
- * The pivot is the beige pin in cannon-base.svg at local (90, 35).
+ * The base SVG is 180x110 with the pivot pin at local (30, 45).
  * @returns {{x: number, y: number}} Pivot position.
  */
 function getCannonPivot() {
   const base = getCannonBasePos();
+  // On the left, pivot is 60 px left of center (x=30 in SVG).
+  // On the right, flip the SVG so the pivot stays at the rear (60 px right of center).
   return {
     x: base.x + (gameState.cannonSide === 'left' ? -60 : 60),
     y: base.y - 65
@@ -216,10 +226,15 @@ function getCannonPivot() {
 function drawCannonBase() {
   const base = getCannonBasePos();
   const img = loadImage('cannon-base', 'assets/images/cannon-base.svg');
+  const dims = ASSET_DIMS.cannonBase;
 
   ctx.save();
   ctx.translate(base.x, base.y);
-  ctx.drawImage(img, -img.width / 2, -img.height);
+  if (gameState.cannonSide === 'right') {
+    ctx.scale(-1, 1);
+  }
+  // Anchor the SVG at its bottom center (90, 110).
+  ctx.drawImage(img, -dims.width / 2, -dims.height, dims.width, dims.height);
   ctx.restore();
 }
 
@@ -229,6 +244,7 @@ function drawCannonBase() {
 function drawCannonBarrel() {
   const pivot = getCannonPivot();
   const img = loadImage('cannon-barrel', 'assets/images/cannon-barrel.svg');
+  const dims = ASSET_DIMS.cannonBarrel;
   const angle = clamp(gameState.cannonAngle, 1, 90) * Math.PI / 180;
 
   ctx.save();
@@ -240,7 +256,7 @@ function drawCannonBarrel() {
     ctx.rotate(-angle);
   }
   // The barrel pivot in the SVG is at (15, 35).
-  ctx.drawImage(img, -15, -35);
+  ctx.drawImage(img, -15, -35, dims.width, dims.height);
   ctx.restore();
 }
 
@@ -258,29 +274,35 @@ function drawWindsock() {
 
   // Always draw the pole anchored at the bottom.
   const poleImg = loadImage('windsock-pole', 'assets/images/windsock-pole.svg');
+  const POLE_WIDTH = 10;
+  const POLE_HEIGHT = 60;
+
   ctx.save();
   ctx.translate(poleX, poleTopY);
-  ctx.drawImage(poleImg, 0, 0);
+  ctx.drawImage(poleImg, 0, 0, POLE_WIDTH, POLE_HEIGHT);
   ctx.restore();
 
   if (hasWind) {
     const windForce = clamp(Math.abs(gameState.wind) / 20, 0, 1);
     const scale = 0.6 + windForce * 0.4;
+    // Point the sock with the wind. Positive wind blows right; negative blows left.
     const flip = gameState.wind < 0 ? -1 : 1;
     const sockImg = loadImage('windsock-sock', 'assets/images/windsock-sock.svg');
 
     ctx.save();
-    ctx.translate(poleX + 5, poleTopY + 5);
+    ctx.translate(poleX + POLE_WIDTH - 2, poleTopY + 5);
     ctx.scale(flip * scale, scale);
-    ctx.drawImage(sockImg, 0, 0);
+    ctx.drawImage(sockImg, 0, 0, 130, 60);
     ctx.restore();
   }
 
-  // Wind speed text to the right of the pole, near the bottom.
-  const textX = poleX + 18;
+  // Wind speed text next to the pole, near the bottom. Speed is always positive;
+  // the sock direction already indicates whether the wind is blowing left or right.
+  const textX = poleX + (gameState.cannonSide === 'left' ? 28 : -28);
   const textY = canvas.height - 8;
-  drawOutlinedText(`${gameState.wind.toFixed(1)} mph`, textX, textY, 'bold 18px sans-serif');
+  drawOutlinedText(`${Math.abs(gameState.wind).toFixed(1)} mph`, textX, textY, 'bold 18px sans-serif');
 }
+
 
 /**
  * Draw the fuse spark before a shot.
@@ -305,17 +327,24 @@ function drawFuse(progress) {
 
 /**
  * Draw the player queue above the cannon.
+ * The player currently being fired is hidden from the queue.
  */
 function drawQueue() {
   const base = getCannonBasePos();
-  const startY = canvas.height - 180;
+  const startY = canvas.height - 260;
 
   ctx.textAlign = 'center';
+  let drawn = 0;
   for (let i = 0; i < gameState.queue.length; i++) {
     const entry = gameState.queue[i];
+    if (gameState.firingEntry && entry.name === gameState.firingEntry.name) {
+      continue;
+    }
+
     const img = getPlayerImage(entry);
     const x = base.x;
-    const y = startY - i * 60;
+    const y = startY - drawn * 70;
+    drawn++;
 
     ctx.save();
     ctx.translate(x, y);
@@ -347,13 +376,14 @@ function drawOutlinedText(text, x, y, font) {
 
 /**
  * Draw the player currently dropping into the cannon during the fuse.
+ * The name is shown above the drop path, not overlapping the cannon.
  */
 function drawFiringEntry() {
   if (!gameState.firingEntry || gameState.fuseProgress <= 0) return;
 
   const base = getCannonBasePos();
   const pivot = getCannonPivot();
-  const startY = canvas.height - 180;
+  const startY = canvas.height - 260;
   const t = easeInQuad(gameState.fuseProgress);
   const x = base.x;
   const y = startY + (pivot.y - startY) * t;
@@ -365,7 +395,7 @@ function drawFiringEntry() {
   ctx.drawImage(img, -PROJECTILE_SIZE / 2, -PROJECTILE_SIZE / 2, PROJECTILE_SIZE, PROJECTILE_SIZE);
   ctx.restore();
 
-  drawOutlinedText(gameState.firingEntry.name, x, y + PROJECTILE_SIZE / 2 + 24, 'bold 20px sans-serif');
+  drawOutlinedText(gameState.firingEntry.name, x, y - PROJECTILE_SIZE / 2 - 12, 'bold 20px sans-serif');
 }
 
 /**
@@ -588,14 +618,19 @@ function launchProjectile(entry) {
   playAudioFile(gameState.audioPaths.fire || 'assets/sounds/cannon-fire.mp3');
 
   const angleRad = entry.angle * Math.PI / 180;
-  const windBoost = gameState.wind * 5;
   const powerPx = entry.power * 11;
-  const velocityX = (powerPx + windBoost) * Math.cos(angleRad);
+
+  // For the right-side cannon, the barrel SVG is flipped horizontally, so the
+  // muzzle still points away from the pivot. Use the same angle sign and let
+  // the side determine the horizontal direction.
+  const sideDir = gameState.cannonSide === 'left' ? 1 : -1;
+  const velocityX = sideDir * powerPx * Math.cos(angleRad);
   const velocityY = -powerPx * Math.sin(angleRad);
 
   const pivot = getCannonPivot();
-  const startX = pivot.x + Math.cos(angleRad) * 145 * (gameState.cannonSide === 'left' ? 1 : -1);
-  const startY = pivot.y - Math.sin(angleRad) * 145;
+  const barrelLength = 145;
+  const startX = pivot.x + sideDir * Math.cos(angleRad) * barrelLength;
+  const startY = pivot.y - Math.sin(angleRad) * barrelLength;
 
   /** @type {Projectile} */
   const projectile = {
@@ -609,7 +644,8 @@ function launchProjectile(entry) {
     time: 0,
     rotation: 0,
     rotationSpeed: (Math.random() * 4 + 2) * (Math.random() < 0.5 ? -1 : 1),
-    bounces: 0
+    bounces: 0,
+    wind: gameState.wind
   };
 
   gameState.projectiles.push(projectile);
