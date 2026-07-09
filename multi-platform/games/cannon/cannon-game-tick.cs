@@ -101,12 +101,15 @@ public class CPHInline
         CPH.LogDebug($"[cannon-tick] Queue count={queue.Count}, queueJson={queueJson}");
 
         // Server-side safety: if the browser never reported the shot ending, reset
-        // the firing flag after a long timeout so the queue can continue.
+        // the firing flag after a long timeout so the queue can continue. Also recover
+        // from a stuck flag that has no start timestamp.
         bool firing = CPH.GetGlobalVar<bool>("cannon_firing", false);
         long firingStarted = CPH.GetGlobalVar<long>("cannon_firing_started", false);
-        if (firing && firingStarted > 0 && (now - firingStarted) > 10000)
+        bool firingTimedOut = firing && firingStarted > 0 && (now - firingStarted) > 10000;
+        bool firingStuckNoTimestamp = firing && firingStarted == 0;
+        if (firingTimedOut || firingStuckNoTimestamp)
         {
-            CPH.LogDebug("[cannon-tick] Firing flag timed out without browser response; resetting.");
+            CPH.LogDebug("[cannon-tick] Firing flag stuck without browser response; resetting.");
             firing = false;
             CPH.SetGlobalVar("cannon_firing", false, false);
             CPH.SetGlobalVar("cannon_firing_started", 0L, false);

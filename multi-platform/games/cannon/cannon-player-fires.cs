@@ -74,12 +74,6 @@ public class CPHInline
         CPH.SetGlobalVar("cannon_queue", id736.Data.ToJson(queue), false);
         CPH.LogDebug("[cannon-fire] Added player to queue.");
 
-        // If a previous shot somehow got stuck without completing, reset the firing flag
-        // so this new queued player can be processed. The browser will normally report the
-        // shot ending; this is a safety net.
-        CPH.SetGlobalVar("cannon_firing", false, false);
-        CPH.SetGlobalVar("cannon_firing_started", 0L, false);
-
         // Show the game in OBS and wake up the game timer.
         ShowGameSource();
         EnableGameTimer(intervalSeconds: 2);
