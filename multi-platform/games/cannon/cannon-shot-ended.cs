@@ -7,7 +7,6 @@ public class CPHInline
     {
         id736.Chat.SetContext(CPH);
         id736.Timers.SetContext(CPH);
-        CPH.LogDebug("[cannon-ended] Started.");
 
         if (!CPH.TryGetArg("userName", out string userName) || string.IsNullOrWhiteSpace(userName))
             userName = "Player";
@@ -26,41 +25,30 @@ public class CPHInline
             int.TryParse(scoreStr, out score);
         }
 
-        CPH.LogDebug($"[cannon-ended] userName={userName}, platform={platform}, score={score}");
-
         // Only announce scores for shots that land on the target. Misses are silent.
         if (score >= 0)
         {
             id736.Chat.SendMessage($"🎯 {userName} scored {score} points!");
-            CPH.LogDebug($"[cannon-ended] Chat message sent for score {score}.");
 
             try
             {
                 id736.Points.SetContext(CPH);
-                int total = id736.Points.Add(userName, platform, "points", score);
-                CPH.LogDebug($"[cannon-ended] Added {score} points to {userName}; total={total}.");
+                id736.Points.Add(userName, platform, "points", score);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                CPH.LogDebug($"[cannon-ended] Points add failed ({ex.Message}).");
+                // Ignore points errors; the chat message already went out.
             }
-        }
-        else
-        {
-            CPH.LogDebug("[cannon-ended] Miss reported; no chat message sent.");
         }
 
         // Mark the shot as complete so the next queued player can fire.
         CPH.SetGlobalVar("cannon_firing", false, false);
         CPH.SetGlobalVar("cannon_firing_started", 0L, false);
-        CPH.LogDebug("[cannon-ended] cannon_firing reset to false.");
 
         // Mark activity and slow the timer to the hide-delay interval.
         CPH.SetGlobalVar("cannon_last_active", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(), false);
-        CPH.LogDebug("[cannon-ended] Activity timestamp reset.");
         SlowGameTimerIfQueueEmpty();
 
-        CPH.LogDebug("[cannon-ended] Finished.");
         return true;
     }
 
@@ -68,18 +56,15 @@ public class CPHInline
     {
         string queueJson = CPH.GetGlobalVar<string>("cannon_queue", false) ?? "[]";
         bool queueEmpty = string.IsNullOrWhiteSpace(queueJson) || queueJson == "[]";
-        CPH.LogDebug($"[cannon-ended] Queue empty={queueEmpty}, queueJson={queueJson}");
         if (!queueEmpty)
             return;
 
         string timerGuid = CPH.GetGlobalVar<string>("cannon_timer_guid", false) ?? "";
-        CPH.LogDebug($"[cannon-ended] SlowGameTimerIfQueueEmpty guid={timerGuid}");
 
         if (!string.IsNullOrWhiteSpace(timerGuid))
         {
             id736.Timers.Enable(timerGuid);
             id736.Timers.ResetTimerById(timerGuid, 60, keepEnabled: true);
-            CPH.LogDebug("[cannon-ended] Timer slowed to 60s hide delay by GUID.");
         }
     }
 }

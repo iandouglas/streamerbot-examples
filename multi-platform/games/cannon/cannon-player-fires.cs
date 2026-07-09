@@ -8,18 +8,14 @@ public class CPHInline
     {
         id736.Chat.SetContext(CPH);
         id736.Timers.SetContext(CPH);
-        CPH.LogDebug("[cannon-fire] Started.");
 
         // Try the rawInput argument.
         string rawInput = "";
         if (!CPH.TryGetArg("rawInput", out rawInput) || string.IsNullOrWhiteSpace(rawInput))
         {
-            CPH.LogDebug("[cannon-fire] rawInput argument missing or empty.");
-            id736.Chat.SendMessage("Usage: !fire \u003cangle\u003e \u003cpower\u003e");
+            id736.Chat.SendMessage("Usage: !fire <angle> <power>");
             return true;
         }
-
-        CPH.LogDebug($"[cannon-fire] rawInput={rawInput}");
 
         var args = rawInput.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -30,21 +26,18 @@ public class CPHInline
 
         if (args.Length - startIndex < 2)
         {
-            CPH.LogDebug("[cannon-fire] Not enough arguments after trigger.");
-            id736.Chat.SendMessage("Usage: !fire \u003cangle\u003e \u003cpower\u003e");
+            id736.Chat.SendMessage("Usage: !fire <angle> <power>");
             return true;
         }
 
         if (!int.TryParse(args[startIndex], out int angle) || !int.TryParse(args[startIndex + 1], out int power))
         {
-            CPH.LogDebug("[cannon-fire] Failed to parse angle or power as integers.");
             id736.Chat.SendMessage("Angle and power must be numbers. Example: !fire 45 75");
             return true;
         }
 
         angle = Clamp(angle, 0, 90);
         power = Clamp(power, 0, 100);
-        CPH.LogDebug($"[cannon-fire] Parsed angle={angle}, power={power}");
 
         if (!CPH.TryGetArg("userName", out string userName) || string.IsNullOrWhiteSpace(userName))
             userName = "Player";
@@ -56,8 +49,6 @@ public class CPHInline
         if (!CPH.TryGetArg("profileImageUrl", out string profileImageUrl))
             profileImageUrl = "";
 
-        CPH.LogDebug($"[cannon-fire] userName={userName}, platform={platform}");
-
         var entry = new Dictionary<string, object>
         {
             { "name", userName },
@@ -68,11 +59,9 @@ public class CPHInline
         };
 
         string queueJson = CPH.GetGlobalVar<string>("cannon_queue", false) ?? "[]";
-        CPH.LogDebug($"[cannon-fire] Existing queue: {queueJson}");
         var queue = id736.Data.JsonToNestedList(queueJson) ?? new List<object>();
         queue.Add(entry);
         CPH.SetGlobalVar("cannon_queue", id736.Data.ToJson(queue), false);
-        CPH.LogDebug("[cannon-fire] Added player to queue.");
 
         // Defensive reset: if a previous shot's firing flag got stuck (e.g. the
         // browser never reported the landing), clearing it here lets the next
@@ -81,7 +70,6 @@ public class CPHInline
         bool firing = CPH.GetGlobalVar<bool>("cannon_firing", false);
         if (firing)
         {
-            CPH.LogDebug("[cannon-fire] cannon_firing was true on queue add; resetting as a safety net.");
             CPH.SetGlobalVar("cannon_firing", false, false);
             CPH.SetGlobalVar("cannon_firing_started", 0L, false);
         }
@@ -91,7 +79,6 @@ public class CPHInline
         EnableGameTimer(intervalSeconds: 2);
 
         id736.Chat.SendMessage($"{userName} is locked and loaded! (angle {angle}, power {power})");
-        CPH.LogDebug("[cannon-fire] Finished.");
         return true;
     }
 
@@ -107,15 +94,9 @@ public class CPHInline
         string scene = CPH.GetGlobalVar<string>("cannon_obs_scene", false) ?? "";
         string source = CPH.GetGlobalVar<string>("cannon_obs_source", false) ?? "";
 
-        CPH.LogDebug($"[cannon-fire] ShowGameSource scene={scene}, source={source}");
-
         if (string.IsNullOrWhiteSpace(scene) || string.IsNullOrWhiteSpace(source))
-        {
-            CPH.LogDebug("[cannon-fire] Cannot show source: missing scene or source config.");
             return;
-        }
 
-        CPH.LogDebug($"[cannon-fire] Calling ObsShowSource({scene}, {source}).");
         CPH.ObsShowSource(scene, source);
         CPH.SetGlobalVar("cannon_source_shown_at", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(), false);
     }
@@ -124,13 +105,11 @@ public class CPHInline
     {
         string timerName = CPH.GetGlobalVar<string>("cannon_timer_name", false) ?? "cannon-game";
         string timerGuid = CPH.GetGlobalVar<string>("cannon_timer_guid", false) ?? "";
-        CPH.LogDebug($"[cannon-fire] EnableGameTimer name={timerName}, guid={timerGuid}");
 
         // The id736.Timers helpers call CPH's *ById methods, which require a GUID.
         // If setup already looked up the GUID, use the DLL helpers directly.
         if (!string.IsNullOrWhiteSpace(timerGuid))
         {
-            CPH.LogDebug($"[cannon-fire] Enabling/resetting timer '{timerGuid}' to {intervalSeconds}s via DLL.");
             id736.Timers.Enable(timerGuid);
             id736.Timers.ResetTimerById(timerGuid, intervalSeconds, keepEnabled: true);
             // Interval is already applied; tell tick not to reset again.
@@ -141,17 +120,11 @@ public class CPHInline
             // No GUID captured yet. Use CPH's name-based EnableTimer so the timer fires
             // once; cannon-game-tick will then capture the GUID from the timerId argument
             // and apply the requested interval itself.
-            CPH.LogDebug($"[cannon-fire] No GUID yet; enabling timer by name '{timerName}' via CPH.EnableTimer.");
             CPH.EnableTimer(timerName);
             CPH.SetGlobalVar("cannon_timer_interval", intervalSeconds, false);
-        }
-        else
-        {
-            CPH.LogDebug("[cannon-fire] No timer name or GUID configured; cannot enable timer.");
         }
 
         CPH.SetGlobalVar("cannon_last_active", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(), false);
         CPH.SetGlobalVar("cannon_timer_enabled", true, false);
-        CPH.LogDebug("[cannon-fire] Timer enabled flag set and activity timestamp updated.");
     }
 }

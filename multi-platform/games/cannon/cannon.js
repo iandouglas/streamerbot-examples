@@ -10,10 +10,10 @@ function initAudio() {
       audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
     if (audioContext.state === 'suspended') {
-      audioContext.resume().catch((err) => console.warn('Audio resume failed:', err));
+      audioContext.resume().catch(() => {});
     }
   } catch (e) {
-    console.error('Web Audio API is not supported in this browser');
+    // Web Audio API not supported; fallback to HTMLAudioElement.
   }
 }
 
@@ -28,8 +28,6 @@ function unlockAudio() {
   // Play a silent buffer to fully unlock the audio element.
   const silent = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQQAAAAAAA==');
   silent.play().catch(() => {});
-  console.log('[cannon] Audio unlocked by user interaction.');
-  debugOverlay('[cannon] Audio unlocked.');
 }
 
 /**
@@ -39,10 +37,7 @@ function unlockAudio() {
 function playAudioFile(path) {
   initAudio();
   const audio = new Audio(path);
-  audio.play().catch((err) => {
-    console.warn('Audio playback failed:', err);
-    debugOverlay(`Audio failed: ${err?.message || err}`);
-  });
+  audio.play().catch(() => {});
 }
 
 // Canvas and drawing context.
@@ -243,17 +238,20 @@ function getCannonPivot() {
 }
 
 /**
- * Draw a 2px gold outline around a bounding box.
- * @param {number} x - Left edge.
- * @param {number} y - Top edge.
- * @param {number} width - Box width.
- * @param {number} height - Box height.
+ * Draw a thin gold stroke around the actual barrel shape.
+ * The SVG path is M 15 18 L 155 20 L 155 50 L 15 52 Z.
  */
-function drawGoldOutline(x, y, width, height) {
+function drawBarrelOutline() {
   ctx.save();
   ctx.strokeStyle = '#ffd700';
   ctx.lineWidth = 2;
-  ctx.strokeRect(x, y, width, height);
+  ctx.beginPath();
+  ctx.moveTo(0, -17);
+  ctx.lineTo(140, -15);
+  ctx.lineTo(140, 15);
+  ctx.lineTo(0, 17);
+  ctx.closePath();
+  ctx.stroke();
   ctx.restore();
 }
 
@@ -272,7 +270,6 @@ function drawCannonBase() {
   }
   // Anchor the SVG at its bottom center (90, 110).
   ctx.drawImage(img, -dims.width / 2, -dims.height, dims.width, dims.height);
-  drawGoldOutline(-dims.width / 2, -dims.height, dims.width, dims.height);
   ctx.restore();
 }
 
@@ -295,7 +292,7 @@ function drawCannonBarrel() {
   ctx.rotate(-angle);
   // The barrel pivot in the SVG is at (15, 35).
   ctx.drawImage(img, -15, -35, dims.width, dims.height);
-  drawGoldOutline(-15, -35, dims.width, dims.height);
+  drawBarrelOutline();
   ctx.restore();
 }
 
@@ -561,9 +558,6 @@ function updateAndDrawProjectiles(dt) {
     // Landing on the target/floor level.
     if (y >= gameState.targetY) {
       const score = calculateScore(x);
-      const msg = `[cannon] Projectile landed at x=${x.toFixed(1)} y=${y.toFixed(1)} score=${score}`;
-      console.log(msg);
-      debugOverlay(msg);
 
       /** @type {LandedShot} */
       const landed = {
@@ -588,9 +582,6 @@ function updateAndDrawProjectiles(dt) {
       reportShotEnded(p.name, score, p.platform);
     } else if (x < 0 || x > canvas.width) {
       // Off-screen miss: report it so Streamer.bot can fire the next player.
-      const msg = `[cannon] Projectile off-screen at x=${x.toFixed(1)} y=${y.toFixed(1)}`;
-      console.log(msg);
-      debugOverlay(msg);
       reportShotEnded(p.name, -1, p.platform);
       gameState.projectiles.splice(i, 1);
     }
@@ -699,52 +690,19 @@ function drawScorePopup() {
  * @param {string} platform - Platform id.
  */
 function reportShotEnded(name, score, platform) {
-  if (!streamerbotClient) {
-    const msg = '[cannon] Cannot report shot ended: streamerbotClient not initialized.';
-    console.warn(msg);
-    debugOverlay(msg);
-    return;
-  }
-  if (typeof streamerbotClient.doAction !== 'function') {
-    const msg = '[cannon] Cannot report shot ended: doAction is not available.';
-    console.warn(msg);
-    debugOverlay(msg);
+  if (!streamerbotClient || typeof streamerbotClient.doAction !== 'function') {
     return;
   }
 
   const args = { userName: name, score, platform };
-  const msg = `[cannon] Reporting shot ended: ${JSON.stringify(args)}`;
-  console.log(msg);
-  debugOverlay(msg);
-
   // The StreamerbotClient expects an action object with a name (or id).
   // Passing a bare string is interpreted as an action id GUID, which fails.
   const actionRef = { name: 'cannon-shot-ended' };
 
   streamerbotClient.doAction(actionRef, args)
-    .then((res) => {
-      const okMsg = `[cannon] Shot-ended action reported: ${JSON.stringify(res)}`;
-      console.log(okMsg);
-      debugOverlay(okMsg);
-    })
-    .catch((err) => {
-      const failMsg = `[cannon] Failed to report shot ended: ${err?.message || err}`;
-      console.warn(failMsg, err);
-      debugOverlay(failMsg);
-
+    .catch(() => {
       // Retry once after a short delay in case the request was dropped.
-      setTimeout(() => {
-        const retryMsg = '[cannon] Retrying shot-ended report...';
-        console.log(retryMsg);
-        debugOverlay(retryMsg);
-        streamerbotClient.doAction(actionRef, args)
-          .then(() => debugOverlay('[cannon] Shot-ended retry succeeded.'))
-          .catch((err2) => {
-            const fail2 = `[cannon] Shot-ended retry failed: ${err2?.message || err2}`;
-            console.warn(fail2, err2);
-            debugOverlay(fail2);
-          });
-      }, 500);
+      setTimeout(() => streamerbotClient.doAction(actionRef, args).catch(() => {}), 500);
     });
 }
 
@@ -902,17 +860,10 @@ function getConnectionSettings() {
  */
 function connectStreamerbot() {
   if (typeof StreamerbotClient === 'undefined') {
-    const msg = '[cannon] StreamerbotClient not available.';
-    console.warn(msg);
-    debugOverlay(msg);
     return;
   }
 
   const settings = getConnectionSettings();
-  const url = `ws://${settings.host}:${settings.port}/`;
-  const connectingMsg = `[cannon] Connecting to ${url}`;
-  console.log(connectingMsg);
-  debugOverlay(connectingMsg);
 
   const clientOptions = {
     host: settings.host,
@@ -920,44 +871,18 @@ function connectStreamerbot() {
     endpoint: '/',
     autoReconnect: true,
     onConnect: () => {
-      const msg = '[cannon] WebSocket connected.';
-      console.log(msg);
-      debugOverlay(msg);
-
       // Mark connection time and clear stale local state so old queue data doesn't flash.
       gameState.connectedAt = Date.now();
       gameState.queue = [];
       gameState.landedShots = [];
       gameState.projectiles = [];
 
-      // Notify Streamer.bot that the browser has loaded so any stale queue clears.
-      streamerbotClient.doAction({ name: 'cannon-browser-loaded' })
-        .then(() => {
-          console.log('[cannon] Browser loaded notification sent.');
-          debugOverlay('[cannon] Browser loaded notification sent.');
-        })
-        .catch((err) => {
-          console.warn('[cannon] Failed to notify browser loaded:', err);
-          debugOverlay(`[cannon] Browser load notify failed: ${err?.message || err}`);
-        });
+      // Notify Streamer.bot that the browser has loaded.
+      streamerbotClient.doAction({ name: 'cannon-browser-loaded' }).catch(() => {});
     },
-    onDisconnect: () => {
-      const msg = '[cannon] WebSocket disconnected.';
-      console.warn(msg);
-      debugOverlay(msg);
-    },
-    onError: (err) => {
-      const msg = `[cannon] WebSocket error: ${err?.message || err}`;
-      console.error(msg, err);
-      debugOverlay(msg);
-    },
-    onData: (raw) => {
-      const source = raw?.event?.source || '?';
-      const type = raw?.event?.type || '?';
-      const msg = `[cannon] Raw data: ${source}.${type}`;
-      console.log(msg, raw);
-      debugOverlay(msg);
-    }
+    onDisconnect: () => {},
+    onError: () => {},
+    onData: () => {}
   };
 
   if (settings.password) {
@@ -969,10 +894,6 @@ function connectStreamerbot() {
   streamerbotClient.on('General.Custom', (payload) => {
     // Streamer.bot wraps the broadcast in an envelope; our actual data is in payload.data.
     const data = payload && typeof payload === 'object' && 'data' in payload ? payload.data : payload;
-    const eventName = typeof data?.event === 'string' ? data.event : 'unknown';
-    const msg = `[cannon] Received event: ${eventName}`;
-    console.log(msg, payload, data);
-    debugOverlay(msg);
     handleEvent(data);
   });
 }
@@ -1021,7 +942,6 @@ function handleEvent(data) {
       if (Array.isArray(data.players)) {
         // Ignore queue events until the first setup is received after this load.
         if (data.players.length > 0 && !gameState.setupReceived) {
-          debugOverlay('[cannon] Ignored stale queue before setup.');
           break;
         }
         gameState.queue = data.players.map(p => normalizePlayer(p));
