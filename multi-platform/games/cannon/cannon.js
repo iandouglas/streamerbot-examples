@@ -111,7 +111,8 @@ const gameState = {
   pauseEnd: 0,
   scoreText: null,
   scoreX: 0,
-  scoreY: 0
+  scoreY: 0,
+  connectedAt: 0
 };
 
 /**
@@ -749,6 +750,12 @@ function connectStreamerbot() {
       console.log(msg);
       debugOverlay(msg);
 
+      // Mark connection time and clear stale local state so old queue data doesn't flash.
+      gameState.connectedAt = Date.now();
+      gameState.queue = [];
+      gameState.landedShots = [];
+      gameState.projectiles = [];
+
       // Notify Streamer.bot that the browser has loaded so any stale queue clears.
       streamerbotClient.doAction('cannon-browser-loaded')
         .then(() => {
@@ -837,6 +844,13 @@ function handleEvent(data) {
 
     case 'queue':
       if (Array.isArray(data.players)) {
+        // Ignore stale queue events that arrive within 750 ms of connecting.
+        // The browser already cleared its local queue and asked Streamer.bot to do the same.
+        const elapsed = Date.now() - gameState.connectedAt;
+        if (data.players.length > 0 && elapsed < 750) {
+          debugOverlay('[cannon] Ignored stale queue after reload.');
+          break;
+        }
         gameState.queue = data.players.map(p => normalizePlayer(p));
       }
       break;
