@@ -243,6 +243,21 @@ function getCannonPivot() {
 }
 
 /**
+ * Draw a 2px gold outline around a bounding box.
+ * @param {number} x - Left edge.
+ * @param {number} y - Top edge.
+ * @param {number} width - Box width.
+ * @param {number} height - Box height.
+ */
+function drawGoldOutline(x, y, width, height) {
+  ctx.save();
+  ctx.strokeStyle = '#ffd700';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(x, y, width, height);
+  ctx.restore();
+}
+
+/**
  * Draw the cannon base at the bottom of the screen.
  */
 function drawCannonBase() {
@@ -257,6 +272,7 @@ function drawCannonBase() {
   }
   // Anchor the SVG at its bottom center (90, 110).
   ctx.drawImage(img, -dims.width / 2, -dims.height, dims.width, dims.height);
+  drawGoldOutline(-dims.width / 2, -dims.height, dims.width, dims.height);
   ctx.restore();
 }
 
@@ -279,6 +295,7 @@ function drawCannonBarrel() {
   ctx.rotate(-angle);
   // The barrel pivot in the SVG is at (15, 35).
   ctx.drawImage(img, -15, -35, dims.width, dims.height);
+  drawGoldOutline(-15, -35, dims.width, dims.height);
   ctx.restore();
 }
 
