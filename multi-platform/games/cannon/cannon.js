@@ -632,10 +632,11 @@ gameState.audioPaths = { fuse: '', fire: '', impact: '' };
  */
 function connectStreamerbot() {
   if (typeof StreamerbotClient === 'undefined') {
-    console.warn('StreamerbotClient not available.');
+    console.warn('[cannon] StreamerbotClient not available.');
     return;
   }
 
+  console.log('[cannon] Connecting to Streamer.bot WebSocket...');
   streamerbotClient = new StreamerbotClient({
     host: '127.0.0.1',
     port: 8080,
@@ -643,7 +644,20 @@ function connectStreamerbot() {
     autoReconnect: true
   });
 
+  streamerbotClient.on('open', () => {
+    console.log('[cannon] WebSocket connected.');
+  });
+
+  streamerbotClient.on('close', () => {
+    console.warn('[cannon] WebSocket disconnected.');
+  });
+
+  streamerbotClient.on('error', (err) => {
+    console.error('[cannon] WebSocket error:', err);
+  });
+
   streamerbotClient.on('General.Custom', ({ data }) => {
+    console.log('[cannon] Received event:', data?.event, data);
     handleEvent(data);
   });
 }
@@ -705,7 +719,7 @@ function handleEvent(data) {
       break;
 
     case 'impactSound':
-      playAudioFile(gameState.audioPaths.impact || 'assets/sounds/impact.mp3');
+      playAudioFile(gameState.audioPaths.impact || 'assets/sounds/land-clang.mp3');
       break;
 
     case 'clearLanded':

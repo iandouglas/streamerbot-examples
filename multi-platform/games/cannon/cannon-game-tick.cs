@@ -132,9 +132,10 @@ public class CPHInline
 
         CPH.LogDebug($"[cannon-tick] SendSetup side={side}, wind={wind:F1}, targetX={targetX}");
 
-        string audioFuse = "";
-        string audioFire = "";
-        string audioImpact = "";
+        // Default audio paths are relative to index.html so local file:// loads work.
+        string audioFuse = "assets/sounds/fuse.mp3";
+        string audioFire = "assets/sounds/cannon-fire.mp3";
+        string audioImpact = "assets/sounds/land-clang.mp3";
 
         if (CPH.TryGetArg("audioFuse", out string fuseArg) && !string.IsNullOrWhiteSpace(fuseArg))
             audioFuse = fuseArg;
