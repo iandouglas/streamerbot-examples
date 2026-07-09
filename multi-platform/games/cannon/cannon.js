@@ -688,6 +688,12 @@ function connectStreamerbot() {
     debugOverlay(msg);
     handleEvent(data);
   });
+
+  streamerbotClient.on('*', (raw) => {
+    const msg = `[cannon] Raw event: ${raw?.event?.source}.${raw?.event?.type}`;
+    console.log(msg, raw);
+    debugOverlay(msg);
+  });
 }
 
 /**
