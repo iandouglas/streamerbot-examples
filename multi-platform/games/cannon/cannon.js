@@ -642,6 +642,19 @@ function debugOverlay(message) {
 }
 
 /**
+ * Read connection settings from URL query parameters.
+ * @returns {{host: string, port: number, password: string|undefined}}
+ */
+function getConnectionSettings() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    host: params.get('host') || '127.0.0.1',
+    port: parseInt(params.get('port') || '8080', 10),
+    password: params.get('password') || undefined
+  };
+}
+
+/**
  * Connect to Streamer.bot and listen for game events.
  */
 function connectStreamerbot() {
@@ -652,13 +665,15 @@ function connectStreamerbot() {
     return;
   }
 
-  const connectingMsg = '[cannon] Connecting to Streamer.bot WebSocket...';
+  const settings = getConnectionSettings();
+  const url = `ws://${settings.host}:${settings.port}/`;
+  const connectingMsg = `[cannon] Connecting to ${url}`;
   console.log(connectingMsg);
   debugOverlay(connectingMsg);
 
-  streamerbotClient = new StreamerbotClient({
-    host: '127.0.0.1',
-    port: 8080,
+  const clientOptions = {
+    host: settings.host,
+    port: settings.port,
     endpoint: '/',
     autoReconnect: true,
     onConnect: () => {
@@ -683,7 +698,13 @@ function connectStreamerbot() {
       console.log(msg, raw);
       debugOverlay(msg);
     }
-  });
+  };
+
+  if (settings.password) {
+    clientOptions.password = settings.password;
+  }
+
+  streamerbotClient = new StreamerbotClient(clientOptions);
 
   streamerbotClient.on('General.Custom', ({ data }) => {
     const eventName = data?.event || 'unknown';
