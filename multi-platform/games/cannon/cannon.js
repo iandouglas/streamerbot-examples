@@ -433,25 +433,6 @@ function updateAndDrawProjectiles() {
     let x = p.startX + p.velocityX * p.time;
     let y = p.startY + p.velocityY * p.time + 0.5 * GRAVITY * p.time * p.time;
 
-    // Wall bounce once off the far wall.
-    if (p.bounces < 1) {
-      if (x < 0) {
-        x = -x;
-        p.velocityX = Math.abs(p.velocityX);
-        p.startX = x;
-        p.startY = y;
-        p.time = 0;
-        p.bounces += 1;
-      } else if (x > canvas.width) {
-        x = canvas.width - (x - canvas.width);
-        p.velocityX = -Math.abs(p.velocityX);
-        p.startX = x;
-        p.startY = y;
-        p.time = 0;
-        p.bounces += 1;
-      }
-    }
-
     // Trail.
     const prevTime = p.time - dt;
     const prevX = p.startX + p.velocityX * prevTime;
@@ -621,6 +602,8 @@ function animateFire(entry) {
   playAudioFile(gameState.audioPaths.fuse || 'assets/sounds/fuse.mp3');
   gameState.fuseStartTime = Date.now();
   gameState.firingEntry = entry;
+  // Aim the cannon barrel at the player's chosen angle during the fuse.
+  gameState.cannonAngle = clamp(entry.angle, 1, 90);
 
   const timer = setInterval(() => {
     const elapsed = Date.now() - gameState.fuseStartTime;
