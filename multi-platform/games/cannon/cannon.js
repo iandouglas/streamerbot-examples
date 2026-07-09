@@ -601,21 +601,49 @@ function showScore(x, y, score) {
 }
 
 /**
+ * Compute the highest score among all landed shots on the target.
+ * @returns {number} Highest score, or -1 if no one hit the target.
+ */
+function getHighScore() {
+  let max = -1;
+  for (const shot of gameState.landedShots) {
+    if (shot.score > max) max = shot.score;
+  }
+  return max;
+}
+
+/**
  * Draw previously landed shots. Icons are right-side up.
  * Misses (score < 0) are faded to 40% opacity.
+ * Hits that are not the current high score are faded to 60% opacity so the
+ * leader stands out. Shots are drawn in score order so the highest score is
+ * always on top.
  */
 function drawLandedShots() {
-  for (const shot of gameState.landedShots) {
+  const highScore = getHighScore();
+  // Sort by score ascending so the highest score is rendered last (on top).
+  const shots = gameState.landedShots.slice().sort((a, b) => a.score - b.score);
+
+  for (const shot of shots) {
     const img = getPlayerImage(shot);
     const isMiss = shot.score < 0;
+    const isLeader = shot.score >= 0 && shot.score === highScore;
+    let alpha;
+    if (isMiss) {
+      alpha = 0.4;
+    } else if (isLeader) {
+      alpha = 1.0;
+    } else {
+      alpha = 0.6;
+    }
 
     ctx.save();
-    ctx.globalAlpha = isMiss ? 0.4 : 1.0;
+    ctx.globalAlpha = alpha;
     ctx.drawImage(img, shot.x - PROJECTILE_SIZE / 2, shot.y - PROJECTILE_SIZE / 2, PROJECTILE_SIZE, PROJECTILE_SIZE);
     ctx.restore();
 
     ctx.save();
-    ctx.globalAlpha = isMiss ? 0.4 : 1.0;
+    ctx.globalAlpha = alpha;
     drawOutlinedText(shot.name, shot.x, shot.y - PROJECTILE_SIZE / 2 - 12, 'bold 22px sans-serif');
     ctx.restore();
 
