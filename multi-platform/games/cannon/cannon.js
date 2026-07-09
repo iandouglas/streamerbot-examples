@@ -659,16 +659,11 @@ function drawLandedShots() {
     ctx.save();
     ctx.globalAlpha = alpha;
     ctx.drawImage(img, shot.x - PROJECTILE_SIZE / 2, shot.y - PROJECTILE_SIZE / 2, PROJECTILE_SIZE, PROJECTILE_SIZE);
-    ctx.restore();
-
-    ctx.save();
-    ctx.globalAlpha = alpha;
     drawOutlinedText(shot.name, shot.x, shot.y - PROJECTILE_SIZE / 2 - 12, 'bold 22px sans-serif');
-    ctx.restore();
-
     if (shot.score >= 0) {
       drawOutlinedText(`${shot.score} pts`, shot.x, shot.y - PROJECTILE_SIZE / 2 - 40, 'bold 18px sans-serif');
     }
+    ctx.restore();
   }
 }
 
