@@ -17,11 +17,30 @@
       background-color: #00ff00; /* Greenscreen background */
       display: block;
     }
+
+    #debugOverlay {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      max-width: 900px;
+      max-height: 300px;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.7);
+      color: #00ff00;
+      font-family: monospace;
+      font-size: 14px;
+      padding: 8px;
+      border-radius: 4px;
+      white-space: pre-wrap;
+      z-index: 9999;
+      pointer-events: none;
+    }
   </style>
   <script src="assets/js/streamerbot-client.js"></script>
   <script src="cannon.js" defer></script>
 </head>
 <body>
   <canvas id="gameCanvas" width="1920" height="1080"></canvas>
+  <div id="debugOverlay">Waiting for events...</div>
 </body>
 </html>

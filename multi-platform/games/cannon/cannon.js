@@ -628,15 +628,34 @@ let streamerbotClient = null;
 gameState.audioPaths = { fuse: '', fire: '', impact: '' };
 
 /**
+ * Append a message to the on-page debug overlay.
+ * @param {string} message - Message to display.
+ */
+function debugOverlay(message) {
+  const el = document.getElementById('debugOverlay');
+  if (!el) return;
+  const line = `[${new Date().toLocaleTimeString()}] ${message}`;
+  el.textContent = `${line}\n${el.textContent}`;
+  // Keep only the most recent 30 lines.
+  const lines = el.textContent.split('\n').slice(0, 30);
+  el.textContent = lines.join('\n');
+}
+
+/**
  * Connect to Streamer.bot and listen for game events.
  */
 function connectStreamerbot() {
   if (typeof StreamerbotClient === 'undefined') {
-    console.warn('[cannon] StreamerbotClient not available.');
+    const msg = '[cannon] StreamerbotClient not available.';
+    console.warn(msg);
+    debugOverlay(msg);
     return;
   }
 
-  console.log('[cannon] Connecting to Streamer.bot WebSocket...');
+  const connectingMsg = '[cannon] Connecting to Streamer.bot WebSocket...';
+  console.log(connectingMsg);
+  debugOverlay(connectingMsg);
+
   streamerbotClient = new StreamerbotClient({
     host: '127.0.0.1',
     port: 8080,
@@ -645,19 +664,28 @@ function connectStreamerbot() {
   });
 
   streamerbotClient.on('open', () => {
-    console.log('[cannon] WebSocket connected.');
+    const msg = '[cannon] WebSocket connected.';
+    console.log(msg);
+    debugOverlay(msg);
   });
 
   streamerbotClient.on('close', () => {
-    console.warn('[cannon] WebSocket disconnected.');
+    const msg = '[cannon] WebSocket disconnected.';
+    console.warn(msg);
+    debugOverlay(msg);
   });
 
   streamerbotClient.on('error', (err) => {
-    console.error('[cannon] WebSocket error:', err);
+    const msg = `[cannon] WebSocket error: ${err?.message || err}`;
+    console.error(msg, err);
+    debugOverlay(msg);
   });
 
   streamerbotClient.on('General.Custom', ({ data }) => {
-    console.log('[cannon] Received event:', data?.event, data);
+    const eventName = data?.event || 'unknown';
+    const msg = `[cannon] Received event: ${eventName}`;
+    console.log(msg, data);
+    debugOverlay(msg);
     handleEvent(data);
   });
 }
