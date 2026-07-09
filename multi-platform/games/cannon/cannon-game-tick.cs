@@ -149,7 +149,7 @@ public class CPHInline
             { "cannonSide", side },
             { "cannonAngle", 45 },
             { "targetX", targetX },
-            { "targetY", 980 },
+            { "targetY", 1060 },
             { "wind", wind },
             { "audio", new Dictionary<string, object>
                 {
