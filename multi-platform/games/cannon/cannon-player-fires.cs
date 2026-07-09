@@ -117,6 +117,7 @@ public class CPHInline
 
         CPH.LogDebug($"[cannon-fire] Calling ObsShowSource({scene}, {source}).");
         CPH.ObsShowSource(scene, source);
+        CPH.SetGlobalVar("cannon_source_shown_at", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(), false);
     }
 
     private void EnableGameTimer(int intervalSeconds)

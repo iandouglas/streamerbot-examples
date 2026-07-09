@@ -125,14 +125,28 @@ public class CPHInline
             CPH.LogDebug($"[cannon-tick] cannon_firing={firing}");
             if (!firing)
             {
-                var player = queue[0] as Dictionary<string, object>;
-                queue.RemoveAt(0);
-                CPH.SetGlobalVar("cannon_queue", id736.Data.ToJson(queue), false);
-                CPH.SetGlobalVar("cannon_firing", true, false);
-                CPH.SetGlobalVar("cannon_firing_started", now, false);
+                // If the OBS source was just shown, give the browser a moment to load
+                // and connect before firing. This prevents the first shot from being
+                // lost when the source was previously hidden.
+                long sourceShownAt = CPH.GetGlobalVar<long>("cannon_source_shown_at", false);
+                long msSinceShown = now - sourceShownAt;
+                const long sourceWarmupMs = 3000;
+                if (sourceShownAt > 0 && msSinceShown < sourceWarmupMs)
+                {
+                    CPH.LogDebug($"[cannon-tick] Source shown recently ({msSinceShown}ms ago); waiting {sourceWarmupMs}ms before firing.");
+                }
+                else
+                {
+                    var player = queue[0] as Dictionary<string, object>;
+                    queue.RemoveAt(0);
+                    CPH.SetGlobalVar("cannon_queue", id736.Data.ToJson(queue), false);
+                    CPH.SetGlobalVar("cannon_firing", true, false);
+                    CPH.SetGlobalVar("cannon_firing_started", now, false);
+                    CPH.SetGlobalVar("cannon_source_shown_at", 0L, false);
 
-                CPH.LogDebug($"[cannon-tick] Firing player: {id736.Data.ToJson(player)}");
-                SendEvent("fire", new Dictionary<string, object> { { "player", player } });
+                    CPH.LogDebug($"[cannon-tick] Firing player: {id736.Data.ToJson(player)}");
+                    SendEvent("fire", new Dictionary<string, object> { { "player", player } });
+                }
             }
         }
 

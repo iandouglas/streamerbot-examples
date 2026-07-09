@@ -28,7 +28,7 @@ public class CPHInline
 
         CPH.LogDebug($"[cannon-ended] userName={userName}, platform={platform}, score={score}");
 
-        // Score is -1 for a miss, 0-100 for a hit.
+        // Only announce scores for shots that land on the target. Misses are silent.
         if (score >= 0)
         {
             id736.Chat.SendMessage($"🎯 {userName} scored {score} points!");
@@ -37,7 +37,7 @@ public class CPHInline
             try
             {
                 id736.Points.SetContext(CPH);
-                int total = id736.Points.Add(userName, platform, "cannon_points", score);
+                int total = id736.Points.Add(userName, platform, "points", score);
                 CPH.LogDebug($"[cannon-ended] Added {score} points to {userName}; total={total}.");
             }
             catch (Exception ex)
@@ -47,8 +47,7 @@ public class CPHInline
         }
         else
         {
-            id736.Chat.SendMessage($"💨 {userName} missed the target!");
-            CPH.LogDebug("[cannon-ended] Chat message sent for miss.");
+            CPH.LogDebug("[cannon-ended] Miss reported; no chat message sent.");
         }
 
         // Mark the shot as complete so the next queued player can fire.
