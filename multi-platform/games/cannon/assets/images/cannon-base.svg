@@ -1,0 +1,24 @@
+<svg width="180" height="110" xmlns="http://www.w3.org/2000/svg">
+  <!-- Base anchor: bottom center of SVG at (90, 110). Pivot at back: (30, 50). -->
+  <!-- Rear wheel -->
+  <circle cx="35" cy="88" r="18" fill="#3d2817" stroke="#1a0f08" stroke-width="3"/>
+  <circle cx="35" cy="88" r="7" fill="#5c3a21"/>
+  <circle cx="35" cy="88" r="3" fill="#8b6914"/>
+  <!-- Front wheel -->
+  <circle cx="135" cy="88" r="18" fill="#3d2817" stroke="#1a0f08" stroke-width="3"/>
+  <circle cx="135" cy="88" r="7" fill="#5c3a21"/>
+  <circle cx="135" cy="88" r="3" fill="#8b6914"/>
+  <!-- Wooden carriage body (low, flat) -->
+  <path d="M 20 65 L 160 65 L 155 88 L 25 88 Z" fill="#5c3a21" stroke="#3d2817" stroke-width="3"/>
+  <!-- Side planks -->
+  <rect x="25" y="68" width="130" height="8" fill="#704a2b" rx="2"/>
+  <rect x="30" y="78" width="120" height="6" fill="#704a2b" rx="2"/>
+  <!-- Gold/brass fittings -->
+  <circle cx="35" cy="65" r="4" fill="#d4af37"/>
+  <circle cx="135" cy="65" r="4" fill="#d4af37"/>
+  <!-- Rear pivot mount base -->
+  <path d="M 15 40 L 45 40 L 42 65 L 18 65 Z" fill="#4a2e1a" stroke="#3d2817" stroke-width="2"/>
+  <!-- Beige pivot pin at the back -->
+  <circle cx="30" cy="45" r="12" fill="#d2b48c" stroke="#8b7355" stroke-width="2"/>
+  <circle cx="30" cy="45" r="5" fill="#a0826d"/>
+</svg>

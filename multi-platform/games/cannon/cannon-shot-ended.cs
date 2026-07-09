@@ -1,0 +1,66 @@
+using System;
+using id736 = iandouglas736;
+
+public class CPHInline
+{
+    public bool Execute()
+    {
+        id736.Chat.SetContext(CPH);
+        id736.Timers.SetContext(CPH);
+        CPH.LogDebug("[cannon-ended] Started.");
+
+        if (!CPH.TryGetArg("userName", out string userName) || string.IsNullOrWhiteSpace(userName))
+            userName = "Player";
+
+        if (!CPH.TryGetArg("platform", out string platform) || string.IsNullOrWhiteSpace(platform))
+            platform = "twitch";
+        platform = platform.ToLowerInvariant();
+
+        int score = -1;
+        if (CPH.TryGetArg("score", out string scoreStr) && !string.IsNullOrWhiteSpace(scoreStr))
+        {
+            int.TryParse(scoreStr, out score);
+        }
+
+        CPH.LogDebug($"[cannon-ended] userName={userName}, platform={platform}, score={score}");
+
+        // Score is -1 for a miss, 0-100 for a hit.
+        if (score >= 0)
+        {
+            id736.Points.SetContext(CPH);
+            int total = id736.Points.Add(userName, platform, "cannon_points", score);
+            id736.Chat.SendMessage($"🎯 {userName} scored {score} points! Total: {total}");
+        }
+        else
+        {
+            id736.Chat.SendMessage($"💨 {userName} missed the target!");
+        }
+
+        // Mark activity and slow the timer to the hide-delay interval.
+        CPH.SetGlobalVar("cannon_last_active", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(), false);
+        CPH.LogDebug("[cannon-ended] Activity timestamp reset.");
+        SlowGameTimerIfQueueEmpty();
+
+        CPH.LogDebug("[cannon-ended] Finished.");
+        return true;
+    }
+
+    private void SlowGameTimerIfQueueEmpty()
+    {
+        string queueJson = CPH.GetGlobalVar<string>("cannon_queue", false) ?? "[]";
+        bool queueEmpty = string.IsNullOrWhiteSpace(queueJson) || queueJson == "[]";
+        CPH.LogDebug($"[cannon-ended] Queue empty={queueEmpty}, queueJson={queueJson}");
+        if (!queueEmpty)
+            return;
+
+        string timerName = CPH.GetGlobalVar<string>("cannon_timer_name", false) ?? "cannon-game";
+        CPH.LogDebug($"[cannon-ended] SlowGameTimerIfQueueEmpty name={timerName}");
+
+        if (!string.IsNullOrWhiteSpace(timerName))
+        {
+            id736.Timers.Enable(timerName);
+            id736.Timers.ResetTimerById(timerName, 60, keepEnabled: true);
+            CPH.LogDebug("[cannon-ended] Timer slowed to 60s hide delay by name.");
+        }
+    }
+}

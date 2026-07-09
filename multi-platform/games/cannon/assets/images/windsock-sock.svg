@@ -1,0 +1,8 @@
+<svg width="130" height="60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Windsock body: wide at pole, tapered to a point on the right -->
+  <path d="M 0 10 L 110 4 L 120 30 L 110 56 L 0 50 Z" fill="#ffcc00" stroke="#cc9900" stroke-width="2"/>
+  <!-- Stripes on the sock -->
+  <line x1="25" y1="8" x2="25" y2="52" stroke="#ff6600" stroke-width="6"/>
+  <line x1="50" y1="6" x2="50" y2="54" stroke="#ff6600" stroke-width="5"/>
+  <line x1="75" y1="5" x2="75" y2="55" stroke="#ff6600" stroke-width="4"/>
+</svg>

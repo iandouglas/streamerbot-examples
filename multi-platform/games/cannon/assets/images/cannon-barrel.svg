@@ -1,0 +1,17 @@
+<svg width="170" height="70" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pivot point at the rear (15, 35), barrel extends to the right -->
+  <!-- Main black barrel -->
+  <path d="M 15 18 L 155 20 L 155 50 L 15 52 Z" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
+  <!-- Barrel highlight -->
+  <path d="M 18 25 L 150 26 L 150 32 L 18 31 Z" fill="#333" opacity="0.5"/>
+  <!-- Gold reinforcing bands -->
+  <rect x="40" y="17" width="10" height="38" fill="#d4af37"/>
+  <rect x="85" y="18" width="10" height="36" fill="#d4af37"/>
+  <rect x="125" y="19" width="10" height="34" fill="#d4af37"/>
+  <!-- Muzzle ring -->
+  <rect x="148" y="15" width="12" height="40" rx="3" fill="#d4af37" stroke="#8b6914" stroke-width="2"/>
+  <!-- Open muzzle (no black dot) -->
+  <ellipse cx="160" cy="35" rx="5" ry="14" fill="#2a1a10" stroke="#1a0f08" stroke-width="1"/>
+  <!-- Rear touch hole / fuse area -->
+  <circle cx="22" cy="28" r="3" fill="#0d0d0d"/>
+</svg>
