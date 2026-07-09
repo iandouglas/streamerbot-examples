@@ -112,7 +112,8 @@ const gameState = {
   scoreText: null,
   scoreX: 0,
   scoreY: 0,
-  connectedAt: 0
+  connectedAt: 0,
+  setupReceived: false
 };
 
 /**
@@ -824,15 +825,14 @@ function handleEvent(data) {
         };
       }
       gameState.initialized = true;
+      gameState.setupReceived = true;
       break;
 
     case 'queue':
       if (Array.isArray(data.players)) {
-        // Ignore stale queue events that arrive within 750 ms of connecting.
-        // The browser already cleared its local queue and asked Streamer.bot to do the same.
-        const elapsed = Date.now() - gameState.connectedAt;
-        if (data.players.length > 0 && elapsed < 750) {
-          debugOverlay('[cannon] Ignored stale queue after reload.');
+        // Ignore queue events until the first setup is received after this load.
+        if (data.players.length > 0 && !gameState.setupReceived) {
+          debugOverlay('[cannon] Ignored stale queue before setup.');
           break;
         }
         gameState.queue = data.players.map(p => normalizePlayer(p));
