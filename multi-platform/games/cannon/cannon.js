@@ -710,9 +710,10 @@ function connectStreamerbot() {
     // The client may pass either the full envelope or the nested data object.
     const data = payload && typeof payload === 'object' && 'data' in payload ? payload.data : payload;
     const eventName = typeof data?.event === 'string' ? data.event : 'unknown';
+    const inspect = JSON.stringify({ payloadKeys: payload && Object.keys(payload), dataKeys: data && Object.keys(data), eventField: data?.event });
     const msg = `[cannon] Received event: ${eventName}`;
-    console.log(msg, data);
-    debugOverlay(msg);
+    console.log(msg, payload, data);
+    debugOverlay(`${msg} ${inspect}`);
     handleEvent(data);
   });
 }
