@@ -268,7 +268,8 @@ function drawCannonBarrel() {
  */
 function drawWindsock() {
   const base = getCannonBasePos();
-  const poleX = base.x + (gameState.cannonSide === 'left' ? 100 : -100);
+  // Keep the pole well clear of the cannon base.
+  const poleX = base.x + (gameState.cannonSide === 'left' ? 140 : -140);
   const poleTopY = canvas.height - 60;
   const hasWind = Math.abs(gameState.wind) > 0.5;
 
@@ -284,16 +285,18 @@ function drawWindsock() {
 
   if (hasWind) {
     const windForce = clamp(Math.abs(gameState.wind) / 20, 0, 1);
-    // Sock is half the original size and grows slightly with stronger wind.
-    const scale = 0.3 + windForce * 0.2;
+    // Sock is about half the original size and grows slightly with stronger wind.
+    const scale = 0.35 + windForce * 0.15;
     // Point the sock with the wind. Positive wind blows right; negative blows left.
     const flip = gameState.wind < 0 ? -1 : 1;
     const sockImg = loadImage('windsock-sock', 'assets/images/windsock-sock.svg');
+    const sockWidth = 130 * scale;
 
     ctx.save();
-    // Offset the sock so it starts further from the pole and doesn't overlap the cannon base.
-    const sockOffsetX = flip === 1 ? POLE_WIDTH + 8 : -130 * scale - 8;
-    ctx.translate(poleX + sockOffsetX, poleTopY + 12);
+    // Attach the sock to the top of the pole. When flipped, translate so the attachment
+    // point (left edge of the sock in its local space) stays at the pole top.
+    const attachX = flip === 1 ? poleX + POLE_WIDTH - 2 : poleX - POLE_WIDTH + 2;
+    ctx.translate(attachX, poleTopY + 5);
     ctx.scale(flip * scale, scale);
     ctx.drawImage(sockImg, 0, 0, 130, 60);
     ctx.restore();
