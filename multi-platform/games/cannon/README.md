@@ -21,6 +21,8 @@ The name of the timer must be `cannon-game`.
 
 Set this to be DISABLED to start, set Repeat to ON, and set the interval to 2 seconds. The game will set this to varying amounts of time as the game plays, and the game will also enable/disable the timer itself so it doesn't fill up your log with information.
 
+Once you save this, right-click on the new "cannon-game" timer and select **Copy Timer ID**. Paste that value into a text editor; you will need it for the setup action's `timerGuid` argument. It will look something like `1288da0a-6c35-44e3-a2ab-eb47e60af695`.
+
 
 ### Add the Browser Source in OBS
 
@@ -67,6 +69,7 @@ Add the following arguments (Add -> Core -> Arguments -> Set argument)
 - "obsScene", set this to the name of the OBS scene where your game's "source" will be used
 - "obsSource", set this to the name of the Browser source you set up to load the HTML file for the game
 - "timerName", set this to "cannon-game"
+- "timerGuid", paste the **Timer ID** you copied from the `cannon-game` timer. This is required for the game to enable/disable the timer.
 
 Add a subaction to 'Execute C# Code' and paste in the code from `cannon-game-setup.cs`
 

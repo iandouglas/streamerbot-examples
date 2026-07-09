@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using Newtonsoft.Json.Linq;
 using id736 = iandouglas736;
 
 public class CPHInline
@@ -27,16 +24,18 @@ public class CPHInline
         if (!CPH.TryGetArg("timerName", out string timerName) || string.IsNullOrWhiteSpace(timerName))
             timerName = "cannon-game";
 
-        CPH.LogDebug($"[cannon-setup] Config: scene={obsScene}, source={obsSource}, timerName={timerName}");
+        if (!CPH.TryGetArg("timerGuid", out string timerGuid) || string.IsNullOrWhiteSpace(timerGuid))
+        {
+            CPH.LogDebug("[cannon-setup] ERROR: timerGuid action argument is missing. Copy the Timer ID from the cannon-game timer in Streamer.bot and paste it as a 'timerGuid' action argument.");
+            return true;
+        }
+
+        CPH.LogDebug($"[cannon-setup] Config: scene={obsScene}, source={obsSource}, timerName={timerName}, timerGuid={timerGuid}");
 
         // Store config in non-persistent global variables.
         CPH.SetGlobalVar("cannon_obs_scene", obsScene, false);
         CPH.SetGlobalVar("cannon_obs_source", obsSource, false);
         CPH.SetGlobalVar("cannon_timer_name", timerName, false);
-
-        // Look up the configured timer by name and store its GUID so the game can
-        // enable/disable/reset it using CPH's ById timer methods.
-        string timerGuid = LookupTimerGuid(timerName);
         CPH.SetGlobalVar("cannon_timer_guid", timerGuid, false);
 
         // Reset game state in non-persistent global variables.
@@ -57,52 +56,5 @@ public class CPHInline
         CPH.LogDebug("[cannon-setup] OBS source hidden. Setup finished.");
 
         return true;
-    }
-
-    private string LookupTimerGuid(string timerName)
-    {
-        CPH.LogDebug($"[cannon-setup] Looking up timer GUID for '{timerName}'.");
-
-        // Allow the caller to override the Streamer.bot internal API URL.
-        if (!CPH.TryGetArg("timerApiUrl", out string apiUrl) || string.IsNullOrWhiteSpace(apiUrl))
-            apiUrl = "http://127.0.0.1:7474";
-
-        CPH.LogDebug($"[cannon-setup] Timer API URL: {apiUrl}");
-
-        try
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                // Fetch the timer data synchronously from the local API.
-                HttpResponseMessage response = client.GetAsync(apiUrl).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    string jsonResponse = response.Content.ReadAsStringAsync().Result;
-                    JObject data = JObject.Parse(jsonResponse);
-
-                    // Streamer.bot API wraps lists inside a "timers" array.
-                    JArray timers = (JArray)data["timers"];
-                    JToken targetTimer = timers?.FirstOrDefault(t => t["name"]?.ToString() == timerName);
-
-                    if (targetTimer != null)
-                    {
-                        string timerGuid = targetTimer["id"]?.ToString() ?? "";
-                        CPH.LogDebug($"[cannon-setup] Found timer '{timerName}' with GUID: {timerGuid}");
-                        return timerGuid;
-                    }
-                }
-                else
-                {
-                    CPH.LogDebug($"[cannon-setup] Timer API returned status {(int)response.StatusCode}.");
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            CPH.LogDebug($"[cannon-setup] Exception looking up timer GUID: {ex.Message}");
-        }
-
-        CPH.LogDebug($"[cannon-setup] Timer '{timerName}' not found; GUID will be empty.");
-        return "";
     }
 }
