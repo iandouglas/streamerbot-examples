@@ -478,9 +478,9 @@ function updateAndDrawProjectiles() {
 
       if (score >= 0) {
         showScore(x, gameState.targetY, score);
-        startPause(10000);
+        startPause(3000);
       } else {
-        startPause(5000);
+        startPause(2000);
       }
 
       // Report shot result back to Streamer.bot (hit or miss).
