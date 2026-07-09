@@ -700,7 +700,11 @@ function reportShotEnded(name, score, platform) {
   console.log(msg);
   debugOverlay(msg);
 
-  streamerbotClient.doAction('cannon-shot-ended', args)
+  // The StreamerbotClient expects an action object with a name (or id).
+  // Passing a bare string is interpreted as an action id GUID, which fails.
+  const actionRef = { name: 'cannon-shot-ended' };
+
+  streamerbotClient.doAction(actionRef, args)
     .then((res) => {
       const okMsg = `[cannon] Shot-ended action reported: ${JSON.stringify(res)}`;
       console.log(okMsg);
@@ -716,7 +720,7 @@ function reportShotEnded(name, score, platform) {
         const retryMsg = '[cannon] Retrying shot-ended report...';
         console.log(retryMsg);
         debugOverlay(retryMsg);
-        streamerbotClient.doAction('cannon-shot-ended', args)
+        streamerbotClient.doAction(actionRef, args)
           .then(() => debugOverlay('[cannon] Shot-ended retry succeeded.'))
           .catch((err2) => {
             const fail2 = `[cannon] Shot-ended retry failed: ${err2?.message || err2}`;
@@ -910,7 +914,7 @@ function connectStreamerbot() {
       gameState.projectiles = [];
 
       // Notify Streamer.bot that the browser has loaded so any stale queue clears.
-      streamerbotClient.doAction('cannon-browser-loaded')
+      streamerbotClient.doAction({ name: 'cannon-browser-loaded' })
         .then(() => {
           console.log('[cannon] Browser loaded notification sent.');
           debugOverlay('[cannon] Browser loaded notification sent.');
