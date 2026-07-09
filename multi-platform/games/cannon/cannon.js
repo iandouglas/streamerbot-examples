@@ -748,6 +748,17 @@ function connectStreamerbot() {
       const msg = '[cannon] WebSocket connected.';
       console.log(msg);
       debugOverlay(msg);
+
+      // Notify Streamer.bot that the browser has loaded so any stale queue clears.
+      streamerbotClient.doAction('cannon-browser-loaded')
+        .then(() => {
+          console.log('[cannon] Browser loaded notification sent.');
+          debugOverlay('[cannon] Browser loaded notification sent.');
+        })
+        .catch((err) => {
+          console.warn('[cannon] Failed to notify browser loaded:', err);
+          debugOverlay(`[cannon] Browser load notify failed: ${err?.message || err}`);
+        });
     },
     onDisconnect: () => {
       const msg = '[cannon] WebSocket disconnected.';
@@ -773,11 +784,6 @@ function connectStreamerbot() {
   }
 
   streamerbotClient = new StreamerbotClient(clientOptions);
-
-  // Let Streamer.bot know the browser has loaded so it can clear any stale queue.
-  streamerbotClient.doAction('cannon-browser-loaded').catch((err) => {
-    console.warn('[cannon] Failed to notify browser loaded:', err);
-  });
 
   streamerbotClient.on('General.Custom', (payload) => {
     // Streamer.bot wraps the broadcast in an envelope; our actual data is in payload.data.
