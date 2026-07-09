@@ -30,6 +30,7 @@ public class CPHInline
         CPH.SetGlobalVar("cannon_obs_scene", obsScene, false);
         CPH.SetGlobalVar("cannon_obs_source", obsSource, false);
         CPH.SetGlobalVar("cannon_timer_name", timerName, false);
+        CPH.SetGlobalVar("cannon_timer_guid", "", false);
 
         // Reset game state in non-persistent global variables.
         CPH.SetGlobalVar("cannon_setup_sent", false, false);

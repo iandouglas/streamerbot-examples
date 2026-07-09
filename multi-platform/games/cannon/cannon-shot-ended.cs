@@ -53,14 +53,14 @@ public class CPHInline
         if (!queueEmpty)
             return;
 
-        string timerName = CPH.GetGlobalVar<string>("cannon_timer_name", false) ?? "cannon-game";
-        CPH.LogDebug($"[cannon-ended] SlowGameTimerIfQueueEmpty name={timerName}");
+        string timerGuid = CPH.GetGlobalVar<string>("cannon_timer_guid", false) ?? "";
+        CPH.LogDebug($"[cannon-ended] SlowGameTimerIfQueueEmpty guid={timerGuid}");
 
-        if (!string.IsNullOrWhiteSpace(timerName))
+        if (!string.IsNullOrWhiteSpace(timerGuid))
         {
-            id736.Timers.Enable(timerName);
-            id736.Timers.ResetTimerById(timerName, 60, keepEnabled: true);
-            CPH.LogDebug("[cannon-ended] Timer slowed to 60s hide delay by name.");
+            id736.Timers.Enable(timerGuid);
+            id736.Timers.ResetTimerById(timerGuid, 60, keepEnabled: true);
+            CPH.LogDebug("[cannon-ended] Timer slowed to 60s hide delay by GUID.");
         }
     }
 }

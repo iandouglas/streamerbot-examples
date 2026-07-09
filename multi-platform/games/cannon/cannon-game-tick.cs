@@ -19,29 +19,35 @@ public class CPHInline
 
         CPH.LogDebug("[cannon-tick] Started.");
 
-        // Timer control uses the configured timer name (the DLL also accepts GUIDs, but
-        // we keep things simple by using the name the broadcaster configured).
-        string timerName = CPH.GetGlobalVar<string>("cannon_timer_name", false) ?? "cannon-game";
+        // Capture this timer's GUID on the first run. The timer must be enabled by name
+        // at least once (via CPH.EnableTimer) so it fires and we can learn its GUID.
+        string timerGuid = CPH.GetGlobalVar<string>("cannon_timer_guid", false) ?? "";
+        if (string.IsNullOrWhiteSpace(timerGuid) && CPH.TryGetArg<Guid>("timerId", out Guid currentTimerId))
+        {
+            timerGuid = currentTimerId.ToString();
+            CPH.SetGlobalVar("cannon_timer_guid", timerGuid, false);
+            CPH.LogDebug($"[cannon-tick] Stored timer GUID: {timerGuid}");
+        }
 
         // Only run when the timer has been enabled by a player joining.
         bool timerEnabled = CPH.GetGlobalVar<bool>("cannon_timer_enabled", false);
         int desiredInterval = CPH.GetGlobalVar<int>("cannon_timer_interval", false);
-        CPH.LogDebug($"[cannon-tick] enabled={timerEnabled}, desiredInterval={desiredInterval}s, timerName={timerName}");
+        CPH.LogDebug($"[cannon-tick] enabled={timerEnabled}, desiredInterval={desiredInterval}s, guid={timerGuid}");
 
         if (!timerEnabled)
         {
             CPH.LogDebug("[cannon-tick] Timer not enabled yet. Disabling self and exiting.");
-            if (!string.IsNullOrWhiteSpace(timerName))
-                id736.Timers.Disable(timerName);
+            if (!string.IsNullOrWhiteSpace(timerGuid))
+                id736.Timers.Disable(timerGuid);
             return true;
         }
 
         // Apply any requested interval change.
-        if (desiredInterval > 0 && !string.IsNullOrWhiteSpace(timerName))
+        if (desiredInterval > 0 && !string.IsNullOrWhiteSpace(timerGuid))
         {
-            CPH.LogDebug($"[cannon-tick] Resetting timer '{timerName}' to {desiredInterval}s via DLL.");
-            id736.Timers.Enable(timerName);
-            id736.Timers.ResetTimerById(timerName, desiredInterval, keepEnabled: true);
+            CPH.LogDebug($"[cannon-tick] Resetting timer '{timerGuid}' to {desiredInterval}s via DLL.");
+            id736.Timers.Enable(timerGuid);
+            id736.Timers.ResetTimerById(timerGuid, desiredInterval, keepEnabled: true);
             CPH.SetGlobalVar("cannon_timer_interval", 0, false);
         }
 
@@ -111,7 +117,7 @@ public class CPHInline
         {
             CPH.LogDebug("[cannon-tick] Inactivity threshold reached. Hiding game.");
             HideGameSource();
-            DisableTimer(timerName);
+            DisableTimer(timerGuid);
         }
 
         CPH.LogDebug("[cannon-tick] Finished.");
@@ -175,12 +181,12 @@ public class CPHInline
         }
     }
 
-    private void DisableTimer(string timerName)
+    private void DisableTimer(string timerGuid)
     {
-        CPH.LogDebug($"[cannon-tick] DisableTimer name={timerName}");
-        if (!string.IsNullOrWhiteSpace(timerName))
+        CPH.LogDebug($"[cannon-tick] DisableTimer guid={timerGuid}");
+        if (!string.IsNullOrWhiteSpace(timerGuid))
         {
-            id736.Timers.Disable(timerName);
+            id736.Timers.Disable(timerGuid);
         }
 
         CPH.SetGlobalVar("cannon_timer_enabled", false, false);

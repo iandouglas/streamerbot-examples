@@ -110,20 +110,30 @@ public class CPHInline
     private void EnableGameTimer(int intervalSeconds)
     {
         string timerName = CPH.GetGlobalVar<string>("cannon_timer_name", false) ?? "cannon-game";
-        CPH.LogDebug($"[cannon-fire] EnableGameTimer name={timerName}");
+        string timerGuid = CPH.GetGlobalVar<string>("cannon_timer_guid", false) ?? "";
+        CPH.LogDebug($"[cannon-fire] EnableGameTimer name={timerName}, guid={timerGuid}");
 
-        if (!string.IsNullOrWhiteSpace(timerName))
+        // The id736.Timers helpers call CPH's *ById methods, which require a GUID.
+        // If we have already captured the GUID, use the DLL helpers directly.
+        if (!string.IsNullOrWhiteSpace(timerGuid))
         {
-            CPH.LogDebug($"[cannon-fire] Enabling/resetting timer '{timerName}' to {intervalSeconds}s via DLL.");
-            id736.Timers.Enable(timerName);
-            id736.Timers.ResetTimerById(timerName, intervalSeconds, keepEnabled: true);
+            CPH.LogDebug($"[cannon-fire] Enabling/resetting timer '{timerGuid}' to {intervalSeconds}s via DLL.");
+            id736.Timers.Enable(timerGuid);
+            id736.Timers.ResetTimerById(timerGuid, intervalSeconds, keepEnabled: true);
+        }
+        else if (!string.IsNullOrWhiteSpace(timerName))
+        {
+            // No GUID captured yet. Use CPH's name-based EnableTimer so the timer fires
+            // once; cannon-game-tick will then capture the GUID from the timerId argument.
+            CPH.LogDebug($"[cannon-fire] No GUID yet; enabling timer by name '{timerName}' via CPH.EnableTimer.");
+            CPH.EnableTimer(timerName);
+            CPH.SetGlobalVar("cannon_timer_interval", intervalSeconds, false);
         }
         else
         {
-            CPH.LogDebug("[cannon-fire] No timer name configured; tick action will apply interval once run.");
+            CPH.LogDebug("[cannon-fire] No timer name or GUID configured; cannot enable timer.");
         }
 
-        CPH.SetGlobalVar("cannon_timer_interval", intervalSeconds, false);
         CPH.SetGlobalVar("cannon_last_active", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(), false);
         CPH.SetGlobalVar("cannon_timer_enabled", true, false);
         CPH.LogDebug("[cannon-fire] Timer enabled flag set and activity timestamp updated.");
