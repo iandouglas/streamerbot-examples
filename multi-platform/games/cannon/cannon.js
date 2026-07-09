@@ -844,7 +844,11 @@ gameState.audioPaths = { fuse: '', fire: '', impact: '' };
  * Only important events are shown so the overlay doesn't scroll too fast.
  * @param {string} message - Message to display.
  */
+let debugOverlayEnabled = true;
+
 function debugOverlay(message) {
+  if (!debugOverlayEnabled) return;
+
   const el = document.getElementById('debugOverlay');
   if (!el) return;
 
@@ -862,10 +866,14 @@ function debugOverlay(message) {
 
 /**
  * Read connection settings from URL query parameters.
+ * Also reads debug=1 to enable the on-page overlay.
  * @returns {{host: string, port: number, password: string|undefined}}
  */
 function getConnectionSettings() {
   const params = new URLSearchParams(window.location.search);
+  debugOverlayEnabled = params.get('debug') === '1';
+  const el = document.getElementById('debugOverlay');
+  if (el) el.style.display = debugOverlayEnabled ? 'block' : 'none';
   return {
     host: params.get('host') || '127.0.0.1',
     port: parseInt(params.get('port') || '8080', 10),
