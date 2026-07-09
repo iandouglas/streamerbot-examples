@@ -343,7 +343,6 @@ function drawQueue() {
   const nameOffset = PROJECTILE_SIZE / 2 + 10;
   const isLeft = gameState.cannonSide === 'left';
 
-  ctx.textAlign = isLeft ? 'left' : 'right';
   ctx.textBaseline = 'middle';
   let drawn = 0;
   for (let i = 0; i < gameState.queue.length; i++) {
@@ -365,7 +364,8 @@ function drawQueue() {
     ctx.restore();
 
     const nameX = isLeft ? iconX + nameOffset : iconX - nameOffset;
-    drawOutlinedText(entry.name, nameX, y, 'bold 20px sans-serif');
+    const align = isLeft ? 'left' : 'right';
+    drawOutlinedText(entry.name, nameX, y, 'bold 20px sans-serif', align);
   }
 
   ctx.textBaseline = 'alphabetic';
@@ -377,10 +377,11 @@ function drawQueue() {
  * @param {number} x - X.
  * @param {number} y - Y.
  * @param {string} font - Font string.
+ * @param {CanvasTextAlign} [align='center'] - Horizontal alignment.
  */
-function drawOutlinedText(text, x, y, font) {
+function drawOutlinedText(text, x, y, font, align = 'center') {
   ctx.font = font;
-  ctx.textAlign = 'center';
+  ctx.textAlign = align;
   ctx.lineWidth = 4;
   ctx.strokeStyle = '#000';
   ctx.strokeText(text, x, y);
