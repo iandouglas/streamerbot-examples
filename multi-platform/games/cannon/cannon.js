@@ -629,12 +629,10 @@ function drawLandedShots() {
     const isMiss = shot.score < 0;
     const isLeader = shot.score >= 0 && shot.score === highScore;
     let alpha;
-    if (isMiss) {
-      alpha = 0.4;
-    } else if (isLeader) {
+    if (isLeader) {
       alpha = 1.0;
     } else {
-      alpha = 0.6;
+      alpha = 0.4;
     }
 
     ctx.save();
