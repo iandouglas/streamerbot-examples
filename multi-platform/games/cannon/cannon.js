@@ -629,15 +629,22 @@ gameState.audioPaths = { fuse: '', fire: '', impact: '' };
 
 /**
  * Append a message to the on-page debug overlay.
+ * Only important events are shown so the overlay doesn't scroll too fast.
  * @param {string} message - Message to display.
  */
 function debugOverlay(message) {
   const el = document.getElementById('debugOverlay');
   if (!el) return;
+
+  // Suppress high-frequency wind updates; they still appear in the browser console.
+  if (typeof message === 'string' && message.includes('Received event: wind')) {
+    return;
+  }
+
   const line = `[${new Date().toLocaleTimeString()}] ${message}`;
   el.textContent = `${line}\n${el.textContent}`;
-  // Keep only the most recent 30 lines.
-  const lines = el.textContent.split('\n').slice(0, 30);
+  // Keep only the most recent 40 lines.
+  const lines = el.textContent.split('\n').slice(0, 40);
   el.textContent = lines.join('\n');
 }
 
