@@ -707,13 +707,13 @@ function connectStreamerbot() {
   streamerbotClient = new StreamerbotClient(clientOptions);
 
   streamerbotClient.on('General.Custom', (payload) => {
-    // The client may pass either the full envelope or the nested data object.
+    // The client passes the full envelope; our actual data is in payload.data.
     const data = payload && typeof payload === 'object' && 'data' in payload ? payload.data : payload;
     const eventName = typeof data?.event === 'string' ? data.event : 'unknown';
-    const inspect = JSON.stringify({ payloadKeys: payload && Object.keys(payload), dataKeys: data && Object.keys(data), eventField: data?.event });
+    const fullPayload = JSON.stringify(payload).slice(0, 500);
     const msg = `[cannon] Received event: ${eventName}`;
     console.log(msg, payload, data);
-    debugOverlay(`${msg} ${inspect}`);
+    debugOverlay(`${msg} PAYLOAD:${fullPayload}`);
     handleEvent(data);
   });
 }
