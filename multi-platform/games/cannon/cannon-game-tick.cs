@@ -165,22 +165,11 @@ public class CPHInline
 
     private void SendEvent(string eventName, Dictionary<string, object> data)
     {
-        // Streamer.bot's websocket client expects events to be wrapped with
-        // event.source and event.type. We use General.Custom so the browser
-        // can listen with streamerbotClient.on('General.Custom', ...).
+        // Streamer.bot automatically wraps the broadcast JSON in a General.Custom
+        // envelope before sending it to websocket clients. We only need to send
+        // the raw payload, and the browser reads it from payload.data.
         data["event"] = eventName;
-        var envelope = new Dictionary<string, object>
-        {
-            { "event", new Dictionary<string, object>
-                {
-                    { "source", "General" },
-                    { "type", "Custom" }
-                }
-            },
-            { "data", data }
-        };
-
-        string json = id736.Data.ToJson(envelope);
+        string json = id736.Data.ToJson(data);
         CPH.LogDebug($"[cannon-tick] Broadcasting event {eventName}: {json}");
         CPH.WebsocketBroadcastJson(json);
     }
