@@ -571,13 +571,21 @@ function drawScorePopup() {
  */
 function reportShotEnded(name, score, platform) {
   if (!streamerbotClient) return;
-  streamerbotClient.doAction('cannon-shot-ended', {
-    userName: name,
-    score,
-    platform
-  }).catch((err) => {
-    console.warn('Failed to report shot ended:', err);
-  });
+  const args = { userName: name, score, platform };
+  const msg = `[cannon] Reporting shot ended: ${JSON.stringify(args)}`;
+  console.log(msg);
+  debugOverlay(msg);
+  streamerbotClient.doAction('cannon-shot-ended', args)
+    .then((res) => {
+      const okMsg = `[cannon] Shot-ended action reported: ${JSON.stringify(res)}`;
+      console.log(okMsg);
+      debugOverlay(okMsg);
+    })
+    .catch((err) => {
+      const failMsg = `Failed to report shot ended: ${err?.message || err}`;
+      console.warn(failMsg, err);
+      debugOverlay(failMsg);
+    });
 }
 
 /**
