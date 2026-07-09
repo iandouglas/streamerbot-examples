@@ -17,7 +17,11 @@ public class CPHInline
         platform = platform.ToLowerInvariant();
 
         int score = -1;
-        if (CPH.TryGetArg("score", out string scoreStr) && !string.IsNullOrWhiteSpace(scoreStr))
+        if (CPH.TryGetArg("score", out int scoreInt))
+        {
+            score = scoreInt;
+        }
+        else if (CPH.TryGetArg("score", out string scoreStr) && !string.IsNullOrWhiteSpace(scoreStr))
         {
             int.TryParse(scoreStr, out score);
         }
@@ -35,6 +39,10 @@ public class CPHInline
         {
             id736.Chat.SendMessage($"💨 {userName} missed the target!");
         }
+
+        // Mark the shot as complete so the next queued player can fire.
+        CPH.SetGlobalVar("cannon_firing", false, false);
+        CPH.LogDebug("[cannon-ended] cannon_firing reset to false.");
 
         // Mark activity and slow the timer to the hide-delay interval.
         CPH.SetGlobalVar("cannon_last_active", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(), false);
