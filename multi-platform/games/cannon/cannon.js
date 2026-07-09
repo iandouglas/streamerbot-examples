@@ -706,8 +706,10 @@ function connectStreamerbot() {
 
   streamerbotClient = new StreamerbotClient(clientOptions);
 
-  streamerbotClient.on('General.Custom', ({ data }) => {
-    const eventName = data?.event || 'unknown';
+  streamerbotClient.on('General.Custom', (payload) => {
+    // The client may pass either the full envelope or the nested data object.
+    const data = payload && typeof payload === 'object' && 'data' in payload ? payload.data : payload;
+    const eventName = typeof data?.event === 'string' ? data.event : 'unknown';
     const msg = `[cannon] Received event: ${eventName}`;
     console.log(msg, data);
     debugOverlay(msg);
