@@ -10,8 +10,14 @@ A browser-based chat-driven cannon game for Streamer.bot. Players type `!fire <a
 ### Enable the WebSocket server
 
 - In Streamer.bot, open **Servers/Clients > WebSocket Server**.
-- Enable the server and note the port (default `8080`).
-- The game connects to `ws://127.0.0.1:8080/` automatically.
+- Set the following values exactly:
+  - **IP Address:** `127.0.0.1`
+  - **Port:** `8080`
+  - **Endpoint:** `/`
+  - **Auto Start:** enabled
+  - **Authentication:** disabled (the game does not send a password by default)
+- Click **Start** so the status shows "Started". The game connects to `ws://127.0.0.1:8080/` automatically.
+- If you must use authentication, append `?password=YOUR_PASSWORD` to the browser source URL. (This only works if the page is loaded via `http://`/`https://`, not the OBS **Local file** option.)
 
 ### Create a Streamer.bot timer
 
@@ -21,7 +27,7 @@ The name of the timer must be `cannon-game`.
 
 Set this to be DISABLED to start, set Repeat to ON, and set the interval to 2 seconds. The game will set this to varying amounts of time as the game plays, and the game will also enable/disable the timer itself so it doesn't fill up your log with information.
 
-Once you save this, right-click on the new "cannon-game" timer and select **Copy Timer ID**. Paste that value into a text editor; you will need it for the setup action's `timerGuid` argument. It will look something like `1288da0a-6c35-44e3-a2ab-eb47e60af695`.
+Once this is saved, right-click on the timer's name in the list and select "Copy Timer ID" and paste it in a text editor. It will be a random string of letters and numbers like "1288da0a-6c35-44e3-a2ab-eb47e60af695".
 
 
 ### Add the Browser Source in OBS
@@ -68,8 +74,7 @@ Add the following arguments (Add -> Core -> Arguments -> Set argument)
 
 - "obsScene", set this to the name of the OBS scene where your game's "source" will be used
 - "obsSource", set this to the name of the Browser source you set up to load the HTML file for the game
-- "timerName", set this to "cannon-game"
-- "timerGuid", paste the **Timer ID** you copied from the `cannon-game` timer. This is required for the game to enable/disable the timer.
+- "timerGuid", set this to the Timer ID you copied earlier that looks like "1288da0a-6c35-44e3-a2ab-eb47e60af695"
 
 Add a subaction to 'Execute C# Code' and paste in the code from `cannon-game-setup.cs`
 
