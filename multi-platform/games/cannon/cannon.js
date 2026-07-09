@@ -37,7 +37,8 @@ const FUSE_DURATION = 800;
 const TARGET_WIDTH = 500;
 const TARGET_HEIGHT = 35;
 const PROJECTILE_SIZE = 50;
-const GRAVITY = 900; // pixels per second squared.
+const GRAVITY = 600; // pixels per second squared.
+const MAX_LAUNCH_SPEED = 850; // px/s; prevents high-power shots from leaving the screen.
 const QUEUE_DROP_DURATION = 600;
 
 /**
@@ -636,8 +637,10 @@ function launchProjectile(entry) {
   playAudioFile(gameState.audioPaths.fire || 'assets/sounds/cannon-fire.mp3');
 
   const angleRad = entry.angle * Math.PI / 180;
-  // Scale power so 50% power reaches roughly two-thirds of the 1920px screen.
-  const powerPx = entry.power * 22;
+  // Scale power so 50% power reaches roughly two-thirds of the screen, but cap
+  // total launch speed so high-power/high-angle shots do not fly off the top.
+  const rawPower = entry.power * 16;
+  const powerPx = Math.min(rawPower, MAX_LAUNCH_SPEED);
 
   // For the right-side cannon, the barrel SVG is flipped horizontally, so the
   // muzzle still points away from the pivot. Use the same angle sign and let
