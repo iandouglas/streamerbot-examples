@@ -251,10 +251,10 @@ function drawCannonBarrel() {
   ctx.translate(pivot.x, pivot.y);
   if (gameState.cannonSide === 'right') {
     ctx.scale(-1, 1);
-    ctx.rotate(angle);
-  } else {
-    ctx.rotate(-angle);
   }
+  // Rotate the barrel up and away from the ground. The right-side scale mirrors
+  // the drawing, so the same rotation direction keeps the barrel pointing outward.
+  ctx.rotate(-angle);
   // The barrel pivot in the SVG is at (15, 35).
   ctx.drawImage(img, -15, -35, dims.width, dims.height);
   ctx.restore();
@@ -819,6 +819,9 @@ function handleEvent(data) {
     case 'fire':
       if (!gameState.paused && gameState.projectiles.length === 0 && data.player) {
         const player = normalizePlayer(data.player);
+        // Remove the fired player from the on-screen queue immediately so their
+        // name doesn't linger above the cannon while the fuse runs.
+        gameState.queue = gameState.queue.filter((entry) => entry.name !== player.name);
         animateFire(player);
       }
       break;
