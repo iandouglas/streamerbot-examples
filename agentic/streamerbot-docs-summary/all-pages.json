@@ -1380,6 +1380,30 @@
     "codeBlockCount": 0
   },
   {
+    "title": "Throne",
+    "name": null,
+    "description": "Integrate Streamer.bot with your Throne account",
+    "version": "1.0.5",
+    "route": "/guide/integrations/throne",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/guide/integrations/throne",
+    "sourcePath": "2.guide/05.integrations/throne.md",
+    "section": "guide",
+    "headings": [
+      "Configuration",
+      "Create a new Webhook",
+      "Obtain your Webhook URL",
+      "Configure Throne Webhooks",
+      "Usage"
+    ],
+    "summary": "Receive Throne event triggers in Streamer.bot via webhooks\n\nThis integration requires the Streamer.bot Website Integration\n\nConfiguration",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "TipeeeStream",
     "name": null,
     "description": "Integrate Streamer.bot with TipeeeStream",
