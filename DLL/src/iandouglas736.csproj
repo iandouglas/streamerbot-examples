@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net481</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <Nullable>disable</Nullable>
+    <UseWPF>false</UseWPF>
+    <RootNamespace>iandouglas736</RootNamespace>
+    <AssemblyName>iandouglas736</AssemblyName>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+  </PropertyGroup>
+
+  <!--
+    Set this to your Streamer.bot installation directory.
+    The build needs Streamer.bot.Plugin.Interface.dll and related assemblies.
+  -->
+  <PropertyGroup>
+    <StreamerBotPath Condition="'$(StreamerBotPath)' == ''">D:/streamerbot/Streamer.bot-x64-1.0.4</StreamerBotPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Streamer.bot plugin interface -->
+    <Reference Include="Streamer.bot.Plugin.Interface">
+      <HintPath>$(StreamerBotPath)/Streamer.bot.Plugin.Interface.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <!-- Common dependencies used by Streamer.bot plugins -->
+    <Reference Include="Streamer.bot.Common">
+      <HintPath>$(StreamerBotPath)/Streamer.bot.Common.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Twitch.Common">
+      <HintPath>$(StreamerBotPath)/Twitch.Common.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(StreamerBotPath)/Newtonsoft.Json.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>

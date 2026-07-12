@@ -1,3 +1,4 @@
+session-*.md
 agentic/3rd-party
 *.pyc
 .venv
@@ -14,3 +15,10 @@ streamerbot-wiki
 agentic/streamerbot-docs
 agentic/streamerbot-typescript-websocket-client
 agentic/streamerbot-wiki
+
+
+DLL/src/bin
+DLL/src/obj
+.idea
+
+
