@@ -27,8 +27,10 @@ public class CPHInline
         CPH.SetGlobalVar("cannon_queue", "[]", false);
         CPH.SetGlobalVar("cannon_firing", false, false);
         CPH.SetGlobalVar("cannon_firing_started", 0L, false);
+        CPH.SetGlobalVar("cannon_next_fire_at", 0L, false);
+        CPH.SetGlobalVar("cannon_current_shot_id", 0, false);
         CPH.SetGlobalVar("cannon_timer_enabled", false, false);
-        CPH.SetGlobalVar("cannon_timer_interval", 2, false);
+        CPH.SetGlobalVar("cannon_timer_interval", 1, false);
         CPH.SetGlobalVar("cannon_last_active", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(), false);
         CPH.SetGlobalVar("cannon_last_wind_update", 0L, false);
         CPH.SetGlobalVar("cannon_wind", new Random().NextDouble() * 40.0 - 20.0, false);

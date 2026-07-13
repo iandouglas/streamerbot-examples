@@ -12,6 +12,7 @@ public class CPHInline
     private const long InactivityHideMs = 60 * 1000; // 60 seconds
     private const long SourceWarmupMs = 3000;
     private const long FiringTimeoutMs = 10000;
+    private const long BetweenShotsMs = 3000;
     private static readonly Random _random = new Random();
 
     public bool Execute()
@@ -48,6 +49,7 @@ public class CPHInline
         }
 
         long now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        long nextFireAt = CPH.GetGlobalVar<long>("cannon_next_fire_at", false);
 
         // --- setup ---
         bool setupSent = CPH.GetGlobalVar<bool>("cannon_setup_sent", false);
@@ -59,8 +61,6 @@ public class CPHInline
             CPH.SetGlobalVar("cannon_last_active", now, false);
             CPH.SetGlobalVar("cannon_wind", _random.NextDouble() * 40.0 - 20.0, false);
             CPH.SetGlobalVar("cannon_side", _random.Next(2) == 0 ? "left" : "right", false);
-            CPH.SetGlobalVar("cannon_firing", false, false);
-            CPH.SetGlobalVar("cannon_firing_started", 0L, false);
         }
 
         // --- wind update every 7 seconds ---
@@ -99,18 +99,19 @@ public class CPHInline
         bool firingStuckNoTimestamp = firing && firingStarted == 0;
         if (firingTimedOut || firingStuckNoTimestamp)
         {
+            id736.Chat.SendMessage("hmm, the cannon seems jammed, let's move to next contender");
             firing = false;
             CPH.SetGlobalVar("cannon_firing", false, false);
             CPH.SetGlobalVar("cannon_firing_started", 0L, false);
+            CPH.SetGlobalVar("cannon_current_shot_id", 0, false);
+            CPH.SetGlobalVar("cannon_next_fire_at", now + BetweenShotsMs, false);
+            nextFireAt = now + BetweenShotsMs;
         }
 
         if (queue.Count > 0)
         {
-            // Tell the browser the current queue order.
-            SendEvent("queue", new Dictionary<string, object> { { "players", queue } });
-
             // Fire the first player if the browser is not currently busy.
-            if (!firing)
+            if (!firing && now >= nextFireAt)
             {
                 // If the OBS source was just shown, give the browser a moment to load
                 // and connect before firing. This prevents the first shot from being
@@ -128,9 +129,21 @@ public class CPHInline
                     CPH.SetGlobalVar("cannon_queue", id736.Data.ToJson(queue), false);
                     CPH.SetGlobalVar("cannon_firing", true, false);
                     CPH.SetGlobalVar("cannon_firing_started", now, false);
+                    int shotId = CPH.GetGlobalVar<int>("cannon_current_shot_id", false) + 1;
+                    CPH.SetGlobalVar("cannon_current_shot_id", shotId, false);
+                    CPH.SetGlobalVar("cannon_next_fire_at", 0L, false);
                     CPH.SetGlobalVar("cannon_source_shown_at", 0L, false);
 
-                    SendEvent("fire", new Dictionary<string, object> { { "player", player } });
+                    if (player != null && player.TryGetValue("name", out object nameObj) && nameObj != null)
+                    {
+                        id736.Chat.SendMessage($"{nameObj} climbs into the cannon...");
+                    }
+
+                    SendEvent("fire", new Dictionary<string, object>
+                    {
+                        { "player", player },
+                        { "shotId", shotId }
+                    });
                 }
             }
         }
@@ -138,7 +151,7 @@ public class CPHInline
         // --- auto-hide after inactivity ---
         long lastActive = CPH.GetGlobalVar<long>("cannon_last_active", false);
         long inactiveMs = now - lastActive;
-        if (queue.Count == 0 && inactiveMs >= InactivityHideMs)
+        if (queue.Count == 0 && !firing && inactiveMs >= InactivityHideMs)
         {
             HideGameSource();
             DisableTimer(timerGuid);

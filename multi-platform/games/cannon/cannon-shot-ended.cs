@@ -15,6 +15,20 @@ public class CPHInline
             platform = "twitch";
         platform = platform.ToLowerInvariant();
 
+        int currentShotId = CPH.GetGlobalVar<int>("cannon_current_shot_id", false);
+        int shotId = 0;
+        if (CPH.TryGetArg("shotId", out int shotIdInt))
+        {
+            shotId = shotIdInt;
+        }
+        else if (CPH.TryGetArg("shotId", out string shotIdStr) && !string.IsNullOrWhiteSpace(shotIdStr))
+        {
+            int.TryParse(shotIdStr, out shotId);
+        }
+
+        if (currentShotId <= 0 || shotId <= 0 || shotId != currentShotId)
+            return true;
+
         int score = -1;
         if (CPH.TryGetArg("score", out int scoreInt))
         {
@@ -25,10 +39,10 @@ public class CPHInline
             int.TryParse(scoreStr, out score);
         }
 
-        // Only announce scores for shots that land on the target. Misses are silent.
+        // Announce the result in chat and award points only for hits.
         if (score >= 0)
         {
-            id736.Chat.SendMessage($"🎯 {userName} scored {score} points!");
+            id736.Chat.SendMessage($"{userName} was fired from the cannon and scored {score} points for landing on the target!");
 
             try
             {
@@ -40,10 +54,16 @@ public class CPHInline
                 // Ignore points errors; the chat message already went out.
             }
         }
+        else
+        {
+            id736.Chat.SendMessage($"{userName} was fired from the cannon and scored 0 points for missing completely.");
+        }
 
         // Mark the shot as complete so the next queued player can fire.
         CPH.SetGlobalVar("cannon_firing", false, false);
         CPH.SetGlobalVar("cannon_firing_started", 0L, false);
+        CPH.SetGlobalVar("cannon_current_shot_id", 0, false);
+        CPH.SetGlobalVar("cannon_next_fire_at", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 3000, false);
 
         // Mark activity and slow the timer to the hide-delay interval.
         CPH.SetGlobalVar("cannon_last_active", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(), false);

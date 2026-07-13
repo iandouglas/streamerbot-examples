@@ -45,7 +45,7 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 // Constants.
-const FUSE_DURATION = 800;
+const FUSE_DURATION = 1500;
 const TARGET_WIDTH = 500;
 const TARGET_HEIGHT = 35;
 const PROJECTILE_SIZE = 50;
@@ -120,6 +120,7 @@ const gameState = {
   queue: [],
   displayQueue: [],
   loadingEntry: null,
+  currentShotId: 0,
   projectiles: [],
   landedShots: [],
   paused: false,
@@ -694,7 +695,7 @@ function reportShotEnded(name, score, platform) {
     return;
   }
 
-  const args = { userName: name, score, platform };
+  const args = { userName: name, score, platform, shotId: gameState.currentShotId, status: 'finished' };
   // The StreamerbotClient expects an action object with a name (or id).
   // Passing a bare string is interpreted as an action id GUID, which fails.
   const actionRef = { name: 'cannon-shot-ended' };
@@ -726,10 +727,11 @@ function normalizePlayer(p) {
  * Triggered by the 'fire' event from C#.
  * @param {QueueEntry} entry - Player to fire.
  */
-function animateFire(entry) {
+function animateFire(entry, shotId) {
   playAudioFile(gameState.audioPaths.fuse || 'assets/sounds/fuse.mp3');
   gameState.fuseStartTime = Date.now();
   gameState.firingEntry = entry;
+  gameState.currentShotId = shotId || 0;
   // Aim the cannon barrel at the player's chosen angle during the fuse.
   gameState.cannonAngle = clamp(entry.angle, 1, 90);
 
@@ -938,17 +940,6 @@ function handleEvent(data) {
       gameState.setupReceived = true;
       break;
 
-    case 'queue':
-      if (Array.isArray(data.players)) {
-        // Ignore queue events until the first setup is received after this load.
-        if (data.players.length > 0 && !gameState.setupReceived) {
-          break;
-        }
-        gameState.queue = data.players.map(p => normalizePlayer(p));
-        updateDisplayQueue();
-      }
-      break;
-
     case 'wind':
       gameState.wind = clamp(data.wind || 0, -20, 20);
       break;
@@ -956,7 +947,7 @@ function handleEvent(data) {
     case 'fire':
       if (!gameState.paused && gameState.projectiles.length === 0 && data.player) {
         const player = normalizePlayer(data.player);
-        animateFire(player);
+        animateFire(player, data.shotId);
       }
       break;
 
@@ -1004,7 +995,6 @@ function gameLoop(timestamp) {
     drawFuse(gameState.fuseProgress);
   }
 
-  drawQueue();
   drawFiringEntry(dt);
 
   if (!gameState.paused) {
