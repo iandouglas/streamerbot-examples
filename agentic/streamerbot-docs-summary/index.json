@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-05T09:00:41.391927+00:00",
+  "generatedAt": "2026-07-12T08:43:41.535984+00:00",
   "sources": {
     "officialDocs": {
       "site": "https://docs.streamer.bot/",
       "repo": "https://github.com/Streamerbot/docs",
       "localRoot": "agentic/streamerbot-docs",
-      "revision": "8242370ba620177b926b4c442ec330b720b3568c",
+      "revision": "fb6972ac10eb5a02f27efc6cfb506d798b0bcb4b",
       "branches": [
         {
           "name": "origin/Mustached-Maniac-patch-1",
@@ -29,8 +29,8 @@
         },
         {
           "name": "origin/main",
-          "shortHash": "8242370",
-          "subject": "Clarify 'duration' parameter description in speak.md (#428)"
+          "shortHash": "fb6972a",
+          "subject": "docs: add throne configuration guide"
         }
       ]
     },
@@ -49,11 +49,11 @@
     }
   },
   "counts": {
-    "allPages": 2154,
-    "docsPages": 1239,
+    "allPages": 2155,
+    "docsPages": 1240,
     "wikiPages": 915,
     "api": 1070,
-    "guide": 49,
+    "guide": 50,
     "getStarted": 7,
     "examples": 15,
     "changelogs": 62,
@@ -66,7 +66,7 @@
     "httpPages": 10,
     "websocketPages": 10,
     "udpPages": 3,
-    "guidePages": 56,
+    "guidePages": 57,
     "examplePages": 15,
     "commandPages": 60,
     "triggerPages": 818,

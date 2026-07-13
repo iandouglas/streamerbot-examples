@@ -6,11 +6,11 @@ Streamer.bot is an event-driven automation tool for livestreamers. The official 
 
 ## What the local docs snapshot covers
 
-- Total markdown pages captured: **2154**
-- Official docs pages: **1239**
+- Total markdown pages captured: **2155**
+- Official docs pages: **1240**
 - Wiki pages: **915**
 - API reference pages captured: **1070**
-- Guide pages captured: **49**
+- Guide pages captured: **50**
 - Get started pages captured: **7**
 - Example pages captured: **15**
 - Changelog pages captured: **62**

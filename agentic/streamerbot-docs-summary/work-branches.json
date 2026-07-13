@@ -22,8 +22,8 @@
     },
     {
       "name": "origin/main",
-      "shortHash": "8242370",
-      "subject": "Clarify 'duration' parameter description in speak.md (#428)"
+      "shortHash": "fb6972a",
+      "subject": "docs: add throne configuration guide"
     }
   ],
   "streamerbot-wiki": [
