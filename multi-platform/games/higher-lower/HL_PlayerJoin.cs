@@ -18,9 +18,10 @@ public class CPHInline
             return false;
         if (!CPH.TryGetArg("userName", out string userName))
             userName = user;
-        if (!CPH.TryGetArg("userId", out string userId))
-            return false;
-        string msgId = args.ContainsKey("msgId") ? args["msgId"].ToString() : null;
+        if (!CPH.TryGetArg("userId", out string userId) || string.IsNullOrWhiteSpace(userId))
+            userId = userName;
+        object msgIdObj;
+        string msgId = CPH.TryGetArg("msgId", out msgIdObj) ? msgIdObj?.ToString() : null;
         string platform = id736.Chat.GetCurrentPlatform();
 
         bool gameActive = CPH.GetGlobalVar<bool>("hl_game_active", false);
@@ -42,13 +43,11 @@ public class CPHInline
 
         id736.Groups.AddUser(userName, platform, "higher-lower-group");
 
-        var players = CPH.GetGlobalVar<List<string>>("hl_players", true) ?? new List<string>();
-        string userKey = $"{platform}:{userName}";
-        if (!players.Contains(userKey))
-        {
-            players.Add(userKey);
-            CPH.SetGlobalVar("hl_players", players, true);
-        }
+        string userKey = $"{platform}:{userId}";
+
+        var playerNames = CPH.GetGlobalVar<Dictionary<string, string>>("hl_player_names", false) ?? new Dictionary<string, string>();
+        playerNames[userKey] = userName;
+        CPH.SetGlobalVar("hl_player_names", playerNames, false);
 
         id736.Chat.SendReplyOrMessage($"@{user} welcome to Higher or Lower!", msgId);
         return true;
