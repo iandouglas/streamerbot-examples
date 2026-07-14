@@ -147,19 +147,17 @@ public class CPHInline
 
         if (mode == "extreme")
         {
-            id736.Chat.SendMessage($"A Higher or Lower EXTREME game has started! Type !join to enter. You have {joinTimer} seconds! Range and rounds will be determined by how many players join.");
+            id736.Chat.SendMessage($"A Higher or Lower EXTREME game has started! Type !join to enter. You have {joinTimer} seconds! Number range and number of rounds will be determined by how many players join. iandouScream");
         }
         else
         {
-            id736.Chat.SendMessage($"A Higher or Lower ({mode} mode) game has started! Type !join to enter. You have {joinTimer} seconds!");
+            id736.Chat.SendMessage($"A Higher or Lower ({mode.ToUpper()} mode) game has started! Type !join to enter. You have {joinTimer} seconds!");
         }
 
-        ObsSetText($"Higher or Lower ({mode} mode)! {joinTimer}s remaining to !join");
+        ObsSetText($"Higher or Lower ({mode} mode)!\n{joinTimer}s remaining to !join");
         ObsShow();
 
-        id736.Chat.SendMessage($"Everyone who joins will have a few seconds to type a number in chat. Only your {guessMode} guess will be stored. Everyone's numbers will be averaged together each round.");
-        id736.Chat.SendMessage($"If the average is lower than the target number, you'll be told to guess HIGHER. If higher, you'll be told to guess LOWER.");
-        id736.Chat.SendMessage($"If anyone guesses the EXACT number before the final round, they'll win an additional bonus!");
+        id736.Chat.SendMessage($"Only your {guessMode} guess will be used. Everyone's numbers will be averaged together each round. The game will tell everyone playing to guess HIGHER or LOWER. If anyone guesses the EXACT number before the final round, they'll win an additional bonus!");
 
         int elapsed = 0;
         while (elapsed < joinTimer)
