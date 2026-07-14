@@ -572,17 +572,21 @@ public class CPHInline
         if (commands == null)
             return "";
 
-        foreach (dynamic cmd in commands)
+        foreach (var cmd in commands)
         {
-            string name = cmd?.Name ?? cmd?.Command ?? "";
-            if (name == "higher-lower number guess")
+            if (cmd == null)
+                continue;
+
+            var type = cmd.GetType();
+            string name = type.GetProperty("Name")?.GetValue(cmd, null)?.ToString() ?? "";
+            if (name != "higher-lower number guess")
+                continue;
+
+            commandId = type.GetProperty("Id")?.GetValue(cmd, null)?.ToString() ?? "";
+            if (!string.IsNullOrWhiteSpace(commandId))
             {
-                commandId = (cmd?.Id ?? cmd?.IdStr ?? "")?.ToString() ?? "";
-                if (!string.IsNullOrWhiteSpace(commandId))
-                {
-                    CPH.SetGlobalVar("hl_guess_command_id", commandId, false);
-                    return commandId;
-                }
+                CPH.SetGlobalVar("hl_guess_command_id", commandId, false);
+                return commandId;
             }
         }
 
