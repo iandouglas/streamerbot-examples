@@ -1,9 +1,11 @@
 using System;
+using id736 = iandouglas736;
 
 public class CPHInline
 {
     public bool Execute()
     {
+        id736.Core.LinkStreamerbot(CPH);
         if (!CPH.TryGetArg("hlAwardUser", out string userName))
             return false;
         if (!CPH.TryGetArg("hlAwardPoints", out int points))
@@ -39,7 +41,7 @@ public class CPHInline
                 break;
         }
 
-        CPH.LogInfo($"[HigherLower] Awarded {points} {currencyName} to {userName} ({platform})");
+        id736.Log.Message($"Awarded {points} {currencyName} to {userName} ({platform})", filenamePrefix: "higherlower");
         return true;
     }
 }

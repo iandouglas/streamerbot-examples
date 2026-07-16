@@ -52,9 +52,7 @@ public class CPHInline
 
     public bool Execute()
     {
-        id736.Chat.SetContext(CPH);
-        id736.Groups.SetContext(CPH);
-        id736.Points.SetContext(CPH);
+        id736.Core.LinkStreamerbot(CPH);
 
         StreamerbotUserGroupName = "higher-lower-group";
         if (!CPH.TryGetArg("rawInput", out string rawInput))
@@ -140,6 +138,7 @@ public class CPHInline
         CPH.SetGlobalVar("hl_exact_guessers", new List<string>(), false);
         CPH.SetGlobalVar("hl_player_names", new Dictionary<string, string>(), false);
 
+        CPH.EnableAction("HL_PlayerJoin");
         EnableGuessCommand();
 
         string currencyName = GetCurrencyName();
@@ -180,6 +179,7 @@ public class CPHInline
 
         ObsHide();
         CPH.SetGlobalVar("hl_phase", "idle", false);
+        CPH.DisableAction("HL_PlayerJoin");
 
         int joinedCount = GetPlayerCount();
         if (joinedCount == 0)
@@ -487,7 +487,7 @@ public class CPHInline
             currencyName = "points";
 
         id736.Points.Add(displayName, platform, currencyName, points);
-        CPH.LogInfo($"[HigherLower] Awarded {points} {currencyName} to {displayName} ({platform})");
+        id736.Log.Message($"Awarded {points} {currencyName} to {displayName} ({platform})", filenamePrefix: "higherlower");
     }
 
     private List<string> GetPlayers()
@@ -510,6 +510,7 @@ public class CPHInline
     private void CleanupGame()
     {
         DisableGuessCommand();
+        CPH.DisableAction("HL_PlayerJoin");
         ObsHide();
 
         int maxRounds = CPH.GetGlobalVar<int>("hl_max_rounds", false);

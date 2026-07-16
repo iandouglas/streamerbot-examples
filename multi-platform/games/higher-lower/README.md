@@ -199,6 +199,8 @@ This action stores your preferred game settings. No C# code needed — just sub-
 | **Enabled** | ✅ Checked |
 | **Platforms** | ✅ Check any platforms you want to allow joins from |
 
+> **Note:** The `HL_PlayerJoin` action is **disabled by default** and auto-enabled when a game starts, auto-disabled when the join period ends. This prevents `!join` from doing anything when no Higher or Lower game is running. If you also play Battleship, both join actions can share the same `!join` command.
+
 ### Step 5: Create the Action `HL_PlayerJoin`
 
 1. **Actions** tab → **+** → name it `HL_PlayerJoin`
