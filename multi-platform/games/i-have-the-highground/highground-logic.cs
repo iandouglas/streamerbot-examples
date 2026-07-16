@@ -7,12 +7,12 @@ public class CPHInline
 {
     public bool Execute()
     {
-        id736.Chat.SetContext(CPH);
+        id736.Core.LinkStreamerbot(CPH);
 
         string userName = id736.Chat.GetCurrentUserName();
         if (string.IsNullOrWhiteSpace(userName))
         {
-            CPH.LogWarn("[HighGround] could not determine username");
+            id736.Log.Message("could not determine username", filenamePrefix: "highground");
             return false;
         }
 
@@ -78,7 +78,7 @@ public class CPHInline
         double? seconds = id736.Media.LengthInSeconds(filename);
         if (!seconds.HasValue)
         {
-            CPH.LogInfo($"[HighGround] Could not determine duration for {filename}");
+            id736.Log.Message($"Could not determine duration for {filename}", filenamePrefix: "highground");
             return;
         }
 
