@@ -10,6 +10,8 @@ public class CPHInline
 
     public bool Execute()
     {
+        id736.Core.LinkStreamerbot(CPH);
+
         // get OBS scene/source from subactions
         if (!CPH.TryGetArg<string>("OBSScene", out string OBSScene))
             return false;
@@ -28,7 +30,7 @@ public class CPHInline
         }
         catch (Exception ex)
         {
-            CPH.LogError($"[Backgrounds] failed to parse catalog: {ex.Message}");
+            id736.Log.Message($"failed to parse catalog: {ex.Message}", filenamePrefix: "backgrounds");
             return false;
         }
 
@@ -50,17 +52,17 @@ public class CPHInline
                 string fileName = System.IO.Path.GetFileName(filePath);
                 CPH.SetArgument("obsMediaFileName", fileName);
                 // Log the output to your Streamer.bot Action Log
-                CPH.LogInfo($"Successfully found media file: {filePath}");
+                id736.Log.Message($"Successfully found media file: {filePath}", filenamePrefix: "backgrounds");
                 filename = filePath;
             }
             else
             {
-                CPH.LogWarn($"Could not find a file attached to source: '{OBSSource}'");
+                id736.Log.Message($"Could not find a file attached to source: '{OBSSource}'", filenamePrefix: "backgrounds");
             }
         }
         catch (Exception ex)
         {
-            CPH.LogError($"Failed to parse OBS response. Error: {ex.Message}");
+            id736.Log.Message($"Failed to parse OBS response. Error: {ex.Message}", filenamePrefix: "backgrounds");
             return false;
         }
 
@@ -82,7 +84,7 @@ public class CPHInline
         }
 
         // set the scene/source
-        CPH.LogDebug($"filename: {targetFile}");
+        id736.Log.Message($"filename: {targetFile}", filenamePrefix: "backgrounds");
         CPH.ObsSetMediaSourceFile(OBSScene, OBSSource, targetFile);
         CPH.ObsSetSourceVisibility(OBSScene, OBSSource, true);
         CPH.ObsSetSourceVisibility(OBSScene, "background", false);

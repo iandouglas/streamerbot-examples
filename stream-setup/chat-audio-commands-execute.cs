@@ -7,13 +7,15 @@ public class CPHInline
 {
     public bool Execute()
     {
+        id736.Core.LinkStreamerbot(CPH);
+
         // Try rawInput first (chat message), fall back to message if needed.
         string rawInput = null;
         if (!CPH.TryGetArg("rawInput", out rawInput) || string.IsNullOrWhiteSpace(rawInput))
         {
             if (!CPH.TryGetArg("message", out rawInput) || string.IsNullOrWhiteSpace(rawInput))
             {
-                CPH.LogDebug("[ChatAudio] no rawInput or message argument found");
+                id736.Log.Message("no rawInput or message argument found", filenamePrefix: "chataudio");
                 return false;
             }
         }
@@ -22,12 +24,12 @@ public class CPHInline
         if (string.IsNullOrWhiteSpace(command))
             return false;
 
-        CPH.LogDebug($"[ChatAudio] received command: {command}");
+        id736.Log.Message($"received command: {command}", filenamePrefix: "chataudio");
 
         string catalogJson = CPH.GetGlobalVar<string>("ID736ChatAudioCommands", false);
         if (string.IsNullOrWhiteSpace(catalogJson))
         {
-            CPH.LogWarn("[ChatAudio] catalog variable ID736ChatAudioCommands is empty");
+            id736.Log.Message("catalog variable ID736ChatAudioCommands is empty", filenamePrefix: "chataudio");
             return false;
         }
 
@@ -38,26 +40,26 @@ public class CPHInline
         }
         catch (Exception ex)
         {
-            CPH.LogError($"[ChatAudio] failed to parse catalog: {ex.Message}");
+            id736.Log.Message($"failed to parse catalog: {ex.Message}", filenamePrefix: "chataudio");
             return false;
         }
 
         if (catalog == null || catalog.Count == 0)
         {
-            CPH.LogWarn("[ChatAudio] parsed catalog is null or empty");
+            id736.Log.Message("parsed catalog is null or empty", filenamePrefix: "chataudio");
             return false;
         }
 
         if (!catalog.TryGetValue(command, out Dictionary<string, object> row))
         {
-            CPH.LogDebug($"[ChatAudio] command not found in catalog: {command}");
+            id736.Log.Message($"command not found in catalog: {command}", filenamePrefix: "chataudio");
             return false;
         }
 
         string pathOrFolder = id736.Data.GetValue<string>(row, "AudioPathOrFolder");
         if (string.IsNullOrWhiteSpace(pathOrFolder))
         {
-            CPH.LogWarn($"[ChatAudio] missing AudioPathOrFolder for command: {command}");
+            id736.Log.Message($"missing AudioPathOrFolder for command: {command}", filenamePrefix: "chataudio");
             return false;
         }
 
@@ -79,15 +81,15 @@ public class CPHInline
             catch { }
         }
 
-        CPH.LogDebug($"[ChatAudio] resolving media for {pathOrFolder}");
+        id736.Log.Message($"resolving media for {pathOrFolder}", filenamePrefix: "chataudio");
         string fileToPlay = id736.Media.ResolveMediaFile(pathOrFolder);
         if (string.IsNullOrWhiteSpace(fileToPlay))
         {
-            CPH.LogWarn($"[ChatAudio] no media file found for command {command} at {pathOrFolder}");
+            id736.Log.Message($"no media file found for command {command} at {pathOrFolder}", filenamePrefix: "chataudio");
             return false;
         }
 
-        CPH.LogInfo($"[ChatAudio] command {command} playing {fileToPlay} at volume {volume}");
+        id736.Log.Message($"command {command} playing {fileToPlay} at volume {volume}", filenamePrefix: "chataudio");
         CPH.PlaySound(fileToPlay, (float)volume, false);
         return true;
     }

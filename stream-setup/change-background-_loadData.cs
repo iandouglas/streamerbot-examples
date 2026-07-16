@@ -7,6 +7,8 @@ public class CPHInline
 {
     public bool Execute()
     {
+        id736.Core.LinkStreamerbot(CPH);
+
         string sheetsURL = args["GoogleSheetURL"].ToString();
 
         var catalog = id736.GoogleSheets.ReadFile(sheetsURL, "Sheet1", id736.SheetDuplicateKeyMode.LastEntryWins);
@@ -24,7 +26,7 @@ public class CPHInline
 
             if (string.IsNullOrWhiteSpace(filename) || string.IsNullOrWhiteSpace(scene) || string.IsNullOrWhiteSpace(source))
             {
-                CPH.LogInfo($"[Backgrounds] skipping invalid record: {filename},{scene},{source}");
+                id736.Log.Message($"skipping invalid record: {filename},{scene},{source}", filenamePrefix: "backgrounds");
                 continue;
             }
 

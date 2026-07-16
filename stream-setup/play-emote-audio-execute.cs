@@ -7,6 +7,8 @@ public class CPHInline
 {
     public bool Execute()
     {
+        id736.Core.LinkStreamerbot(CPH);
+
         if (!CPH.TryGetArg("message", out string message) || string.IsNullOrWhiteSpace(message))
             return false;
         if (!CPH.TryGetArg("userName", out string userName) || string.IsNullOrWhiteSpace(userName))
@@ -34,7 +36,7 @@ public class CPHInline
         }
         catch (Exception ex)
         {
-            CPH.LogError($"[EmoteAudio] failed to parse catalog: {ex.Message}");
+            id736.Log.Message($"failed to parse catalog: {ex.Message}", filenamePrefix: "emoteaudio");
             return false;
         }
 

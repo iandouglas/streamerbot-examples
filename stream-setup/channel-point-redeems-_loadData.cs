@@ -7,6 +7,8 @@ public class CPHInline
 {
     public bool Execute()
     {
+        id736.Core.LinkStreamerbot(CPH);
+
         string sheetsURL = args["GoogleSheetURL"].ToString();
 
         var catalog = id736.GoogleSheets.ReadFile(sheetsURL, "Sheet1", id736.SheetDuplicateKeyMode.LastEntryWins);
@@ -26,7 +28,7 @@ public class CPHInline
             if (string.IsNullOrWhiteSpace(rewardName) || string.IsNullOrWhiteSpace(filename) ||
                 string.IsNullOrWhiteSpace(scene) || string.IsNullOrWhiteSpace(source) || string.IsNullOrWhiteSpace(type))
             {
-                CPH.LogInfo($"[ChannelRedeems] skipping invalid record: {rewardName},{filename},{scene},{source},{type}");
+                id736.Log.Message($"skipping invalid record: {rewardName},{filename},{scene},{source},{type}", filenamePrefix: "channelrewards");
                 continue;
             }
 

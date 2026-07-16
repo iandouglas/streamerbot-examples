@@ -7,6 +7,8 @@ public class CPHInline
 {
     public bool Execute()
     {
+        id736.Core.LinkStreamerbot(CPH);
+
         string sheetsURL = args["GoogleSheetURL"].ToString();
 
         var catalog = id736.GoogleSheets.ReadFile(sheetsURL, "ChatAudioCommands", id736.SheetDuplicateKeyMode.LastEntryWins);
@@ -22,7 +24,7 @@ public class CPHInline
 
             if (string.IsNullOrWhiteSpace(command) || string.IsNullOrWhiteSpace(audioPath))
             {
-                CPH.LogInfo($"[ChatAudio] skipping invalid record: {command},{audioPath}");
+                id736.Log.Message($"skipping invalid record: {command},{audioPath}", filenamePrefix: "chataudio");
                 continue;
             }
 

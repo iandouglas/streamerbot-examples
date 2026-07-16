@@ -8,10 +8,12 @@ public class CPHInline
 {
     public bool Execute()
     {
+        id736.Core.LinkStreamerbot(CPH);
+
         if (!CPH.TryGetArg<string>("rewardName", out string rewardName))
             return false;
 
-        CPH.LogDebug($"channel reward redeemed: {rewardName}");
+        id736.Log.Message($"channel reward redeemed: {rewardName}", filenamePrefix: "channelrewards");
 
         string catalogJson = CPH.GetGlobalVar<string>("ID736ChanPtsMediaCatalog", false);
         if (string.IsNullOrWhiteSpace(catalogJson))
@@ -24,7 +26,7 @@ public class CPHInline
         }
         catch (Exception ex)
         {
-            CPH.LogError($"[ChannelRewards] failed to parse catalog: {ex.Message}");
+            id736.Log.Message($"failed to parse catalog: {ex.Message}", filenamePrefix: "channelrewards");
             return false;
         }
 
@@ -45,7 +47,7 @@ public class CPHInline
         double? seconds = id736.Media.LengthInSeconds(filename);
         if (!seconds.HasValue)
         {
-            CPH.LogInfo($"[ChannelRewards] Could not determine duration for {filename}");
+            id736.Log.Message($"Could not determine duration for {filename}", filenamePrefix: "channelrewards");
             return true;
         }
         int media_duration = Convert.ToInt32(seconds.Value);
@@ -61,7 +63,7 @@ public class CPHInline
             case "video":
                 if (string.IsNullOrWhiteSpace(OBSScene) || string.IsNullOrWhiteSpace(OBSSource))
                 {
-                    CPH.LogInfo($"[ChannelRewards] Missing OBS scene/source for video reward: {rewardName}");
+                    id736.Log.Message($"Missing OBS scene/source for video reward: {rewardName}", filenamePrefix: "channelrewards");
                     return true;
                 }
 
@@ -73,7 +75,7 @@ public class CPHInline
                 break;
 
             default:
-                CPH.LogInfo($"[ChannelRewards] Unknown reward type '{type}' for {rewardName}");
+                id736.Log.Message($"Unknown reward type '{type}' for {rewardName}", filenamePrefix: "channelrewards");
                 return false;
         }
 

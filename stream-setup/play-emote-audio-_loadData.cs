@@ -8,6 +8,8 @@ public class CPHInline
 {
     public bool Execute()
     {
+        id736.Core.LinkStreamerbot(CPH);
+
         string sheetsURL = args["GoogleSheetURL"].ToString();
 
         var catalog = id736.GoogleSheets.ReadFile(sheetsURL, "Sheet1", id736.SheetDuplicateKeyMode.LastEntryWins);
@@ -24,13 +26,13 @@ public class CPHInline
 
             if (string.IsNullOrWhiteSpace(emoteName) || string.IsNullOrWhiteSpace(filename))
             {
-                CPH.LogInfo($"[EmoteAudio] skipping invalid record: {emoteName},{filename},{GetString(row, "OBSScene")},{GetString(row, "OBSSource")},{GetString(row, "Duration")}");
+                id736.Log.Message($"skipping invalid record: {emoteName},{filename},{GetString(row, "OBSScene")},{GetString(row, "OBSSource")},{GetString(row, "Duration")}", filenamePrefix: "emoteaudio");
                 continue;
             }
 
             if (type == "txt")
             {
-                CPH.LogInfo($"[EmoteAudio] skipping text entry: {emoteName}");
+                id736.Log.Message($"skipping text entry: {emoteName}", filenamePrefix: "emoteaudio");
                 continue;
             }
 
@@ -53,7 +55,7 @@ public class CPHInline
                 }
                 else
                 {
-                    CPH.LogInfo($"[EmoteAudio] could not determine duration, defaulting to 5s: {filename}");
+                    id736.Log.Message($"could not determine duration, defaulting to 5s: {filename}", filenamePrefix: "emoteaudio");
                     safeRow["Duration"] = 5;
                 }
             }
