@@ -8,14 +8,14 @@ public class CPHInline
 
     public bool Execute()
     {
-        id736.Chat.SetContext(CPH);
+        id736.Core.LinkStreamerbot(CPH);
 
         string userName = id736.Chat.GetCurrentUserName();
         string sourcePlatform = id736.Chat.GetCurrentPlatform();
 
         if (string.IsNullOrWhiteSpace(userName))
         {
-            CPH.LogWarn("[DadJoke] could not determine username");
+            id736.Log.Message("could not determine username", filenamePrefix: "dadjoke");
             return false;
         }
 
@@ -58,7 +58,7 @@ public class CPHInline
         }
         catch (Exception ex)
         {
-            CPH.LogError($"[DadJoke] failed to fetch joke: {ex.Message}");
+            id736.Log.Message($"failed to fetch joke: {ex.Message}", filenamePrefix: "dadjoke");
             response = "no joke -- literally ... ¯\\_(ツ)_/¯";
         }
         return response;

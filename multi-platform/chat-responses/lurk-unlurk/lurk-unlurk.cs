@@ -6,7 +6,7 @@ public class CPHInline
 {
 	public bool Execute()
 	{
-		id736.Chat.SetContext(CPH);
+		id736.Core.LinkStreamerbot(CPH);
 
 		string cmd = args.ContainsKey("command") ? args["command"].ToString() : "";
 		string userName = id736.Chat.GetCurrentUserName();
@@ -15,7 +15,7 @@ public class CPHInline
 
 		if (string.IsNullOrWhiteSpace(userName))
 		{
-			CPH.LogWarn("[LurkUnlurk] could not determine username");
+			id736.Log.Message("could not determine username", filenamePrefix: "lurk");
 			return false;
 		}
 
