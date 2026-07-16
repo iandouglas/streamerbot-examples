@@ -25,11 +25,14 @@ The DLL provides static helper classes under the `iandouglas736` namespace:
 
 | Class | Purpose |
 |---|---|
+| `iandouglas736.Core` | One-call setup: `Core.LinkStreamerbot(CPH)` sets context on all helpers |
+| `iandouglas736.Log` | Write timestamped messages to per-prefix daily log files |
 | `iandouglas736.Chat` | Send chat messages / replies to the correct platform |
 | `iandouglas736.Groups` | Add/check/clear Streamer.bot user groups across platforms |
 | `iandouglas736.Points` | Get/set/add points in platform-specific user variables |
 | `iandouglas736.PlatformConfig` | Read global variables to enable/disable platforms per action |
-| `iandouglas736.Media` | Get audio/video file durations without external libraries |
+| `iandouglas736.Timers` | Enable/disable/reset Streamer.bot timers |
+| `iandouglas736.Media` | Get audio/video file durations; play MP4 in OBS, play MP3 via Streamer.bot |
 | `iandouglas736.Data` | Convert JSON into nested dictionaries with inferred types |
 | `iandouglas736.GoogleSheets` | Read public Google Sheets as nested dictionaries |
 | `iandouglas736.Time` | Unix epoch helpers and human-readable relative times |
@@ -57,18 +60,27 @@ public class CPHInline
 {
     public bool Execute()
     {
-        Chat.SetContext(CPH);
-        Groups.SetContext(CPH);
-        Points.SetContext(CPH);
-        PlatformConfig.SetContext(CPH);
+        id736.Core.LinkStreamerbot(CPH);
 
         Chat.SendMessage("Hello from all platforms!");
+        Log.Message("Action executed", filenamePrefix: "mygame");
         return true;
     }
 }
 ```
 
-You only need to call `SetContext` on the classes you use. Setting context is required; the helpers will throw a clear error if you forget.
+`Core.LinkStreamerbot(CPH)` sets context on all helpers that need it. You only need to call it once per action.
+
+### Logging setup (required)
+
+Before `Log.Message()` works, configure two persistent global variables in a Streamer.bot **startup action** (triggered on application start):
+
+```csharp
+CPH.SetGlobalVar("id736LogPath", "S:/logs", true);
+CPH.SetGlobalVar("id736DefaultFilenamePrefix", "iandouglas736", true);
+```
+
+If these are not set, `Core.LinkStreamerbot(CPH)` will log errors via `CPH.LogError` on every action, and `Log.Message()` will log errors and skip writing.
 
 ---
 
@@ -306,7 +318,7 @@ msbuild iandouglas736.csproj /p:Configuration=Release /p:StreamerBotPath=/Applic
 
 - This DLL is a **work in progress**. The API may change as more helpers are added.
 - The helpers intentionally use `SetContext(CPH)` so they work inside Streamer.bot's isolated `Execute C# Code` sandbox.
-- `Media` and `Data` do not need a context because they do not call Streamer.bot APIs.
+- `Media` duration helpers do not need a context. `Media` playback helpers (`PlayMp4InObs`, `PlayMp3`) require `SetContext(CPH)`. `Data` and `GoogleSheets` do **not** need a context because they do not call Streamer.bot APIs.
 - Platform detection relies on the `userType` argument that Streamer.bot provides on chat triggers.
 - Points are stored in platform-specific user variables because Streamer.bot does not have a single global user variable across platforms.
 

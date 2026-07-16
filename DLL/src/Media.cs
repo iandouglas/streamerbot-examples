@@ -3,12 +3,18 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Streamer.bot.Plugin.Interface;
 
 namespace iandouglas736
 {
     /// <summary>
     /// Cross-platform media helpers for Streamer.bot actions.
-    /// No Streamer.bot context is required; these helpers work with local files.
+    /// 
+    /// The duration-detection helpers (LengthInSeconds, Length, IsMediaFile, etc.)
+    /// do NOT require a Streamer.bot context — they work with local files only.
+    /// 
+    /// The PlayMp4InObs and PlayMp3 helpers DO require a context via SetContext(CPH)
+    /// because they call Streamer.bot APIs to control OBS and play audio.
     /// 
     /// The default duration detection tries, in order:
     ///   1. NLayer + Duration.Mine.Mp4 DLLs if present in the Streamer.bot directory
@@ -20,6 +26,148 @@ namespace iandouglas736
     /// </summary>
     public static class Media
     {
+        private static IInlineInvokeProxy _cph;
+
+        /// <summary>
+        /// Required before using PlayMp4InObs or PlayMp3.
+        /// The duration-detection helpers do NOT need a context.
+        /// </summary>
+        public static void SetContext(IInlineInvokeProxy cph)
+        {
+            _cph = cph ?? throw new ArgumentNullException(nameof(cph));
+        }
+
+        private static IInlineInvokeProxy CPH
+        {
+            get
+            {
+                if (_cph == null)
+                    throw new InvalidOperationException("iandouglas736.Media.SetContext(CPH) must be called before using playback helpers.");
+                return _cph;
+            }
+        }
+
+        /// <summary>
+        /// Plays an MP4 video file in an OBS media source. Determines the file's duration,
+        /// makes the OBS source visible, sets the media source file, and hides the source
+        /// after playback completes (or after the override duration, whichever is shorter).
+        /// Logs an error via CPH.LogError if the file is missing, unplayable, or the
+        /// duration cannot be determined and no override is provided.
+        /// </summary>
+        /// <param name="filename">Path to the .mp4 file.</param>
+        /// <param name="obsScene">OBS scene name containing the media source.</param>
+        /// <param name="obsSource">OBS media source name.</param>
+        /// <param name="secondsDurationOverride">If &gt; 0, caps playback to this many seconds (file duration is used if shorter). If &lt;= 0, the full file duration is used.</param>
+        public static void PlayMp4InObs(string filename, string obsScene, string obsSource, int secondsDurationOverride)
+        {
+            if (string.IsNullOrWhiteSpace(filename))
+            {
+                CPH.LogError("[iandouglas736.Media.PlayMp4InObs] filename is null or empty.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(obsScene) || string.IsNullOrWhiteSpace(obsSource))
+            {
+                CPH.LogError("[iandouglas736.Media.PlayMp4InObs] obsScene and obsSource must be provided.");
+                return;
+            }
+
+            string path = filename.Replace("\\", "/");
+            if (!File.Exists(path))
+            {
+                CPH.LogError($"[iandouglas736.Media.PlayMp4InObs] File not found: {filename}");
+                return;
+            }
+
+            double? durationSeconds = LengthInSeconds(path, DurationMineMp4Provider);
+            double playSeconds;
+
+            if (durationSeconds.HasValue && durationSeconds.Value > 0)
+            {
+                playSeconds = secondsDurationOverride > 0
+                    ? Math.Min(durationSeconds.Value, secondsDurationOverride)
+                    : durationSeconds.Value;
+            }
+            else if (secondsDurationOverride > 0)
+            {
+                playSeconds = secondsDurationOverride;
+                CPH.LogError($"[iandouglas736.Media.PlayMp4InObs] Could not determine duration for '{filename}', using override of {secondsDurationOverride}s.");
+            }
+            else
+            {
+                CPH.LogError($"[iandouglas736.Media.PlayMp4InObs] Could not determine duration for '{filename}' and no override provided. Aborting playback.");
+                return;
+            }
+
+            try
+            {
+                CPH.ObsSetMediaSourceFile(obsScene, obsSource, path);
+                CPH.ObsSetSourceVisibility(obsScene, obsSource, true);
+                CPH.Wait((int)(playSeconds * 1000));
+                CPH.ObsSetSourceVisibility(obsScene, obsSource, false);
+            }
+            catch (Exception ex)
+            {
+                CPH.LogError($"[iandouglas736.Media.PlayMp4InObs] OBS playback failed for '{filename}': {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Plays an MP3 audio file through Streamer.bot's sound system. Determines the
+        /// file's duration and waits for playback to complete (or for the override
+        /// duration, whichever is shorter). Logs an error via CPH.LogError if the file
+        /// is missing, unplayable, or the duration cannot be determined and no override
+        /// is provided.
+        /// </summary>
+        /// <param name="filename">Path to the .mp3 file.</param>
+        /// <param name="secondsDurationOverride">If &gt; 0, caps playback to this many seconds (file duration is used if shorter). If &lt;= 0, the full file duration is used.</param>
+        public static void PlayMp3(string filename, int secondsDurationOverride)
+        {
+            if (string.IsNullOrWhiteSpace(filename))
+            {
+                CPH.LogError("[iandouglas736.Media.PlayMp3] filename is null or empty.");
+                return;
+            }
+
+            string path = filename.Replace("\\", "/");
+            if (!File.Exists(path))
+            {
+                CPH.LogError($"[iandouglas736.Media.PlayMp3] File not found: {filename}");
+                return;
+            }
+
+            double? durationSeconds = LengthInSeconds(path, NLayerMp3Provider);
+            double playSeconds;
+
+            if (durationSeconds.HasValue && durationSeconds.Value > 0)
+            {
+                playSeconds = secondsDurationOverride > 0
+                    ? Math.Min(durationSeconds.Value, secondsDurationOverride)
+                    : durationSeconds.Value;
+            }
+            else if (secondsDurationOverride > 0)
+            {
+                playSeconds = secondsDurationOverride;
+                CPH.LogError($"[iandouglas736.Media.PlayMp3] Could not determine duration for '{filename}', using override of {secondsDurationOverride}s.");
+            }
+            else
+            {
+                CPH.LogError($"[iandouglas736.Media.PlayMp3] Could not determine duration for '{filename}' and no override provided. Aborting playback.");
+                return;
+            }
+
+            try
+            {
+                CPH.PlaySound(path, 1.0f, true);
+                int waitMs = (int)(playSeconds * 1000);
+                if (waitMs > 0)
+                    CPH.Wait(waitMs);
+            }
+            catch (Exception ex)
+            {
+                CPH.LogError($"[iandouglas736.Media.PlayMp3] Playback failed for '{filename}': {ex.Message}");
+            }
+        }
         /// <summary>
         /// Returns the media duration in seconds, or null if it cannot be determined.
         /// Supports common audio/video files such as .mp3, .mp4, .wav, .ogg, .webm, .mov, .mkv.

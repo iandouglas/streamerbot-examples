@@ -26,7 +26,7 @@ using iandouglas736;
 
 ## Quick start pattern
 
-Most helpers require a one-time `SetContext(CPH)` call at the start of your action:
+Most helpers require a one-time `Core.LinkStreamerbot(CPH)` call at the start of your action. This sets context on all helper classes at once:
 
 ```csharp
 using iandouglas736;
@@ -35,18 +35,27 @@ public class CPHInline
 {
     public bool Execute()
     {
-        Chat.SetContext(CPH);
-        Groups.SetContext(CPH);
-        Points.SetContext(CPH);
-        PlatformConfig.SetContext(CPH);
+        id736.Core.LinkStreamerbot(CPH);
 
         Chat.SendMessage("Hello from iandouglas736!");
+        Log.Message("Action executed", filenamePrefix: "mygame");
         return true;
     }
 }
 ```
 
-`Media`, `Data`, and `GoogleSheets` do **not** need a context because they do not call Streamer.bot APIs.
+`Media` duration helpers (`LengthInSeconds`, `Length`, `IsMediaFile`) and `Data` do **not** need a context. `Media` playback helpers (`PlayMp4InObs`, `PlayMp3`) and `Log.Message()` **do** need context — `Core.LinkStreamerbot(CPH)` handles this.
+
+### Logging setup
+
+Before `Log.Message()` works, configure two persistent global variables in a Streamer.bot startup action:
+
+```csharp
+CPH.SetGlobalVar("id736LogPath", "S:/logs", true);
+CPH.SetGlobalVar("id736DefaultFilenamePrefix", "iandouglas736", true);
+```
+
+`Core.LinkStreamerbot(CPH)` will log an error via `CPH.LogError` if these are missing.
 
 ---
 
@@ -54,13 +63,90 @@ public class CPHInline
 
 | Helper | Needs `CPH` context | Purpose |
 |--------|----------------------|---------|
+| `Core` | Yes | One-call setup for all helpers via `LinkStreamerbot(CPH)` |
+| `Log` | Yes | Write timestamped messages to per-prefix daily log files |
 | `Chat` | Yes | Send messages and replies on the right platform |
 | `Groups` | Yes | Cross-platform user group management |
 | `Points` | Yes | Award currency on Twitch/YouTube/Kick user variables |
 | `PlatformConfig` | Yes | Enable/disable platforms per action via global vars |
-| `Media` | No | Get audio/video file durations |
+| `Timers` | Yes | Enable/disable/reset Streamer.bot timers |
+| `Media` | Playback yes; duration no | Get audio/video file durations; play MP4 in OBS, play MP3 |
 | `Data` | No | Convert JSON to nested dictionaries with inferred types |
 | `GoogleSheets` | No | Read public Google Sheets as nested dictionaries |
+
+---
+
+## Core
+
+```csharp
+public static class Core
+```
+
+### Methods
+
+| Method | Description |
+|--------|-------------|
+| `LinkStreamerbot(IInlineInvokeProxy cph)` | Sets CPH context on all helpers (`Chat`, `Groups`, `Points`, `PlatformConfig`, `Timers`, `Log`, `Media`). Also verifies that `id736LogPath` and `id736DefaultFilenamePrefix` global variables are set, logging an error via `CPH.LogError` if missing. Call this once at the top of every `Execute()`. |
+
+### Example
+
+```csharp
+public bool Execute()
+{
+    id736.Core.LinkStreamerbot(CPH);
+
+    Chat.SendMessage("Hello!");
+    Log.Message("Game started", filenamePrefix: "battleship");
+    return true;
+}
+```
+
+### Logging configuration
+
+Before `Log.Message()` works, set two persistent global variables in a Streamer.bot **startup action** (triggered on application start):
+
+```csharp
+CPH.SetGlobalVar("id736LogPath", "S:/logs", true);
+CPH.SetGlobalVar("id736DefaultFilenamePrefix", "iandouglas736", true);
+```
+
+If these are not set, `Core.LinkStreamerbot(CPH)` will log errors via `CPH.LogError` on every action that calls it, and `Log.Message()` will log errors and skip writing.
+
+---
+
+## Log
+
+```csharp
+public static class Log
+```
+
+Requires `Core.LinkStreamerbot(CPH)` (or `Log.SetContext(CPH)` individually).
+
+### Methods
+
+| Method | Description |
+|--------|-------------|
+| `Message(string message, string filenamePrefix = null, string path = null)` | Writes a timestamped line to `{path}/{filenamePrefix}-{yyyyMMdd}.txt`. If `path` is null, reads from `id736LogPath` global var. If `filenamePrefix` is null, reads from `id736DefaultFilenamePrefix` global var. Logs an error via `CPH.LogError` if either cannot be resolved. |
+| `SetContext(IInlineInvokeProxy cph)` | Sets CPH context. Normally called by `Core.LinkStreamerbot(CPH)`. |
+
+### Line format
+
+```
+[2026-07-15 14:32:01.1234] your message here
+```
+
+### Examples
+
+```csharp
+// Uses globals for path + prefix
+Log.Message("Game started");
+
+// Uses global path, custom prefix
+Log.Message("Round 3 started", filenamePrefix: "battleship");
+
+// Fully explicit
+Log.Message("Weird bug", filenamePrefix: "diagnostics", path: "S:/logs");
+```
 
 ---
 
@@ -211,12 +297,17 @@ if (!PlatformConfig.IsCurrentPlatformEnabled("higherlower"))
 public static class Media
 ```
 
-No `SetContext` is needed.
+The duration-detection helpers (`LengthInSeconds`, `Length`, `IsMediaFile`, `ResolveMediaFile`) do **not** need a context.
+
+The playback helpers (`PlayMp4InObs`, `PlayMp3`) **do** need `SetContext(CPH)` because they call Streamer.bot APIs.
 
 ### Methods
 
 | Method | Description |
 |--------|-------------|
+| `SetContext(IInlineInvokeProxy cph)` | Required before using `PlayMp4InObs` or `PlayMp3`. |
+| `PlayMp4InObs(string filename, string obsScene, string obsSource, int secondsDurationOverride)` | Sets the OBS media source file, makes it visible, plays for the file's duration (or override if shorter), then hides the source. Logs errors via `CPH.LogError` if the file is missing/unplayable. |
+| `PlayMp3(string filename, int secondsDurationOverride)` | Plays an MP3 through Streamer.bot's sound system for the file's duration (or override if shorter). Logs errors via `CPH.LogError` if the file is missing/unplayable. |
 | `LengthInSeconds(string filename)` | Returns the duration in seconds or `null`. |
 | `LengthInSeconds(string filename, Func<string, double?> customProvider)` | Same, with an optional custom provider tried first. |
 | `Length(string filename)` | Returns a `TimeSpan?` duration. |
