@@ -5,8 +5,7 @@ public class CPHInline
 {
 	public bool Execute()
 	{
-		id736.Chat.SetContext(CPH);
-		id736.Points.SetContext(CPH);
+		id736.Core.LinkStreamerbot(CPH);
 
 		string userName = id736.Chat.GetCurrentUserName();
 		string platform = id736.Chat.GetCurrentPlatform();
@@ -14,7 +13,7 @@ public class CPHInline
 
 		if (string.IsNullOrWhiteSpace(userName))
 		{
-			CPH.LogWarn("[Points] could not determine username");
+			id736.Log.Message("could not determine username", filenamePrefix: "points");
 			return false;
 		}
 
