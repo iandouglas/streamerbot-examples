@@ -69,21 +69,28 @@ function loadImage(key, src) {
 
 // --- Sprite paths ---
 const SPRITES = {
-  water: 'assets/images/water.svg',
-  fog: 'assets/images/fog.svg',
+  water: 'assets/images/water.png',
+  fog: 'assets/images/fog.png',
   pegWhite: 'assets/images/peg-white.svg',
   pegRed: 'assets/images/peg-red.svg',
-  mine: 'assets/images/mine.svg',
-  bomber: 'assets/images/bomber.svg',
+  mine: 'assets/images/mine.png',
+  bomber: 'assets/images/bomber.png',
   bomb: 'assets/images/bomb.svg',
   ships: [
-    'assets/images/ship-carrier.svg',
-    'assets/images/ship-battleship.svg',
-    'assets/images/ship-cruiser.svg',
-    'assets/images/ship-submarine.svg',
-    'assets/images/ship-destroyer.svg'
+    'assets/images/carrier-horiz.png',
+    'assets/images/battleship-horiz.png',
+    'assets/images/cruiser-horiz.png',
+    'assets/images/submarine-horiz.png',
+    'assets/images/destroyer-horiz.png'
   ]
 };
+
+// Preload critical images at startup
+loadImage('bomb', SPRITES.bomb);
+loadImage('bomber', SPRITES.bomber);
+loadImage('mine', SPRITES.mine);
+loadImage('water', SPRITES.water);
+loadImage('fog', SPRITES.fog);
 
 const SHIP_NAMES = ['Carrier', 'Battleship', 'Cruiser', 'Submarine', 'Destroyer'];
 const SHIP_SIZES = [5, 4, 3, 3, 2];
@@ -189,33 +196,37 @@ function drawWater() {
 // --- Layer 2: Ships, pegs, mines ---
 
 /**
- * Draw a single cell of a ship sprite. For vertical ships, the sprite is rotated 90°.
- * The sprite is drawn as if the whole ship fits in a gridSize×1 (horizontal) or
- * 1×gridSize (vertical) block, and we slice the appropriate cell portion.
+ * Draw a full ship sprite across all its cells.
+ * Ship sprites are horizontally oriented (wider than tall).
+ * For horizontal ship placement, draw as-is.
+ * For vertical ship placement, rotate 90° clockwise.
+ * The sprite is stretched to fit the ship's cell area.
  */
-function drawShipCell(sprite, row, col, isVertical, allCells, cs) {
+function drawFullShip(sprite, ship, cs) {
   if (!sprite || !sprite.complete || sprite.naturalWidth === 0) return;
 
-  const p = cellToPixel(row, col);
-  const shipLen = allCells.length;
-  // Find this cell's index within the ship (0-based)
-  const cellIdx = allCells.findIndex(c => c.row === row && c.col === col);
-  if (cellIdx < 0) return;
+  const isVertical = ship.cells.length > 1 && ship.cells[0].col === ship.cells[1].col;
+  const shipLen = ship.cells.length;
+  const minRow = Math.min(...ship.cells.map(c => c.row));
+  const minCol = Math.min(...ship.cells.map(c => c.col));
+  const p = cellToPixel(minRow, minCol);
+
+  // Carrier stays full width; other ships are 20% skinnier, centered in the cell
+  const isCarrier = ship.id === 0;
+  const thickness = isCarrier ? cs : cs * 0.8;
+  const thicknessOffset = (cs - thickness) / 2;
 
   if (!isVertical) {
-    // Horizontal: sprite is drawn left-to-right, each cell gets 1/shipLen of the sprite width
-    const srcW = sprite.naturalWidth / shipLen;
-    const srcX = srcW * cellIdx;
-    shipCtx.drawImage(sprite, srcX, 0, srcW, sprite.naturalHeight, p.x, p.y, cs, cs);
+    // Horizontal ship: sprite is horizontal, draw as-is
+    shipCtx.drawImage(sprite, p.x, p.y + thicknessOffset, shipLen * cs, thickness);
   } else {
-    // Vertical: rotate the sprite 90° clockwise and draw top-to-bottom
-    const srcH = sprite.naturalHeight / shipLen;
-    const srcY = srcH * cellIdx;
+    // Vertical ship: rotate 90° clockwise
     shipCtx.save();
     shipCtx.translate(p.x + cs, p.y);
     shipCtx.rotate(Math.PI / 2);
-    // After rotation, draw the sprite so each cell gets 1/shipLen of the height
-    shipCtx.drawImage(sprite, 0, srcY, sprite.naturalWidth, srcH, 0, 0, cs, cs);
+    // After +90° rotation: x-axis points down, y-axis points right
+    // drawImage width = screen height (length), height = screen width (thickness)
+    shipCtx.drawImage(sprite, thicknessOffset, 0, shipLen * cs, thickness);
     shipCtx.restore();
   }
 }
@@ -224,29 +235,20 @@ function drawShipLayer() {
   shipCtx.clearRect(0, 0, 1920, 1080);
   const cs = gameState.cellSize;
 
-  // Draw revealed ship cells (partial from fog)
+  // Draw sunk ships (full sprite) with red pegs only on actually-hit cells
   for (const ship of gameState.ships) {
-    const isVertical = ship.cells.length > 1 && ship.cells[0].col === ship.cells[1].col;
-    const sprite = loadImage('ship-' + ship.id, SPRITES.ships[ship.id]);
-
-    for (const cell of ship.cells) {
-      if (cell.hit) {
-        drawShipCell(sprite, cell.row, cell.col, isVertical, ship.cells, cs);
-      }
-    }
-
-    // If fully sunk, draw the entire ship shape + red X
     if (ship.sunk) {
+      const sprite = loadImage('ship-' + ship.id, SPRITES.ships[ship.id]);
+      drawFullShip(sprite, ship, cs);
+
+      // Red peg only on cells that were actually hit during play
+      const peg = loadImage('peg-red', SPRITES.pegRed);
+      const pegSize = Math.floor(cs * 0.6);
       for (const cell of ship.cells) {
-        drawShipCell(sprite, cell.row, cell.col, isVertical, ship.cells, cs);
-        // Red peg on each cell
+        if (!cell.hit) continue;
         const p = cellToPixel(cell.row, cell.col);
-        const peg = loadImage('peg-red', SPRITES.pegRed);
-        const pegSize = Math.floor(cs * 0.6);
         shipCtx.drawImage(peg, p.x + (cs - pegSize) / 2, p.y + (cs - pegSize) / 2, pegSize, pegSize);
       }
-      // Draw red X over the ship
-      drawShipX(ship);
     }
   }
 
@@ -279,28 +281,6 @@ function drawShipLayer() {
       shipCtx.drawImage(mineIcon, p.x + (cs - iconSize) / 2, p.y + (cs - iconSize) / 2, iconSize, iconSize);
     }
   }
-}
-
-function drawShipX(ship) {
-  const cs = gameState.cellSize;
-  const minRow = Math.min(...ship.cells.map(c => c.row));
-  const maxRow = Math.max(...ship.cells.map(c => c.row));
-  const minCol = Math.min(...ship.cells.map(c => c.col));
-  const maxCol = Math.max(...ship.cells.map(c => c.col));
-
-  const x1 = gameState.boardOffsetX + minCol * cs;
-  const y1 = gameState.boardOffsetY + minRow * cs;
-  const x2 = gameState.boardOffsetX + (maxCol + 1) * cs;
-  const y2 = gameState.boardOffsetY + (maxRow + 1) * cs;
-
-  shipCtx.strokeStyle = '#ff0000';
-  shipCtx.lineWidth = 6;
-  shipCtx.beginPath();
-  shipCtx.moveTo(x1, y1);
-  shipCtx.lineTo(x2, y2);
-  shipCtx.moveTo(x2, y1);
-  shipCtx.lineTo(x1, y2);
-  shipCtx.stroke();
 }
 
 // --- Layer 3: Fog ---
@@ -417,9 +397,6 @@ function startBomber(targetRow, targetCol, audioPath, onComplete) {
   const cs = gameState.cellSize;
   const gridSize = gameState.gridSize;
 
-  // Enter from the far side: if target col < midpoint, enter from right; else from left
-  // If target row < midpoint, enter from bottom; else from top
-  // Pick the axis that gives the longest travel distance
   const midCol = Math.floor(gridSize / 2);
   const midRow = Math.floor(gridSize / 2);
 
@@ -427,16 +404,13 @@ function startBomber(targetRow, targetCol, audioPath, onComplete) {
   const margin = 100;
 
   if (targetCol < midCol) {
-    // Target is on the left side — enter from the right
     startX = gameState.boardOffsetX + gridSize * cs + margin;
     if (targetRow < midRow) {
-      // Target is on top — enter from bottom-right
       startY = gameState.boardOffsetY + gridSize * cs + margin;
     } else {
       startY = gameState.boardOffsetY - margin;
     }
   } else {
-    // Target is on the right side — enter from the left
     startX = gameState.boardOffsetX - margin;
     if (targetRow < midRow) {
       startY = gameState.boardOffsetY + gridSize * cs + margin;
@@ -447,14 +421,16 @@ function startBomber(targetRow, targetCol, audioPath, onComplete) {
 
   const dx = target.x - startX;
   const dy = target.y - startY;
-  const dist = Math.sqrt(dx * dx + dy * dy);
-  const flightTime = 8.0; // arrive 1 second sooner
   const angle = Math.atan2(dy, dx);
+
+  // Plane reaches target at 7s, is past it by 8s
+  const arriveTime = 7.0;
 
   gameState.bomber = {
     startX, startY, targetX: target.x, targetY: target.y,
     angle, elapsed: 0, phase: 'flying',
     targetRow, targetCol, audioPath, onComplete,
+    arriveTime,
     bombDropped: false, bomb: null,
     opacity: 1.0
   };
@@ -470,35 +446,37 @@ function updateBomber(dt) {
   b.elapsed += dt;
 
   if (b.phase === 'flying') {
-    if (b.elapsed >= 8.0) {
+    if (b.elapsed >= b.arriveTime) {
       b.phase = 'fading';
       b.fadeStart = b.elapsed;
-      // Drop bomb at target
-      if (!b.bombDropped) {
-        b.bombDropped = true;
-        b.bomb = { x: b.targetX, y: b.targetY - 100, vy: 0, elapsed: 0 };
-      }
     }
-  } else if (b.phase === 'fading') {
+  }
+
+  // Drop bomb at 8s — plane is already past the target, bomb sound starts in audio
+  if (!b.bombDropped && b.elapsed >= 7.5) {
+    b.bombDropped = true;
+    const center = cellCenter(b.targetRow, b.targetCol);
+    b.bomb = { elapsed: 0, fallTime: 1.75, centerX: center.x, centerY: center.y };
+  }
+
+  if (b.phase === 'fading') {
     const fadeElapsed = b.elapsed - b.fadeStart;
-    b.opacity = Math.max(0, 1.0 - fadeElapsed / 2.0);
+    b.opacity = Math.max(0, 1.0 - fadeElapsed / 3.0);
 
     const fadeDist = gameState.cellSize * 4;
     const moveDir = { x: Math.cos(b.angle), y: Math.sin(b.angle) };
-    b.targetX += moveDir.x * (fadeDist / 2.0) * dt;
-    b.targetY += moveDir.y * (fadeDist / 2.0) * dt;
+    b.targetX += moveDir.x * (fadeDist / 3.0) * dt;
+    b.targetY += moveDir.y * (fadeDist / 3.0) * dt;
 
-    if (b.elapsed >= 10.0) {
+    if (b.elapsed >= 11.0) {
       b.phase = 'done';
     }
   }
 
-  // Update bomb fall
+  // Update bomb — spirals inward within the target cell over 1.75s
   if (b.bomb) {
     b.bomb.elapsed += dt;
-    b.bomb.vy += 800 * dt;
-    b.bomb.y += b.bomb.vy * dt;
-    if (b.bomb.y >= cellCenter(b.targetRow, b.targetCol).y) {
+    if (b.bomb.elapsed >= b.bomb.fallTime) {
       b.bomb = null;
     }
   }
@@ -515,11 +493,11 @@ function drawBomber() {
   if (!b) return;
 
   const bomberImg = loadImage('bomber', SPRITES.bomber);
-  const bomberSize = gameState.cellSize * 0.7;
+  const bomberSize = gameState.cellSize * 1.575;
 
   let bx, by;
   if (b.phase === 'flying') {
-    const t = b.elapsed / 8.0;
+    const t = b.elapsed / b.arriveTime;
     bx = b.startX + (b.targetX - b.startX) * t;
     by = b.startY + (b.targetY - b.startY) * t;
   } else {
@@ -536,10 +514,19 @@ function drawBomber() {
 
   if (b.bomb) {
     const bombImg = loadImage('bomb', SPRITES.bomb);
-    const bombSize = gameState.cellSize * 0.2;
+    const progress = Math.min(1, b.bomb.elapsed / b.bomb.fallTime);
+    const cs = gameState.cellSize;
+    // Spiral: 2 full rotations, radius shrinks from 0.4 to 0 of cell size
+    const angle = progress * Math.PI * 4; // 2 full rotations
+    const radius = cs * 0.4 * (1 - progress);
+    const bx = b.bomb.centerX + Math.cos(angle) * radius;
+    const by = b.bomb.centerY + Math.sin(angle) * radius;
+    // Size shrinks from 0.5 to 0.05 of cell size
+    const bombSize = cs * (0.5 - progress * 0.45);
+    if (bombSize < 1) return;
     hudCtx.save();
-    hudCtx.globalAlpha = b.opacity;
-    hudCtx.drawImage(bombImg, b.bomb.x - bombSize / 2, b.bomb.y - bombSize / 2, bombSize, bombSize);
+    hudCtx.globalAlpha = 1.0; // always 100% opacity
+    hudCtx.drawImage(bombImg, bx - bombSize / 2, by - bombSize / 2, bombSize, bombSize);
     hudCtx.restore();
   }
 }
@@ -553,15 +540,19 @@ function updateLeaderboard() {
   const players = Object.values(gameState.players).sort((a, b) => b.coordCount - a.coordCount).slice(0, maxPlayers);
 
   let html = '<div class="heading">Top 10 Players</div>';
+  const showMuted = gameState.mode !== 'easy';
   for (const p of players) {
     const iconSrc = `assets/images/emote-${p.platform || 'twitch'}.png`;
     const mutedClass = gameState.mutedPlayers.some(m => m.user === p.user && m.platform === p.platform) ? ' muted' : '';
+    const statsLine = showMuted
+      ? `coords: ${p.coordCount}, muted: ${p.muteCount}`
+      : `coords: ${p.coordCount}`;
     html += `<div class="entry${mutedClass}">
       <div class="row1">
         <img class="platform-icon" src="${iconSrc}" onerror="this.style.display='none'">
         <span class="name">${escapeHtml(p.user)}</span>
       </div>
-      <div class="stats">coords: ${p.coordCount}, muted: ${p.muteCount}</div>
+      <div class="stats">${statsLine}</div>
     </div>`;
   }
   el.innerHTML = html;
@@ -582,8 +573,8 @@ function updateRightPanel() {
       const ship = gameState.ships[i];
       const sunkClass = ship.sunk ? ' sunk' : '';
       html += `<div class="ship-entry${sunkClass}">
-        <img src="${SPRITES.ships[i]}" alt="">
-        <span>${SHIP_NAMES[i]} (${SHIP_SIZES[i]})</span>
+        <img class="ship-icon" src="${SPRITES.ships[i]}" alt="">
+        <div class="ship-label">${SHIP_NAMES[i]} (${SHIP_SIZES[i]})</div>
       </div>`;
     }
     shipRoster.innerHTML = html;
@@ -592,14 +583,16 @@ function updateRightPanel() {
   const mineRoster = document.getElementById('mineRoster');
   if (mineRoster) {
     if (gameState.mines.length === 0) {
-      mineRoster.innerHTML = '<div>No mines</div>';
+      mineRoster.innerHTML = '';
     } else {
       let html = '';
+      let hitCount = 0;
       for (let i = 0; i < gameState.mines.length; i++) {
         const hit = gameState.mines[i].hit ? ' hit' : '';
+        if (gameState.mines[i].hit) hitCount++;
         html += `<div class="mine-icon${hit}"><img src="${SPRITES.mine}" alt=""></div>`;
       }
-      mineRoster.innerHTML = html;
+      mineRoster.innerHTML = `<div class="mine-header">Mines: ${hitCount}/${gameState.mines.length}</div><div class="mine-grid">` + html + `</div>`;
     }
   }
 
@@ -935,13 +928,13 @@ function handleGameEnd(data) {
   gameState.collecting = false;
   gameState.crosshair.visible = false;
 
-  // Reveal full board
+  // Reveal full board — show ship sprites but don't add pegs to unhit cells
   if (data.ships) {
     for (let i = 0; i < data.ships.length; i++) {
       const s = data.ships[i];
       if (gameState.ships[i]) {
+        // Mark as sunk so the full sprite is drawn, but don't mark unhit cells as hit
         gameState.ships[i].sunk = true;
-        for (const cell of gameState.ships[i].cells) cell.hit = true;
       }
     }
   }

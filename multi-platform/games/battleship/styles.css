@@ -107,23 +107,26 @@
 }
 
 #shipRoster .ship-entry {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 40px;
+  text-align: center;
 }
 
-#shipRoster .ship-entry img {
-  width: 48px;
-  height: 48px;
+#shipRoster .ship-entry img.ship-icon {
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 1px auto;
+  max-width: 100%;
 }
 
-#shipRoster .ship-entry.sunk {
-  opacity: 0.5;
+#shipRoster .ship-entry .ship-label {
+  font-size: 24px;
+}
+
+#shipRoster .ship-entry.sunk .ship-label {
   text-decoration: line-through;
 }
 
-#shipRoster .ship-entry.sunk::after {
+#shipRoster .ship-entry.sunk .ship-label::after {
   content: " X";
   color: #ff3333;
   font-weight: bold;
@@ -131,6 +134,14 @@
 
 #mineRoster {
   font-size: 28px;
+}
+
+#mineRoster .mine-header {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+#mineRoster .mine-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
