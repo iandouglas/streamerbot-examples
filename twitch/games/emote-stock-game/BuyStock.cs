@@ -33,7 +33,7 @@ public class CPHInline
 
 		if (!stockPrices.ContainsKey(stockName))
 		{
-			id736.Chat.SendReplyOrMessage($"Sorry, '{stockName}' is not a valid stock.", msgId);
+			id736.Chat.SendReplyOrMessage($"Sorry, '{stockName}' is not a valid stock.", msgId, false);
 			return false;
 		}
 
@@ -53,7 +53,7 @@ public class CPHInline
 
 		if (cost > points)
 		{
-			id736.Chat.SendReplyOrMessage($"Sorry, you don't have enough points to buy {stockQuantity} shares of {stockName}.", msgId);
+			id736.Chat.SendReplyOrMessage($"Sorry, you don't have enough points to buy {stockQuantity} shares of {stockName}.", msgId, false);
 			return false;
 		}
 
@@ -67,7 +67,7 @@ public class CPHInline
 		id736.Points.Set(userName, platform, "points", points);
 
 		string emote = platform == "twitch" ? "TheIlluminati" : "";
-		id736.Chat.SendReplyOrMessage($"{emote}You have bought {stockQuantity} shares of {stockName} for ${cost} points. You have {points} points left. {emote}", msgId);
+		id736.Chat.SendReplyOrMessage($"{emote} You have bought {stockQuantity} shares of {stockName} for {cost} points. You have {points} points left. {emote}", msgId, false);
 
 		return true;
 	}

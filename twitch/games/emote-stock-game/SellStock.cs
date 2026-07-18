@@ -51,7 +51,7 @@ public class CPHInline
 
 		if (!stocks.ContainsKey(stockName) || stockQuantity > stocks[stockName])
 		{
-			id736.Chat.SendReplyOrMessage($"Sorry, you don't have enough {stockName} stock to sell {stockQuantity} shares.", msgId);
+			id736.Chat.SendReplyOrMessage($"Sorry, you don't have enough {stockName} stock to sell {stockQuantity} shares.", msgId, false);
 			return false;
 		}
 
@@ -64,7 +64,7 @@ public class CPHInline
 		id736.Points.Set(userName, platform, "points", points);
 
 		string emote = platform == "twitch" ? "TheIlluminati" : "";
-		id736.Chat.SendReplyOrMessage($"{emote}You sold {stockQuantity} shares of {stockName} for ${cost} points. You now have {points} points. {emote}", msgId);
+		id736.Chat.SendReplyOrMessage($"{emote} You sold {stockQuantity} shares of {stockName} for {cost} points. You now have {points} points. {emote}", msgId, false);
 
 		return true;
 	}

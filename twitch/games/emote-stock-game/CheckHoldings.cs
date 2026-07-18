@@ -49,7 +49,7 @@ public class CPHInline
 			? $"Current stocks: {string.Join(" ... ", parts)}; you have {points} points."
 			: $"You don't own any stock right now, but you have {points} points.";
 
-		id736.Chat.SendReplyOrMessage(stockMsg, msgId);
+		id736.Chat.SendReplyOrMessage(stockMsg, msgId, false);
 		return true;
 	}
 }
