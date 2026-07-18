@@ -106,9 +106,12 @@ const gameState = {
   cellSize: 108,
   round: 0,
   endsAt: 0,
+  joinEndsAt: 0,
   duration: 30,
+  roundSeed: 0,
   collecting: false,
   coords: [],
+  coordCounts: {},
   players: {},
   mutedPlayers: [],
   ships: [],
@@ -333,8 +336,45 @@ function drawHud(dt) {
     }
   }
 
+  // During collecting in easy/normal, show vote circles only.
+  if (gameState.collecting && gameState.mode !== 'extreme' && gameState.coords.length > 0) {
+    const seen = new Set();
+    const markers = [];
+    let maxCount = 0;
+
+    for (const coord of gameState.coords) {
+      const key = `${coord.row},${coord.col}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const count = gameState.coordCounts[key] || 0;
+      if (count > maxCount) maxCount = count;
+      markers.push({ row: coord.row, col: coord.col, count });
+    }
+
+    const cs = gameState.cellSize;
+    for (const marker of markers) {
+      const p = cellToPixel(marker.row, marker.col);
+      const cx = p.x + cs / 2;
+      const cy = p.y + cs / 2;
+      const alpha = maxCount <= 1 ? 1 : marker.count / maxCount;
+      const isWinner = marker.count === maxCount;
+
+      hudCtx.strokeStyle = `rgba(255, 0, 0, ${alpha})`;
+      hudCtx.fillStyle = `rgba(255, 80, 80, ${alpha})`;
+      hudCtx.lineWidth = isWinner ? 4 : 2;
+
+      hudCtx.beginPath();
+      hudCtx.arc(cx, cy, cs * (isWinner ? 0.30 : 0.22), 0, Math.PI * 2);
+      hudCtx.stroke();
+
+      hudCtx.beginPath();
+      hudCtx.arc(cx, cy, cs * 0.05, 0, Math.PI * 2);
+      hudCtx.fill();
+    }
+  }
+
   // Crosshair lines
-  if (gameState.crosshair.visible) {
+  if (gameState.crosshair.visible && !(gameState.collecting && gameState.mode !== 'extreme')) {
     const cs = gameState.cellSize;
     const cx = gameState.boardOffsetX + gameState.crosshair.col * cs + cs / 2;
     const cy = gameState.boardOffsetY + gameState.crosshair.row * cs + cs / 2;
@@ -389,6 +429,48 @@ function computeAverage() {
     row: Math.max(0, Math.min(gameState.gridSize - 1, avgRow)),
     col: Math.max(0, Math.min(gameState.gridSize - 1, avgCol))
   };
+}
+
+function hashTieBreak(seed, row, col) {
+  let hash = 2166136261 >>> 0;
+  const value = `${seed}:${row},${col}`;
+  for (let i = 0; i < value.length; i++) {
+    hash ^= value.charCodeAt(i);
+    hash = Math.imul(hash, 16777619) >>> 0;
+  }
+  return hash >>> 0;
+}
+
+function computeMajorityTarget() {
+  if (gameState.coords.length === 0) return null;
+
+  let bestRow = null;
+  let bestCol = null;
+  let bestCount = -1;
+  let bestIndex = Number.POSITIVE_INFINITY;
+  let bestHash = 0;
+
+  for (let i = 0; i < gameState.coords.length; i++) {
+    const coord = gameState.coords[i];
+    const key = `${coord.row},${coord.col}`;
+    const count = gameState.coordCounts[key] || 0;
+    const hash = hashTieBreak(gameState.roundSeed, coord.row, coord.col);
+
+    if (count > bestCount || (count === bestCount && (hash > bestHash || (hash === bestHash && i < bestIndex)))) {
+      bestRow = coord.row;
+      bestCol = coord.col;
+      bestCount = count;
+      bestIndex = i;
+      bestHash = hash;
+    }
+  }
+
+  if (bestRow === null || bestCol === null) return null;
+  return { row: bestRow, col: bestCol };
+}
+
+function computeRoundTarget() {
+  return gameState.mode === 'extreme' ? computeAverage() : computeMajorityTarget();
 }
 
 // --- Bomber animation ---
@@ -601,17 +683,41 @@ function updateRightPanel() {
 }
 
 function updateCountdown() {
-  const el = document.getElementById('countdown');
-  if (!el) return;
-  if (!gameState.collecting || gameState.endsAt === 0) {
+  const roundEl = document.getElementById('countdown');
+  const joinEl = document.getElementById('joinCountdown');
+  const clear = (el) => {
+    if (!el) return;
     el.textContent = '';
     el.classList.remove('urgent');
+    el.style.display = 'none';
+  };
+
+  if (gameState.phase === 'join' && gameState.joinEndsAt > 0) {
+    const remaining = Math.max(0, Math.ceil((gameState.joinEndsAt - Date.now()) / 1000));
+    if (joinEl) {
+      joinEl.innerHTML = `<div>!join to play</div><div>${remaining}</div>`;
+      joinEl.style.display = 'flex';
+      if (remaining <= 5) joinEl.classList.add('urgent');
+      else joinEl.classList.remove('urgent');
+    }
+    clear(roundEl);
     return;
   }
+
+  clear(joinEl);
+
+  if (!gameState.collecting || gameState.endsAt === 0) {
+    clear(roundEl);
+    return;
+  }
+
   const remaining = Math.max(0, Math.ceil((gameState.endsAt - Date.now()) / 1000));
-  el.textContent = remaining;
-  if (remaining <= 5) el.classList.add('urgent');
-  else el.classList.remove('urgent');
+  if (roundEl) {
+    roundEl.textContent = remaining;
+    roundEl.style.display = 'block';
+    if (remaining <= 5) roundEl.classList.add('urgent');
+    else roundEl.classList.remove('urgent');
+  }
 }
 
 // --- WebSocket client ---
@@ -742,6 +848,8 @@ function handleSetup(data) {
   gameState.gridSize = data.gridSize || 10;
   gameState.boardSize = 1080;
   recalcGeometry();
+  gameState.round = data.round || 0;
+  gameState.phase = data.phase || 'setup';
   gameState.ships = (data.ships || []).map((s, i) => ({
     id: i,
     name: s.name || SHIP_NAMES[i] || 'Ship',
@@ -749,14 +857,17 @@ function handleSetup(data) {
     sunk: false
   }));
   gameState.mines = (data.mines || []).map(m => ({ row: m.row, col: m.col, hit: false }));
+  gameState.joinEndsAt = data.joinEndsAt || 0;
+  gameState.endsAt = data.endsAt || 0;
+  gameState.roundSeed = data.roundSeed || 0;
+  gameState.collecting = data.collecting !== undefined ? !!data.collecting : gameState.phase === 'collect';
   gameState.shots = {};
   gameState.coords = [];
+  gameState.coordCounts = {};
   gameState.players = {};
   gameState.mutedPlayers = [];
-  gameState.round = 0;
   gameState.gameEnded = false;
   gameState.initialized = true;
-  gameState.phase = 'setup';
 
   drawWater();
   drawShipLayer();
@@ -773,9 +884,12 @@ function handleSetup(data) {
 function handleRoundStart(data) {
   gameState.round = data.round || (gameState.round + 1);
   gameState.endsAt = data.endsAt || (Date.now() + (data.duration || 30) * 1000);
+  gameState.joinEndsAt = 0;
   gameState.duration = data.duration || 30;
+  gameState.roundSeed = data.roundSeed || gameState.roundSeed || 0;
   gameState.collecting = true;
   gameState.coords = [];
+  gameState.coordCounts = {};
   gameState.mutedPlayers = data.mutedPlayers || [];
   gameState.crosshair.visible = false; // hidden until first coordinate arrives
   gameState.crosshair.blinkPhase = 0;
@@ -795,19 +909,21 @@ function handleCoord(data) {
   const platform = data.platform;
 
   gameState.coords.push({ row, col, user, platform });
+  const key = `${row},${col}`;
+  gameState.coordCounts[key] = (gameState.coordCounts[key] || 0) + 1;
 
   // Track player stats
-  const key = `${platform}:${user}`;
-  if (!gameState.players[key]) {
-    gameState.players[key] = { user, platform, coordCount: 0, muteCount: 0 };
+  const playerKey = `${platform}:${user}`;
+  if (!gameState.players[playerKey]) {
+    gameState.players[playerKey] = { user, platform, coordCount: 0, muteCount: 0 };
   }
-  gameState.players[key].coordCount++;
+  gameState.players[playerKey].coordCount++;
 
-  // Update crosshair from live average
-  const avg = computeAverage();
-  if (avg) {
-    gameState.crosshair.row = avg.row;
-    gameState.crosshair.col = avg.col;
+  // Update crosshair from the mode-specific live target.
+  const target = computeRoundTarget();
+  if (target) {
+    gameState.crosshair.row = target.row;
+    gameState.crosshair.col = target.col;
     gameState.crosshair.visible = true;
   }
 

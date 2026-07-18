@@ -1,6 +1,6 @@
 # Battleship
 
-A browser-based chat-driven Battleship game for Streamer.bot. Viewers type coordinates (e.g. `B5`) in chat to collectively fire at a hidden fleet. All coordinates are averaged each round, and the result is a single shot at the average position. Ships sink, mines explode, and the chat works together (or chaotically) to sink all 5 ships.
+A browser-based chat-driven Battleship game for Streamer.bot. Viewers type coordinates (e.g. `B5`) in chat to collectively fire at a hidden fleet. Easy and normal mode fire at the most-voted coordinate; extreme mode uses the average of all submitted coordinates. Ships sink, mines explode, and the chat works together (or chaotically) to sink all 5 ships.
 
 > **Architecture note:** All game logic lives in Streamer.bot C# actions. The browser page (`index.html` + `battleship.js`) is purely an animation renderer that listens for WebSocket events from Streamer.bot.
 
@@ -8,11 +8,11 @@ A browser-based chat-driven Battleship game for Streamer.bot. Viewers type coord
 
 ## Game Modes
 
-| Mode     | Grid      | Round Timer | Mines                     | Points per Hit | Mine Penalty | Flawless Bonus |
-|----------|-----------|-------------|---------------------------|----------------|--------------|----------------|
-| Easy     | 10×10     | 30s         | 0                         | 100            | 0            | N/A            |
-| Normal   | 10×10     | 30s         | 0–25 (default 5)          | 250            | 0 (config)   | 1000           |
-| Extreme  | 15×15     | 15s         | 1×–5× ship cells (def 2×) | 500            | 500          | 10000          |
+| Mode     | Grid      | Round Timer | Targeting                           | Mines                     | Points per Hit | Mine Penalty | Flawless Bonus |
+|----------|-----------|-------------|-------------------------------------|---------------------------|----------------|--------------|----------------|
+| Easy     | 10×10     | 30s         | Most-voted coordinate               | 0                         | 100            | 0            | N/A            |
+| Normal   | 10×10     | 30s         | Most-voted coordinate               | 0–25 (default 5)          | 250            | 0            | 1000           |
+| Extreme  | 15×15     | 15s         | Average of all submitted coordinates | 1×–5× ship cells (def 2×) | 500            | 500          | 10000          |
 
 ### Ships
 - Carrier (5 blocks), Battleship (4), Cruiser (3), Submarine (3), Destroyer (2)
@@ -22,6 +22,7 @@ A browser-based chat-driven Battleship game for Streamer.bot. Viewers type coord
 - Normal mode: 0–25 single-cell mines (default 5)
 - Extreme mode: multiplier of total ship cells (1×–5×, default 2× = 34 mines); half are placed adjacent to ships
 - Hitting a mine times out floor(half of round participants) players for the next round
+- Mine penalties only deduct points in extreme mode
 
 ### Points
 - Per round, per ship block hit: all players who submitted ≥1 coordinate that round receive points
@@ -86,13 +87,14 @@ Example: `!game battleship normal` or `!game battleship extreme`
 | `obsScene`              | `GameScene`                          | OBS scene containing the browser source          |
 | `obsSource`             | `BattleshipBrowser`                  | OBS browser source name                          |
 | `timerGuid`             | `1288da0a-...`                       | Timer ID copied from the battleship-game timer   |
+| `joinTimer`             | `60`                                 | Seconds for the join countdown                   |
 | `roundSeconds`          | `30`                                 | Seconds per round (extreme uses max(this/2, 15)) |
 | `interRoundSeconds`     | `3`                                  | Minimum gap between rounds                       |
 | `pointsName`            | `points`                             | Currency name for awarding/losing points         |
 | `shipHitPointsEasy`     | `100`                                | Points per block hit, easy mode                  |
 | `shipHitPointsNormal`   | `250`                                | Points per block hit, normal mode                |
 | `shipHitPointsExtreme`  | `500`                                | Points per block hit, extreme mode               |
-| `minePenalty`           | `0`                                  | Points lost per mine hit (0 = no penalty)        |
+| `minePenalty`           | `0`                                  | Points lost per mine hit in extreme mode only    |
 | `flawlessBonusNormal`   | `1000`                               | End-of-game flawless bonus, normal mode          |
 | `flawlessBonusExtreme`  | `10000`                              | End-of-game flawless bonus, extreme mode         |
 | `minRoundsForBonus`     | `5`                                  | Rounds a player must play to receive bonus       |
@@ -169,16 +171,17 @@ Add a sub-action to **Execute C# Code** and paste `battleship-browser-loaded.cs`
 2. **Ships and mines are placed** randomly on the grid
 3. **The board appears in OBS**, covered in fog
 4. **Viewers `!join`** to enter the game
-5. **Round begins:** a 30s (or 15s) countdown starts, and the red crosshair appears
-6. **Viewers type coordinates** (e.g. `B5`, `j10`) — no command prefix needed
-7. **The crosshair drifts** in real-time as the average of all submitted coordinates changes
-8. **Timer expires:** the final average is locked, announced in chat ("Firing on position C-9!")
-9. **Bomber animation:** a 1960s-era bomber flies across the board, drops a bomb at the target
-10. **Result:** white peg (miss), red peg (hit), or mine icon (mine hit)
-11. **Ship sunk:** the ship shape is revealed with a red X
-12. **Mine hit:** half the round's players are muted for the next round
-13. **Next round starts** after the animation completes
-14. **Game ends** when all ships are sunk (win), all mines are hit in extreme mode (lost), or the streamer ends it
+5. **Join window starts:** a centered `!join to play` overlay and countdown appear on the board
+6. **Round begins:** a 30s (or 15s) countdown starts, and the target indicator appears
+7. **Viewers type coordinates** (e.g. `B5`, `j10`) — no command prefix needed
+8. **Easy/normal:** the most-voted coordinate is targeted; **extreme:** the live average is targeted
+9. **Timer expires:** the final target is locked, announced in chat ("Firing on position C-9!")
+10. **Bomber animation:** a 1960s-era bomber flies across the board, drops a bomb at the target
+11. **Result:** white peg (miss), red peg (hit), or mine icon (mine hit)
+12. **Ship sunk:** the ship shape is revealed with a red X
+13. **Mine hit:** half the round's players are muted for the next round; point penalties only apply in extreme mode
+14. **Next round starts** after the animation completes
+15. **Game ends** when all ships are sunk (win), all mines are hit in extreme mode (lost), or the streamer ends it
 
 ---
 

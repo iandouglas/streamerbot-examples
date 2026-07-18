@@ -208,9 +208,41 @@
   animation: pulse 0.5s infinite alternate;
 }
 
+#joinCountdown {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 50;
+  display: none;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Courier New', monospace;
+  font-size: 96px;
+  line-height: 1;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 4px 4px 0 #000, 0 0 24px rgba(0, 0, 0, 0.85);
+  pointer-events: none;
+}
+
+#joinCountdown.urgent {
+  color: #ff3333;
+  animation: joinPulse 0.5s infinite alternate;
+}
+
 @keyframes pulse {
   from { transform: scale(1.0); }
   to   { transform: scale(1.1); }
+}
+
+@keyframes joinPulse {
+  from { transform: translate(-50%, -50%) scale(1.0); }
+  to   { transform: translate(-50%, -50%) scale(1.1); }
 }
 
 #debugOverlay {

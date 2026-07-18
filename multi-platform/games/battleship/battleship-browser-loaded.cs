@@ -22,6 +22,7 @@ public class CPHInline
                 string mode = CPH.GetGlobalVar<string>("battleship_mode", false) ?? "normal";
                 int gridSize = CPH.GetGlobalVar<int>("battleship_grid_size", false);
                 if (gridSize < 1) gridSize = 10;
+                string phase = CPH.GetGlobalVar<string>("battleship_phase", false) ?? "setup";
 
                 string shipsJson = CPH.GetGlobalVar<string>("battleship_ships", false) ?? "[]";
                 string minesJson = CPH.GetGlobalVar<string>("battleship_mines", false) ?? "[]";
@@ -33,6 +34,11 @@ public class CPHInline
                     { "event", "setup" },
                     { "mode", mode },
                     { "gridSize", gridSize },
+                    { "round", CPH.GetGlobalVar<int>("battleship_round", false) },
+                    { "phase", phase },
+                    { "joinEndsAt", CPH.GetGlobalVar<long>("battleship_join_ends_at", false) },
+                    { "endsAt", CPH.GetGlobalVar<long>("battleship_round_ends_at", false) },
+                    { "roundSeed", CPH.GetGlobalVar<int>("battleship_round_seed", false) },
                     { "ships", ships },
                     { "mines", mines },
                     { "playAudio", false }

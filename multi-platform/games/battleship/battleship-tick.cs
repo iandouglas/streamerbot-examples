@@ -34,6 +34,7 @@ public class CPHInline
         // Stop collecting
         CPH.SetGlobalVar("battleship_collecting", false, false);
         CPH.SetGlobalVar("battleship_phase", "resolving", false);
+        CPH.SetGlobalVar("battleship_join_ends_at", 0L, false);
 
         // Clear muted players — their timeout lasted through this round, now it's over
         CPH.SetGlobalVar("battleship_muted_players", "[]", false);
@@ -41,6 +42,8 @@ public class CPHInline
         // Get all coordinates for this round
         var coords = id736.Data.FromJson<List<Dictionary<string, object>>>(
             CPH.GetGlobalVar<string>("battleship_coords", false) ?? "[]") ?? new List<Dictionary<string, object>>();
+
+        string mode = CPH.GetGlobalVar<string>("battleship_mode", false) ?? "normal";
 
         int gridSize = CPH.GetGlobalVar<int>("battleship_grid_size", false);
         if (gridSize < 1) gridSize = 10;
@@ -67,37 +70,82 @@ public class CPHInline
             return true;
         }
 
-        // Compute average
-        double rowSum = 0, colSum = 0;
-        foreach (var c in coords)
-        {
-            rowSum += Convert.ToInt32(c["row"]);
-            colSum += Convert.ToInt32(c["col"]);
-        }
-        // Compute average using round-half-up (not banker's rounding) to match JS
-        double rowAvg = rowSum / (double)coords.Count;
-        double colAvg = colSum / (double)coords.Count;
-        int avgRow = (int)Math.Floor(rowAvg + 0.5);
-        int avgCol = (int)Math.Floor(colAvg + 0.5);
-        avgRow = Math.Max(0, Math.Min(gridSize - 1, avgRow));
-        avgCol = Math.Max(0, Math.Min(gridSize - 1, avgCol));
+        int targetRow;
+        int targetCol;
 
-        string coordName = $"{(char)('A' + avgRow)}-{avgCol + 1}";
-        Log($"tick: average of {coords.Count} coords = {coordName}");
+        if (mode == "extreme")
+        {
+            // Extreme mode uses the averaged coordinate.
+            double rowSum = 0, colSum = 0;
+            foreach (var c in coords)
+            {
+                rowSum += Convert.ToInt32(c["row"]);
+                colSum += Convert.ToInt32(c["col"]);
+            }
+
+            double rowAvg = rowSum / (double)coords.Count;
+            double colAvg = colSum / (double)coords.Count;
+            targetRow = (int)Math.Floor(rowAvg + 0.5);
+            targetCol = (int)Math.Floor(colAvg + 0.5);
+            targetRow = Math.Max(0, Math.Min(gridSize - 1, targetRow));
+            targetCol = Math.Max(0, Math.Min(gridSize - 1, targetCol));
+            Log($"tick: average of {coords.Count} coords = {(char)('A' + targetRow)}-{targetCol + 1}");
+        }
+        else
+        {
+            // Easy/normal modes use the most common coordinate from the round.
+            int roundSeed = CPH.GetGlobalVar<int>("battleship_round_seed", false);
+            var coordCounts = new Dictionary<string, int>();
+            foreach (var c in coords)
+            {
+                int row = Convert.ToInt32(c["row"]);
+                int col = Convert.ToInt32(c["col"]);
+                string key = $"{row},{col}";
+                coordCounts[key] = coordCounts.TryGetValue(key, out int existing) ? existing + 1 : 1;
+            }
+
+            int bestCount = -1;
+            int bestIndex = int.MaxValue;
+            uint bestHash = 0;
+            targetRow = 0;
+            targetCol = 0;
+
+            for (int i = 0; i < coords.Count; i++)
+            {
+                int row = Convert.ToInt32(coords[i]["row"]);
+                int col = Convert.ToInt32(coords[i]["col"]);
+                string key = $"{row},{col}";
+                int count = coordCounts[key];
+                uint hash = HashTieBreak(roundSeed, row, col);
+
+                if (count > bestCount || (count == bestCount && (hash > bestHash || (hash == bestHash && i < bestIndex))))
+                {
+                    bestCount = count;
+                    bestIndex = i;
+                    bestHash = hash;
+                    targetRow = row;
+                    targetCol = col;
+                }
+            }
+
+            Log($"tick: most common of {coords.Count} coords ({coordCounts.Count} unique) = {(char)('A' + targetRow)}-{targetCol + 1} ({bestCount} votes)");
+        }
+
+        string coordName = $"{(char)('A' + targetRow)}-{targetCol + 1}";
         id736.Chat.SendMessage($"Firing on position {coordName}!");
 
         // Send round-end with final coordinate
         SendEvent("round-end", new Dictionary<string, object>
         {
-            { "row", avgRow },
-            { "col", avgCol }
+            { "row", targetRow },
+            { "col", targetCol }
         });
 
         // Check if already shot
         var shots = id736.Data.FromJson<Dictionary<string, Dictionary<string, object>>>(
             CPH.GetGlobalVar<string>("battleship_shots", false) ?? "{}") ?? new Dictionary<string, Dictionary<string, object>>();
 
-        string shotKey = $"{avgRow},{avgCol}";
+        string shotKey = $"{targetRow},{targetCol}";
         if (shots.ContainsKey(shotKey))
         {
             Log($"tick: {coordName} already fired upon, skipping round");
@@ -105,8 +153,8 @@ public class CPHInline
 
             SendEvent("shot-resolve", new Dictionary<string, object>
             {
-                { "row", avgRow },
-                { "col", avgCol },
+                { "row", targetRow },
+                { "col", targetCol },
                 { "result", "repeat" }
             });
             return true;
@@ -125,7 +173,7 @@ public class CPHInline
         {
             int mRow = Convert.ToInt32(mines[i]["row"]);
             int mCol = Convert.ToInt32(mines[i]["col"]);
-            if (mRow == avgRow && mCol == avgCol)
+            if (mRow == targetRow && mCol == targetCol)
             {
                 mineIdx = i;
                 break;
@@ -134,14 +182,14 @@ public class CPHInline
 
         if (mineIdx >= 0)
         {
-            ResolveMineHit(avgRow, avgCol, mineIdx, mines, coords, shots, shotKey);
+            ResolveMineHit(targetRow, targetCol, mineIdx, mines, coords, shots, shotKey);
             return true;
         }
 
         // Check ship hit
         int shipIdx = -1;
         int cellIdx = -1;
-        Log($"tick: checking {ships.Count} ships for hit at {avgRow},{avgCol}");
+        Log($"tick: checking {ships.Count} ships for hit at {targetRow},{targetCol}");
         for (int i = 0; i < ships.Count; i++)
         {
             object cellsObj;
@@ -167,7 +215,7 @@ public class CPHInline
             {
                 int cRow = GetCellIntProperty(cells, j, "row");
                 int cCol = GetCellIntProperty(cells, j, "col");
-                if (cRow == avgRow && cCol == avgCol)
+                if (cRow == targetRow && cCol == targetCol)
                 {
                     shipIdx = i;
                     cellIdx = j;
@@ -179,20 +227,20 @@ public class CPHInline
 
         if (shipIdx >= 0)
         {
-            Log($"tick: HIT on ship {shipIdx} cell {cellIdx} at {avgRow},{avgCol}");
-            ResolveShipHit(avgRow, avgCol, shipIdx, cellIdx, ships, coords, shots, shotKey);
+            Log($"tick: HIT on ship {shipIdx} cell {cellIdx} at {targetRow},{targetCol}");
+            ResolveShipHit(targetRow, targetCol, shipIdx, cellIdx, ships, coords, shots, shotKey);
             return true;
         }
 
         // Water miss
         Log($"tick: {coordName} is a miss");
-        shots[shotKey] = new Dictionary<string, object> { { "row", avgRow }, { "col", avgCol }, { "result", "miss" } };
+        shots[shotKey] = new Dictionary<string, object> { { "row", targetRow }, { "col", targetCol }, { "result", "miss" } };
         CPH.SetGlobalVar("battleship_shots", id736.Data.ToJson(shots), false);
 
         SendEvent("shot-resolve", new Dictionary<string, object>
         {
-            { "row", avgRow },
-            { "col", avgCol },
+            { "row", targetRow },
+            { "col", targetCol },
             { "result", "miss" }
         });
 
@@ -411,7 +459,8 @@ public class CPHInline
             string mineMsg = $"Mine hit! These players are timed out next round: {nameList}";
 
             int minePenalty = CPH.GetGlobalVar<int>("battleship_mine_penalty", false);
-            if (minePenalty > 0)
+            string mode = CPH.GetGlobalVar<string>("battleship_mode", false) ?? "normal";
+            if (minePenalty > 0 && mode == "extreme")
             {
                 string pointsName = CPH.GetGlobalVar<string>("battleship_points_name", false) ?? "points";
                 mineMsg += $" All participants lose {minePenalty} {pointsName}!";
@@ -502,7 +551,8 @@ public class CPHInline
     private void ApplyMinePenalty(List<Dictionary<string, object>> roundPlayers)
     {
         int minePenalty = CPH.GetGlobalVar<int>("battleship_mine_penalty", false);
-        if (minePenalty <= 0) return;
+        string mode = CPH.GetGlobalVar<string>("battleship_mode", false) ?? "normal";
+        if (minePenalty <= 0 || mode != "extreme") return;
 
         string pointsName = CPH.GetGlobalVar<string>("battleship_points_name", false) ?? "points";
         var playerNames = id736.Data.FromJson<Dictionary<string, string>>(
@@ -534,5 +584,20 @@ public class CPHInline
         data["event"] = eventName;
         string json = id736.Data.ToJson(data);
         CPH.WebsocketBroadcastJson(json);
+    }
+
+    private static uint HashTieBreak(int seed, int row, int col)
+    {
+        unchecked
+        {
+            uint hash = 2166136261;
+            string value = $"{seed}:{row},{col}";
+            foreach (char ch in value)
+            {
+                hash ^= ch;
+                hash *= 16777619;
+            }
+            return hash;
+        }
     }
 }

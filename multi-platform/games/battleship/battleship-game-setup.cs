@@ -62,6 +62,8 @@ public class CPHInline
         CPH.SetGlobalVar("battleship_phase", "join", false);
         CPH.SetGlobalVar("battleship_group", groupName, false);
         CPH.SetGlobalVar("battleship_round", 0, false);
+        CPH.SetGlobalVar("battleship_round_seed", 0, false);
+        CPH.SetGlobalVar("battleship_join_ends_at", 0L, false);
         CPH.SetGlobalVar("battleship_collecting", false, false);
         CPH.SetGlobalVar("battleship_coords", "[]", false);
         CPH.SetGlobalVar("battleship_shots", "{}", false);
@@ -85,6 +87,10 @@ public class CPHInline
         if (mode == "extreme")
             roundSeconds = Math.Max(roundSeconds / 2, 15);
         CPH.SetGlobalVar("battleship_round_seconds", roundSeconds, false);
+
+        int joinTimer = GetArgInt("joinTimer", 60);
+        if (joinTimer < 10) joinTimer = 60;
+        CPH.SetGlobalVar("battleship_join_seconds", joinTimer, false);
 
         int interRoundSeconds = GetArgInt("interRoundSeconds", 3);
         CPH.SetGlobalVar("battleship_inter_round_seconds", interRoundSeconds, false);
@@ -199,6 +205,9 @@ public class CPHInline
         {
             { "mode", mode },
             { "gridSize", gridSize },
+            { "round", 0 },
+            { "phase", "join" },
+            { "joinEndsAt", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + joinTimer * 1000L },
             { "ships", shipDataList },
             { "mines", mineDataList },
             { "playAudio", true }
@@ -224,9 +233,9 @@ public class CPHInline
         id736.Chat.SendMessage(welcomeMsg);
 
         // --- Join phase: 60 seconds ---
-        int joinTimer = GetArgInt("joinTimer", 60);
-        if (joinTimer < 10) joinTimer = 60;
         CPH.SetGlobalVar("battleship_phase", "join", false);
+        long joinEndsAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + joinTimer * 1000L;
+        CPH.SetGlobalVar("battleship_join_ends_at", joinEndsAt, false);
 
         id736.Chat.SendMessage($"You have {joinTimer} seconds to !join!");
 
@@ -274,7 +283,10 @@ public class CPHInline
         CPH.SetGlobalVar("battleship_round", round, false);
         CPH.SetGlobalVar("battleship_phase", "collect", false);
         CPH.SetGlobalVar("battleship_collecting", true, false);
+        CPH.SetGlobalVar("battleship_join_ends_at", 0L, false);
         CPH.SetGlobalVar("battleship_coords", "[]", false);
+        int roundSeed = _random.Next();
+        CPH.SetGlobalVar("battleship_round_seed", roundSeed, false);
 
         int roundSeconds = CPH.GetGlobalVar<int>("battleship_round_seconds", false);
         if (roundSeconds < 1) roundSeconds = 30;
@@ -297,6 +309,7 @@ public class CPHInline
             { "round", round },
             { "endsAt", endsAt },
             { "duration", roundSeconds },
+            { "roundSeed", roundSeed },
             { "mutedPlayers", mutedPayload }
         });
         Log($"round-start: sent round-start event to browser, round={round}, endsAt={endsAt}, duration={roundSeconds}s");
@@ -483,7 +496,8 @@ public class CPHInline
     private void ApplyMinePenalty(List<Dictionary<string, object>> roundPlayers)
     {
         int minePenalty = CPH.GetGlobalVar<int>("battleship_mine_penalty", false);
-        if (minePenalty <= 0) return;
+        string mode = CPH.GetGlobalVar<string>("battleship_mode", false) ?? "normal";
+        if (minePenalty <= 0 || mode != "extreme") return;
 
         string pointsName = CPH.GetGlobalVar<string>("battleship_points_name", false) ?? "points";
         var playerNames = id736.Data.FromJson<Dictionary<string, string>>(
