@@ -14,6 +14,7 @@ The DLL will be needed for most of my open-source extensions here in this reposi
 
 # Documentation
 
+## What is this DLL file for?
 
 A small C# helper library for [Streamer.bot](https://streamer.bot) actions. It gives streamers a consistent, cross-platform API for common tasks like sending chat messages, managing user groups, and awarding points across **Twitch, YouTube, and Kick**.
 
@@ -54,22 +55,26 @@ Streamer.bot will load the DLL automatically on startup.
 At the top of every `Execute C# Code` sub-action, set the context:
 
 ```csharp
-using iandouglas736;
+using id736 = iandouglas736;
 
 public class CPHInline
 {
     public bool Execute()
     {
+        // this needs to be near the top of every Execute() method
+        // you add in Streamer.bot so my DLL knows how to talk to
+        // Streamer.bot, the streaming platforms, etc.
         id736.Core.LinkStreamerbot(CPH);
 
-        Chat.SendMessage("Hello from all platforms!");
-        Log.Message("Action executed", filenamePrefix: "mygame");
+        id7363.Chat.SendMessage("Hello from all platforms!");
+        id736.Log.Message("Action executed", filenamePrefix: "mygame");
+
         return true;
     }
 }
 ```
 
-`Core.LinkStreamerbot(CPH)` sets context on all helpers that need it. You only need to call it once per action.
+`id736.Core.LinkStreamerbot(CPH)` sets context on all helpers that need it. You need to call it once per action that runs C# code.
 
 ### Logging setup (required)
 

@@ -9,9 +9,9 @@ This folder contains the compiled helper DLL and its optional media-duration dep
 | File | Required? | Purpose |
 |---|---|---|
 | `iandouglas736.dll` | **Yes** | The main helper library. Provides `Chat`, `Groups`, `Points`, `PlatformConfig`, `Media`, `Data`, and `GoogleSheets` helpers. |
-| `NLayer.dll` | Only for MP3 duration | Used by `iandouglas736.Media` to read `.mp3` file durations. |
-| `NLayer.NAudioSupport.dll` | Only for NAudio MP3 | Optional. Only needed if you also use NAudio's `Mp3FileReader` with NLayer. `iandouglas736.Media` does not need it for basic MP3 duration detection. |
-| `Duration.Mine.Mp4.dll` | Only for MP4 duration | Used by `iandouglas736.Media` to read `.mp4` file durations. |
+| `NLayer.dll` | MP3 duration | Used by `iandouglas736.Media` to read `.mp3` file durations. |
+| `NLayer.NAudioSupport.dll` | NAudio MP3 | Supplemental library for mp3 files. |
+| `Duration.Mine.Mp4.dll` | MP4 duration | Used by `iandouglas736.Media` to read `.mp4` file durations. |
 
 If you do not play `.mp3` or `.mp4` files from Streamer.bot actions, you only need `iandouglas736.dll`.
 
@@ -25,14 +25,14 @@ Common locations:
 
 - `C:\Program Files\Streamer.bot\`
 - `C:\Program Files\Streamer.bot\DLLs\`
-- A portable folder like `D:\streamerbot\Streamer.bot\DLLs\`
+- A different disk/path folder like `D:\Streamer.bot\DLLs\`
 
 Put all of these files together in the same folder:
 
 - `iandouglas736.dll`
-- `NLayer.dll` (only if you use `.mp3` duration)
-- `Duration.Mine.Mp4.dll` (only if you use `.mp4` duration)
-- `NLayer.NAudioSupport.dll` (only if you know you need it)
+- `NLayer.dll`
+- `Duration.Mine.Mp4.dll`
+- `NLayer.NAudioSupport.dll`
 
 If you split the DLLs across different folders, you may see `FileNotFoundException` at runtime because Streamer.bot resolves assemblies relative to where the main reference is located.
 
@@ -42,17 +42,20 @@ If you split the DLLs across different folders, you may see `FileNotFoundExcepti
 
 1. Open **Streamer.bot**.
 2. Go to **Settings → C# Compile Settings**.
-3. In the **Common References** area, right-click and choose **Add Reference**.
-4. Browse to the folder where you placed the DLLs.
-5. Select `iandouglas736.dll`.
-6. If you want media duration detection, also select:
-   - `NLayer.dll` (for `.mp3`)
-   - `Duration.Mine.Mp4.dll` (for `.mp4`)
-   - `NLayer.NAudioSupport.dll` (only if you know you need NAudio support)
-7. Click **OK**.
-8. Restart Streamer.bot if the new references do not take effect immediately.
+3. Repeat the following steps for each DLL file:
+  a. In the **Common References** area, right-click and choose **Add Reference from File**.
+  b. Browse to the folder where you placed the DLLs. (protip, in the navigation window where it might look like "This PC > C: > Program Files", click in that address bar, it will give you the full proper disk path like "C:\Program Files\" which you can then copy to your clipboard )
+  c. Select the DLL file
+  d. Click **Open**.
+8. Restart Streamer.bot
 
-After that, every `Execute C# Code` sub-action can use the full namespace:
+If you ever grab a fresh copy of the DLL files from this GitHub repository, you can replace the files in the same path. Streamer.bot will need to be fully closed to overwrite the DLL files on your disk though, as Streamer.bot may have them loaded in memory and you'll get an error from Windows trying to overwrite the files until Streamer.bot is fully shut down.
+
+---
+
+## Using the DLL library, iandouglas736.dll
+
+Every `Execute C# Code` sub-action can use the full namespace:
 
 ```csharp
 using iandouglas736;
@@ -60,7 +63,7 @@ using iandouglas736;
 Chat.SendMessage("Hello chat!");
 ```
 
-Or a short alias:
+Or a short alias that I prefer to use in case you have a different library that might implement a `Chat` functionality:
 
 ```csharp
 using id736 = iandouglas736;
@@ -70,24 +73,13 @@ id736.Chat.SendMessage("Hello chat!");
 
 ---
 
-## Updating the DLL
-
-When a new version of `iandouglas736.dll` is released:
-
-1. Copy the new `iandouglas736.dll` into the same folder where the old one lived (e.g. your Streamer.bot root or your `DLLs` subfolder), overwriting the old one.
-2. In Streamer.bot, go to **Settings → C# Compile Settings**.
-3. Remove the old `iandouglas736` reference from **Common References**.
-4. Add the new `iandouglas736.dll` reference from that same folder.
-5. Restart Streamer.bot.
-
----
-
 ## Source code
 
 The source for `iandouglas736.dll` is open-source and lives in [`../DLL`](../DLL).
 
 Build instructions are in [`../DLL/README.md`](../DLL/README.md).
-The API reference is in [`../DLL/API.md`](../DLL/API.md).
+
+The API reference is in [`../DLL/API.md`](../DLL/API.md) for all of the different things it can do for you.
 
 ---
 
