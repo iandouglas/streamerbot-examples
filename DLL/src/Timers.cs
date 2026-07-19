@@ -22,7 +22,8 @@ namespace iandouglas736
             get
             {
                 if (_cph == null)
-                    throw new InvalidOperationException("iandouglas736.Timers.SetContext(CPH) must be called before using timer helpers.");
+                    Log.Message("iandouglas736.Timers.SetContext(CPH) must be called before using timer helpers. Use Core.LinkStreamerbot(CPH) to set context on all helpers.");
+                    throw new InvalidOperationException("iandouglas736.Timers.SetContext(CPH) must be called before using timer helpers. Use Core.LinkStreamerbot(CPH) to set context on all helpers.");
                 return _cph;
             }
         }

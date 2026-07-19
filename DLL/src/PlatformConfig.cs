@@ -6,15 +6,15 @@ namespace iandouglas736
 {
     /// <summary>
     /// Helpers for reading streamer-configured platform settings from global variables.
-    /// 
+    ///
     /// Global variables let a streamer decide:
     /// - Which platforms they stream to (default: Twitch, YouTube, Kick if connected)
     /// - Which platforms a specific command or action is allowed to use
-    /// 
+    ///
     /// Suggested naming convention for per-action platform filters:
     ///   idLLC_enabled_platforms            = global default list (e.g. "twitch,youtube")
     ///   idLLC_<action>_enabled_platforms   = per-action override (e.g. "idLLC_higherlower_enabled_platforms")
-    /// 
+    ///
     /// Values are comma-separated platform names: "twitch", "youtube", "kick".
     /// </summary>
     public static class PlatformConfig
@@ -31,7 +31,8 @@ namespace iandouglas736
             get
             {
                 if (_cph == null)
-                    throw new InvalidOperationException("iandouglas736.PlatformConfig.SetContext(CPH) must be called before using platform config helpers.");
+                    Log.Message("iandouglas736.PlatformConfig.SetContext(CPH) must be called before using platform config helpers. Use Core.LinkStreamerbot(CPH) to set context on all helpers.");
+                    throw new InvalidOperationException("iandouglas736.PlatformConfig.SetContext(CPH) must be called before using platform config helpers. Use Core.LinkStreamerbot(CPH) to set context on all helpers.");
                 return _cph;
             }
         }

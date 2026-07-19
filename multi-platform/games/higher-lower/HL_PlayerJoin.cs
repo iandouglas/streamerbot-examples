@@ -11,8 +11,7 @@ public class CPHInline
 
     public bool Execute()
     {
-        id736.Chat.SetContext(CPH);
-        id736.Groups.SetContext(CPH);
+        id736.Core.LinkStreamerbot(CPH);
 
         if (!CPH.TryGetArg("user", out string user))
             return false;
@@ -49,7 +48,7 @@ public class CPHInline
         playerNames[userKey] = userName;
         CPH.SetGlobalVar("hl_player_names", playerNames, false);
 
-        id736.Chat.SendReplyOrMessage($"@{user} welcome to Higher or Lower!", msgId);
+        id736.Chat.SendMessageToAllPlatforms($"@{user}@{platform} has joined -- welcome to Higher or Lower!");
         return true;
     }
 }

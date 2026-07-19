@@ -6,8 +6,7 @@ public class CPHInline
 {
     public bool Execute()
     {
-        id736.Chat.SetContext(CPH);
-        id736.Timers.SetContext(CPH);
+        id736.Core.LinkStreamerbot(CPH);
 
         // Try the rawInput argument.
         string rawInput = "";
@@ -67,7 +66,7 @@ public class CPHInline
         ShowGameSource();
         EnableGameTimer(intervalSeconds: 1);
 
-        id736.Chat.SendMessage($"{userName} is waiting for their turn.");
+        id736.Chat.SendMessageToAllPlatforms($"{userName}@{platform} is waiting for their turn in the cannon.");
         return true;
     }
 

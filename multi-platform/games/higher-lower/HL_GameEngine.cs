@@ -146,17 +146,17 @@ public class CPHInline
 
         if (mode == "extreme")
         {
-            id736.Chat.SendMessage($"A Higher or Lower EXTREME game has started! Type !join to enter. You have {joinTimer} seconds! Number range and number of rounds will be determined by how many players join. iandouScream");
+            id736.Chat.SendMessageToAllPlatforms($"A Higher or Lower EXTREME game has started! Type !join to enter. You have {joinTimer} seconds! Number range and number of rounds will be determined by how many players join. iandouScream");
         }
         else
         {
-            id736.Chat.SendMessage($"A Higher or Lower ({mode.ToUpper()} mode) game has started! Type !join to enter. You have {joinTimer} seconds!");
+            id736.Chat.SendMessageToAllPlatforms($"A Higher or Lower ({mode.ToUpper()} mode) game has started! Type !join to enter. You have {joinTimer} seconds!");
         }
 
         ObsSetText($"Higher or Lower ({mode} mode)!\n{joinTimer}s remaining to !join");
         ObsShow();
 
-        id736.Chat.SendMessage($"Only your {guessMode} guess will be used. Everyone's numbers will be averaged together each round. The game will tell everyone playing to guess HIGHER or LOWER. If anyone guesses the EXACT number before the final round, they'll win an additional bonus!");
+        id736.Chat.SendMessageToAllPlatforms($"Only your {guessMode} guess will be used. Everyone's numbers will be averaged together each round. The game will tell everyone playing to guess HIGHER or LOWER. If anyone guesses the EXACT number before the final round, they'll win an additional bonus!");
 
         int elapsed = 0;
         while (elapsed < joinTimer)
@@ -170,7 +170,7 @@ public class CPHInline
             if (remaining > 0)
             {
                 int count = GetPlayerCount();
-                id736.Chat.SendMessage($"{remaining} seconds left to !join! Players so far: {count}");
+                id736.Chat.SendMessageToAllPlatforms($"{remaining} seconds left to !join! Players so far: {count}");
             }
         }
 
@@ -184,7 +184,7 @@ public class CPHInline
         int joinedCount = GetPlayerCount();
         if (joinedCount == 0)
         {
-            id736.Chat.SendMessage("No one joined! Game cancelled.");
+            id736.Chat.SendMessageToAllPlatforms("No one joined! Game cancelled.");
             CleanupGame();
             return;
         }
@@ -217,7 +217,7 @@ public class CPHInline
         CPH.SetGlobalVar("hl_number_guessed", false, false);
         CPH.SetGlobalVar("hl_round", 1, false);
 
-        id736.Chat.SendMessage($"Game on! {joinedCount} player(s) are playing ({mode} mode). The number is between 1 and {rangeTop}. {rounds} rounds. Prize pool: {startingPool} {currencyName}. Starting round 1 in 15 seconds...");
+        id736.Chat.SendMessageToAllPlatforms($"Game on! {joinedCount} player(s) are playing ({mode} mode). The number is between 1 and {rangeTop}. {rounds} rounds. Prize pool: {startingPool} {currencyName}. Starting round 1 in 15 seconds...");
 
         string joinplural = joinedCount == 1 ? "" : "s";
         ObsSetText($"Game on! {joinedCount} player{joinplural}!\n{mode} mode - 1 to {rangeTop}\nStarting in 15s...");
@@ -273,7 +273,7 @@ public class CPHInline
                 displayMax = rangeTop;
             }
 
-            id736.Chat.SendMessage($"Round {round}/{maxRounds} - Type a number between {displayMin} and {displayMax}! You have {guessTimer} seconds. Prize pool: {winnable} {GetCurrencyName()}");
+            id736.Chat.SendMessageToAllPlatforms($"Round {round}/{maxRounds} - Type a number between {displayMin} and {displayMax}! You have {guessTimer} seconds. Prize pool: {winnable} {GetCurrencyName()}");
 
             ObsSetText($"Round {round}/{maxRounds} - Guess {displayMin}-{displayMax}!\nPrize: {winnable} {GetCurrencyName()}");
             ObsShow();
@@ -291,7 +291,7 @@ public class CPHInline
             if (!numberGuessed)
             {
                 round++;
-                id736.Chat.SendMessage($"Next round starting in {roundDelayMs / 1000} seconds...");
+                id736.Chat.SendMessageToAllPlatforms($"Next round starting in {roundDelayMs / 1000} seconds...");
                 CPH.Wait(roundDelayMs);
             }
         }
@@ -302,7 +302,7 @@ public class CPHInline
 
         if (!numberGuessed && round > maxRounds)
         {
-            id736.Chat.SendMessage($"No one guessed the number in {maxRounds} rounds! The number was {targetNumber}. Better luck next time!");
+            id736.Chat.SendMessageToAllPlatforms($"No one guessed the number in {maxRounds} rounds! The number was {targetNumber}. Better luck next time!");
             ObsSetText($"No one guessed the number! It was {targetNumber}");
             ObsShow();
             CPH.Wait(5000);
@@ -366,7 +366,7 @@ public class CPHInline
             string candidate = firstEntry ? entry : ", " + entry;
             if (Encoding.UTF8.GetByteCount(line.ToString() + candidate) > 400)
             {
-                id736.Chat.SendMessage(line.ToString());
+                id736.Chat.SendMessageToAllPlatforms(line.ToString());
                 line = new StringBuilder("Points awarded: ");
                 candidate = entry;
                 firstEntry = true;
@@ -377,9 +377,9 @@ public class CPHInline
             firstEntry = false;
         }
         if (line.Length > "Points awarded: ".Length)
-            id736.Chat.SendMessage(line.ToString());
+            id736.Chat.SendMessageToAllPlatforms(line.ToString());
 
-        id736.Chat.SendMessage($"In total, we gave out {grandTotal} {currencyName} to everyone who played");
+        id736.Chat.SendMessageToAllPlatforms($"In total, we gave out {grandTotal} {currencyName} to everyone who played");
 
         CleanupGame();
     }
@@ -398,7 +398,7 @@ public class CPHInline
             if (winnable < finalPool) winnable = finalPool;
             CPH.SetGlobalVar("hl_winnable_points", winnable, false);
 
-            id736.Chat.SendMessage($"No one submitted a guess this round! Prize pool reduced to {winnable} {GetCurrencyName()}.");
+            id736.Chat.SendMessageToAllPlatforms($"No one submitted a guess this round! Prize pool reduced to {winnable} {GetCurrencyName()}.");
             return;
         }
 
@@ -417,7 +417,7 @@ public class CPHInline
             numberGuessed = true;
             CPH.SetGlobalVar("hl_number_guessed", true, false);
 
-            id736.Chat.SendMessage($"The average was {avg} - CORRECT! The number was {target}!");
+            id736.Chat.SendMessageToAllPlatforms($"The average was {avg} - CORRECT! The number was {target}!");
             ObsSetText($"CORRECT! The number was {target}!");
             ObsShow();
             CPH.Wait(8000);
@@ -444,12 +444,12 @@ public class CPHInline
                 CPH.SetGlobalVar("hl_current_max", currentMax, false);
 
                 string hint = avg < target ? "guess HIGHER" : "guess LOWER";
-                id736.Chat.SendMessage($"Average guess was {avg}. {hint}! New range: {currentMin}-{currentMax}. Prize pool: {winnable} {GetCurrencyName()}.");
+                id736.Chat.SendMessageToAllPlatforms($"Average guess was {avg}. {hint}! New range: {currentMin}-{currentMax}. Prize pool: {winnable} {GetCurrencyName()}.");
             }
             else
             {
                 string hint = avg < target ? "guess HIGHER" : "guess LOWER";
-                id736.Chat.SendMessage($"Average guess was {avg}. {hint}! Prize pool reduced to {winnable} {GetCurrencyName()}.");
+                id736.Chat.SendMessageToAllPlatforms($"Average guess was {avg}. {hint}! Prize pool reduced to {winnable} {GetCurrencyName()}.");
             }
         }
     }

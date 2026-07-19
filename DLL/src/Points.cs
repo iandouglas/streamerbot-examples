@@ -24,7 +24,8 @@ namespace iandouglas736
             get
             {
                 if (_cph == null)
-                    throw new InvalidOperationException("iandouglas736.Points.SetContext(CPH) must be called before using points helpers.");
+                    Log.Message("iandouglas736.Points.SetContext(CPH) must be called before using points helpers. Use Core.LinkStreamerbot(CPH) to set context on all helpers.");
+                    throw new InvalidOperationException("iandouglas736.Points.SetContext(CPH) must be called before using points helpers. Use Core.LinkStreamerbot(CPH) to set context on all helpers.");
                 return _cph;
             }
         }

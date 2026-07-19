@@ -7,7 +7,7 @@ public class CPHInline
 {
     public bool Execute()
     {
-        id736.Chat.SetContext(CPH);
+        id736.Core.LinkStreamerbot(CPH);
 
         string currentHolder = CPH.GetGlobalVar<string>("highGroundCurrentHolder", true) ?? string.Empty;
         long lastClaimEpoch = CPH.GetGlobalVar<long?>("highGroundLastClaimEpoch", true) ?? 0;

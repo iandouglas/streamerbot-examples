@@ -23,7 +23,8 @@ namespace iandouglas736
             get
             {
                 if (_cph == null)
-                    throw new InvalidOperationException("iandouglas736.Groups.SetContext(CPH) must be called before using group helpers.");
+                    Log.Message("iandouglas736.Groups.SetContext(CPH) must be called before using group helpers. Use Core.LinkStreamerbot(CPH) to set context on all helpers.");
+                    throw new InvalidOperationException("iandouglas736.Groups.SetContext(CPH) must be called before using group helpers. Use Core.LinkStreamerbot(CPH) to set context on all helpers.");
                 return _cph;
             }
         }

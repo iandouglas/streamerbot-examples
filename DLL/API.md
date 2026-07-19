@@ -120,7 +120,7 @@ If these are not set, `Core.LinkStreamerbot(CPH)` will log errors via `CPH.LogEr
 public static class Log
 ```
 
-Requires `Core.LinkStreamerbot(CPH)` (or `Log.SetContext(CPH)` individually).
+Requires `Core.LinkStreamerbot(CPH)`.
 
 ### Methods
 
@@ -172,7 +172,7 @@ public static class Chat
 ### Example: per-platform response from the Higher or Lower game
 
 ```csharp
-Chat.SetContext(CPH);
+Core.LinkStreamearbot(CPH);
 string userName = Chat.GetCurrentUserName();
 Platform platform = Chat.GetCurrentPlatformEnum();
 
@@ -204,8 +204,7 @@ public static class Groups
 ### Example: allow one join per user across platforms
 
 ```csharp
-Chat.SetContext(CPH);
-Groups.SetContext(CPH);
+Core.LinkStreamerbot(CPH);
 
 string userName = Chat.GetCurrentUserName();
 if (Groups.IsInGroup(userName, "higher-lower-group"))
@@ -242,8 +241,7 @@ public static class Points
 ### Example: award participation points from Higher or Lower
 
 ```csharp
-Chat.SetContext(CPH);
-Points.SetContext(CPH);
+Core.LinkStreamerbot(CPH);
 
 string userName = Chat.GetCurrentUserName();
 Platform platform = Chat.GetCurrentPlatformEnum();
@@ -284,7 +282,7 @@ Set a global variable in Streamer.bot:
 Then in code:
 
 ```csharp
-PlatformConfig.SetContext(CPH);
+Core.LinkStreamerbot(CPH);
 if (!PlatformConfig.IsCurrentPlatformEnabled("higherlower"))
     return true;
 ```
@@ -299,7 +297,7 @@ public static class Media
 
 The duration-detection helpers (`LengthInSeconds`, `Length`, `IsMediaFile`, `ResolveMediaFile`) do **not** need a context.
 
-The playback helpers (`PlayMp4InObs`, `PlayMp3`) **do** need `SetContext(CPH)` because they call Streamer.bot APIs.
+The playback helpers (`PlayMp4InObs`, `PlayMp3`) **do** need `Core.LinkStreamerbot(CPH)` because they call Streamer.bot APIs.
 
 ### Methods
 

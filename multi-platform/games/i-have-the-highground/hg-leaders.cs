@@ -7,7 +7,7 @@ public class CPHInline
 {
     public bool Execute()
     {
-        id736.Chat.SetContext(CPH);
+        id736.Core.LinkStreamerbot(CPH);
 
         string countsJson = CPH.GetGlobalVar<string>("highGroundClaimCounts", true);
         var counts = id736.Data.FromJson<Dictionary<string, int>>(countsJson)

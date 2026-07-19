@@ -230,14 +230,14 @@ public class CPHInline
         {
             welcomeMsg = $"Battleship (NORMAL mode) has started. Type !join in chat to play. Players will work together to sink 5 ships and avoid {mineCount} mines on a 10x10 grid, 30 seconds per round. Multiple shots per round are allowed.";
         }
-        id736.Chat.SendMessage(welcomeMsg);
+        id736.Chat.SendMessageToAllPlatforms(welcomeMsg);
 
         // --- Join phase: 60 seconds ---
         CPH.SetGlobalVar("battleship_phase", "join", false);
         long joinEndsAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + joinTimer * 1000L;
         CPH.SetGlobalVar("battleship_join_ends_at", joinEndsAt, false);
 
-        id736.Chat.SendMessage($"You have {joinTimer} seconds to !join!");
+        id736.Chat.SendMessageToAllPlatforms($"You have {joinTimer} seconds to !join!");
 
         int elapsed = 0;
         while (elapsed < joinTimer)
@@ -251,7 +251,7 @@ public class CPHInline
             if (remaining > 0)
             {
                 int count = id736.Groups.Count(groupName);
-                id736.Chat.SendMessage($"{remaining} seconds left to !join! Players so far: {count}");
+                id736.Chat.SendMessageToAllPlatforms($"{remaining} seconds left to !join! Players so far: {count}");
             }
         }
 
@@ -261,7 +261,7 @@ public class CPHInline
         int joinedCount = id736.Groups.Count(groupName);
         if (joinedCount == 0)
         {
-            id736.Chat.SendMessage("No one joined! Game cancelled.");
+            id736.Chat.SendMessageToAllPlatforms("No one joined! Game cancelled.");
             Log("setup: no players joined, cancelling game");
             CleanupGame();
             return;
@@ -313,7 +313,7 @@ public class CPHInline
             { "mutedPlayers", mutedPayload }
         });
         Log($"round-start: sent round-start event to browser, round={round}, endsAt={endsAt}, duration={roundSeconds}s");
-        id736.Chat.SendMessage($"Round {round}! Enter a coordinate (e.g. B5) — you have {roundSeconds} seconds!");
+        id736.Chat.SendMessageToAllPlatforms($"Round {round}! Enter a coordinate (e.g. B5) — you have {roundSeconds} seconds!");
 
         // Set the timer to fire at round end
         string timerGuid = CPH.GetGlobalVar<string>("battleship_timer_guid", false) ?? "";
@@ -397,7 +397,7 @@ public class CPHInline
         else if (result == "lost") endMsg = "All mines hit! The fleet is lost! Game over.";
         else endMsg = "Battleship game ended by the streamer.";
 
-        id736.Chat.SendMessage(endMsg);
+        id736.Chat.SendMessageToAllPlatforms(endMsg);
         Log($"game-end: {result}");
 
         // Clear global vars
@@ -446,7 +446,7 @@ public class CPHInline
             }
         }
 
-        id736.Chat.SendMessage($"Flawless victory bonus! {bonus} {pointsName} awarded to all players who played {minRounds}+ rounds!");
+        id736.Chat.SendMessageToAllPlatforms($"Flawless victory bonus! {bonus} {pointsName} awarded to all players who played {minRounds}+ rounds!");
     }
 
     private void AwardRoundPoints(int blockRow, int blockCol)

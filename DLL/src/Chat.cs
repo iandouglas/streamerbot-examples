@@ -25,7 +25,8 @@ namespace iandouglas736
             get
             {
                 if (_cph == null)
-                    throw new InvalidOperationException("iandouglas736.Chat.SetContext(CPH) must be called before using chat helpers.");
+                    Log.Message("Chat.SetContext(CPH) must be called before using chat helpers. Use Core.LinkStreamerbot(CPH) to set context on all helpers.");
+                    throw new InvalidOperationException("iandouglas736.Chat.SetContext(CPH) must be called before using chat helpers. Use Core.LinkStreamerbot(CPH) to set context on all helpers.");
                 return _cph;
             }
         }
@@ -40,6 +41,26 @@ namespace iandouglas736
             SendMessageTo(platform, message, fromBot);
         }
 
+        /// <summary>
+        /// Sends a chat message to a specific platform.
+        /// </summary>
+        public static void SendMessageToAllPlatforms(string message, bool fromBot = true)
+        {
+            if (string.IsNullOrEmpty(message))
+                return;
+
+            try
+            {
+                CPH.SendYouTubeMessage(message, fromBot);
+            }
+            catch (Exception e)
+            {
+                Log.Message(e.ToString());
+            }
+
+            CPH.SendMessage(message, fromBot);
+            CPH.SendKickMessage(message, fromBot);
+        }
         /// <summary>
         /// Sends a chat message to a specific platform.
         /// </summary>

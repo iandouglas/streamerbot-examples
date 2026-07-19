@@ -17,8 +17,7 @@ public class CPHInline
 
     public bool Execute()
     {
-        id736.Chat.SetContext(CPH);
-        id736.Timers.SetContext(CPH);
+        id736.Core.LinkStreamerbot(CPH);
 
         // Capture this timer's GUID on the first run. The timer must be enabled by name
         // at least once (via CPH.EnableTimer) so it fires and we can learn its GUID.
@@ -99,7 +98,7 @@ public class CPHInline
         bool firingStuckNoTimestamp = firing && firingStarted == 0;
         if (firingTimedOut || firingStuckNoTimestamp)
         {
-            id736.Chat.SendMessage("hmm, the cannon seems jammed, let's move to next contender");
+            id736.Chat.SendMessageToAllPlatforms("hmm, the cannon seems jammed, let's move to next player");
             firing = false;
             CPH.SetGlobalVar("cannon_firing", false, false);
             CPH.SetGlobalVar("cannon_firing_started", 0L, false);
@@ -136,7 +135,7 @@ public class CPHInline
 
                     if (player != null && player.TryGetValue("name", out object nameObj) && nameObj != null)
                     {
-                        id736.Chat.SendMessage($"{nameObj} climbs into the cannon...");
+                        id736.Chat.SendMessageToAllPlatforms($"{nameObj} climbs into the cannon...");
                     }
 
                     SendEvent("fire", new Dictionary<string, object>

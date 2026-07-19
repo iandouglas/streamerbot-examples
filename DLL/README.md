@@ -322,8 +322,8 @@ msbuild iandouglas736.csproj /p:Configuration=Release /p:StreamerBotPath=/Applic
 ## Notes
 
 - This DLL is a **work in progress**. The API may change as more helpers are added.
-- The helpers intentionally use `SetContext(CPH)` so they work inside Streamer.bot's isolated `Execute C# Code` sandbox.
-- `Media` duration helpers do not need a context. `Media` playback helpers (`PlayMp4InObs`, `PlayMp3`) require `SetContext(CPH)`. `Data` and `GoogleSheets` do **not** need a context because they do not call Streamer.bot APIs.
+- The helpers intentionally use `Core.LinkStreamerbot(CPH)` so they work inside Streamer.bot's isolated `Execute C# Code` sandbox.
+- `Media` duration helpers do not need a context. `Media` playback helpers (`PlayMp4InObs`, `PlayMp3`) require `Core.LinkStreamerbot(CPH)`. `Data` and `GoogleSheets` do **not** need a context because they do not call Streamer.bot APIs.
 - Platform detection relies on the `userType` argument that Streamer.bot provides on chat triggers.
 - Points are stored in platform-specific user variables because Streamer.bot does not have a single global user variable across platforms.
 

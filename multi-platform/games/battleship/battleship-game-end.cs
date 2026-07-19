@@ -53,7 +53,7 @@ public class CPHInline
             { "mines", mines }
         });
 
-        id736.Chat.SendMessage("Battleship game ended by the streamer. The fleet returns to base.");
+        id736.Chat.SendMessageToAllPlatforms("Battleship game ended by the streamer. The fleet returns to base.");
 
         string obsScene = CPH.GetGlobalVar<string>("battleship_obs_scene", false) ?? "";
         string obsSource = CPH.GetGlobalVar<string>("battleship_obs_source", false) ?? "";

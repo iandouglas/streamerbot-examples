@@ -6,7 +6,7 @@ public class CPHInline
 {
     public bool Execute()
     {
-        id736.Timers.SetContext(CPH);
+        id736.Core.LinkStreamerbot(CPH);
 
         if (!CPH.TryGetArg("obsScene", out string obsScene) || string.IsNullOrWhiteSpace(obsScene))
             return true;

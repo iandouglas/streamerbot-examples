@@ -5,7 +5,7 @@ public class CPHInline
 {
 	public bool Execute()
 	{
-		id736.Chat.SetContext(CPH);
+		id736.Core.LinkStreamerbot(CPH);
 
 		string msgId = args.ContainsKey("msgId") ? args["msgId"].ToString() : null;
 		string platform = id736.Chat.GetCurrentPlatform();

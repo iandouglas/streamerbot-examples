@@ -6,7 +6,7 @@ public class CPHInline
 {
     public bool Execute()
     {
-        id736.Chat.SetContext(CPH);
+        id736.Core.LinkStreamerbot(CPH);
 
         if (!CPH.TryGetArg("rawInput", out string target))
             return false;
@@ -35,8 +35,7 @@ public class CPHInline
         CPH.SetGlobalVar("shoutoutQueue", queue, true);
         CPH.EnableAction("!so (timer)");
 
-        // Ensure the timer context is set, then start/reset the shoutout timer to 2 seconds.
-        id736.Timers.SetContext(CPH);
+        // start/reset the shoutout timer to 2 seconds.
         id736.Timers.ResetTimerById("shoutout timer", 2);
         return true;
     }

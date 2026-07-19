@@ -6,11 +6,11 @@ namespace iandouglas736
 {
     /// <summary>
     /// Writes per-prefix daily log files to a disk directory.
-    /// 
+    ///
     /// The path and filename prefix can be configured once via Streamer.bot global
     /// variables (id736LogPath, id736DefaultFilenamePrefix) and read automatically
     /// by every Log.Message() call, or passed explicitly per call.
-    /// 
+    ///
     /// Requires SetContext(CPH) — call Core.LinkStreamerbot(CPH) at the top of each action.
     /// </summary>
     public static class Log
@@ -27,20 +27,20 @@ namespace iandouglas736
             get
             {
                 if (_cph == null)
-                    throw new InvalidOperationException("iandouglas736.Log.SetContext(CPH) must be called before using Log.Message(). Use Core.LinkStreamerbot(CPH) to set context on all helpers.");
+                    throw new InvalidOperationException("iandouglas736.Log.SetContext(CPH) must be called before using Log.Message(). Use Core.LinkStreamerbot(CPH) to set context on all helpers. Use Core.LinkStreamerbot(CPH) to set context on all helpers.");
                 return _cph;
             }
         }
 
         /// <summary>
         /// Writes a timestamped line to a daily log file.
-        /// 
+        ///
         /// The path and filename prefix are resolved in order:
         ///   1. Explicit parameters (if provided)
         ///   2. Streamer.bot global variables (id736LogPath, id736DefaultFilenamePrefix)
-        /// 
+        ///
         /// If path or prefix cannot be resolved, logs an error via CPH.LogError and returns.
-        /// 
+        ///
         /// File name format: {prefix}-{yyyyMMdd}.txt
         /// Line format: [{timestamp}] {message}
         /// </summary>

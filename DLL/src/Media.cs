@@ -9,19 +9,19 @@ namespace iandouglas736
 {
     /// <summary>
     /// Cross-platform media helpers for Streamer.bot actions.
-    /// 
+    ///
     /// The duration-detection helpers (LengthInSeconds, Length, IsMediaFile, etc.)
     /// do NOT require a Streamer.bot context — they work with local files only.
-    /// 
+    ///
     /// The PlayMp4InObs and PlayMp3 helpers DO require a context via SetContext(CPH)
     /// because they call Streamer.bot APIs to control OBS and play audio.
-    /// 
+    ///
     /// The default duration detection tries, in order:
     ///   1. NLayer + Duration.Mine.Mp4 DLLs if present in the Streamer.bot directory
     ///   2. ffprobe (FFmpeg) if installed and on PATH
     ///   3. Windows Shell Property System for common audio/video files
     ///   4. Falls back to null if no provider can read the file
-    /// 
+    ///
     /// You can also pass a custom provider to LengthInSeconds().
     /// </summary>
     public static class Media
@@ -42,7 +42,8 @@ namespace iandouglas736
             get
             {
                 if (_cph == null)
-                    throw new InvalidOperationException("iandouglas736.Media.SetContext(CPH) must be called before using playback helpers.");
+                    Log.Message("iandouglas736.Media.SetContext(CPH) must be called before using playback helpers. Use Core.LinkStreamerbot(CPH) to set context on all helpers.");
+                    throw new InvalidOperationException("iandouglas736.Media.SetContext(CPH) must be called before using playback helpers. Use Core.LinkStreamerbot(CPH) to set context on all helpers.");
                 return _cph;
             }
         }

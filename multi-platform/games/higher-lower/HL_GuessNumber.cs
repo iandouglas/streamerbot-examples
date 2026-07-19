@@ -1,29 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using id736 = iandouglas736;
 
 public class CPHInline
 {
-    public void SendChatMessage(string message, bool fromBot = true)
-    {
-        string platform;
-        CPH.TryGetArg("userType", out platform);
-        platform = platform?.ToLower() ?? "twitch";
-
-        switch (platform)
-        {
-            case "youtube":
-                CPH.SendYouTubeMessageToLatestMonitored(message, false);
-                break;
-            case "kick":
-                CPH.SendKickMessage(message, fromBot);
-                break;
-            default:
-                CPH.SendMessage(message, fromBot);
-                break;
-        }
-    }
-
     bool IsInGame(string userName)
     {
         return CPH.UserInGroup(userName, Platform.Twitch, "higher-lower-group")
@@ -38,6 +19,8 @@ public class CPHInline
 
     public bool Execute()
     {
+        id736.Core.LinkStreamerbot(CPH);
+
         if (!CPH.TryGetArg("user", out string userName))
             return false;
         if (!CPH.TryGetArg("userId", out string userId) || string.IsNullOrWhiteSpace(userId))
@@ -79,9 +62,9 @@ public class CPHInline
         if (!int.TryParse(trimmed, out int guess) || guess < effectiveMin || guess > effectiveMax)
         {
             if (narrowRange && (guess < effectiveMin || guess > effectiveMax))
-                SendChatMessage($"Sorry {userName}, that number is outside the current range {effectiveMin}-{effectiveMax}. Try again.");
+                id736.Chat.SendMessage($"Sorry {userName}, that number is outside the current range {effectiveMin}-{effectiveMax}. Try again.");
             else
-                SendChatMessage($"Sorry {userName} that number was out of range");
+                id736.Chat.SendMessage($"Sorry {userName} that number was out of range");
             return false;
         }
 
@@ -101,7 +84,7 @@ public class CPHInline
             }
             else
             {
-                SendChatMessage($"@{userName}, you already submitted a guess this round!", true);
+                id736.Chat.SendMessage($"@{userName}, you already submitted a guess this round!", true);
             }
             return true;
         }

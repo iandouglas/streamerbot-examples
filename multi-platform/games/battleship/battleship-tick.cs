@@ -52,7 +52,7 @@ public class CPHInline
         if (coords.Count == 0)
         {
             Log("tick: no coordinates submitted this round");
-            id736.Chat.SendMessage("No coordinates were seen, no shot fired.");
+            id736.Chat.SendMessageToAllPlatforms("No coordinates were seen, no shot fired.");
 
             SendEvent("round-end", new Dictionary<string, object>
             {
@@ -132,7 +132,7 @@ public class CPHInline
         }
 
         string coordName = $"{(char)('A' + targetRow)}-{targetCol + 1}";
-        id736.Chat.SendMessage($"Firing on position {coordName}!");
+        id736.Chat.SendMessageToAllPlatforms($"Firing on position {coordName}!");
 
         // Send round-end with final coordinate
         SendEvent("round-end", new Dictionary<string, object>
@@ -149,7 +149,7 @@ public class CPHInline
         if (shots.ContainsKey(shotKey))
         {
             Log($"tick: {coordName} already fired upon, skipping round");
-            id736.Chat.SendMessage($"Already fired on {coordName}! Skipping this round.");
+            id736.Chat.SendMessageToAllPlatforms($"Already fired on {coordName}! Skipping this round.");
 
             SendEvent("shot-resolve", new Dictionary<string, object>
             {

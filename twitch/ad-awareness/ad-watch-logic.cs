@@ -20,7 +20,7 @@ public class CPHInline
 
     public bool Execute()
     {
-        id736.Chat.SetContext(CPH);
+        id736.Core.LinkStreamerbot(CPH);
 
         string adTimerName = "ad awareness timer";
 

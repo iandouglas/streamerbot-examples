@@ -7,8 +7,7 @@ public class CPHInline
 {
     public bool Execute()
     {
-        id736.Chat.SetContext(CPH);
-        id736.Timers.SetContext(CPH);
+        id736.Core.LinkStreamerbot(CPH);
 
         long now = id736.Time.NowEpoch();
         long lastShoutoutEpoch = CPH.GetGlobalVar<long>("lastShoutoutEpoch", true);
@@ -55,7 +54,7 @@ public class CPHInline
         if (queue.Count == 0)
         {
             // After this shoutout the queue is empty; reset the timer to 1s so future queue-and-shoutouts happen quickly.
-            id736.Timers.ResetTimerById("shoutout timer", 1);
+            id736.Timers.ResetTimerById("shoutout timer", 1, false);
             CPH.DisableAction("!so (timer)");
         }
 

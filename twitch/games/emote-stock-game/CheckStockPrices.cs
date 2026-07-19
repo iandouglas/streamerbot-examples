@@ -7,7 +7,7 @@ public class CPHInline
 {
 	public bool Execute()
 	{
-		id736.Chat.SetContext(CPH);
+		id736.Core.LinkStreamerbot(CPH);
 
 		string stockPricesJson = CPH.GetGlobalVar<string>("EmoteStockGame_prices", true);
 		var stocks = id736.Data.FromJson<Dictionary<string, Dictionary<string, int>>>(stockPricesJson)

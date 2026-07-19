@@ -22,21 +22,21 @@ public class CPHInline
         Log($"bomber-complete: pending_hit='{pendingHitMsg}'");
         if (!string.IsNullOrWhiteSpace(pendingHitMsg))
         {
-            id736.Chat.SendMessage($"A boat is hit! All players who helped aim receive {pendingHitMsg}!");
+            id736.Chat.SendMessageToAllPlatforms($"A boat is hit! All players who helped aim receive {pendingHitMsg}!");
             CPH.SetGlobalVar("battleship_pending_chat_hit", "", false);
         }
         string pendingSunkMsg = CPH.GetGlobalVar<string>("battleship_pending_chat_sunk", false) ?? "";
         Log($"bomber-complete: pending_sunk='{pendingSunkMsg}'");
         if (!string.IsNullOrWhiteSpace(pendingSunkMsg))
         {
-            id736.Chat.SendMessage($"🎯 {pendingSunkMsg}");
+            id736.Chat.SendMessageToAllPlatforms($"🎯 {pendingSunkMsg}");
             CPH.SetGlobalVar("battleship_pending_chat_sunk", "", false);
         }
         string pendingMineMsg = CPH.GetGlobalVar<string>("battleship_pending_chat_mine", false) ?? "";
         Log($"bomber-complete: pending_mine='{pendingMineMsg}'");
         if (!string.IsNullOrWhiteSpace(pendingMineMsg))
         {
-            id736.Chat.SendMessage(pendingMineMsg);
+            id736.Chat.SendMessageToAllPlatforms(pendingMineMsg);
             CPH.SetGlobalVar("battleship_pending_chat_mine", "", false);
         }
 
@@ -101,7 +101,7 @@ public class CPHInline
         }
 
         Log($"round-start: round {round}, {roundSeconds}s");
-        id736.Chat.SendMessage($"Round {round}! Enter a coordinate (e.g. B5) — you have {roundSeconds} seconds!");
+        id736.Chat.SendMessageToAllPlatforms($"Round {round}! Enter a coordinate (e.g. B5) — you have {roundSeconds} seconds!");
     }
 
     private void DoGameEnd(string result)
@@ -149,7 +149,7 @@ public class CPHInline
         if (result == "win") endMsg = "All ships sunk! Victory! Thanks for playing Battleship!";
         else if (result == "lost") endMsg = "All mines hit! The fleet is lost! Game over.";
         else endMsg = "Battleship game ended.";
-        id736.Chat.SendMessage(endMsg);
+        id736.Chat.SendMessageToAllPlatforms(endMsg);
 
         // Hide OBS source after a delay
         string obsScene = CPH.GetGlobalVar<string>("battleship_obs_scene", false) ?? "";
@@ -208,7 +208,7 @@ public class CPHInline
             }
         }
 
-        id736.Chat.SendMessage($"Flawless victory bonus! {bonus} {pointsName} awarded to {awarded} players who played {minRounds}+ rounds!");
+        id736.Chat.SendMessageToAllPlatforms($"Flawless victory bonus! {bonus} {pointsName} awarded to {awarded} players who played {minRounds}+ rounds!");
     }
 
     private void DisableCommand(string commandName)

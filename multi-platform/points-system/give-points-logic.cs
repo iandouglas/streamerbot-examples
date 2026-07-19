@@ -5,8 +5,7 @@ public class CPHInline
 {
 	public bool Execute()
 	{
-		id736.Chat.SetContext(CPH);
-		id736.Points.SetContext(CPH);
+		id736.Core.LinkStreamerbot(CPH);
 
 		string currencyVariableName = "points";
 

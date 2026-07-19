@@ -5,8 +5,7 @@ public class CPHInline
 {
     public bool Execute()
     {
-        id736.Chat.SetContext(CPH);
-        id736.Timers.SetContext(CPH);
+        id736.Core.LinkStreamerbot(CPH);
 
         if (!CPH.TryGetArg("userName", out string userName) || string.IsNullOrWhiteSpace(userName))
             userName = "Player";
@@ -42,11 +41,10 @@ public class CPHInline
         // Announce the result in chat and award points only for hits.
         if (score >= 0)
         {
-            id736.Chat.SendMessage($"{userName} was fired from the cannon and scored {score} points for landing on the target!");
+            id736.Chat.SendMessageToAllPlatforms($"{userName}@{platform} was fired from the cannon and scored {score} points for landing on the target!");
 
             try
             {
-                id736.Points.SetContext(CPH);
                 id736.Points.Add(userName, platform, "points", score);
             }
             catch (Exception)
@@ -56,7 +54,7 @@ public class CPHInline
         }
         else
         {
-            id736.Chat.SendMessage($"{userName} was fired from the cannon and scored 0 points for missing completely.");
+            id736.Chat.SendMessageToAllPlatforms($"{userName}@{platform} was fired from the cannon and scored 0 points for missing completely.");
         }
 
         // Mark the shot as complete so the next queued player can fire.

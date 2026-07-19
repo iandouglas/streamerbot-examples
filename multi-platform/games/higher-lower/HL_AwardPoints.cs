@@ -41,7 +41,7 @@ public class CPHInline
                 break;
         }
 
-        id736.Log.Message($"Awarded {points} {currencyName} to {userName} ({platform})", filenamePrefix: "higherlower");
+        id736.Log.Message($"Awarded {points} {currencyName} to {userName}@{platform}", filenamePrefix: "higherlower");
         return true;
     }
 }
