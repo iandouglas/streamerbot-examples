@@ -62,7 +62,7 @@ The DLL's namespace is `iandouglas736`. You can reference helpers directly:
 ```csharp
 using iandouglas736;
 
-Chat.SetContext(CPH);
+Core.LinkStreamerbot(CPH);
 Chat.SendMessage("Hello chat!");
 ```
 
@@ -71,7 +71,7 @@ But I prefer using a short alias:
 ```csharp
 using id736 = iandouglas736;
 
-id736.Chat.SetContext(CPH);
+id736.Core.LinkStreamerbot(CPH);
 id736.Chat.SendMessage("Hello chat!");
 ```
 
