@@ -118,10 +118,14 @@ const gameState = {
   mines: [],
   shots: {},
   crosshair: { row: 0, col: 0, visible: false, blinkPhase: 0 },
-  bomber: null,
+  bomber: null,        // single bomber (classic) OR array of bombers (teams)
+  bombers: [],         // teams mode: array of active bombers
   audioPlaying: null,
   phase: 'idle',
-  gameEnded: false
+  gameEnded: false,
+  platformTeams: false,
+  platformHits: {},    // { platform: hitCount }
+  teamsCellCount: 0    // how many bombers to wait for in teams mode
 };
 
 // --- Board geometry ---
@@ -302,6 +306,40 @@ function drawFog() {
       fogCtx.drawImage(fogImg, p.x, p.y, cs, cs);
     }
   }
+
+  // Prominent grid lines over fog for coordinate readability.
+  // Drawn on the fog layer so they stay visible above the clouds.
+  fogCtx.save();
+  fogCtx.strokeStyle = 'rgba(20, 40, 70, 0.55)';
+  fogCtx.lineWidth = 2;
+  for (let i = 0; i <= gameState.gridSize; i++) {
+    const x = gameState.boardOffsetX + i * cs;
+    const y = gameState.boardOffsetY + i * cs;
+    fogCtx.beginPath();
+    fogCtx.moveTo(x, gameState.boardOffsetY);
+    fogCtx.lineTo(x, gameState.boardOffsetY + gameState.gridSize * cs);
+    fogCtx.stroke();
+    fogCtx.beginPath();
+    fogCtx.moveTo(gameState.boardOffsetX, y);
+    fogCtx.lineTo(gameState.boardOffsetX + gameState.gridSize * cs, y);
+    fogCtx.stroke();
+  }
+  // Lighter inner highlight for contrast against dark grid
+  fogCtx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
+  fogCtx.lineWidth = 1;
+  for (let i = 0; i <= gameState.gridSize; i++) {
+    const x = gameState.boardOffsetX + i * cs + 1;
+    const y = gameState.boardOffsetY + i * cs + 1;
+    fogCtx.beginPath();
+    fogCtx.moveTo(x, gameState.boardOffsetY);
+    fogCtx.lineTo(x, gameState.boardOffsetY + gameState.gridSize * cs);
+    fogCtx.stroke();
+    fogCtx.beginPath();
+    fogCtx.moveTo(gameState.boardOffsetX, y);
+    fogCtx.lineTo(gameState.boardOffsetX + gameState.gridSize * cs, y);
+    fogCtx.stroke();
+  }
+  fogCtx.restore();
 }
 
 // --- Layer 4: HUD (crosshair, bomber, bomb) ---
@@ -336,8 +374,37 @@ function drawHud(dt) {
     }
   }
 
-  // During collecting in easy/normal, show vote circles only.
-  if (gameState.collecting && gameState.mode !== 'extreme' && gameState.coords.length > 0) {
+  // During collecting in easy/normal (or teams non-extreme), show vote circles only.
+  // In teams + extreme, show a reticle at each platform's live average.
+  if (gameState.collecting && gameState.platformTeams && gameState.mode === 'extreme' && gameState.coords.length > 0) {
+    const cs = gameState.cellSize;
+    const platformAvgs = computePlatformAverages();
+    for (const p of platformAvgs) {
+      const cx = gameState.boardOffsetX + p.col * cs + cs / 2;
+      const cy = gameState.boardOffsetY + p.row * cs + cs / 2;
+      const color = platformColor(p.platform);
+      hudCtx.strokeStyle = color;
+      hudCtx.lineWidth = 2;
+      // Full-length crosshair lines spanning the board
+      hudCtx.beginPath();
+      hudCtx.moveTo(cx, gameState.boardOffsetY);
+      hudCtx.lineTo(cx, gameState.boardOffsetY + gameState.gridSize * cs);
+      hudCtx.stroke();
+      hudCtx.beginPath();
+      hudCtx.moveTo(gameState.boardOffsetX, cy);
+      hudCtx.lineTo(gameState.boardOffsetX + gameState.gridSize * cs, cy);
+      hudCtx.stroke();
+      // Reticle circle
+      hudCtx.lineWidth = 3;
+      hudCtx.beginPath();
+      hudCtx.arc(cx, cy, cs * 0.40, 0, Math.PI * 2);
+      hudCtx.stroke();
+      hudCtx.fillStyle = color;
+      hudCtx.beginPath();
+      hudCtx.arc(cx, cy, cs * 0.06, 0, Math.PI * 2);
+      hudCtx.fill();
+    }
+  } else if (gameState.collecting && (gameState.mode !== 'extreme' || gameState.platformTeams) && gameState.coords.length > 0) {
     const seen = new Set();
     const markers = [];
     let maxCount = 0;
@@ -374,7 +441,7 @@ function drawHud(dt) {
   }
 
   // Crosshair lines
-  if (gameState.crosshair.visible && !(gameState.collecting && gameState.mode !== 'extreme')) {
+  if (gameState.crosshair.visible && !(gameState.collecting && (gameState.mode !== 'extreme' || gameState.platformTeams))) {
     const cs = gameState.cellSize;
     const cx = gameState.boardOffsetX + gameState.crosshair.col * cs + cs / 2;
     const cy = gameState.boardOffsetY + gameState.crosshair.row * cs + cs / 2;
@@ -409,8 +476,22 @@ function drawHud(dt) {
 
   // Bomber animation
   if (gameState.bomber) {
-    updateBomber(dt);
-    drawBomber();
+    updateBomber(gameState.bomber, dt);
+    drawBomber(gameState.bomber);
+  }
+  if (gameState.bombers && gameState.bombers.length > 0) {
+    for (const b of gameState.bombers) {
+      updateBomber(b, dt);
+      drawBomber(b);
+    }
+    // Cull finished bombers
+    gameState.bombers = gameState.bombers.filter(b => b.phase !== 'done');
+    // If all bombers done, fire completion
+    if (gameState.bombers.length === 0 && gameState.teamsBomberPending) {
+      const cb = gameState.teamsBomberPending;
+      gameState.teamsBomberPending = null;
+      cb();
+    }
   }
 }
 
@@ -473,8 +554,51 @@ function computeRoundTarget() {
   return gameState.mode === 'extreme' ? computeAverage() : computeMajorityTarget();
 }
 
+// --- Teams: per-platform live averages ---
+function computePlatformAverages() {
+  const byPlatform = {};
+  for (const c of gameState.coords) {
+    const p = (c.platform || 'twitch').toLowerCase();
+    if (!byPlatform[p]) byPlatform[p] = [];
+    byPlatform[p].push(c);
+  }
+  const out = [];
+  for (const p of Object.keys(byPlatform)) {
+    const arr = byPlatform[p];
+    let rowSum = 0, colSum = 0;
+    for (const c of arr) { rowSum += c.row; colSum += c.col; }
+    const row = Math.floor(rowSum / arr.length + 0.5);
+    const col = Math.floor(colSum / arr.length + 0.5);
+    out.push({
+      platform: p,
+      row: Math.max(0, Math.min(gameState.gridSize - 1, row)),
+      col: Math.max(0, Math.min(gameState.gridSize - 1, col))
+    });
+  }
+  return out;
+}
+
+const PLATFORM_COLORS = {
+  twitch:  'rgba(145, 70, 255, 0.95)',
+  youtube: 'rgba(255, 0, 0, 0.95)',
+  trovo:   'rgba(0, 200, 120, 0.95)',
+  kick:    'rgba(95, 235, 95, 0.95)',
+  tiktok:  'rgba(0, 242, 234, 0.95)'
+};
+
+function platformColor(platform) {
+  return PLATFORM_COLORS[(platform || '').toLowerCase()] || 'rgba(255, 255, 255, 0.95)';
+}
+
 // --- Bomber animation ---
 function startBomber(targetRow, targetCol, audioPath, onComplete) {
+  gameState.bomber = makeBomber(targetRow, targetCol, audioPath, onComplete);
+  if (audioPath) {
+    gameState.audioPlaying = playAudioFile(audioPath);
+  }
+}
+
+function makeBomber(targetRow, targetCol, audioPath, onComplete) {
   const target = cellCenter(targetRow, targetCol);
   const cs = gameState.cellSize;
   const gridSize = gameState.gridSize;
@@ -505,10 +629,9 @@ function startBomber(targetRow, targetCol, audioPath, onComplete) {
   const dy = target.y - startY;
   const angle = Math.atan2(dy, dx);
 
-  // Plane reaches target at 7s, is past it by 8s
   const arriveTime = 7.0;
 
-  gameState.bomber = {
+  return {
     startX, startY, targetX: target.x, targetY: target.y,
     angle, elapsed: 0, phase: 'flying',
     targetRow, targetCol, audioPath, onComplete,
@@ -516,14 +639,9 @@ function startBomber(targetRow, targetCol, audioPath, onComplete) {
     bombDropped: false, bomb: null,
     opacity: 1.0
   };
-
-  if (audioPath) {
-    gameState.audioPlaying = playAudioFile(audioPath);
-  }
 }
 
-function updateBomber(dt) {
-  const b = gameState.bomber;
+function updateBomber(b, dt) {
   if (!b) return;
   b.elapsed += dt;
 
@@ -534,7 +652,7 @@ function updateBomber(dt) {
     }
   }
 
-  // Drop bomb at 8s — plane is already past the target, bomb sound starts in audio
+  // Drop bomb at 7.5s
   if (!b.bombDropped && b.elapsed >= 7.5) {
     b.bombDropped = true;
     const center = cellCenter(b.targetRow, b.targetCol);
@@ -555,7 +673,7 @@ function updateBomber(dt) {
     }
   }
 
-  // Update bomb — spirals inward within the target cell over 1.75s
+  // Update bomb
   if (b.bomb) {
     b.bomb.elapsed += dt;
     if (b.bomb.elapsed >= b.bomb.fallTime) {
@@ -563,15 +681,15 @@ function updateBomber(dt) {
     }
   }
 
-  if (b.phase === 'done') {
+  // Classic single-bomber completion
+  if (b.phase === 'done' && gameState.bomber === b) {
     const cb = b.onComplete;
     gameState.bomber = null;
     if (cb) cb();
   }
 }
 
-function drawBomber() {
-  const b = gameState.bomber;
+function drawBomber(b) {
   if (!b) return;
 
   const bomberImg = loadImage('bomber', SPRITES.bomber);
@@ -598,31 +716,58 @@ function drawBomber() {
     const bombImg = loadImage('bomb', SPRITES.bomb);
     const progress = Math.min(1, b.bomb.elapsed / b.bomb.fallTime);
     const cs = gameState.cellSize;
-    // Spiral: 2 full rotations, radius shrinks from 0.4 to 0 of cell size
-    const angle = progress * Math.PI * 4; // 2 full rotations
+    const angle = progress * Math.PI * 4;
     const radius = cs * 0.4 * (1 - progress);
-    const bx = b.bomb.centerX + Math.cos(angle) * radius;
-    const by = b.bomb.centerY + Math.sin(angle) * radius;
-    // Size shrinks from 0.5 to 0.05 of cell size
+    const bxp = b.bomb.centerX + Math.cos(angle) * radius;
+    const byp = b.bomb.centerY + Math.sin(angle) * radius;
     const bombSize = cs * (0.5 - progress * 0.45);
     if (bombSize < 1) return;
     hudCtx.save();
-    hudCtx.globalAlpha = 1.0; // always 100% opacity
-    hudCtx.drawImage(bombImg, bx - bombSize / 2, by - bombSize / 2, bombSize, bombSize);
+    hudCtx.globalAlpha = 1.0;
+    hudCtx.drawImage(bombImg, bxp - bombSize / 2, byp - bombSize / 2, bombSize, bombSize);
     hudCtx.restore();
   }
 }
 
 // --- Leaderboard ---
+function getRegisteredPlatforms() {
+  const set = new Set();
+  for (const p of Object.values(gameState.players)) {
+    if (p.platform) set.add(p.platform);
+  }
+  // Also count platforms with hits tracked
+  for (const p of Object.keys(gameState.platformHits)) {
+    set.add(p);
+  }
+  return Array.from(set).sort();
+}
+
+function getListSize(platformCount) {
+  if (platformCount <= 1) return 10;
+  if (platformCount === 2) return 5;
+  if (platformCount <= 4) return 3;
+  return 2;
+}
+
 function updateLeaderboard() {
   const el = document.getElementById('leaderboard');
   if (!el) return;
 
-  const maxPlayers = 10;
-  const players = Object.values(gameState.players).sort((a, b) => b.coordCount - a.coordCount).slice(0, maxPlayers);
-
-  let html = '<div class="heading">Top 10 Players</div>';
   const showMuted = gameState.mode !== 'easy';
+
+  // Teams mode
+  if (gameState.platformTeams) {
+    const platforms = getRegisteredPlatforms();
+    if (platforms.length >= 2) {
+      renderTeamsLeaderboard(el, platforms, showMuted);
+      return;
+    }
+  }
+
+  // Classic single-list mode (also used when teams is on but only 1 platform registered)
+  const listSize = 10;
+  const players = Object.values(gameState.players).sort((a, b) => b.coordCount - a.coordCount).slice(0, listSize);
+  let html = '<div class="heading">Top 10 Players</div>';
   for (const p of players) {
     const iconSrc = `assets/images/emote-${p.platform || 'twitch'}.png`;
     const mutedClass = gameState.mutedPlayers.some(m => m.user === p.user && m.platform === p.platform) ? ' muted' : '';
@@ -636,6 +781,64 @@ function updateLeaderboard() {
       </div>
       <div class="stats">${statsLine}</div>
     </div>`;
+  }
+  el.innerHTML = html;
+}
+
+function renderTeamsLeaderboard(el, platforms, showMuted) {
+  const listSize = getListSize(platforms.length);
+
+  // Sort platforms by hits desc, then by total coordCount as tiebreak proxy
+  const platformSorted = platforms.slice().sort((a, b) => {
+    const ha = gameState.platformHits[a] || 0;
+    const hb = gameState.platformHits[b] || 0;
+    if (hb !== ha) return hb - ha;
+    // tiebreak by total coordCount across players on that platform
+    const ca = Object.values(gameState.players).filter(p => p.platform === a).reduce((s, p) => s + (p.coordCount || 0), 0);
+    const cb = Object.values(gameState.players).filter(p => p.platform === b).reduce((s, p) => s + (p.coordCount || 0), 0);
+    return cb - ca;
+  });
+
+  // Header
+  let html = '<div class="teams-header"><div class="heading">Platform Teams</div>';
+  for (let i = 0; i < platformSorted.length; i++) {
+    const p = platformSorted[i];
+    const hits = gameState.platformHits[p] || 0;
+    const totalCoords = Object.values(gameState.players).filter(pl => pl.platform === p).reduce((s, pl) => s + (pl.coordCount || 0), 0);
+    const leaderClass = i === 0 ? ' leader' : '';
+    const iconSrc = `assets/images/emote-${p}.png`;
+    html += `<div class="platform-totals${leaderClass}">
+      <img class="platform-icon" src="${iconSrc}" onerror="this.style.display='none'">
+      <span class="platform-name">${escapeHtml(p)}</span>
+      <span class="platform-hits">${hits} hits</span>
+      <span class="platform-coords">${totalCoords} coords</span>
+    </div>`;
+  }
+  html += '</div>';
+
+  // Per-platform player sub-lists
+  for (const p of platformSorted) {
+    const players = Object.values(gameState.players)
+      .filter(pl => pl.platform === p)
+      .sort((a, b) => b.coordCount - a.coordCount)
+      .slice(0, listSize);
+    const iconSrc = `assets/images/emote-${p}.png`;
+    html += `<div class="platform-section">
+      <div class="platform-section-heading">
+        <img class="platform-icon" src="${iconSrc}" onerror="this.style.display='none'">
+        <span>${escapeHtml(p)}</span>
+      </div>`;
+    for (const pl of players) {
+      const mutedClass = gameState.mutedPlayers.some(m => m.user === pl.user && m.platform === pl.platform) ? ' muted' : '';
+      const statsLine = showMuted
+        ? `coords: ${pl.coordCount}, muted: ${pl.muteCount}`
+        : `coords: ${pl.coordCount}`;
+      html += `<div class="entry${mutedClass}">
+        <div class="row1"><span class="name">${escapeHtml(pl.user)}</span></div>
+        <div class="stats">${statsLine}</div>
+      </div>`;
+    }
+    html += '</div>';
   }
   el.innerHTML = html;
 }
@@ -867,6 +1070,10 @@ function handleSetup(data) {
   gameState.players = {};
   gameState.mutedPlayers = [];
   gameState.gameEnded = false;
+  gameState.platformTeams = !!data.platformTeams;
+  gameState.platformHits = data.platformHits || {};
+  gameState.bombers = [];
+  gameState.teamsBomberPending = null;
   gameState.initialized = true;
 
   drawWater();
@@ -919,12 +1126,15 @@ function handleCoord(data) {
   }
   gameState.players[playerKey].coordCount++;
 
-  // Update crosshair from the mode-specific live target.
-  const target = computeRoundTarget();
-  if (target) {
-    gameState.crosshair.row = target.row;
-    gameState.crosshair.col = target.col;
-    gameState.crosshair.visible = true;
+  // Update crosshair from the mode-specific live target (classic mode only).
+  // In teams mode each platform has its own target — crosshair stays hidden during collecting.
+  if (!gameState.platformTeams) {
+    const target = computeRoundTarget();
+    if (target) {
+      gameState.crosshair.row = target.row;
+      gameState.crosshair.col = target.col;
+      gameState.crosshair.visible = true;
+    }
   }
 
   updateLeaderboard();
@@ -932,6 +1142,13 @@ function handleCoord(data) {
 
 function handleRoundEnd(data) {
   gameState.collecting = false;
+  // In teams mode, multiple targets exist — don't show a single crosshair; bombers render instead.
+  if (gameState.platformTeams) {
+    gameState.crosshair.visible = false;
+    gameState.crosshair.blinkPhase = 0;
+    debugOverlay(`Round ended (teams)`);
+    return;
+  }
   gameState.crosshair.row = data.row;
   gameState.crosshair.col = data.col;
   gameState.crosshair.blinkPhase = 0.01; // start blinking
@@ -950,6 +1167,12 @@ function handleShotResolve(data) {
   const col = data.col;
   const key = row + ',' + col;
   const result = data.result;
+
+  // Teams mode: data.cells is an array of { row, col, platforms, result, shipSunk, shipId, allShipsSunk }
+  if (data.teams && Array.isArray(data.cells) && data.cells.length > 0) {
+    handleTeamsShotResolve(data);
+    return;
+  }
 
   // Update mine and ship state immediately, but DON'T draw or add to shots yet
   // — pegs/ship reveals happen after the bomber animation completes (10s in)
@@ -1037,6 +1260,98 @@ function handleShotResolve(data) {
   }
 
   debugOverlay(`Shot resolved: ${result} at ${String.fromCharCode(65 + row)}-${col + 1}`);
+}
+
+function handleTeamsShotResolve(data) {
+  const cells = data.cells;
+  const worstResult = data.result; // already computed by C# (mine > hit > miss)
+
+  // Update mine/ship state immediately; defer peg draw until bombers complete
+  for (const cell of cells) {
+    if (cell.result === 'mine') {
+      for (const m of gameState.mines) {
+        if (m.row === cell.row && m.col === cell.col) { m.hit = true; break; }
+      }
+    }
+    if (cell.shipSunk && cell.shipId !== undefined) {
+      const ship = gameState.ships[cell.shipId];
+      if (ship) {
+        ship.sunk = true;
+        for (const c of ship.cells) c.hit = true;
+      }
+    }
+  }
+
+  // Increment platform hit totals locally for live display
+  for (const cell of cells) {
+    if (cell.result === 'hit' && Array.isArray(cell.platforms)) {
+      for (const p of cell.platforms) {
+        gameState.platformHits[p] = (gameState.platformHits[p] || 0) + 1;
+      }
+    }
+  }
+
+  updateRightPanel();
+  updateLeaderboard();
+
+  // Start one bomber per distinct cell, all simultaneously
+  gameState.bombers = [];
+  for (const cell of cells) {
+    if (cell.result === 'hit' || cell.result === 'miss' || cell.result === 'mine' || cell.result === 'repeat') {
+      gameState.bombers.push(makeBomber(cell.row, cell.col, null, null));
+    }
+  }
+
+  // Single audio: worst-result-wins
+  const audioPath = getAudioPath(worstResult, false);
+  let bomberAudioEl = audioPath ? playAudioFile(audioPath) : null;
+
+  // After bombers complete, reveal pegs and report complete
+  gameState.teamsBomberPending = () => {
+    // Reveal shots for all cells
+    for (const cell of cells) {
+      const cellKey = cell.row + ',' + cell.col;
+      if (cell.result === 'hit' || cell.result === 'miss' || cell.result === 'mine') {
+        gameState.shots[cellKey] = { row: cell.row, col: cell.col, result: cell.result, shipSunk: !!cell.shipSunk };
+      }
+    }
+    drawShipLayer();
+    drawFog();
+
+    // Check if any ship sunk — play sunk audio after hit audio
+    const anySunk = cells.some(c => c.shipSunk);
+    if (anySunk) {
+      const playSunkAudio = () => {
+        const sunkAudio = playAudioFile('assets/sounds/__ship-sunk.mp3');
+        if (sunkAudio && sunkAudio.onended !== undefined) {
+          sunkAudio.onended = () => reportBomberComplete(gameState.round);
+        } else {
+          setTimeout(() => reportBomberComplete(gameState.round), 10000);
+        }
+      };
+      if (bomberAudioEl && bomberAudioEl.onended !== undefined) {
+        bomberAudioEl.onended = playSunkAudio;
+      } else {
+        setTimeout(playSunkAudio, 10000);
+      }
+    } else {
+      if (bomberAudioEl && bomberAudioEl.onended !== undefined) {
+        bomberAudioEl.onended = () => reportBomberComplete(gameState.round);
+      } else {
+        // Fallback: wait for bomber animation to fully complete
+        setTimeout(() => reportBomberComplete(gameState.round), 12000);
+      }
+    }
+  };
+
+  // Edge case: no bombers started (all repeats)
+  if (gameState.bombers.length === 0) {
+    const cb = gameState.teamsBomberPending;
+    gameState.teamsBomberPending = null;
+    if (cb) cb();
+  }
+
+  debugOverlay(`Teams shot resolved: ${cells.length} cells, worst=${worstResult}`);
 }
 
 function handleGameEnd(data) {

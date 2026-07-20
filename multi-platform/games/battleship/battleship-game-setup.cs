@@ -84,8 +84,6 @@ public class CPHInline
         CPH.SetGlobalVar("battleship_grid_size", gridSize, false);
 
         int roundSeconds = GetArgInt("roundSeconds", 30);
-        if (mode == "extreme")
-            roundSeconds = Math.Max(roundSeconds / 2, 15);
         CPH.SetGlobalVar("battleship_round_seconds", roundSeconds, false);
 
         int joinTimer = GetArgInt("joinTimer", 60);
@@ -122,6 +120,10 @@ public class CPHInline
         extremeMultiplier = Math.Max(1, Math.Min(5, extremeMultiplier));
         CPH.SetGlobalVar("battleship_normal_mines", normalMines, false);
         CPH.SetGlobalVar("battleship_extreme_multiplier", extremeMultiplier, false);
+
+        bool platformTeams = GetArgBool("platformTeams", false);
+        CPH.SetGlobalVar("battleship_platform_teams", platformTeams, false);
+        CPH.SetGlobalVar("battleship_platform_hits", "{}", false);
 
         // Ship definitions: carrier 5, battleship 4, cruiser 3, submarine 3, destroyer 2
         int[] shipSizes = { 5, 4, 3, 3, 2 };
@@ -210,7 +212,8 @@ public class CPHInline
             { "joinEndsAt", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + joinTimer * 1000L },
             { "ships", shipDataList },
             { "mines", mineDataList },
-            { "playAudio", true }
+            { "playAudio", true },
+            { "platformTeams", platformTeams }
         });
         Log("setup event sent to browser");
 
@@ -231,6 +234,9 @@ public class CPHInline
             welcomeMsg = $"Battleship (NORMAL mode) has started. Type !join in chat to play. Players will work together to sink 5 ships and avoid {mineCount} mines on a 10x10 grid, 30 seconds per round. Multiple shots per round are allowed.";
         }
         id736.Chat.SendMessageToAllPlatforms(welcomeMsg);
+
+        if (platformTeams)
+            id736.Chat.SendMessageToAllPlatforms("Platform teams mode on: each platform fires its own shot.");
 
         // --- Join phase: 60 seconds ---
         CPH.SetGlobalVar("battleship_phase", "join", false);
@@ -713,6 +719,20 @@ public class CPHInline
         return defaultVal;
     }
 
+    private bool GetArgBool(string name, bool defaultVal)
+    {
+        if (CPH.TryGetArg(name, out bool val))
+            return val;
+        if (CPH.TryGetArg(name, out string valStr))
+        {
+            if (string.IsNullOrWhiteSpace(valStr)) return defaultVal;
+            string s = valStr.Trim().ToLowerInvariant();
+            if (s == "true" || s == "1" || s == "yes" || s == "on") return true;
+            if (s == "false" || s == "0" || s == "no" || s == "off") return false;
+        }
+        return defaultVal;
+    }
+
     private void SendEvent(string eventName, Dictionary<string, object> data)
     {
         data["event"] = eventName;
@@ -810,7 +830,8 @@ public class CPHInline
             "battleship_extreme_multiplier", "battleship_ships", "battleship_mines",
             "battleship_obs_scene", "battleship_obs_source", "battleship_timer_guid",
             "battleship_round_ends_at", "battleship_pending_game_end",
-            "battleship_pending_chat_hit", "battleship_pending_chat_sunk", "battleship_pending_chat_mine"
+            "battleship_pending_chat_hit", "battleship_pending_chat_sunk", "battleship_pending_chat_mine",
+            "battleship_platform_teams", "battleship_platform_hits"
         };
         foreach (string v in vars)
             CPH.UnsetGlobalVar(v, false);

@@ -12,7 +12,7 @@ A browser-based chat-driven Battleship game for Streamer.bot. Viewers type coord
 |----------|-----------|-------------|-------------------------------------|---------------------------|----------------|--------------|----------------|
 | Easy     | 10×10     | 30s         | Most-voted coordinate               | 0                         | 100            | 0            | N/A            |
 | Normal   | 10×10     | 30s         | Most-voted coordinate               | 0–25 (default 5)          | 250            | 0            | 1000           |
-| Extreme  | 15×15     | 15s         | Average of all submitted coordinates | 1×–5× ship cells (def 2×) | 500            | 500          | 10000          |
+| Extreme  | 15×15     | 30s         | Average of all submitted coordinates | 1×–5× ship cells (def 2×) | 500            | 500          | 10000          |
 
 ### Ships
 - Carrier (5 blocks), Battleship (4), Cruiser (3), Submarine (3), Destroyer (2)
@@ -28,6 +28,27 @@ A browser-based chat-driven Battleship game for Streamer.bot. Viewers type coord
 - Per round, per ship block hit: all players who submitted ≥1 coordinate that round receive points
 - Extreme mine penalty: -500 per mine hit (configurable, default 0)
 - Flawless victory bonus: if all ships sunk and no mines ever hit, players with ≥5 rounds of participation receive a bonus
+
+### Platform Teams Mode (`platformTeams=true`)
+- Each platform (Twitch, YouTube, Trovo, etc.) with ≥1 joined player resolves its own target using the mode's rule applied to only that platform's players' coordinates.
+- One plane flies per *distinct* target cell. If multiple platforms resolve to the same cell, only one plane flies and all of them share credit.
+- All planes fly simultaneously; only one audio file plays per round (worst-result-wins: mine > hit > miss).
+- **Scoring:** only platforms whose target *hit* a ship block award points to their voters that round. Platforms whose target missed award no points. Platforms whose target hit a mine in extreme mode receive the mine penalty.
+- **Mute:** only players on the offending platform(s) — the platform(s) whose target hit the mine — are muted for the next round. Mute count is `floor(half of that platform's round participants)`, applied per offending platform independently.
+- **Flawless bonus:** awarded to every player on every platform with ≥`minRoundsForBonus` rounds of participation when all ships are sunk with no mine hits.
+- **Mid-game platform registration:** a platform is "registered" the moment its first player `!join`s. If that join happens mid-round and the platform's first player submits a coordinate before the timer expires, the platform flies a plane that same round; otherwise it starts the next round. No back-credit for prior rounds.
+- **`platformTeams=true` with only one platform connected:** runs as classic (one plane, top-10 list, no platform header).
+- **Leaderboard:** when ≥2 platforms are registered, the left panel shows:
+  - A **platform totals header** at the top: each platform's name, total boat-cell hits, and total coordinate count, ranked by hits (ties broken by total coords). Leader is highlighted.
+  - **Per-platform player sub-lists** below the header, sized dynamically by registered platform count:
+    | Registered platforms | Players per list |
+    |----------------------|------------------|
+    | 1                    | 10 (classic)     |
+    | 2                    | 5                |
+    | 3–4                  | 3                |
+    | 5+                   | 2                |
+  - When only one platform is registered, the panel falls back to the classic top-10 single list.
+- The join overlay and `!join` chat message are unchanged — no platform indicators during the join phase.
 
 ---
 
@@ -88,7 +109,7 @@ Example: `!game battleship normal` or `!game battleship extreme`
 | `obsSource`             | `BattleshipBrowser`                  | OBS browser source name                          |
 | `timerGuid`             | `1288da0a-...`                       | Timer ID copied from the battleship-game timer   |
 | `joinTimer`             | `60`                                 | Seconds for the join countdown                   |
-| `roundSeconds`          | `30`                                 | Seconds per round (extreme uses max(this/2, 15)) |
+| `roundSeconds`          | `30`                                 | Seconds per round (all modes)                  |
 | `interRoundSeconds`     | `3`                                  | Minimum gap between rounds                       |
 | `pointsName`            | `points`                             | Currency name for awarding/losing points         |
 | `shipHitPointsEasy`     | `100`                                | Points per block hit, easy mode                  |
@@ -101,6 +122,7 @@ Example: `!game battleship normal` or `!game battleship extreme`
 | `normalMines`           | `5`                                  | Mine count for normal mode (0–25)                |
 | `extremeMultiplier`     | `2`                                  | Mine multiplier for extreme (1–5)                |
 | `debugMines`            | `0`                                  | Set to 1 to reveal one mine coordinate in chat for testing |
+| `platformTeams`         | `false`                              | When true, each connected platform fires its own shot per round and is tracked separately on the leaderboard |
 
 Add a sub-action to **Execute C# Code** and paste the code from `battleship-game-setup.cs`.
 
@@ -172,7 +194,7 @@ Add a sub-action to **Execute C# Code** and paste `battleship-browser-loaded.cs`
 3. **The board appears in OBS**, covered in fog
 4. **Viewers `!join`** to enter the game
 5. **Join window starts:** a centered `!join to play` overlay and countdown appear on the board
-6. **Round begins:** a 30s (or 15s) countdown starts, and the target indicator appears
+6. **Round begins:** a 30s countdown starts, and the target indicator appears
 7. **Viewers type coordinates** (e.g. `B5`, `j10`) — no command prefix needed
 8. **Easy/normal:** the most-voted coordinate is targeted; **extreme:** the live average is targeted
 9. **Timer expires:** the final target is locked, announced in chat ("Firing on position C-9!")

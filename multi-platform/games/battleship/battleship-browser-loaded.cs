@@ -41,7 +41,9 @@ public class CPHInline
                     { "roundSeed", CPH.GetGlobalVar<int>("battleship_round_seed", false) },
                     { "ships", ships },
                     { "mines", mines },
-                    { "playAudio", false }
+                    { "playAudio", false },
+                    { "platformTeams", CPH.GetGlobalVar<bool>("battleship_platform_teams", false) },
+                    { "platformHits", id736.Data.FromJson<Dictionary<string, int>>(CPH.GetGlobalVar<string>("battleship_platform_hits", false) ?? "{}") ?? new Dictionary<string, int>() }
                 };
                 string json = id736.Data.ToJson(payload);
                 CPH.WebsocketBroadcastJson(json);

@@ -257,7 +257,9 @@ public class CPHInline
             "battleship_extreme_multiplier", "battleship_ships", "battleship_mines",
             "battleship_obs_scene", "battleship_obs_source", "battleship_timer_guid",
             "battleship_round_ends_at", "battleship_pending_game_end",
-            "battleship_pending_chat_hit", "battleship_pending_chat_sunk", "battleship_pending_chat_mine"
+            "battleship_pending_chat_hit", "battleship_pending_chat_sunk", "battleship_pending_chat_mine",
+            "battleship_platform_teams", "battleship_platform_hits",
+            "battleship_pending_teams_resolve"
         };
         foreach (string v in vars)
             CPH.UnsetGlobalVar(v, false);
