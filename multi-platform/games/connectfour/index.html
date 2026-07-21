@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamer.bot Connect Four</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: transparent; }
+    </style>
+    <script src="assets/js/streamerbot-client.js"></script>
+    <script src="connectfour.js" defer></script>
+</head>
+<body>
+    <div id="game-container">
+        <!-- Left panel: players & difficulty -->
+        <div id="leftPanel">
+            <div class="panel-heading">Connect Four</div>
+            <div id="difficultyDisplay" class="difficulty-badge difficulty-easy">Easy</div>
+            <div class="section-heading">Players</div>
+            <div id="playerList" class="player-list">None</div>
+            <div class="section-heading">Turn</div>
+            <div id="turnCount" class="turn-count">0</div>
+        </div>
+
+        <!-- Center: the board -->
+        <div id="centerPanel">
+            <h1 id="currentTurn">Waiting for players...</h1>
+            <div class="grid-container">
+                <div class="column-labels easy" id="columnLabels"></div>
+                <div class="grid easy" id="grid"></div>
+            </div>
+        </div>
+
+        <!-- Right panel: voting & timer -->
+        <div id="rightPanel">
+            <div class="panel-heading">Status</div>
+            <div id="status">Connecting to Streamer.bot...</div>
+            <div id="votingSection" class="voting-info">
+                <div class="voting-label">Vote for column:</div>
+                <div id="timerDisplay" class="voting-timer">--:--</div>
+                <div class="vote-total"></div>
+            </div>
+        </div>
+
+        <!-- Winner overlay -->
+        <div class="winner-overlay" id="winnerOverlay">
+            <h1 class="winner-title" id="winnerTitle">Player 1 Wins!</h1>
+            <p id="winnerMessage">Congratulations!</p>
+        </div>
+    </div>
+</body>
+</html>
