@@ -29306,6 +29306,121 @@
     "codeBlockCount": 0
   },
   {
+    "title": "Contribution Purchased",
+    "name": null,
+    "description": "Triggered when a contribution is purchased through the Throne integration",
+    "version": "1.0.5",
+    "route": "/api/triggers/integrations/throne/contribution-purchased",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/integrations/throne/contribution-purchased",
+    "sourcePath": "3.api/2.triggers/integrations/throne/contribution-purchased.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Gift Crowdfunded",
+    "name": null,
+    "description": "Triggered when a gift is crowdfunded through the Throne integration",
+    "version": "1.0.5",
+    "route": "/api/triggers/integrations/throne/gift-crowdfunded",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/integrations/throne/gift-crowdfunded",
+    "sourcePath": "3.api/2.triggers/integrations/throne/gift-crowdfunded.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Gift Purchased",
+    "name": null,
+    "description": "Triggered when a gift is purchased through the Throne integration",
+    "version": "1.0.5",
+    "route": "/api/triggers/integrations/throne/gift-purchased",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/integrations/throne/gift-purchased",
+    "sourcePath": "3.api/2.triggers/integrations/throne/gift-purchased.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [
+      {
+        "name": "throne.gifterLogin",
+        "type": "string",
+        "description": "The login of the gifter",
+        "value": "Lyfesaver74"
+      },
+      {
+        "name": "throne.isSurpriseGift",
+        "type": "boolean",
+        "description": "Indicates if the gift is a surprise",
+        "value": false
+      },
+      {
+        "name": "throne.price",
+        "type": "number",
+        "description": "The price of the gift, in cents",
+        "value": 10000
+      },
+      {
+        "name": "throne.creatorId",
+        "type": "string",
+        "description": "The ID of the creator / recipient of the gift",
+        "value": "twitch:12345678"
+      },
+      {
+        "name": "throne.creatorLogin",
+        "type": "string",
+        "description": "The login of the creator / recipient of the gift",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "throne.message",
+        "type": "string",
+        "description": "The message attached to the gift",
+        "value": "Happy Birthday!"
+      },
+      {
+        "name": "throne.itemName",
+        "type": "string",
+        "description": "The name of the item purchased as a gift",
+        "value": "AirPods Max"
+      },
+      {
+        "name": "throne.itemThumbnailUrl",
+        "type": "string",
+        "description": "The URL of the thumbnail image for the item purchased as a gift",
+        "value": "https://m.media-amazon.com/images/I/81jqUPkIVRL._AC_SX522_.jpg"
+      },
+      {
+        "name": "throne.currency",
+        "type": "string",
+        "description": "The currency of the gift price",
+        "value": "USD"
+      },
+      {
+        "name": "throne.createdAt",
+        "type": "DateTime",
+        "description": "The timestamp when the gift was created",
+        "value": "7/10/2026 3:01:00 PM"
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "Donation",
     "name": null,
     "description": "Trigger for a TipeeeStream Donation",
@@ -64588,32 +64703,32 @@
       {
         "language": "json",
         "label": "Body",
-        "code": "// Content-Type: application/json\n  {\n    \"action\": {\n      \"id\": \"<guid>\",\n      \"name\": \"<name>\"\n    },\n    \"args\": {\n      \"key\": \"value\"\n    }\n  }"
+        "code": "// Content-Type: application/json\n{\n  \"action\": {\n    \"id\": \"<guid>\",\n    \"name\": \"<name>\"\n  },\n  \"args\": {\n    \"key\": \"value\"\n  }\n}"
       },
       {
         "language": "json",
         "label": "Execute by ID",
-        "code": "// Execute action by ID\n  {\n    \"action\": { \"id\": \"4af4bdef-f396-521f-a1a5-02983ae638cb\"}\n  }"
+        "code": "// Execute action by ID\n{\n  \"action\": { \"id\": \"4af4bdef-f396-521f-a1a5-02983ae638cb\" }\n}"
       },
       {
         "language": "json",
         "label": "Execute by Name",
-        "code": "// Execute action by name\n  {\n    \"action\": { \"name\": \"My Action\" }\n  }"
+        "code": "// Execute action by name\n{\n  \"action\": { \"name\": \"My Action\" }\n}"
       },
       {
         "language": "bash",
         "label": "Terminal",
-        "code": "curl -X POST http://127.0.0.1:7474/DoAction \\\n    -H \"Content-Type: application/json\" \\\n    -d '{\n      \"action\": {\n        \"id\": \"your-action-guid\",\n        \"name\": \"Your Action Name\"\n      },\n      \"args\": {\n        \"customArg\": \"customValue\"\n      }\n    }'"
+        "code": "curl -X POST http://127.0.0.1:7474/DoAction \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"action\": {\n      \"id\": \"your-action-guid\",\n      \"name\": \"Your Action Name\"\n    },\n    \"args\": {\n      \"customArg\": \"customValue\"\n    }\n  }'"
       },
       {
         "language": "js",
         "label": "js",
-        "code": "const response = await fetch('http://127.0.0.1:7474/DoAction', {\n    method: 'POST',\n    headers: {\n      'Content-Type': 'application/json'\n    },\n    body: JSON.stringify({\n      action: {\n        id: 'your-action-guid',\n        name: 'Your Action Name'\n      },\n      args: {\n        customArg: 'customValue'\n      }\n    })\n  });\n  console.log(response.status); // 204"
+        "code": "const response = await fetch('http://127.0.0.1:7474/DoAction', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n  },\n  body: JSON.stringify({\n    action: {\n      id: 'your-action-guid',\n      name: 'Your Action Name',\n    },\n    args: {\n      customArg: 'customValue',\n    },\n  }),\n});\nconsole.log(response.status); // 204"
       },
       {
         "language": "py",
         "label": "py",
-        "code": "import requests\n  import json\n\n  data = {\n    \"action\": {\n      \"id\": \"your-action-guid\",\n      \"name\": \"Your Action Name\"\n    },\n    \"args\": {\n      \"customArg\": \"customValue\"\n    }\n  }\n\n  response = requests.post(\n    'http://127.0.0.1:7474/DoAction',\n    headers={'Content-Type': 'application/json'},\n    data=json.dumps(data)\n  )\n  print(response.status_code)  # 204"
+        "code": "import requests\nimport json\n\ndata = {\n  \"action\": {\n    \"id\": \"your-action-guid\",\n    \"name\": \"Your Action Name\"\n  },\n  \"args\": {\n    \"customArg\": \"customValue\"\n  }\n}\n\nresponse = requests.post(\n  'http://127.0.0.1:7474/DoAction',\n  headers={'Content-Type': 'application/json'},\n  data=json.dumps(data)\n)\nprint(response.status_code)  # 204"
       }
     ],
     "codeBlockCount": 6

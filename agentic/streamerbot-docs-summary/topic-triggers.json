@@ -11613,6 +11613,121 @@
     "codeBlockCount": 0
   },
   {
+    "title": "Contribution Purchased",
+    "name": null,
+    "description": "Triggered when a contribution is purchased through the Throne integration",
+    "version": "1.0.5",
+    "route": "/api/triggers/integrations/throne/contribution-purchased",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/integrations/throne/contribution-purchased",
+    "sourcePath": "3.api/2.triggers/integrations/throne/contribution-purchased.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Gift Crowdfunded",
+    "name": null,
+    "description": "Triggered when a gift is crowdfunded through the Throne integration",
+    "version": "1.0.5",
+    "route": "/api/triggers/integrations/throne/gift-crowdfunded",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/integrations/throne/gift-crowdfunded",
+    "sourcePath": "3.api/2.triggers/integrations/throne/gift-crowdfunded.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Gift Purchased",
+    "name": null,
+    "description": "Triggered when a gift is purchased through the Throne integration",
+    "version": "1.0.5",
+    "route": "/api/triggers/integrations/throne/gift-purchased",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/integrations/throne/gift-purchased",
+    "sourcePath": "3.api/2.triggers/integrations/throne/gift-purchased.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [
+      {
+        "name": "throne.gifterLogin",
+        "type": "string",
+        "description": "The login of the gifter",
+        "value": "Lyfesaver74"
+      },
+      {
+        "name": "throne.isSurpriseGift",
+        "type": "boolean",
+        "description": "Indicates if the gift is a surprise",
+        "value": false
+      },
+      {
+        "name": "throne.price",
+        "type": "number",
+        "description": "The price of the gift, in cents",
+        "value": 10000
+      },
+      {
+        "name": "throne.creatorId",
+        "type": "string",
+        "description": "The ID of the creator / recipient of the gift",
+        "value": "twitch:12345678"
+      },
+      {
+        "name": "throne.creatorLogin",
+        "type": "string",
+        "description": "The login of the creator / recipient of the gift",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "throne.message",
+        "type": "string",
+        "description": "The message attached to the gift",
+        "value": "Happy Birthday!"
+      },
+      {
+        "name": "throne.itemName",
+        "type": "string",
+        "description": "The name of the item purchased as a gift",
+        "value": "AirPods Max"
+      },
+      {
+        "name": "throne.itemThumbnailUrl",
+        "type": "string",
+        "description": "The URL of the thumbnail image for the item purchased as a gift",
+        "value": "https://m.media-amazon.com/images/I/81jqUPkIVRL._AC_SX522_.jpg"
+      },
+      {
+        "name": "throne.currency",
+        "type": "string",
+        "description": "The currency of the gift price",
+        "value": "USD"
+      },
+      {
+        "name": "throne.createdAt",
+        "type": "DateTime",
+        "description": "The timestamp when the gift was created",
+        "value": "7/10/2026 3:01:00 PM"
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "Donation",
     "name": null,
     "description": "Trigger for a TipeeeStream Donation",

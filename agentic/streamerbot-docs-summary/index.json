@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-19T08:46:08.549081+00:00",
+  "generatedAt": "2026-07-26T08:47:05.006591+00:00",
   "sources": {
     "officialDocs": {
       "site": "https://docs.streamer.bot/",
       "repo": "https://github.com/Streamerbot/docs",
       "localRoot": "agentic/streamerbot-docs",
-      "revision": "fb6972ac10eb5a02f27efc6cfb506d798b0bcb4b",
+      "revision": "ce3d5e7c9dfac6daae3cf5cd3624bf4c33430cdc",
       "branches": [
         {
           "name": "origin/Mustached-Maniac-patch-1",
@@ -29,8 +29,8 @@
         },
         {
           "name": "origin/main",
-          "shortHash": "fb6972a",
-          "subject": "docs: add throne configuration guide"
+          "shortHash": "ce3d5e7",
+          "subject": "docs: add throne pages"
         }
       ]
     },
@@ -49,10 +49,10 @@
     }
   },
   "counts": {
-    "allPages": 2155,
-    "docsPages": 1240,
+    "allPages": 2158,
+    "docsPages": 1243,
     "wikiPages": 915,
-    "api": 1070,
+    "api": 1073,
     "guide": 50,
     "getStarted": 7,
     "examples": 15,
@@ -62,14 +62,14 @@
     "csharpClasses": 29,
     "csharpEnums": 6,
     "subActions": 351,
-    "triggers": 411,
+    "triggers": 414,
     "httpPages": 10,
     "websocketPages": 10,
     "udpPages": 3,
     "guidePages": 57,
     "examplePages": 15,
     "commandPages": 60,
-    "triggerPages": 818,
+    "triggerPages": 821,
     "timerPages": 6,
     "queuePages": 1
   },
