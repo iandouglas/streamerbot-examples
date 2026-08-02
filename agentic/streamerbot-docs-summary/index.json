@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-26T08:47:05.006591+00:00",
+  "generatedAt": "2026-08-02T08:46:33.725461+00:00",
   "sources": {
     "officialDocs": {
       "site": "https://docs.streamer.bot/",
       "repo": "https://github.com/Streamerbot/docs",
       "localRoot": "agentic/streamerbot-docs",
-      "revision": "ce3d5e7c9dfac6daae3cf5cd3624bf4c33430cdc",
+      "revision": "9d8b2952367a2add940ea10043b5c2a07385e729",
       "branches": [
         {
           "name": "origin/Mustached-Maniac-patch-1",
@@ -29,8 +29,8 @@
         },
         {
           "name": "origin/main",
-          "shortHash": "ce3d5e7",
-          "subject": "docs: add throne pages"
+          "shortHash": "9d8b295",
+          "subject": "docs: update youtube subscription, remove streamelements requirement"
         }
       ]
     },
@@ -49,27 +49,27 @@
     }
   },
   "counts": {
-    "allPages": 2158,
-    "docsPages": 1243,
+    "allPages": 2167,
+    "docsPages": 1252,
     "wikiPages": 915,
-    "api": 1073,
-    "guide": 50,
-    "getStarted": 7,
+    "api": 1082,
+    "guide": 51,
+    "getStarted": 6,
     "examples": 15,
     "changelogs": 62,
     "csharpGuides": 9,
     "csharpMethods": 195,
     "csharpClasses": 29,
     "csharpEnums": 6,
-    "subActions": 351,
-    "triggers": 414,
-    "httpPages": 10,
-    "websocketPages": 10,
-    "udpPages": 3,
+    "subActions": 363,
+    "triggers": 415,
+    "httpPages": 9,
+    "websocketPages": 9,
+    "udpPages": 2,
     "guidePages": 57,
     "examplePages": 15,
     "commandPages": 60,
-    "triggerPages": 821,
+    "triggerPages": 822,
     "timerPages": 6,
     "queuePages": 1
   },

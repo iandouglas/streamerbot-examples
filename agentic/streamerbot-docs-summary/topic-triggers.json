@@ -1396,12 +1396,15 @@
     "sourceUrl": "https://docs.streamer.bot/api/triggers/core/processes/process-started",
     "sourcePath": "3.api/2.triggers/core/processes/process-started.md",
     "section": "api",
-    "headings": [
-      "Details",
-      "Parameters"
+    "headings": [],
+    "summary": "**This trigger relies on the Process Watcher service**\n<br>\nYou can enable the **Process Watcher** in Streamer.bot by navigating to Services -> Process Watcher",
+    "parameters": [
+      {
+        "name": "Name",
+        "type": "Text",
+        "description": "The name of the process to watch for. This is the name of the process as it appears in Task Manager.\n<br>\nAn empty value is considered a catch-all and will trigger on **any** process started on your machine.\n"
+      }
     ],
-    "summary": "Details\nUsing this trigger requires you to have the Process Watcher enabled. This can be done under Services -> Process Watcher\n\nParameters\n\nInput the name of the process",
-    "parameters": [],
     "variables": [
       {
         "name": "name",
@@ -1448,12 +1451,15 @@
     "sourceUrl": "https://docs.streamer.bot/api/triggers/core/processes/process-stopped",
     "sourcePath": "3.api/2.triggers/core/processes/process-stopped.md",
     "section": "api",
-    "headings": [
-      "Details",
-      "Parameters"
+    "headings": [],
+    "summary": "**This trigger relies on the Process Watcher service**\n<br>\nYou can enable the **Process Watcher** in Streamer.bot by navigating to Services -> Process Watcher",
+    "parameters": [
+      {
+        "name": "Name",
+        "type": "Text",
+        "description": "The name of the process to watch for. This is the name of the process as it appears in Task Manager.\n<br>\nAn empty value is considered a catch-all and will trigger on **any** process started on your machine.\n"
+      }
     ],
-    "summary": "Details\nUsing this trigger requires you to have the Process Watcher enabled. This can be done under Services -> Process Watcher\n\nParameters\n\nInput the name of the process",
-    "parameters": [],
     "variables": [
       {
         "name": "name",
@@ -16263,7 +16269,7 @@
     "sourcePath": "3.api/2.triggers/twitch/ads/ad-mid-roll.md",
     "section": "api",
     "headings": [],
-    "summary": "**Removed in Streamer.bot v1.0.0**\n<br>\nTwitch has deprecated the PubSub API and all triggers relying on it have been removed.\n\nIt is **not recommended** to rely on this trigger.\n- This trigger utilizes an **undocumented and unsupported** Twitch PubSub event which could be removed, without warning, in the future.\n\nThis event triggers 5 seconds prior to the start of an ad.",
+    "summary": "**Removed in Streamer.bot v1.0.0**\n<br>\nTwitch has deprecated the PubSub API and all triggers relying on it have been removed.\n\nIt is **not recommended** to rely on this trigger.\n\n- This trigger utilizes an **undocumented and unsupported** Twitch PubSub event which could be removed, without warning, in the future.",
     "parameters": [],
     "variables": [
       {
@@ -18711,7 +18717,7 @@
     "headings": [
       "Notes"
     ],
-    "summary": "Notes\nThe user sending the whisper must have a **verified phone number** (see the **Phone Number setting** in your **Security and Privacy settings**).\n\nThe API may silently drop whispers that it suspects of violating Twitch policies, it will still indicate success even if the message is dropped.\n\nRate Limits: You may whisper to a maximum of **40 unique recipients per day**. Within the per day limit, you may whisper a maximum of 3 whispers per second and a maximum of 100 whispers per minute.",
+    "summary": "Notes\n\nThe user sending the whisper must have a **verified phone number** (see the **Phone Number setting** in your **Security and Privacy settings**).\n\nThe API may silently drop whispers that it suspects of violating Twitch policies, it will still indicate success even if the message is dropped.",
     "parameters": [],
     "variables": [],
     "commonVariables": [
@@ -19231,7 +19237,7 @@
     "sourcePath": "3.api/2.triggers/twitch/chat/first-words.md",
     "section": "api",
     "headings": [],
-    "summary": "This triggers when someone sends their first message of the stream.\n\nThe exact reset time is set in Platforms -> Twitch -> Settings and is 12h by default. That means that StreamerBot must have been closed for 12 hours in order to reset the First Words trigger.\n\nYou can create a new action, then create a  Settings -> Reset First Words subaction and assign a Twitch -> Channel -> Stream Online trigger. This will automatically reset the First Words trigger once you go live without any time requirement.",
+    "summary": "This triggers when someone sends their first message of the stream.\n\nThe exact reset time is set in Platforms -> Twitch -> Settings and is 12h by default. That means that StreamerBot must have been closed for 12 hours in order to reset the First Words trigger.\n\nYou can create a new action, then create a Settings -> Reset First Words subaction and assign a Twitch -> Channel -> Stream Online trigger. This will automatically reset the First Words trigger once you go live without any time requirement.",
     "parameters": [
       {
         "name": "User Name",
@@ -21093,7 +21099,7 @@
     "headings": [
       "Notes"
     ],
-    "summary": "Notes\nThe user sending the whisper must have a **verified phone number** (see the **Phone Number setting** in your **Security and Privacy settings**).\n\nThe API may silently drop whispers that it suspects of violating Twitch policies, it will still indicate success even if the message is dropped.\n\nRate Limits: You may whisper to a maximum of **40 unique recipients per day**. Within the per day limit, you may whisper a maximum of 3 whispers per second and a maximum of 100 whispers per minute.",
+    "summary": "Notes\n\nThe user sending the whisper must have a **verified phone number** (see the **Phone Number setting** in your **Security and Privacy settings**).\n\nThe API may silently drop whispers that it suspects of violating Twitch policies, it will still indicate success even if the message is dropped.",
     "parameters": [],
     "variables": [],
     "commonVariables": [
@@ -22711,7 +22717,7 @@
       "Details",
       "Notes"
     ],
-    "summary": "Details\nThis triggers every 1-10 minutes, default every 5 minutes.\n\nNotes\nThe present viewer tick will always happen, but you have the ability to have it \"live update\" from Twitch, or artificially mark someone as present.\n\nUnder the Platforms > Twitch > Settings, in the Present Viewers section, there are 2 settings, a Live Update check box, and a slider bar.",
+    "summary": "Details\n\nThis triggers every 1-10 minutes, default every 5 minutes.\n\nNotes",
     "parameters": [],
     "variables": [
       {
@@ -22967,7 +22973,7 @@
       "Details",
       "Parameters"
     ],
-    "summary": "Details\nThis triggers when the title or the description changes on your stream.\n\nParameters\n\nCheck this field if you only want this to trigger when the game changes\n  \n  \n    Select a game if you only want this to trigger when the stream changes to this game",
+    "summary": "Details\n\nThis triggers when the title or the description changes on your stream.\n\nParameters",
     "parameters": [],
     "variables": [
       {
@@ -38178,6 +38184,222 @@
     "codeBlockCount": 0
   },
   {
+    "title": "Jewels Gifted",
+    "name": null,
+    "description": "Trigger for a when jewels have been spent to send a gift to the broadcaster",
+    "version": "1.0.5",
+    "route": "/api/triggers/youtube/chat/jewels-gifted",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/youtube/chat/jewels-gifted",
+    "sourcePath": "3.api/2.triggers/youtube/chat/jewels-gifted.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [
+      {
+        "name": "publishedAt",
+        "type": "DateTime",
+        "description": "The time the message was published at",
+        "value": "5/8/2026 12:00:00 PM"
+      },
+      {
+        "name": "gift.jewelsAmount",
+        "type": "number",
+        "description": "The amount of Jewels redeemed for the gift",
+        "value": 10
+      },
+      {
+        "name": "gift.name",
+        "type": "string",
+        "description": "The name of the gift",
+        "value": "Thumbs up"
+      },
+      {
+        "name": "gift.url",
+        "type": "string",
+        "descripton": "The URL of the gift asset",
+        "value": "https://www.gstatic.com/youtube/img/pdg/gift/assets/keep_it_up.png"
+      },
+      {
+        "name": "gift.durationInSeconds",
+        "type": "string",
+        "description": "The number of seconds to display the gift URL",
+        "value": 3
+      },
+      {
+        "name": "gift.durationInNanoSeconds",
+        "type": "string",
+        "description": "The number of nanoseconds to display the gift URL",
+        "value": 0
+      },
+      {
+        "name": "gift.hasVisualEffect",
+        "type": "boolean",
+        "description": "Indicates if the gift has a visual effect",
+        "value": false
+      },
+      {
+        "name": "gift.isCombo",
+        "type": "boolean",
+        "description": "Indicates if this gift is part of a combo",
+        "value": false
+      },
+      {
+        "name": "gift.comboCount",
+        "type": "number",
+        "description": "What combo level the gift is",
+        "value": 1
+      },
+      {
+        "name": "gift.altText",
+        "type": "string",
+        "description": "A text string that describes the gift",
+        "value": "Thumbs up"
+      },
+      {
+        "name": "gift.altTextLanguage",
+        "type": "string",
+        "description": "The language of the `gift.altText`",
+        "value": "en_US"
+      }
+    ],
+    "commonVariables": [
+      {
+        "name": "user",
+        "type": "string",
+        "description": "The display name of the user",
+        "value": "YouTubeUser123"
+      },
+      {
+        "name": "userName",
+        "type": "string",
+        "description": "The login name of the user",
+        "value": "youtubeuser123"
+      },
+      {
+        "name": "userId",
+        "type": "string",
+        "description": "Unique user identifier",
+        "value": "UCI9-KG2xoyh5z-g41IL2jqf"
+      },
+      {
+        "name": "userType",
+        "type": "string",
+        "description": "Streaming service of this user",
+        "value": "youtube"
+      },
+      {
+        "name": "isSubscribed",
+        "type": "bool",
+        "description": "Has the user been a member at any time, including the present?",
+        "value": true
+      },
+      {
+        "name": "isModerator",
+        "type": "bool",
+        "description": "Is this user a moderator?",
+        "value": true
+      },
+      {
+        "name": "userPreviousActive",
+        "type": "DateTime",
+        "description": "When was this user last active?",
+        "value": "8/4/2023 10:56:06 AM"
+      },
+      {
+        "name": "userProfileUrl",
+        "type": "string",
+        "description": "The user's YouTube profile image"
+      },
+      {
+        "name": "userIsSponsor",
+        "type": "boolean",
+        "description": "Indicates whether the viewer is a current channel member or not"
+      },
+      {
+        "name": "broadcast.id",
+        "type": "string",
+        "description": "The ID of the broadcast the message was sent from",
+        "value": "UCI9-KG2xoyh5z-g41IL2jqf"
+      },
+      {
+        "name": "broadcast.title",
+        "type": "string",
+        "description": "The title of the broadcast the message was sent from",
+        "value": "Really cool stream title"
+      },
+      {
+        "name": "broadcast.description",
+        "type": "string",
+        "description": "The description of the broadcast the message was sent from",
+        "value": "Super cool YouTube Stream happening now!"
+      },
+      {
+        "name": "broadcast.privacy",
+        "type": "string",
+        "description": "The privacy setting of the broadcast the message was sent from\n\nValid values are `public`, `unlisted`, `private`\n",
+        "value": "public"
+      },
+      {
+        "name": "broadcast.status",
+        "type": "string",
+        "description": "The online status of the broadcast the message was sent from\n\nPossible values are, `complete`, `created`, `live`, `liveStarting`, `ready`, `revoked`, `testStarting`, `testing` \n",
+        "value": "live"
+      },
+      {
+        "name": "broadcast.publishedAt",
+        "type": "DateTime",
+        "description": "When the YouTube broadcast was first published on YouTube",
+        "value": "12/21/2023 9:25:21 AM"
+      },
+      {
+        "name": "broadcast.defaultLanguage",
+        "type": "string",
+        "description": "The default language code for the YouTube Broadcast's Title and Description",
+        "value": "en"
+      },
+      {
+        "name": "broadcast.defaultAudioLanguage",
+        "type": "string",
+        "description": "The default language code for the YouTube Broadcast's Stream",
+        "value": "en"
+      },
+      {
+        "name": "broadcast.tags",
+        "type": "string",
+        "description": "The tags that are set for the YouTube Broadcast as a comma delimited string, and these tags are case sensitive.",
+        "value": "Horizontal,Gaming"
+      },
+      {
+        "name": "broadcastUsername",
+        "type": "string",
+        "description": "The YouTube user name of the broadcaster account",
+        "value": "youtubeuser123"
+      },
+      {
+        "name": "broadcastUserId",
+        "type": "string",
+        "description": "The YouTube user ID of the broadcaster account",
+        "value": "UCI9-KG2xoyh5z-g41IL2jqf"
+      },
+      {
+        "name": "broadcastUserProfileImage",
+        "type": "string",
+        "description": "The profile image of the broadcaster account",
+        "value": "https://yt3.ggpht.com/ytc/profile-image-id"
+      },
+      {
+        "name": "broadcastId",
+        "type": "string",
+        "description": "The broadcast ID from the livestream",
+        "value": "UCI9-KG2xoy"
+      }
+    ],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "Message",
     "name": null,
     "description": "Trigger for incoming YouTube chat messages",
@@ -38936,7 +39158,7 @@
     "sourcePath": "3.api/2.triggers/youtube/general/new-subscriber.md",
     "section": "api",
     "headings": [],
-    "summary": "**This trigger relies on event data from StreamElements** <br>\n  :icon{name=\"i-mdi-chevron-right\"} For this trigger to work you must configure the StreamElements integration in Streamer.bot",
+    "summary": "You will not receive a New Subscriber event for users that have their Subscriptions Private, and/or if the Google account does not have a YouTube Channel created.",
     "parameters": [],
     "variables": [],
     "commonVariables": [

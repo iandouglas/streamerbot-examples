@@ -642,11 +642,26 @@
     "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/delay",
     "sourcePath": "3.api/1.sub-actions/core/delay.md",
     "section": "api",
-    "headings": [
-      "Parameters"
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Delay",
+        "type": "Number",
+        "required": true,
+        "description": "The duration of the delay"
+      },
+      {
+        "name": "Random",
+        "type": "Checkbox",
+        "description": "Generate a random delay between min/max values"
+      },
+      {
+        "name": "To",
+        "type": "Checkbox",
+        "description": "If `Random` is selected, a random delay will be selected between the `Delay` and `To` values"
+      }
     ],
-    "summary": "Parameters\n\nThe duration of the delay\n\nGenerate a random delay between min/max values",
-    "parameters": [],
     "variables": [],
     "commonVariables": [],
     "codeBlocks": [],
@@ -1293,6 +1308,42 @@
         "value": "123"
       }
     ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Loop Break",
+    "name": null,
+    "description": "Break out of a loop in the current action.",
+    "version": "1.0.5",
+    "route": "/api/sub-actions/core/logic/loop-break",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/logic/loop-break",
+    "sourcePath": "3.api/1.sub-actions/core/logic/loop-break.md",
+    "section": "api",
+    "headings": [],
+    "summary": "As opposed to the Break sub-action, which will break out of the current action entirely, this sub-action will only break out of the current loop and continue executing the rest of the action.\n\n:read-more{to=/api/sub-actions/core/logic/while}",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Loop Continue",
+    "name": null,
+    "description": "Continue to the next iteration of a loop in the current action.",
+    "version": "1.0.5",
+    "route": "/api/sub-actions/core/logic/loop-continue",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/logic/loop-continue",
+    "sourcePath": "3.api/1.sub-actions/core/logic/loop-continue.md",
+    "section": "api",
+    "headings": [],
+    "summary": "When executed during a loop, this sub-action will skip the rest of the current iteration and continue on to the next iteration of the loop.\n\n:read-more{to=/api/sub-actions/core/logic/while}",
+    "parameters": [],
+    "variables": [],
     "commonVariables": [],
     "codeBlocks": [],
     "codeBlockCount": 0
@@ -8355,6 +8406,389 @@
     "headings": [],
     "summary": ":read-more{to=\"/guide/integrations/speakerbot\"}",
     "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Deck Notify",
+    "name": null,
+    "description": "Send a notification to a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/deck-notify",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/deck-notify",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/deck-notify.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck to send the notification to",
+        "required": true
+      },
+      {
+        "name": "Title",
+        "type": "Text",
+        "description": "The title of the notification",
+        "required": true
+      },
+      {
+        "name": "Description",
+        "type": "Text",
+        "description": "The description text for this notification"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Item Set Background",
+    "name": null,
+    "description": "Set the background of a specific item in a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/item-set-background",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/item-set-background",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/item-set-background.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck where the item is located",
+        "required": true
+      },
+      {
+        "name": "Item",
+        "type": "Select",
+        "description": "Select the item to modify",
+        "required": true
+      },
+      {
+        "name": "Color",
+        "type": "Text",
+        "description": "Set an optional background color for the item (hex code or color name)"
+      },
+      {
+        "name": "URL",
+        "type": "Text",
+        "description": "Set an optional image URL for the item"
+      },
+      {
+        "name": "File ID",
+        "type": "Text",
+        "description": "Set an optional image file ID for the item (for files uploaded to Streamer.bot)"
+      },
+      {
+        "name": "State",
+        "type": "Number",
+        "description": "Apply the change to a specific state of the item (0 for default, 1 for active, etc.)",
+        "default": 0
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Item Set Icon",
+    "name": null,
+    "description": "Set the icon of a specific item in a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/item-set-icon",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/item-set-icon",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/item-set-icon.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck where the item is located",
+        "required": true
+      },
+      {
+        "name": "Item",
+        "type": "Select",
+        "description": "Select the item to modify",
+        "required": true
+      },
+      {
+        "name": "Color",
+        "type": "Text",
+        "description": "Set an optional color for the icon (hex code or color name)"
+      },
+      {
+        "name": "Name",
+        "type": "Text",
+        "description": "Set the item's icon to an [Iconify](https://icon-sets.iconify.design/) icon name, e.g. 'mdi:home' or 'heroicons:arrow-left'"
+      },
+      {
+        "name": "URL",
+        "type": "Text",
+        "description": "Set the item's icon to an image URL"
+      },
+      {
+        "name": "File ID",
+        "type": "Text",
+        "description": "Set the item's icon to an image file ID (for files uploaded to Streamer.bot)"
+      },
+      {
+        "name": "State",
+        "type": "Number",
+        "description": "Apply the change to a specific state of the item (0 for default, 1 for active, etc.)",
+        "default": 0
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Item Set State",
+    "name": null,
+    "description": "Set the active state of an item in a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/item-set-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/item-set-state",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/item-set-state.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck where the item is located",
+        "required": true
+      },
+      {
+        "name": "Item",
+        "type": "Select",
+        "description": "Select the item to modify",
+        "required": true
+      },
+      {
+        "name": "State",
+        "type": "Number",
+        "description": "Enter the state to make active for the selected item (0 for default, 1 for active, etc.)",
+        "default": 0
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Item Set State",
+    "name": null,
+    "description": "Set the active state of an item in a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/item-set-title",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/item-set-title",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/item-set-title.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck where the item is located",
+        "required": true
+      },
+      {
+        "name": "Item",
+        "type": "Select",
+        "description": "Select the item to modify",
+        "required": true
+      },
+      {
+        "name": "Title",
+        "type": "Text",
+        "description": "Set the title text for the item"
+      },
+      {
+        "name": "Color",
+        "type": "Text",
+        "description": "Set an optional color for the title text (hex code or color name)"
+      },
+      {
+        "name": "State",
+        "type": "Number",
+        "description": "Apply the change to a specific state of the item (0 for default, 1 for active, etc.)",
+        "default": 0
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Item Set Value",
+    "name": null,
+    "description": "Set the status value of an item in a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/item-set-value",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/item-set-value",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/item-set-value.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck where the item is located",
+        "required": true
+      },
+      {
+        "name": "Item",
+        "type": "Select",
+        "description": "Select the item to modify",
+        "required": true
+      },
+      {
+        "name": "Value",
+        "type": "Number",
+        "description": "Set the value for the item"
+      },
+      {
+        "name": "State",
+        "type": "Number",
+        "description": "Apply the change to a specific state of the item (0 for default, 1 for active, etc.)",
+        "default": 0
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Item Toggle State",
+    "name": null,
+    "description": "Toggle the active state of an item in a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/item-toggle-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/item-toggle-state",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/item-toggle-state.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck where the item is located",
+        "required": true
+      },
+      {
+        "name": "Item",
+        "type": "Select",
+        "description": "Select the item to modify",
+        "required": true
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Page Next",
+    "name": null,
+    "description": "Go to the next page of a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/page-next",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/page-next",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/page-next.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck to send the page command to",
+        "required": true
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Page Previous",
+    "name": null,
+    "description": "Go to the previous page of a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/page-previous",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/page-previous",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/page-previous.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck to send the page command to",
+        "required": true
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Page Set",
+    "name": null,
+    "description": "Go to a specific page of a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/page-set",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/page-set",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/page-set.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck to send the page command to",
+        "required": true
+      },
+      {
+        "name": "Page",
+        "type": "Number",
+        "description": "The page number to navigate to",
+        "required": true
+      }
+    ],
     "variables": [],
     "commonVariables": [],
     "codeBlocks": [],

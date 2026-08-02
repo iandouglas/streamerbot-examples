@@ -6,12 +6,12 @@ Streamer.bot is an event-driven automation tool for livestreamers. The official 
 
 ## What the local docs snapshot covers
 
-- Total markdown pages captured: **2158**
-- Official docs pages: **1243**
+- Total markdown pages captured: **2167**
+- Official docs pages: **1252**
 - Wiki pages: **915**
-- API reference pages captured: **1073**
-- Guide pages captured: **50**
-- Get started pages captured: **7**
+- API reference pages captured: **1082**
+- Guide pages captured: **51**
+- Get started pages captured: **6**
 - Example pages captured: **15**
 - Changelog pages captured: **62**
 
@@ -19,11 +19,11 @@ Streamer.bot is an event-driven automation tool for livestreamers. The official 
 
 - C# guide + recipe pages: **9**
 - C# method reference pages: **195**
-- Trigger reference pages: **414**
-- Sub-action reference pages: **351**
-- HTTP API pages: **10**
-- WebSocket API pages: **10**
-- UDP API pages: **3**
+- Trigger reference pages: **415**
+- Sub-action reference pages: **363**
+- HTTP API pages: **9**
+- WebSocket API pages: **9**
+- UDP API pages: **2**
 
 ## C# code model
 
@@ -67,7 +67,6 @@ Streamer.bot is an event-driven automation tool for livestreamers. The official 
 
 ## Official examples captured
 
-- `Examples` — https://docs.streamer.bot/examples
 - `AutoHotKey Actions` — https://docs.streamer.bot/examples/autohotkey
 - `Chat Message Timer` — https://docs.streamer.bot/examples/chat-message-timer
 - `Chatbot Commands` — https://docs.streamer.bot/examples/chatbot-commands
@@ -76,6 +75,7 @@ Streamer.bot is an event-driven automation tool for livestreamers. The official 
 - `cURL POST Requests` — https://docs.streamer.bot/examples/curl-requests
 - `Execute Scripts` — https://docs.streamer.bot/examples/execute-scripts
 - `Advanced "Fetch URL"` — https://docs.streamer.bot/examples/http-post
+- `Examples` — https://docs.streamer.bot/examples
 - `AI Chat Command` — https://docs.streamer.bot/examples/ollama-chat-command
 - `Parse JSON Utility` — https://docs.streamer.bot/examples/parse-json-utility
 - `Quotes Commands for v1.0.0+` — https://docs.streamer.bot/examples/quotes-commands

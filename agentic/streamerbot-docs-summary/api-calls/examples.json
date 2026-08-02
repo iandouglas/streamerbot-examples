@@ -1,25 +1,5 @@
 [
   {
-    "title": "Examples",
-    "name": null,
-    "description": "Some basic examples for getting started with Streamer.bot!",
-    "version": null,
-    "route": "/examples",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/examples",
-    "sourcePath": "4.examples/0.index.md",
-    "section": "examples",
-    "headings": [
-      "Additional Resources"
-    ],
-    "summary": "Additional Resources\n\nBrowse the largest library of community-made functionality for Streamer.bot!",
-    "parameters": [],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
     "title": "AutoHotKey Actions",
     "name": null,
     "description": "Execute your Streamer.bot actions with AutoHotKey",
@@ -309,6 +289,24 @@
       }
     ],
     "codeBlockCount": 5
+  },
+  {
+    "title": "Examples",
+    "name": null,
+    "description": "Explore some examples from the community that showcase what you can do with Streamer.bot!",
+    "version": null,
+    "route": "/examples",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/examples",
+    "sourcePath": "4.examples/index.md",
+    "section": "examples",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
   },
   {
     "title": "AI Chat Command",

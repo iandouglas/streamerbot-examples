@@ -215,24 +215,6 @@
     "codeBlockCount": 4
   },
   {
-    "title": "WebSocket API",
-    "name": null,
-    "description": "Real-time interaction with Streamer.bot via the built-in WebSocket server.",
-    "version": null,
-    "route": "/api/websocket",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/websocket",
-    "sourcePath": "3.api/4.websocket/0.index.md",
-    "section": "api",
-    "headings": [],
-    "summary": "Learn how to configure and use the WebSocket server in Streamer.bot\n  \n  \n   Additional documentation for common use cases\n  \n  \n    Complete WebSocket API examples\n\nDocumentation for all WebSocket requests\n  \n  \n    Documentation for all WebSocket events",
-    "parameters": [],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
     "title": "Custom Overlays",
     "name": null,
     "description": "Create your own custom overlays using the WebSocket API",

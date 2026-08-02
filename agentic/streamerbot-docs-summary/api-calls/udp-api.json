@@ -20,24 +20,6 @@
     "codeBlockCount": 0
   },
   {
-    "title": "UDP Server",
-    "name": null,
-    "description": "Interact with Streamer.bot via UDP",
-    "version": null,
-    "route": "/api/udp",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/udp",
-    "sourcePath": "3.api/6.udp/0.index.md",
-    "section": "api",
-    "headings": [],
-    "summary": "Learn how to configure and use the UDP server in Streamer.bot\n  \n  \n    Documentation for all UDP server requests",
-    "parameters": [],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
     "title": "DoAction (UDP)",
     "name": null,
     "description": "Trigger an action in Streamer.bot via UDP",

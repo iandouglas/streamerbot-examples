@@ -22,7 +22,7 @@
       "Variable Types",
       "Start Building"
     ],
-    "summary": "Your Bot\n\n- With Streamer.bot, the bot is **yours**!\n\nStreamer.bot is a **local** bot, meaning all connections are made directly from your local PC to any configured external services, such as Twitch, YouTube, etc.",
+    "summary": "Your Bot\n\nWith Streamer.bot, the bot is **yours**!\n\nStreamer.bot is a **local** bot, meaning all connections are made directly from your local PC to any configured external services, such as Twitch, YouTube, etc.",
     "parameters": [],
     "variables": [],
     "commonVariables": [],
@@ -76,24 +76,6 @@
       "Meld Studio"
     ],
     "summary": "Overview\n\nThis guide covers the basics of the following initial setup of Streamer.bot:\n\n- Connect to your streaming **platform**, such as Twitch or YouTube\n- Connect your **broadcaster** software, such as OBS Studio or Streamlabs Desktop",
-    "parameters": [],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "FAQ",
-    "name": null,
-    "description": "Frequently Asked Questions",
-    "version": null,
-    "route": "/get-started/faq",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/get-started/faq",
-    "sourcePath": "1.get-started/4.faq.md",
-    "section": "get-started",
-    "headings": [],
-    "summary": "",
     "parameters": [],
     "variables": [],
     "commonVariables": [],
@@ -210,7 +192,6 @@
     "sourcePath": "2.guide/01.core/01.actions.md",
     "section": "guide",
     "headings": [
-      "Introduction",
       "Actions",
       "Configuration",
       "Options",
@@ -227,7 +208,7 @@
       "Action History",
       "Context Menu"
     ],
-    "summary": "Introduction\n\nPerhaps the most important piece of Streamer.bot, actions are at the center of everything you do.\n\nYou can configure actions for anything from basic alerts and shoutouts to extremely complex integrations such as TerrierDart's Leaderboard Points System{target=\\_blank}",
+    "summary": "Perhaps the most important piece of Streamer.bot, actions are at the center of everything you do.\n\nYou can configure actions for anything from basic alerts and shoutouts to extremely complex integrations such as TerrierDart's Leaderboard Points System{target=\\_blank}\n\nActions consist of configurable sets of sub-actions that can be executed by Streamer.bot's event sources, such as Triggers, Commands, various integrations such as Elgato Stream Deck, and even your own voice!",
     "parameters": [],
     "variables": [],
     "commonVariables": [],
@@ -892,6 +873,60 @@
     "codeBlockCount": 5
   },
   {
+    "title": "Keyboard Shortcuts",
+    "name": null,
+    "description": "Reference of keyboard shortcuts that can be used within the Streamer.bot UI",
+    "version": null,
+    "route": "/guide/advanced/shortcuts",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/guide/advanced/shortcuts",
+    "sourcePath": "2.guide/05.advanced/01.shortcuts.md",
+    "section": "guide",
+    "headings": [
+      "Global",
+      "Actions View",
+      "Actions",
+      "With Multiple Selected",
+      "Sub-Actions",
+      "Triggers",
+      "With Multiple Selected",
+      "Commands View",
+      "Timers View",
+      "MIDI Views",
+      "MIDI In",
+      "Devices",
+      "Events",
+      "MIDI Out",
+      "Voice Control Commands",
+      "Quotes",
+      "Twitch Channel Point Rewards"
+    ],
+    "summary": "Global\n\nThe global shortcuts listed below can be used from **anywhere within the Streamer.bot application**\n\nActions View",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Startup Switches",
+    "name": null,
+    "description": "Reference of all startup switches available when launching Streamer.bot",
+    "version": null,
+    "route": "/guide/advanced/switches",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/guide/advanced/switches",
+    "sourcePath": "2.guide/05.advanced/02.switches.md",
+    "section": "guide",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "Crowd Control",
     "name": null,
     "description": "Integrate Streamer.bot with Crowd Control",
@@ -899,7 +934,7 @@
     "route": "/guide/integrations/crowd-control",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/crowd-control",
-    "sourcePath": "2.guide/05.integrations/crowd-control.md",
+    "sourcePath": "2.guide/06.integrations/crowd-control.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -923,7 +958,7 @@
     "route": "/guide/integrations/discord",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/discord",
-    "sourcePath": "2.guide/05.integrations/discord.md",
+    "sourcePath": "2.guide/06.integrations/discord.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -945,7 +980,7 @@
     "route": "/guide/integrations/donordrive",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/donordrive",
-    "sourcePath": "2.guide/05.integrations/donordrive.md",
+    "sourcePath": "2.guide/06.integrations/donordrive.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -967,7 +1002,7 @@
     "route": "/guide/integrations/elgato-camera-hub",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/elgato-camera-hub",
-    "sourcePath": "2.guide/05.integrations/elgato-camera-hub.md",
+    "sourcePath": "2.guide/06.integrations/elgato-camera-hub.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -989,7 +1024,7 @@
     "route": "/guide/integrations/elgato-stream-deck",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/elgato-stream-deck",
-    "sourcePath": "2.guide/05.integrations/elgato-stream-deck.md",
+    "sourcePath": "2.guide/06.integrations/elgato-stream-deck.md",
     "section": "guide",
     "headings": [],
     "summary": "Official Elgato Stream Deck Plugin for Streamer.bot\n<br>\n<small>streamdeck.streamer.bot</small>",
@@ -1007,7 +1042,7 @@
     "route": "/guide/integrations/elgato-wave-link",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/elgato-wave-link",
-    "sourcePath": "2.guide/05.integrations/elgato-wave-link.md",
+    "sourcePath": "2.guide/06.integrations/elgato-wave-link.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1028,7 +1063,7 @@
     "route": "/guide/integrations/fourthwall",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/fourthwall",
-    "sourcePath": "2.guide/05.integrations/fourthwall.md",
+    "sourcePath": "2.guide/06.integrations/fourthwall.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1053,7 +1088,7 @@
     "route": "/guide/integrations/hyperate",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/hyperate",
-    "sourcePath": "2.guide/05.integrations/hyperate.md",
+    "sourcePath": "2.guide/06.integrations/hyperate.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1075,7 +1110,7 @@
     "route": "/guide/integrations/ifttt",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/ifttt",
-    "sourcePath": "2.guide/05.integrations/ifttt.md",
+    "sourcePath": "2.guide/06.integrations/ifttt.md",
     "section": "guide",
     "headings": [
       "Send Notifications to IFTTT",
@@ -1106,7 +1141,7 @@
     "route": "/guide/integrations/ko-fi",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/ko-fi",
-    "sourcePath": "2.guide/05.integrations/ko-fi.md",
+    "sourcePath": "2.guide/06.integrations/ko-fi.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1132,7 +1167,7 @@
     "route": "/guide/integrations/lumia-stream",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/lumia-stream",
-    "sourcePath": "2.guide/05.integrations/lumia-stream.md",
+    "sourcePath": "2.guide/06.integrations/lumia-stream.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1155,7 +1190,7 @@
     "route": "/guide/integrations/pallygg",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/pallygg",
-    "sourcePath": "2.guide/05.integrations/pallygg.md",
+    "sourcePath": "2.guide/06.integrations/pallygg.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1179,7 +1214,7 @@
     "route": "/guide/integrations/patreon",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/patreon",
-    "sourcePath": "2.guide/05.integrations/patreon.md",
+    "sourcePath": "2.guide/06.integrations/patreon.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1204,7 +1239,7 @@
     "route": "/guide/integrations/pulsoid",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/pulsoid",
-    "sourcePath": "2.guide/05.integrations/pulsoid.md",
+    "sourcePath": "2.guide/06.integrations/pulsoid.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1226,7 +1261,7 @@
     "route": "/guide/integrations/shopify",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/shopify",
-    "sourcePath": "2.guide/05.integrations/shopify.md",
+    "sourcePath": "2.guide/06.integrations/shopify.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1251,7 +1286,7 @@
     "route": "/guide/integrations/speakerbot",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/speakerbot",
-    "sourcePath": "2.guide/05.integrations/speakerbot.md",
+    "sourcePath": "2.guide/06.integrations/speakerbot.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1272,7 +1307,7 @@
     "route": "/guide/integrations/streamelements",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/streamelements",
-    "sourcePath": "2.guide/05.integrations/streamelements.md",
+    "sourcePath": "2.guide/06.integrations/streamelements.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1294,7 +1329,7 @@
     "route": "/guide/integrations/streamerbot",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/streamerbot",
-    "sourcePath": "2.guide/05.integrations/streamerbot.md",
+    "sourcePath": "2.guide/06.integrations/streamerbot.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1316,7 +1351,7 @@
     "route": "/guide/integrations/streamfog",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/streamfog",
-    "sourcePath": "2.guide/05.integrations/streamfog.md",
+    "sourcePath": "2.guide/06.integrations/streamfog.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1340,7 +1375,7 @@
     "route": "/guide/integrations/streamlabs",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/streamlabs",
-    "sourcePath": "2.guide/05.integrations/streamlabs.md",
+    "sourcePath": "2.guide/06.integrations/streamlabs.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1363,7 +1398,7 @@
     "route": "/guide/integrations/streamloots",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/streamloots",
-    "sourcePath": "2.guide/05.integrations/streamloots.md",
+    "sourcePath": "2.guide/06.integrations/streamloots.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1387,7 +1422,7 @@
     "route": "/guide/integrations/throne",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/throne",
-    "sourcePath": "2.guide/05.integrations/throne.md",
+    "sourcePath": "2.guide/06.integrations/throne.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1411,7 +1446,7 @@
     "route": "/guide/integrations/tipeee-stream",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/tipeee-stream",
-    "sourcePath": "2.guide/05.integrations/tipeee-stream.md",
+    "sourcePath": "2.guide/06.integrations/tipeee-stream.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1432,7 +1467,7 @@
     "route": "/guide/integrations/tits",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/tits",
-    "sourcePath": "2.guide/05.integrations/tits.md",
+    "sourcePath": "2.guide/06.integrations/tits.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1453,7 +1488,7 @@
     "route": "/guide/integrations/treatstream",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/treatstream",
-    "sourcePath": "2.guide/05.integrations/treatstream.md",
+    "sourcePath": "2.guide/06.integrations/treatstream.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1474,7 +1509,7 @@
     "route": "/guide/integrations/voicemod",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/voicemod",
-    "sourcePath": "2.guide/05.integrations/voicemod.md",
+    "sourcePath": "2.guide/06.integrations/voicemod.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1496,7 +1531,7 @@
     "route": "/guide/integrations/vtube-studio",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/guide/integrations/vtube-studio",
-    "sourcePath": "2.guide/05.integrations/vtube-studio.md",
+    "sourcePath": "2.guide/06.integrations/vtube-studio.md",
     "section": "guide",
     "headings": [
       "Configuration",
@@ -1506,42 +1541,6 @@
       "Usage"
     ],
     "summary": "Configuration\n\nEnable the VTube Studio API\n\nNavigate to **Settings** in VTube Studio",
-    "parameters": [],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Keyboard Shortcuts",
-    "name": null,
-    "description": "Reference of keyboard shortcuts that can be used within the Streamer.bot UI",
-    "version": null,
-    "route": "/guide/shortcuts",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/guide/shortcuts",
-    "sourcePath": "2.guide/12.shortcuts.md",
-    "section": "guide",
-    "headings": [
-      "Global",
-      "Actions View",
-      "Actions",
-      "With Multiple Selected",
-      "Sub-Actions",
-      "Triggers",
-      "With Multiple Selected",
-      "Commands View",
-      "Timers View",
-      "MIDI Views",
-      "MIDI In",
-      "Devices",
-      "Events",
-      "MIDI Out",
-      "Voice Control Commands",
-      "Quotes",
-      "Twitch Channel Point Rewards"
-    ],
-    "summary": "Global\n\nThe global shortcuts listed below can be used from **anywhere within the Streamer.bot application**\n\nActions View",
     "parameters": [],
     "variables": [],
     "commonVariables": [],
@@ -4581,11 +4580,26 @@
     "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/delay",
     "sourcePath": "3.api/1.sub-actions/core/delay.md",
     "section": "api",
-    "headings": [
-      "Parameters"
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Delay",
+        "type": "Number",
+        "required": true,
+        "description": "The duration of the delay"
+      },
+      {
+        "name": "Random",
+        "type": "Checkbox",
+        "description": "Generate a random delay between min/max values"
+      },
+      {
+        "name": "To",
+        "type": "Checkbox",
+        "description": "If `Random` is selected, a random delay will be selected between the `Delay` and `To` values"
+      }
     ],
-    "summary": "Parameters\n\nThe duration of the delay\n\nGenerate a random delay between min/max values",
-    "parameters": [],
     "variables": [],
     "commonVariables": [],
     "codeBlocks": [],
@@ -5232,6 +5246,42 @@
         "value": "123"
       }
     ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Loop Break",
+    "name": null,
+    "description": "Break out of a loop in the current action.",
+    "version": "1.0.5",
+    "route": "/api/sub-actions/core/logic/loop-break",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/logic/loop-break",
+    "sourcePath": "3.api/1.sub-actions/core/logic/loop-break.md",
+    "section": "api",
+    "headings": [],
+    "summary": "As opposed to the Break sub-action, which will break out of the current action entirely, this sub-action will only break out of the current loop and continue executing the rest of the action.\n\n:read-more{to=/api/sub-actions/core/logic/while}",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Loop Continue",
+    "name": null,
+    "description": "Continue to the next iteration of a loop in the current action.",
+    "version": "1.0.5",
+    "route": "/api/sub-actions/core/logic/loop-continue",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/logic/loop-continue",
+    "sourcePath": "3.api/1.sub-actions/core/logic/loop-continue.md",
+    "section": "api",
+    "headings": [],
+    "summary": "When executed during a loop, this sub-action will skip the rest of the current iteration and continue on to the next iteration of the loop.\n\n:read-more{to=/api/sub-actions/core/logic/while}",
+    "parameters": [],
+    "variables": [],
     "commonVariables": [],
     "codeBlocks": [],
     "codeBlockCount": 0
@@ -12300,6 +12350,389 @@
     "codeBlockCount": 0
   },
   {
+    "title": "Deck Notify",
+    "name": null,
+    "description": "Send a notification to a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/deck-notify",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/deck-notify",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/deck-notify.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck to send the notification to",
+        "required": true
+      },
+      {
+        "name": "Title",
+        "type": "Text",
+        "description": "The title of the notification",
+        "required": true
+      },
+      {
+        "name": "Description",
+        "type": "Text",
+        "description": "The description text for this notification"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Item Set Background",
+    "name": null,
+    "description": "Set the background of a specific item in a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/item-set-background",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/item-set-background",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/item-set-background.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck where the item is located",
+        "required": true
+      },
+      {
+        "name": "Item",
+        "type": "Select",
+        "description": "Select the item to modify",
+        "required": true
+      },
+      {
+        "name": "Color",
+        "type": "Text",
+        "description": "Set an optional background color for the item (hex code or color name)"
+      },
+      {
+        "name": "URL",
+        "type": "Text",
+        "description": "Set an optional image URL for the item"
+      },
+      {
+        "name": "File ID",
+        "type": "Text",
+        "description": "Set an optional image file ID for the item (for files uploaded to Streamer.bot)"
+      },
+      {
+        "name": "State",
+        "type": "Number",
+        "description": "Apply the change to a specific state of the item (0 for default, 1 for active, etc.)",
+        "default": 0
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Item Set Icon",
+    "name": null,
+    "description": "Set the icon of a specific item in a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/item-set-icon",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/item-set-icon",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/item-set-icon.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck where the item is located",
+        "required": true
+      },
+      {
+        "name": "Item",
+        "type": "Select",
+        "description": "Select the item to modify",
+        "required": true
+      },
+      {
+        "name": "Color",
+        "type": "Text",
+        "description": "Set an optional color for the icon (hex code or color name)"
+      },
+      {
+        "name": "Name",
+        "type": "Text",
+        "description": "Set the item's icon to an [Iconify](https://icon-sets.iconify.design/) icon name, e.g. 'mdi:home' or 'heroicons:arrow-left'"
+      },
+      {
+        "name": "URL",
+        "type": "Text",
+        "description": "Set the item's icon to an image URL"
+      },
+      {
+        "name": "File ID",
+        "type": "Text",
+        "description": "Set the item's icon to an image file ID (for files uploaded to Streamer.bot)"
+      },
+      {
+        "name": "State",
+        "type": "Number",
+        "description": "Apply the change to a specific state of the item (0 for default, 1 for active, etc.)",
+        "default": 0
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Item Set State",
+    "name": null,
+    "description": "Set the active state of an item in a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/item-set-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/item-set-state",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/item-set-state.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck where the item is located",
+        "required": true
+      },
+      {
+        "name": "Item",
+        "type": "Select",
+        "description": "Select the item to modify",
+        "required": true
+      },
+      {
+        "name": "State",
+        "type": "Number",
+        "description": "Enter the state to make active for the selected item (0 for default, 1 for active, etc.)",
+        "default": 0
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Item Set State",
+    "name": null,
+    "description": "Set the active state of an item in a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/item-set-title",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/item-set-title",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/item-set-title.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck where the item is located",
+        "required": true
+      },
+      {
+        "name": "Item",
+        "type": "Select",
+        "description": "Select the item to modify",
+        "required": true
+      },
+      {
+        "name": "Title",
+        "type": "Text",
+        "description": "Set the title text for the item"
+      },
+      {
+        "name": "Color",
+        "type": "Text",
+        "description": "Set an optional color for the title text (hex code or color name)"
+      },
+      {
+        "name": "State",
+        "type": "Number",
+        "description": "Apply the change to a specific state of the item (0 for default, 1 for active, etc.)",
+        "default": 0
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Item Set Value",
+    "name": null,
+    "description": "Set the status value of an item in a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/item-set-value",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/item-set-value",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/item-set-value.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck where the item is located",
+        "required": true
+      },
+      {
+        "name": "Item",
+        "type": "Select",
+        "description": "Select the item to modify",
+        "required": true
+      },
+      {
+        "name": "Value",
+        "type": "Number",
+        "description": "Set the value for the item"
+      },
+      {
+        "name": "State",
+        "type": "Number",
+        "description": "Apply the change to a specific state of the item (0 for default, 1 for active, etc.)",
+        "default": 0
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Item Toggle State",
+    "name": null,
+    "description": "Toggle the active state of an item in a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/item-toggle-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/item-toggle-state",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/item-toggle-state.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck where the item is located",
+        "required": true
+      },
+      {
+        "name": "Item",
+        "type": "Select",
+        "description": "Select the item to modify",
+        "required": true
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Page Next",
+    "name": null,
+    "description": "Go to the next page of a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/page-next",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/page-next",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/page-next.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck to send the page command to",
+        "required": true
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Page Previous",
+    "name": null,
+    "description": "Go to the previous page of a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/page-previous",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/page-previous",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/page-previous.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck to send the page command to",
+        "required": true
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Page Set",
+    "name": null,
+    "description": "Go to a specific page of a Streamer.bot deck",
+    "version": "1.0.0",
+    "route": "/api/sub-actions/streamerbot/decks/page-set",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/streamerbot/decks/page-set",
+    "sourcePath": "3.api/1.sub-actions/streamerbot/decks/page-set.md",
+    "section": "api",
+    "headings": [],
+    "summary": "Streamer.bot Website Integration is required for this sub-action",
+    "parameters": [
+      {
+        "name": "Deck",
+        "type": "Select",
+        "description": "Select the deck to send the page command to",
+        "required": true
+      },
+      {
+        "name": "Page",
+        "type": "Number",
+        "description": "The page number to navigate to",
+        "required": true
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "Send Remote Signal",
     "name": null,
     "description": "Send a remote signal to another Streamer.bot instance",
@@ -19028,12 +19461,15 @@
     "sourceUrl": "https://docs.streamer.bot/api/triggers/core/processes/process-started",
     "sourcePath": "3.api/2.triggers/core/processes/process-started.md",
     "section": "api",
-    "headings": [
-      "Details",
-      "Parameters"
+    "headings": [],
+    "summary": "**This trigger relies on the Process Watcher service**\n<br>\nYou can enable the **Process Watcher** in Streamer.bot by navigating to Services -> Process Watcher",
+    "parameters": [
+      {
+        "name": "Name",
+        "type": "Text",
+        "description": "The name of the process to watch for. This is the name of the process as it appears in Task Manager.\n<br>\nAn empty value is considered a catch-all and will trigger on **any** process started on your machine.\n"
+      }
     ],
-    "summary": "Details\nUsing this trigger requires you to have the Process Watcher enabled. This can be done under Services -> Process Watcher\n\nParameters\n\nInput the name of the process",
-    "parameters": [],
     "variables": [
       {
         "name": "name",
@@ -19080,12 +19516,15 @@
     "sourceUrl": "https://docs.streamer.bot/api/triggers/core/processes/process-stopped",
     "sourcePath": "3.api/2.triggers/core/processes/process-stopped.md",
     "section": "api",
-    "headings": [
-      "Details",
-      "Parameters"
+    "headings": [],
+    "summary": "**This trigger relies on the Process Watcher service**\n<br>\nYou can enable the **Process Watcher** in Streamer.bot by navigating to Services -> Process Watcher",
+    "parameters": [
+      {
+        "name": "Name",
+        "type": "Text",
+        "description": "The name of the process to watch for. This is the name of the process as it appears in Task Manager.\n<br>\nAn empty value is considered a catch-all and will trigger on **any** process started on your machine.\n"
+      }
     ],
-    "summary": "Details\nUsing this trigger requires you to have the Process Watcher enabled. This can be done under Services -> Process Watcher\n\nParameters\n\nInput the name of the process",
-    "parameters": [],
     "variables": [
       {
         "name": "name",
@@ -33956,7 +34395,7 @@
     "sourcePath": "3.api/2.triggers/twitch/ads/ad-mid-roll.md",
     "section": "api",
     "headings": [],
-    "summary": "**Removed in Streamer.bot v1.0.0**\n<br>\nTwitch has deprecated the PubSub API and all triggers relying on it have been removed.\n\nIt is **not recommended** to rely on this trigger.\n- This trigger utilizes an **undocumented and unsupported** Twitch PubSub event which could be removed, without warning, in the future.\n\nThis event triggers 5 seconds prior to the start of an ad.",
+    "summary": "**Removed in Streamer.bot v1.0.0**\n<br>\nTwitch has deprecated the PubSub API and all triggers relying on it have been removed.\n\nIt is **not recommended** to rely on this trigger.\n\n- This trigger utilizes an **undocumented and unsupported** Twitch PubSub event which could be removed, without warning, in the future.",
     "parameters": [],
     "variables": [
       {
@@ -36404,7 +36843,7 @@
     "headings": [
       "Notes"
     ],
-    "summary": "Notes\nThe user sending the whisper must have a **verified phone number** (see the **Phone Number setting** in your **Security and Privacy settings**).\n\nThe API may silently drop whispers that it suspects of violating Twitch policies, it will still indicate success even if the message is dropped.\n\nRate Limits: You may whisper to a maximum of **40 unique recipients per day**. Within the per day limit, you may whisper a maximum of 3 whispers per second and a maximum of 100 whispers per minute.",
+    "summary": "Notes\n\nThe user sending the whisper must have a **verified phone number** (see the **Phone Number setting** in your **Security and Privacy settings**).\n\nThe API may silently drop whispers that it suspects of violating Twitch policies, it will still indicate success even if the message is dropped.",
     "parameters": [],
     "variables": [],
     "commonVariables": [
@@ -36924,7 +37363,7 @@
     "sourcePath": "3.api/2.triggers/twitch/chat/first-words.md",
     "section": "api",
     "headings": [],
-    "summary": "This triggers when someone sends their first message of the stream.\n\nThe exact reset time is set in Platforms -> Twitch -> Settings and is 12h by default. That means that StreamerBot must have been closed for 12 hours in order to reset the First Words trigger.\n\nYou can create a new action, then create a  Settings -> Reset First Words subaction and assign a Twitch -> Channel -> Stream Online trigger. This will automatically reset the First Words trigger once you go live without any time requirement.",
+    "summary": "This triggers when someone sends their first message of the stream.\n\nThe exact reset time is set in Platforms -> Twitch -> Settings and is 12h by default. That means that StreamerBot must have been closed for 12 hours in order to reset the First Words trigger.\n\nYou can create a new action, then create a Settings -> Reset First Words subaction and assign a Twitch -> Channel -> Stream Online trigger. This will automatically reset the First Words trigger once you go live without any time requirement.",
     "parameters": [
       {
         "name": "User Name",
@@ -38786,7 +39225,7 @@
     "headings": [
       "Notes"
     ],
-    "summary": "Notes\nThe user sending the whisper must have a **verified phone number** (see the **Phone Number setting** in your **Security and Privacy settings**).\n\nThe API may silently drop whispers that it suspects of violating Twitch policies, it will still indicate success even if the message is dropped.\n\nRate Limits: You may whisper to a maximum of **40 unique recipients per day**. Within the per day limit, you may whisper a maximum of 3 whispers per second and a maximum of 100 whispers per minute.",
+    "summary": "Notes\n\nThe user sending the whisper must have a **verified phone number** (see the **Phone Number setting** in your **Security and Privacy settings**).\n\nThe API may silently drop whispers that it suspects of violating Twitch policies, it will still indicate success even if the message is dropped.",
     "parameters": [],
     "variables": [],
     "commonVariables": [
@@ -40404,7 +40843,7 @@
       "Details",
       "Notes"
     ],
-    "summary": "Details\nThis triggers every 1-10 minutes, default every 5 minutes.\n\nNotes\nThe present viewer tick will always happen, but you have the ability to have it \"live update\" from Twitch, or artificially mark someone as present.\n\nUnder the Platforms > Twitch > Settings, in the Present Viewers section, there are 2 settings, a Live Update check box, and a slider bar.",
+    "summary": "Details\n\nThis triggers every 1-10 minutes, default every 5 minutes.\n\nNotes",
     "parameters": [],
     "variables": [
       {
@@ -40660,7 +41099,7 @@
       "Details",
       "Parameters"
     ],
-    "summary": "Details\nThis triggers when the title or the description changes on your stream.\n\nParameters\n\nCheck this field if you only want this to trigger when the game changes\n  \n  \n    Select a game if you only want this to trigger when the stream changes to this game",
+    "summary": "Details\n\nThis triggers when the title or the description changes on your stream.\n\nParameters",
     "parameters": [],
     "variables": [
       {
@@ -55871,6 +56310,222 @@
     "codeBlockCount": 0
   },
   {
+    "title": "Jewels Gifted",
+    "name": null,
+    "description": "Trigger for a when jewels have been spent to send a gift to the broadcaster",
+    "version": "1.0.5",
+    "route": "/api/triggers/youtube/chat/jewels-gifted",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/youtube/chat/jewels-gifted",
+    "sourcePath": "3.api/2.triggers/youtube/chat/jewels-gifted.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [
+      {
+        "name": "publishedAt",
+        "type": "DateTime",
+        "description": "The time the message was published at",
+        "value": "5/8/2026 12:00:00 PM"
+      },
+      {
+        "name": "gift.jewelsAmount",
+        "type": "number",
+        "description": "The amount of Jewels redeemed for the gift",
+        "value": 10
+      },
+      {
+        "name": "gift.name",
+        "type": "string",
+        "description": "The name of the gift",
+        "value": "Thumbs up"
+      },
+      {
+        "name": "gift.url",
+        "type": "string",
+        "descripton": "The URL of the gift asset",
+        "value": "https://www.gstatic.com/youtube/img/pdg/gift/assets/keep_it_up.png"
+      },
+      {
+        "name": "gift.durationInSeconds",
+        "type": "string",
+        "description": "The number of seconds to display the gift URL",
+        "value": 3
+      },
+      {
+        "name": "gift.durationInNanoSeconds",
+        "type": "string",
+        "description": "The number of nanoseconds to display the gift URL",
+        "value": 0
+      },
+      {
+        "name": "gift.hasVisualEffect",
+        "type": "boolean",
+        "description": "Indicates if the gift has a visual effect",
+        "value": false
+      },
+      {
+        "name": "gift.isCombo",
+        "type": "boolean",
+        "description": "Indicates if this gift is part of a combo",
+        "value": false
+      },
+      {
+        "name": "gift.comboCount",
+        "type": "number",
+        "description": "What combo level the gift is",
+        "value": 1
+      },
+      {
+        "name": "gift.altText",
+        "type": "string",
+        "description": "A text string that describes the gift",
+        "value": "Thumbs up"
+      },
+      {
+        "name": "gift.altTextLanguage",
+        "type": "string",
+        "description": "The language of the `gift.altText`",
+        "value": "en_US"
+      }
+    ],
+    "commonVariables": [
+      {
+        "name": "user",
+        "type": "string",
+        "description": "The display name of the user",
+        "value": "YouTubeUser123"
+      },
+      {
+        "name": "userName",
+        "type": "string",
+        "description": "The login name of the user",
+        "value": "youtubeuser123"
+      },
+      {
+        "name": "userId",
+        "type": "string",
+        "description": "Unique user identifier",
+        "value": "UCI9-KG2xoyh5z-g41IL2jqf"
+      },
+      {
+        "name": "userType",
+        "type": "string",
+        "description": "Streaming service of this user",
+        "value": "youtube"
+      },
+      {
+        "name": "isSubscribed",
+        "type": "bool",
+        "description": "Has the user been a member at any time, including the present?",
+        "value": true
+      },
+      {
+        "name": "isModerator",
+        "type": "bool",
+        "description": "Is this user a moderator?",
+        "value": true
+      },
+      {
+        "name": "userPreviousActive",
+        "type": "DateTime",
+        "description": "When was this user last active?",
+        "value": "8/4/2023 10:56:06 AM"
+      },
+      {
+        "name": "userProfileUrl",
+        "type": "string",
+        "description": "The user's YouTube profile image"
+      },
+      {
+        "name": "userIsSponsor",
+        "type": "boolean",
+        "description": "Indicates whether the viewer is a current channel member or not"
+      },
+      {
+        "name": "broadcast.id",
+        "type": "string",
+        "description": "The ID of the broadcast the message was sent from",
+        "value": "UCI9-KG2xoyh5z-g41IL2jqf"
+      },
+      {
+        "name": "broadcast.title",
+        "type": "string",
+        "description": "The title of the broadcast the message was sent from",
+        "value": "Really cool stream title"
+      },
+      {
+        "name": "broadcast.description",
+        "type": "string",
+        "description": "The description of the broadcast the message was sent from",
+        "value": "Super cool YouTube Stream happening now!"
+      },
+      {
+        "name": "broadcast.privacy",
+        "type": "string",
+        "description": "The privacy setting of the broadcast the message was sent from\n\nValid values are `public`, `unlisted`, `private`\n",
+        "value": "public"
+      },
+      {
+        "name": "broadcast.status",
+        "type": "string",
+        "description": "The online status of the broadcast the message was sent from\n\nPossible values are, `complete`, `created`, `live`, `liveStarting`, `ready`, `revoked`, `testStarting`, `testing` \n",
+        "value": "live"
+      },
+      {
+        "name": "broadcast.publishedAt",
+        "type": "DateTime",
+        "description": "When the YouTube broadcast was first published on YouTube",
+        "value": "12/21/2023 9:25:21 AM"
+      },
+      {
+        "name": "broadcast.defaultLanguage",
+        "type": "string",
+        "description": "The default language code for the YouTube Broadcast's Title and Description",
+        "value": "en"
+      },
+      {
+        "name": "broadcast.defaultAudioLanguage",
+        "type": "string",
+        "description": "The default language code for the YouTube Broadcast's Stream",
+        "value": "en"
+      },
+      {
+        "name": "broadcast.tags",
+        "type": "string",
+        "description": "The tags that are set for the YouTube Broadcast as a comma delimited string, and these tags are case sensitive.",
+        "value": "Horizontal,Gaming"
+      },
+      {
+        "name": "broadcastUsername",
+        "type": "string",
+        "description": "The YouTube user name of the broadcaster account",
+        "value": "youtubeuser123"
+      },
+      {
+        "name": "broadcastUserId",
+        "type": "string",
+        "description": "The YouTube user ID of the broadcaster account",
+        "value": "UCI9-KG2xoyh5z-g41IL2jqf"
+      },
+      {
+        "name": "broadcastUserProfileImage",
+        "type": "string",
+        "description": "The profile image of the broadcaster account",
+        "value": "https://yt3.ggpht.com/ytc/profile-image-id"
+      },
+      {
+        "name": "broadcastId",
+        "type": "string",
+        "description": "The broadcast ID from the livestream",
+        "value": "UCI9-KG2xoy"
+      }
+    ],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "Message",
     "name": null,
     "description": "Trigger for incoming YouTube chat messages",
@@ -56629,7 +57284,7 @@
     "sourcePath": "3.api/2.triggers/youtube/general/new-subscriber.md",
     "section": "api",
     "headings": [],
-    "summary": "**This trigger relies on event data from StreamElements** <br>\n  :icon{name=\"i-mdi-chevron-right\"} For this trigger to work you must configure the StreamElements integration in Streamer.bot",
+    "summary": "You will not receive a New Subscriber event for users that have their Subscriptions Private, and/or if the Google account does not have a YouTube Channel created.",
     "parameters": [],
     "variables": [],
     "commonVariables": [
@@ -58313,24 +58968,6 @@
       "References"
     ],
     "summary": ":wip\n\nCompiling Log\n\nThis view allows you to see the output from the compiler when you attempt to compile your code.",
-    "parameters": [],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "C# Code Actions",
-    "name": null,
-    "description": "Extend Streamer.bot and take full control with custom code actions.",
-    "version": null,
-    "route": "/api/csharp",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/csharp",
-    "sourcePath": "3.api/3.csharp/0.index.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
     "parameters": [],
     "variables": [],
     "commonVariables": [],
@@ -63946,24 +64583,6 @@
     "codeBlockCount": 4
   },
   {
-    "title": "WebSocket API",
-    "name": null,
-    "description": "Real-time interaction with Streamer.bot via the built-in WebSocket server.",
-    "version": null,
-    "route": "/api/websocket",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/websocket",
-    "sourcePath": "3.api/4.websocket/0.index.md",
-    "section": "api",
-    "headings": [],
-    "summary": "Learn how to configure and use the WebSocket server in Streamer.bot\n  \n  \n   Additional documentation for common use cases\n  \n  \n    Complete WebSocket API examples\n\nDocumentation for all WebSocket requests\n  \n  \n    Documentation for all WebSocket events",
-    "parameters": [],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
     "title": "Custom Overlays",
     "name": null,
     "description": "Create your own custom overlays using the WebSocket API",
@@ -64586,24 +65205,6 @@
     "codeBlockCount": 0
   },
   {
-    "title": "HTTP Server",
-    "name": null,
-    "description": "Explore the HTTP API and/or serve local files with Streamer.bot",
-    "version": null,
-    "route": "/api/http",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/http",
-    "sourcePath": "3.api/5.http/0.index.md",
-    "section": "api",
-    "headings": [],
-    "summary": "Learn how to configure and use the HTTP server in Streamer.bot\n  \n  \n    Documentation for all HTTP server requests",
-    "parameters": [],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
     "title": "ClearCredits",
     "name": null,
     "description": "Clear the credits via HTTP in Streamer.bot",
@@ -64883,24 +65484,6 @@
     "codeBlockCount": 0
   },
   {
-    "title": "UDP Server",
-    "name": null,
-    "description": "Interact with Streamer.bot via UDP",
-    "version": null,
-    "route": "/api/udp",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/udp",
-    "sourcePath": "3.api/6.udp/0.index.md",
-    "section": "api",
-    "headings": [],
-    "summary": "Learn how to configure and use the UDP server in Streamer.bot\n  \n  \n    Documentation for all UDP server requests",
-    "parameters": [],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
     "title": "DoAction (UDP)",
     "name": null,
     "description": "Trigger an action in Streamer.bot via UDP",
@@ -64925,26 +65508,6 @@
       }
     ],
     "codeBlockCount": 1
-  },
-  {
-    "title": "Examples",
-    "name": null,
-    "description": "Some basic examples for getting started with Streamer.bot!",
-    "version": null,
-    "route": "/examples",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/examples",
-    "sourcePath": "4.examples/0.index.md",
-    "section": "examples",
-    "headings": [
-      "Additional Resources"
-    ],
-    "summary": "Additional Resources\n\nBrowse the largest library of community-made functionality for Streamer.bot!",
-    "parameters": [],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
   },
   {
     "title": "AutoHotKey Actions",
@@ -65236,6 +65799,24 @@
       }
     ],
     "codeBlockCount": 5
+  },
+  {
+    "title": "Examples",
+    "name": null,
+    "description": "Explore some examples from the community that showcase what you can do with Streamer.bot!",
+    "version": null,
+    "route": "/examples",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/examples",
+    "sourcePath": "4.examples/index.md",
+    "section": "examples",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
   },
   {
     "title": "AI Chat Command",
