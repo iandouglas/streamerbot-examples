@@ -22,8 +22,25 @@ public class CPHInline
         if (!CPH.GetGlobalVar<bool>("connectfour_game_active", false))
             return true;
 
+        // Atomic guard: if ai_pending is already false, another invocation already
+        // claimed this move. Check-and-clear must happen before any grid work.
         if (!CPH.GetGlobalVar<bool>("connectfour_ai_pending", false))
+        {
+            Log("ai: skipping, ai_pending is false (already claimed)");
             return true;
+        }
+
+        // Re-check phase — if the tick or a manual cancel moved us out of "ai",
+        // don't execute a move.
+        string phase = CPH.GetGlobalVar<string>("connectfour_phase", false) ?? "";
+        if (phase != "ai")
+        {
+            Log($"ai: skipping, phase is '{phase}' (expected ai)");
+            return true;
+        }
+
+        // Claim the move immediately so concurrent invocations/ticks can't race.
+        CPH.SetGlobalVar("connectfour_ai_pending", false, false);
 
         string difficulty = CPH.GetGlobalVar<string>("connectfour_difficulty", false) ?? "normal";
         int rows = CPH.GetGlobalVar<int>("connectfour_rows", false);
@@ -39,7 +56,15 @@ public class CPHInline
             col = FindFirstAvailableColumn(grid, cols);
             if (col < 0)
             {
-                CPH.SetGlobalVar("connectfour_ai_pending", false, false);
+                // Board is full — end as a draw.
+                long nowDraw = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                CPH.SetGlobalVar("connectfour_phase", "game_end", false);
+                CPH.SetGlobalVar("connectfour_phase_started_at", nowDraw, false);
+                SendEvent("game-over", new Dictionary<string, object>
+                {
+                    { "result", "draw" },
+                    { "winningCells", new List<Dictionary<string, int>>() }
+                });
                 return true;
             }
             CanDrop(grid, col, out dropRow);

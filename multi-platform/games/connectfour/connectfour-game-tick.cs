@@ -9,7 +9,6 @@ public class CPHInline
     private const long JoinWindowMs = 60000;
     private const long VotingWindowMs = 30000;
     private const long TiebreakWindowMs = 15000;
-    private const long AiThinkBudgetMs = 8000;
     private const long MoveAnimationMs = 2500;
     private const long GameEndDisplayMs = 8000;
 
@@ -87,6 +86,11 @@ public class CPHInline
 
     private void HandleVotingPhase(long now)
     {
+        // Guard against double-resolution.
+        string currentPhase = CPH.GetGlobalVar<string>("connectfour_phase", false) ?? "";
+        if (currentPhase != "voting")
+            return;
+
         long startedAt = CPH.GetGlobalVar<long>("connectfour_phase_started_at", false);
         long remaining = Math.Max(0, VotingWindowMs - (now - startedAt));
 
@@ -101,11 +105,21 @@ public class CPHInline
             return;
         }
 
-        ResolveVotes(now, isTiebreak: false);
+        // Re-check phase before resolving in case another tick just transitioned.
+        currentPhase = CPH.GetGlobalVar<string>("connectfour_phase", false) ?? "";
+        if (currentPhase == "voting")
+        {
+            ResolveVotes(now, isTiebreak: false);
+        }
     }
 
     private void HandleTiebreakPhase(long now)
     {
+        // Guard against double-resolution.
+        string currentPhase = CPH.GetGlobalVar<string>("connectfour_phase", false) ?? "";
+        if (currentPhase != "tiebreak")
+            return;
+
         long startedAt = CPH.GetGlobalVar<long>("connectfour_phase_started_at", false);
         long remaining = Math.Max(0, TiebreakWindowMs - (now - startedAt));
 
@@ -121,7 +135,12 @@ public class CPHInline
             return;
         }
 
-        ResolveVotes(now, isTiebreak: true);
+        // Re-check phase before resolving in case another tick just transitioned.
+        currentPhase = CPH.GetGlobalVar<string>("connectfour_phase", false) ?? "";
+        if (currentPhase == "tiebreak")
+        {
+            ResolveVotes(now, isTiebreak: true);
+        }
     }
 
     private List<int> CurrentFinalists()
@@ -161,20 +180,47 @@ public class CPHInline
 
     private void HandleAiPhase(long now)
     {
+        // The AI sub-action (connectfour-ai-move) is responsible for completing
+        // the move and transitioning the phase to "animating". The tick does NOT
+        // call a fallback here — the AI sub-action has its own internal fallback
+        // chain (Ollama -> minimax -> random) and will always complete.
+        //
+        // If the AI sub-action somehow crashes or hangs, the streamer can cancel
+        // with !game connectfour end. We do not want a concurrent fallback here
+        // because it races with the AI sub-action and causes double drops.
+        //
+        // All we do here is broadcast a "thinking" status update.
+        string currentPhase = CPH.GetGlobalVar<string>("connectfour_phase", false) ?? "";
+        if (currentPhase != "ai")
+            return;
+
         long startedAt = CPH.GetGlobalVar<long>("connectfour_phase_started_at", false);
-        if (now - startedAt >= AiThinkBudgetMs)
+        long elapsed = now - startedAt;
+
+        SendEvent("phase", new Dictionary<string, object>
         {
-            Log("ai: budget expired, forcing fallback move");
-            ExecuteAiFallback();
-        }
+            { "phase", "ai" },
+            { "currentPlayer", 2 },
+            { "elapsedMs", elapsed }
+        });
     }
 
     private void HandleAnimatingPhase(long now)
     {
+        // Guard against double-processing: if the phase already moved on, do nothing.
+        string currentPhase = CPH.GetGlobalVar<string>("connectfour_phase", false) ?? "";
+        if (currentPhase != "animating")
+            return;
+
         long startedAt = CPH.GetGlobalVar<long>("connectfour_phase_started_at", false);
         if (now - startedAt >= MoveAnimationMs)
         {
-            AfterMoveComplete();
+            // Re-check before acting in case another tick just transitioned.
+            currentPhase = CPH.GetGlobalVar<string>("connectfour_phase", false) ?? "";
+            if (currentPhase == "animating")
+            {
+                AfterMoveComplete();
+            }
         }
     }
 
@@ -264,6 +310,14 @@ public class CPHInline
 
     private void ExecuteHumanMove(int col, long now)
     {
+        // Guard against double-execution: only execute if we're still in voting/tiebreak.
+        string phase = CPH.GetGlobalVar<string>("connectfour_phase", false) ?? "";
+        if (phase != "voting" && phase != "tiebreak")
+        {
+            Log($"ExecuteHumanMove: skipping, phase is '{phase}' (expected voting/tiebreak)");
+            return;
+        }
+
         int rows = CPH.GetGlobalVar<int>("connectfour_rows", false);
         int cols = CPH.GetGlobalVar<int>("connectfour_cols", false);
         var grid = LoadGrid(rows, cols);
@@ -299,61 +353,18 @@ public class CPHInline
         Log($"move: human dropped in col {col + 1}, row {dropRow}");
     }
 
-    private void ExecuteAiFallback()
-    {
-        long now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        int rows = CPH.GetGlobalVar<int>("connectfour_rows", false);
-        int cols = CPH.GetGlobalVar<int>("connectfour_cols", false);
-        var grid = LoadGrid(rows, cols);
-
-        int col = FindFirstAvailableColumn(grid, cols);
-        if (col < 0)
-        {
-            EndGame("draw", null, now);
-            return;
-        }
-
-        ExecuteAiMove(col, now);
-    }
-
-    public void ExecuteAiMove(int col, long now)
-    {
-        int rows = CPH.GetGlobalVar<int>("connectfour_rows", false);
-        int cols = CPH.GetGlobalVar<int>("connectfour_cols", false);
-        var grid = LoadGrid(rows, cols);
-
-        if (!CanDrop(grid, col, out int dropRow))
-        {
-            col = FindFirstAvailableColumn(grid, cols);
-            if (col < 0)
-            {
-                EndGame("draw", null, now);
-                return;
-            }
-            CanDrop(grid, col, out dropRow);
-        }
-
-        int player = 2;
-        grid[dropRow][col] = player;
-        SaveGrid(grid);
-
-        CPH.SetGlobalVar("connectfour_last_move", $"{dropRow},{col}", false);
-        CPH.SetGlobalVar("connectfour_phase", "animating", false);
-        CPH.SetGlobalVar("connectfour_phase_started_at", now, false);
-        CPH.SetGlobalVar("connectfour_ai_pending", false, false);
-
-        SendEvent("move", new Dictionary<string, object>
-        {
-            { "player", player },
-            { "row", dropRow },
-            { "col", col }
-        });
-
-        Log($"move: AI dropped in col {col + 1}, row {dropRow}");
-    }
-
     private void AfterMoveComplete()
     {
+        // Guard against double-advancement: atomically transition out of "animating".
+        string phase = CPH.GetGlobalVar<string>("connectfour_phase", false) ?? "";
+        if (phase != "animating")
+        {
+            Log($"AfterMoveComplete: skipping, phase is '{phase}' (expected animating)");
+            return;
+        }
+        // Immediately clear the phase so a concurrent tick doesn't re-enter.
+        CPH.SetGlobalVar("connectfour_phase", "transitioning", false);
+
         long now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         int rows = CPH.GetGlobalVar<int>("connectfour_rows", false);
         int cols = CPH.GetGlobalVar<int>("connectfour_cols", false);

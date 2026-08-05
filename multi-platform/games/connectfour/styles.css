@@ -134,36 +134,39 @@
 
 .column-label {
     text-align: center;
-    font-size: 28px;
+    font-size: 48px;
     font-weight: bold;
     color: #ffd54a;
-    text-shadow: 1px 1px 0 #000;
+    text-shadow: 2px 2px 0 #000, 0 0 8px rgba(0, 0, 0, 0.6);
     font-family: 'Courier New', monospace;
+    line-height: 1.1;
 }
 
 .column-label.highlighted {
     color: #4caf50;
-    text-shadow: 0 0 12px rgba(76, 175, 80, 0.8), 1px 1px 0 #000;
+    text-shadow: 0 0 16px rgba(76, 175, 80, 0.9), 2px 2px 0 #000;
 }
 
 .column-label.leading {
     color: #ffd700;
-    text-shadow: 0 0 14px rgba(255, 215, 0, 0.9), 1px 1px 0 #000;
+    text-shadow: 0 0 18px rgba(255, 215, 0, 0.95), 2px 2px 0 #000;
 }
 
 .vote-count {
-    font-size: 18px;
+    font-size: 22px;
     font-weight: bold;
-    color: #fff;
-    background: rgba(255, 215, 0, 0.85);
-    border-radius: 50%;
-    width: 26px;
-    height: 26px;
-    line-height: 26px;
+    color: #ffd700;
     text-align: center;
-    margin: 4px auto 0 auto;
-    text-shadow: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    margin-top: 4px;
+    line-height: 1;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.vote-count::before {
+    content: "votes: ";
+    color: #a0a0a0;
+    font-size: 16px;
+    font-weight: normal;
 }
 
 .vote-total {

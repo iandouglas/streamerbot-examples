@@ -79,7 +79,7 @@ function updateVoteTally(tally) {
         const count = counts[col] || 0;
         label.classList.toggle('leading', count > 0 && count === maxCount);
 
-        // Append/replace a vote-count badge under the number.
+        // Replace the vote-count text below the column number.
         let badge = label.querySelector('.vote-count');
         if (count > 0) {
             if (!badge) {
@@ -87,7 +87,7 @@ function updateVoteTally(tally) {
                 badge.className = 'vote-count';
                 label.appendChild(badge);
             }
-            badge.textContent = count;
+            badge.textContent = String(count);
         } else if (badge) {
             badge.remove();
         }
@@ -95,7 +95,7 @@ function updateVoteTally(tally) {
 
     // Update the total votes display in the voting section.
     const totalEl = $('votingSection').querySelector('.vote-total');
-    if (totalEl) totalEl.textContent = total > 0 ? `${total} vote${total === 1 ? '' : 's'}` : '';
+    if (totalEl) totalEl.textContent = total > 0 ? `${total} vote${total === 1 ? '' : 's'} total` : '';
 }
 
 function clearVoteTally() {
