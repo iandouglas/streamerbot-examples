@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-08-02T08:46:33.725461+00:00",
+  "generatedAt": "2026-08-09T08:12:44.375789+00:00",
   "sources": {
     "officialDocs": {
       "site": "https://docs.streamer.bot/",
       "repo": "https://github.com/Streamerbot/docs",
       "localRoot": "agentic/streamerbot-docs",
-      "revision": "9d8b2952367a2add940ea10043b5c2a07385e729",
+      "revision": "d7aec330a39320cc1c8cb068078d040057fadad1",
       "branches": [
         {
           "name": "origin/Mustached-Maniac-patch-1",
@@ -29,8 +29,8 @@
         },
         {
           "name": "origin/main",
-          "shortHash": "9d8b295",
-          "subject": "docs: update youtube subscription, remove streamelements requirement"
+          "shortHash": "d7aec33",
+          "subject": "docs: add throne contribution purchased variables"
         }
       ]
     },

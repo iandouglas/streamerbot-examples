@@ -470,7 +470,7 @@
   {
     "title": "Backup & Restore",
     "name": null,
-    "description": "Easily fix things when they go wrong!",
+    "description": "Learn how to backup and restore your Streamer.bot configuration, including rolling back to previous versions.",
     "version": null,
     "route": "/guide/core/backup",
     "sourceRepo": "streamerbot-docs",
@@ -478,12 +478,28 @@
     "sourcePath": "2.guide/01.core/10.backup.md",
     "section": "guide",
     "headings": [
-      "Restoring Backups",
-      "Data",
-      "App Rollback",
-      "Video Tutorial"
+      "Local Backups",
+      "Restoring Data Backups",
+      "Select a Backup to Restore",
+      "Restore Your Backup",
+      "Restart Streamer.bot",
+      "Rolling Back to a Previous Version",
+      "Download a previous version of Streamer.bot",
+      "Select a Backup to Restore",
+      "Restore Your Backup",
+      "Restart Streamer.bot",
+      "Video Tutorial",
+      "Cloud Backups",
+      "Upload a Backup to the Cloud",
+      "Open Backup Settings",
+      "Configure Your Cloud Backup",
+      "Create Backup",
+      "Restore a Backup from the Cloud",
+      "Open Backup Settings",
+      "Select a Backup to Restore",
+      "Restart Streamer.bot"
     ],
-    "summary": "Streamer.bot **automatically** performs backups any time you open the application or perform an update with the in-built updater.\n\nYou can use these backups to fully restore your data, in case you accidentally deleted something and would like to restore it.\n\nYou can even fix catastrophic scenarios preventing you from starting up Streamer.bot by simply restoring an automatic backup!",
+    "summary": "Local Backups\n\nBackups are **automatically saved** any time you open Streamer.bot or perform an update with the built-in updater\n\nThese backups contain **all** of your configuration settings, including actions, commands, stored user data, and more. This means that if you ever experience a catastrophic failure, you can fully restore your configuration to a previous state.",
     "parameters": [],
     "variables": [],
     "commonVariables": [],
@@ -2010,6 +2026,13 @@
         "type": "Guid",
         "description": "The unique ID of this running action instance within the queue",
         "value": "c83dd939-9f86-4435-b07c-b6e7e3eef134"
+      },
+      {
+        "name": "queueName",
+        "type": "string",
+        "description": "The name of the queue the action is in",
+        "value": "Alerts",
+        "version": "1.0.5"
       },
       {
         "name": "actionQueuedAt",
@@ -29755,9 +29778,64 @@
     "sourcePath": "3.api/2.triggers/integrations/throne/contribution-purchased.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [],
-    "variables": [],
+    "variables": [
+      {
+        "name": "throne.gifterLogin",
+        "type": "string",
+        "description": "The login of the gifter",
+        "value": "Lyfesaver74"
+      },
+      {
+        "name": "throne.amount",
+        "type": "number",
+        "description": "The amount of the contribution, in cents",
+        "value": 10000
+      },
+      {
+        "name": "throne.creatorId",
+        "type": "string",
+        "description": "The ID of the creator / recipient of the gift",
+        "value": "twitch:12345678"
+      },
+      {
+        "name": "throne.creatorLogin",
+        "type": "string",
+        "description": "The login of the creator / recipient of the gift",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "throne.message",
+        "type": "string",
+        "description": "The message attached to the gift",
+        "value": "Happy Birthday!"
+      },
+      {
+        "name": "throne.itemName",
+        "type": "string",
+        "description": "The name of the item purchased as a gift",
+        "value": "AirPods Max"
+      },
+      {
+        "name": "throne.itemThumbnailUrl",
+        "type": "string",
+        "description": "The URL of the thumbnail image for the item purchased as a gift",
+        "value": "https://m.media-amazon.com/images/I/81jqUPkIVRL._AC_SX522_.jpg"
+      },
+      {
+        "name": "throne.currency",
+        "type": "string",
+        "description": "The currency of the contribution amount",
+        "value": "USD"
+      },
+      {
+        "name": "throne.createdAt",
+        "type": "DateTime",
+        "description": "The timestamp when the gift was created",
+        "value": "7/10/2026 3:01:00 PM"
+      }
+    ],
     "commonVariables": [],
     "codeBlocks": [],
     "codeBlockCount": 0
@@ -58936,22 +59014,47 @@
     "codeBlockCount": 3
   },
   {
-    "title": "Sharing Extensions",
+    "title": "Threading Best Practices",
     "name": null,
-    "description": "Best practices when creating C# extensions to share with the community",
+    "description": "Best practices when dealing with background threads and tasks",
     "version": null,
-    "route": "/api/csharp/guide/extensions",
+    "route": "/api/csharp/guide/threading-best-practices",
     "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/csharp/guide/extensions",
-    "sourcePath": "3.api/3.csharp/0.guide/3.extensions.md",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/guide/threading-best-practices",
+    "sourcePath": "3.api/3.csharp/0.guide/4.threading-best-practices.md",
     "section": "api",
-    "headings": [],
-    "summary": ":wip",
+    "headings": [
+      "Never use `async void`{lang=cs}",
+      "Prefer `Task.Run()` over `new Thread()`",
+      "Handling Third-Party Assemblies"
+    ],
+    "summary": "Streamer.bot provides an isolated AppDomain sandbox that catches and logs runtime errors originating from C# CPH scripts.\n\nWhile standard synchronous code, wrapped execution paths, and standard Task operations are fully caught, unhandled exceptions on raw background threads can bypass exception barriers and crash the host application.\n\nTo ensure your code and custom actions remain stable, follow these standard patterns when working with async operations or multi-threading:",
     "parameters": [],
     "variables": [],
     "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
+    "codeBlocks": [
+      {
+        "language": "csharp",
+        "label": "❌ Incorrect",
+        "code": "// BAD: Exceptions thrown here escape the application exception barrier!\nprivate async void PerformBackgroundProcess() // [!code highlight]\n{\n    await Task.Delay(1000);\n    throw new Exception(\"This will crash the process!\");\n}"
+      },
+      {
+        "language": "csharp",
+        "label": "✅ Correct",
+        "code": "// GOOD: The returned Task allows Streamer.bot to catch and log errors safely.\nprivate async Task PerformBackgroundProcessAsync() // [!code highlight]\n{\n    await Task.Delay(1000);\n    // Any exceptions here will be caught and output to the CPH log\n    throw new Exception(\"This will be logged safely.\");\n}"
+      },
+      {
+        "language": "csharp",
+        "label": "❌ Incorrect",
+        "code": "// BAD: Dedicated threads run outside the CPH execution frame.\nnew Thread(() => // [!code highlight]\n{\n    // Unhandled errors here cannot be intercepted by the host app\n    DoWork();\n}).Start();"
+      },
+      {
+        "language": "csharp",
+        "label": "✅ Correct",
+        "code": "// GOOD: Tasks are managed by the TaskScheduler and unobserved errors are safely caught.\nTask.Run(() => // [!code highlight]\n{\n    DoWork();\n});"
+      }
+    ],
+    "codeBlockCount": 4
   },
   {
     "title": "Debugging",
@@ -58961,7 +59064,7 @@
     "route": "/api/csharp/guide/debugging",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/api/csharp/guide/debugging",
-    "sourcePath": "3.api/3.csharp/0.guide/4.debugging.md",
+    "sourcePath": "3.api/3.csharp/0.guide/5.debugging.md",
     "section": "api",
     "headings": [
       "Compiling Log",

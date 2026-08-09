@@ -60,7 +60,7 @@ Streamer.bot is an event-driven automation tool for livestreamers. The official 
 - `Voice Control` — Execute actions with your own voice!
 - `MIDI` — Configure MIDI I/O with Streamer.bot
 - `Import & Export` — Import ready-to-use functionality from the community or share your own creations.
-- `Backup & Restore` — Easily fix things when they go wrong!
+- `Backup & Restore` — Learn how to backup and restore your Streamer.bot configuration, including rolling back to previous versions.
 - `Credits` — Configure the built-in Credits system in Streamer.bot
 - `Quotes` — Interacting with the built-in quote system in Streamer.bot
 - `Timers` — Configure triggers to execute your actions at specific intervals

@@ -204,22 +204,47 @@
     "codeBlockCount": 3
   },
   {
-    "title": "Sharing Extensions",
+    "title": "Threading Best Practices",
     "name": null,
-    "description": "Best practices when creating C# extensions to share with the community",
+    "description": "Best practices when dealing with background threads and tasks",
     "version": null,
-    "route": "/api/csharp/guide/extensions",
+    "route": "/api/csharp/guide/threading-best-practices",
     "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/csharp/guide/extensions",
-    "sourcePath": "3.api/3.csharp/0.guide/3.extensions.md",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/guide/threading-best-practices",
+    "sourcePath": "3.api/3.csharp/0.guide/4.threading-best-practices.md",
     "section": "api",
-    "headings": [],
-    "summary": ":wip",
+    "headings": [
+      "Never use `async void`{lang=cs}",
+      "Prefer `Task.Run()` over `new Thread()`",
+      "Handling Third-Party Assemblies"
+    ],
+    "summary": "Streamer.bot provides an isolated AppDomain sandbox that catches and logs runtime errors originating from C# CPH scripts.\n\nWhile standard synchronous code, wrapped execution paths, and standard Task operations are fully caught, unhandled exceptions on raw background threads can bypass exception barriers and crash the host application.\n\nTo ensure your code and custom actions remain stable, follow these standard patterns when working with async operations or multi-threading:",
     "parameters": [],
     "variables": [],
     "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
+    "codeBlocks": [
+      {
+        "language": "csharp",
+        "label": "❌ Incorrect",
+        "code": "// BAD: Exceptions thrown here escape the application exception barrier!\nprivate async void PerformBackgroundProcess() // [!code highlight]\n{\n    await Task.Delay(1000);\n    throw new Exception(\"This will crash the process!\");\n}"
+      },
+      {
+        "language": "csharp",
+        "label": "✅ Correct",
+        "code": "// GOOD: The returned Task allows Streamer.bot to catch and log errors safely.\nprivate async Task PerformBackgroundProcessAsync() // [!code highlight]\n{\n    await Task.Delay(1000);\n    // Any exceptions here will be caught and output to the CPH log\n    throw new Exception(\"This will be logged safely.\");\n}"
+      },
+      {
+        "language": "csharp",
+        "label": "❌ Incorrect",
+        "code": "// BAD: Dedicated threads run outside the CPH execution frame.\nnew Thread(() => // [!code highlight]\n{\n    // Unhandled errors here cannot be intercepted by the host app\n    DoWork();\n}).Start();"
+      },
+      {
+        "language": "csharp",
+        "label": "✅ Correct",
+        "code": "// GOOD: Tasks are managed by the TaskScheduler and unobserved errors are safely caught.\nTask.Run(() => // [!code highlight]\n{\n    DoWork();\n});"
+      }
+    ],
+    "codeBlockCount": 4
   },
   {
     "title": "Debugging",
@@ -229,7 +254,7 @@
     "route": "/api/csharp/guide/debugging",
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/api/csharp/guide/debugging",
-    "sourcePath": "3.api/3.csharp/0.guide/4.debugging.md",
+    "sourcePath": "3.api/3.csharp/0.guide/5.debugging.md",
     "section": "api",
     "headings": [
       "Compiling Log",
