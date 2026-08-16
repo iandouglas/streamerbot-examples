@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-08-09T08:12:44.375789+00:00",
+  "generatedAt": "2026-08-16T08:05:51.255583+00:00",
   "sources": {
     "officialDocs": {
       "site": "https://docs.streamer.bot/",
       "repo": "https://github.com/Streamerbot/docs",
       "localRoot": "agentic/streamerbot-docs",
-      "revision": "d7aec330a39320cc1c8cb068078d040057fadad1",
+      "revision": "55b710195bb2744eaf763fbb2383a9fdbdf57332",
       "branches": [
         {
           "name": "origin/Mustached-Maniac-patch-1",
@@ -29,8 +29,8 @@
         },
         {
           "name": "origin/main",
-          "shortHash": "d7aec33",
-          "subject": "docs: add throne contribution purchased variables"
+          "shortHash": "55b7101",
+          "subject": "docs: add tabs for instructions varying on install location"
         }
       ]
     },
@@ -49,12 +49,12 @@
     }
   },
   "counts": {
-    "allPages": 2167,
-    "docsPages": 1252,
+    "allPages": 2173,
+    "docsPages": 1258,
     "wikiPages": 915,
     "api": 1082,
     "guide": 51,
-    "getStarted": 6,
+    "getStarted": 11,
     "examples": 15,
     "changelogs": 62,
     "csharpGuides": 9,
@@ -66,7 +66,7 @@
     "httpPages": 9,
     "websocketPages": 9,
     "udpPages": 2,
-    "guidePages": 57,
+    "guidePages": 62,
     "examplePages": 15,
     "commandPages": 60,
     "triggerPages": 822,
