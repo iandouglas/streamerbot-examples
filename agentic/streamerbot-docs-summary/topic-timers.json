@@ -14,7 +14,7 @@
       "Configuration",
       "Usage"
     ],
-    "summary": "Setup\n\nIn Streamer.bot, navigate to **Settings > Timers**\n\nTo create a new timer, :kbd{value=\"Right-Click\"} anywhere in the list pane and select Add from the context menu.",
+    "summary": "Setup\n\nIn Streamer.bot, navigate to **Services > Timers**\n\nTo create a new timer, :kbd{value=\"Right-Click\"} anywhere in the list pane and select Add from the context menu.",
     "parameters": [],
     "variables": [],
     "commonVariables": [],

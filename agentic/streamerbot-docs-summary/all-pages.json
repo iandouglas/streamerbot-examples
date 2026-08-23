@@ -683,7 +683,7 @@
       "Configuration",
       "Usage"
     ],
-    "summary": "Setup\n\nIn Streamer.bot, navigate to **Settings > Timers**\n\nTo create a new timer, :kbd{value=\"Right-Click\"} anywhere in the list pane and select Add from the context menu.",
+    "summary": "Setup\n\nIn Streamer.bot, navigate to **Services > Timers**\n\nTo create a new timer, :kbd{value=\"Right-Click\"} anywhere in the list pane and select Add from the context menu.",
     "parameters": [],
     "variables": [],
     "commonVariables": [],
@@ -927,7 +927,7 @@
       {
         "language": "css",
         "label": "style.css",
-        "code": "/* Hide all rows originating from Twitch */\n[data-platform=\"twitch\"] {\n  display: none !important;\n}\n\n/* Hide messages from a specific username */\n[data-username=\"someannoyinguser69\"] {\n  display: none !important;\n}\n\n/* Highlight messages from a specific user */\n[data-username=\"bestmodever\"] {\n  background-color: rgba(255, 215, 0, 0.2);\n  border: 1px solid gold;\n  border-radius: 4px;\n}\n\n/* Custom CSS for Twitch Follow events */\n[data-event-source=\"Twitch\"][data-event-type=\"Follow\"] {\n  background-color: rgba(100, 65, 165, 0.2);\n  border: 1px solid rebeccapurple;\n  border-radius: 4px;\n}"
+        "code": "/* Hide all rows originating from Twitch */\n[data-platform='twitch'] {\n  display: none !important;\n}\n\n/* Hide messages from a specific username */\n[data-username='someannoyinguser69'] {\n  display: none !important;\n}\n\n/* Highlight messages from a specific user */\n[data-username='bestmodever'] {\n  background-color: rgba(255, 215, 0, 0.2);\n  border: 1px solid gold;\n  border-radius: 4px;\n}\n\n/* Custom CSS for Twitch Follow events */\n[data-event-source='Twitch'][data-event-type='Follow'] {\n  background-color: rgba(100, 65, 165, 0.2);\n  border: 1px solid rebeccapurple;\n  border-radius: 4px;\n}"
       }
     ],
     "codeBlockCount": 1
@@ -8297,6 +8297,1690 @@
     "codeBlockCount": 0
   },
   {
+    "title": "Add Application to Channel",
+    "name": null,
+    "description": "Add an application to a specific audio channel",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/channels/add-application-to-channel",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/channels/add-application-to-channel",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/channels/add-application-to-channel.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Mix to add to the audio channel"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Adjust Channel Volume",
+    "name": null,
+    "description": "Adjust the volume of an audio channel",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/channels/adjust-channel-volume",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/channels/adjust-channel-volume",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/channels/adjust-channel-volume.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Channel",
+        "type": "Select",
+        "required": true,
+        "description": "Audio channel you want to affect"
+      },
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Desired mix of the channel you want to affect"
+      },
+      {
+        "name": "Volume Delta",
+        "type": "Number",
+        "description": "Will add/subtract from the current volume",
+        "default": 5
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Channel Information",
+    "name": null,
+    "description": "Retrieve information about an audio channel",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/channels/get-channel-information",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/channels/get-channel-information",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/channels/get-channel-information.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Channel",
+        "type": "Select",
+        "required": true,
+        "description": "Audio channel you want to obtain the current information for"
+      }
+    ],
+    "variables": [
+      {
+        "name": "waveLinkChannelId",
+        "type": "string",
+        "description": "Identifier of the channel ID",
+        "value": "PCM_OUT_00_V_00_SD1"
+      },
+      {
+        "name": "waveLinkChannelName",
+        "type": "string",
+        "description": "Name of the channel",
+        "value": "System"
+      },
+      {
+        "name": "waveLinkChannelVolume",
+        "type": "number",
+        "description": "Current volume level of the channel",
+        "value": 1
+      },
+      {
+        "name": "waveLinkChannelMuted",
+        "type": "bool",
+        "description": "Indicates if the channel is muted",
+        "value": false
+      },
+      {
+        "name": "waveLinkChannelLevel",
+        "type": "number",
+        "description": "Current volume level of the channel",
+        "value": 1
+      },
+      {
+        "name": "waveLinkChannelEffectsCount",
+        "type": "number",
+        "description": "Current number of effects applied to the channel",
+        "value": 0
+      },
+      {
+        "name": "waveLinkChannelMixesCount",
+        "type": "number",
+        "description": "Current number of mixes the channel is part of",
+        "value": 2
+      },
+      {
+        "name": "waveLinkChannelMix.0.id",
+        "type": "string",
+        "description": "ID of the first mix the channel is part of",
+        "value": "PCM_IN_01_V_00_SD1"
+      },
+      {
+        "name": "waveLinkChannelMix.0.name",
+        "type": "string",
+        "description": "Name of the first mix the channel is part of",
+        "value": "Testing Name Mix"
+      },
+      {
+        "name": "waveLinkChannelMix.0.level",
+        "type": "number",
+        "description": "Volume level of the first mix the channel is part of",
+        "value": 1
+      },
+      {
+        "name": "waveLinkChannelMix.0.muted",
+        "type": "bool",
+        "description": "Indicates if the first mix the channel is part of is muted",
+        "value": false
+      },
+      {
+        "name": "waveLinkChannelMix.1.id",
+        "type": "string",
+        "description": "ID of the second mix the channel is part of",
+        "value": "PCM_IN_01_V_02_SD2"
+      },
+      {
+        "name": "waveLinkChannelMix.1.name",
+        "type": "string",
+        "description": "Name of the second mix the channel is part of",
+        "value": "Stream Mix"
+      },
+      {
+        "name": "waveLinkChannelMix.1.level",
+        "type": "number",
+        "description": "Volume level of the second mix the channel is part of",
+        "value": 1
+      },
+      {
+        "name": "waveLinkChannelMix.1.muted",
+        "type": "bool",
+        "description": "Indicates if the second mix the channel is part of is muted",
+        "value": false
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Mute Channel",
+    "name": null,
+    "description": "Mute a specific audio channel",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/channels/mute-channel",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/channels/mute-channel",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/channels/mute-channel.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Channel",
+        "type": "Select",
+        "required": true,
+        "description": "Audio channel you want to affect"
+      },
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "Mute State\nOptions: `Muted`, `Not Muted`, `Toggle`\n",
+        "default": "Muted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Channel Effect State",
+    "name": null,
+    "description": "Set the state of a specific effect within an audio channel",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/channels/set-channel-effect-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/channels/set-channel-effect-state",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/channels/set-channel-effect-state.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Channel",
+        "type": "Select",
+        "required": true,
+        "description": "Audio channel you want to affect"
+      },
+      {
+        "name": "Effect",
+        "type": "Select",
+        "required": true,
+        "description": "Effect which should be applied to the audio channel"
+      },
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "Effect State\nOptions: `Disabled`, `Enabled`, `Toggle`\n",
+        "default": "Disabled"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Channel Mix Mute",
+    "name": null,
+    "description": "Mute a specific mix within an audio channel",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/channels/set-channel-mix-mute",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/channels/set-channel-mix-mute",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/channels/set-channel-mix-mute.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Channel",
+        "type": "Select",
+        "required": true,
+        "description": "Audio channel you want to affect"
+      },
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Mix which should be affected"
+      },
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "Mute State\nOptions: `Muted`, `Not Muted`, `Toggle`\n",
+        "default": "Muted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Channel Volume",
+    "name": null,
+    "description": "Set the output volume of an audio channel",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/channels/set-channel-volume",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/channels/set-channel-volume",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/channels/set-channel-volume.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Channel",
+        "type": "Select",
+        "required": true,
+        "description": "Audio channel you want to affect"
+      },
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Audio input mix you want to affect"
+      },
+      {
+        "name": "Volume",
+        "type": "Number",
+        "required": true,
+        "description": "Volume of the audio input mix",
+        "default": 100
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Input Device Information",
+    "name": null,
+    "description": "Retrieve information about an audio input device",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/inputs/get-input-device-information",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/inputs/get-input-device-information",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/inputs/get-input-device-information.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Input Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio input device you want to obtain the current information for"
+      }
+    ],
+    "variables": [
+      {
+        "name": "waveLinkInputDeviceId",
+        "type": "string",
+        "description": "Identifier of the input device",
+        "value": "{0.0.1.00000000}.{96e65e84-0aaf-4b18-8f69-3da2d478b3d4}"
+      },
+      {
+        "name": "waveLinkInputDeviceName",
+        "type": "string",
+        "description": "Name of the input device",
+        "value": "Microphone (2- Realtek USB2.0 Audio)"
+      },
+      {
+        "name": "waveLinkInputDeviceType",
+        "type": "string",
+        "description": "Type of the input device",
+        "value": "thirdParty"
+      },
+      {
+        "name": "waveLinkInputDeviceGain",
+        "type": "number",
+        "description": "Current gain level of the input device",
+        "value": 0.5541552
+      },
+      {
+        "name": "waveLinkInputDeviceMuted",
+        "type": "bool",
+        "description": "Indicates if the input device is muted",
+        "value": false
+      },
+      {
+        "name": "waveLinkInputDeviceMicPcMix",
+        "type": "number",
+        "description": "Current microphone/PC mix level of the input device",
+        "value": 0
+      },
+      {
+        "name": "waveLinkInputDeviceClipGuard",
+        "type": "bool",
+        "description": "Indicates if the input device has clip guard enabled",
+        "value": false
+      },
+      {
+        "name": "waveLinkInputDeviceLowCutFilter",
+        "type": "bool",
+        "description": "Indicates if the input device has low cut filter enabled",
+        "value": false
+      },
+      {
+        "name": "waveLinkInputDeviceChannelCount",
+        "type": "number",
+        "description": "Number of channels of the input device",
+        "value": 0
+      },
+      {
+        "name": "waveLinkInputChannelId",
+        "type": "string",
+        "description": "Identifier of the input channel",
+        "value": null
+      },
+      {
+        "name": "waveLinkInputChannelName",
+        "type": "string",
+        "description": "Name of the input channel",
+        "value": null
+      },
+      {
+        "name": "waveLinkInputChannelVolume",
+        "type": "number",
+        "description": "Current volume level of the channel",
+        "value": 0
+      },
+      {
+        "name": "waveLinkInputChannelMuted",
+        "type": "bool",
+        "description": "Indicates if the input channel is muted",
+        "value": false
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Mute Input Device",
+    "name": null,
+    "description": "Mute a specific audio input device",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/inputs/mute-input-device",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/inputs/mute-input-device",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/inputs/mute-input-device.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Input Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio input device you want to affect"
+      },
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "State\nOptions: `Muted`, `Not Muted`, `Toggle`\n",
+        "default": "Muted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Input Clipguard State",
+    "name": null,
+    "description": "Sets the clipguard state of a specific audio input device",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/inputs/set-input-clipguard-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/inputs/set-input-clipguard-state",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/inputs/set-input-clipguard-state.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Input Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio input device you want to affect"
+      },
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "State\nOptions: `Enabled`, `Disabled`, `Toggle`\n",
+        "default": "Enabled"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Input Gain Lock State",
+    "name": null,
+    "description": "Sets the gain lock state of a specific audio input device",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/inputs/set-input-gain-lock-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/inputs/set-input-gain-lock-state",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/inputs/set-input-gain-lock-state.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Input Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio input device you want to affect"
+      },
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "State\nOptions: `Enabled`, `Disabled`, `Toggle`\n",
+        "default": "Enabled"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Input Gain",
+    "name": null,
+    "description": "Sets the gain of a specific audio input device",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/inputs/set-input-gain",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/inputs/set-input-gain",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/inputs/set-input-gain.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Input Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio input device you want to affect"
+      },
+      {
+        "name": "Gain",
+        "type": "number",
+        "required": true,
+        "description": "Gain\nRange: `0` to `1` db\n",
+        "default": "Enabled"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Input Low Cut Filter",
+    "name": null,
+    "description": "Sets the low cut filter state of a specific audio input device",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/inputs/set-input-low-cut-filter",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/inputs/set-input-low-cut-filter",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/inputs/set-input-low-cut-filter.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Input Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio input device you want to affect"
+      },
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "State\nOptions: `Enabled`, `Disabled`, `Toggle`\n",
+        "default": "Enabled"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Mic/PC Balance",
+    "name": null,
+    "description": "Sets the balance between the microphone and PC audio input",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/inputs/set-mic-pc-balance",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/inputs/set-mic-pc-balance",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/inputs/set-mic-pc-balance.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Input Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio input device you want to affect"
+      },
+      {
+        "name": "Mic/PC Mix",
+        "type": "number",
+        "required": true,
+        "description": "Mic/PC Mix\nRange: `0` to `100`\n",
+        "default": 100
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Adjust Mix Volume",
+    "name": null,
+    "description": "Adjust the volume of an audio mix",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/mixes/adjust-mix-volume",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/mixes/adjust-mix-volume",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/mixes/adjust-mix-volume.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Audio mix you want to affect"
+      },
+      {
+        "name": "Volume Delta",
+        "type": "Number",
+        "description": "Will add/subtract from the current volume",
+        "default": 5
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Mix Information",
+    "name": null,
+    "description": "Retrieve information about an audio mix",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/mixes/get-mix-information",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/mixes/get-mix-information",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/mixes/get-mix-information.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Audio mix you want to obtain the current information for"
+      }
+    ],
+    "variables": [
+      {
+        "name": "waveLinkMixId",
+        "type": "string",
+        "description": "Identifier of the mix ID",
+        "value": "PCM_IN_01_V_04_SD3"
+      },
+      {
+        "name": "waveLinkMixName",
+        "type": "string",
+        "description": "Name of the mix",
+        "value": "Chat Mix"
+      },
+      {
+        "name": "waveLinkMixVolume",
+        "type": "number",
+        "description": "Current volume level of the mix",
+        "value": 1
+      },
+      {
+        "name": "waveLinkMixMuted",
+        "type": "bool",
+        "description": "Indicates if the mix is muted",
+        "value": false
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Mix Volume",
+    "name": null,
+    "description": "Sets the volume of a specific audio mix",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/mixes/set-mix-volume",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/mixes/set-mix-volume",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/mixes/set-mix-volume.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Audio mix you want to affect"
+      },
+      {
+        "name": "Volume",
+        "type": "number",
+        "required": true,
+        "description": "Gain\nRange: `0` to `100` db\n",
+        "default": 100
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Add Output Device to Mix",
+    "name": null,
+    "description": "Adds an output device to a specific audio mix",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/outputs/add-output-to-device-mix",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/outputs/add-output-to-device-mix",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/outputs/add-output-to-device-mix.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Output Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio output device you want to add to the mix"
+      },
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Audio mix you want to add the output device to"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Selected Output Device",
+    "name": null,
+    "description": "Retrieve information about the currently selected audio output device",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/outputs/get-selected-output-device",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/outputs/get-selected-output-device",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/outputs/get-selected-output-device.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [
+      {
+        "name": "waveLinkOutputDeviceId",
+        "type": "string",
+        "description": "Identifier of the output device",
+        "value": "{0.0.0.00000000}.{51228b0e-d9af-4c0f-a03c-934a19a8cb23}"
+      },
+      {
+        "name": "waveLinkOutputDeviceName",
+        "type": "string",
+        "description": "Name of the output device",
+        "value": "SPDIF Interface (2- Realtek USB2.0 Audio)"
+      },
+      {
+        "name": "waveLinkOutputId",
+        "type": "string",
+        "description": "Identifier of the output device",
+        "value": "{0.0.0.00000000}.{51228b0e-d9af-4c0f-a03c-934a19a8cb23}"
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Monitored Mix",
+    "name": null,
+    "description": "Sets the mix to monitor",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/outputs/set-monitored-mix",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/outputs/set-monitored-mix",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/outputs/set-monitored-mix.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Monitored Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Audio mix you want to affect"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Output Volume",
+    "name": null,
+    "description": "Sets the volume of a specific audio output",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3/outputs/set-output-volume",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/outputs/set-output-volume",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/outputs/set-output-volume.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [
+      {
+        "name": "Output Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio output device you want to affect"
+      },
+      {
+        "name": "Volume",
+        "type": "number",
+        "required": true,
+        "description": "Gain\nRange: `0` to `100`\n",
+        "default": 100
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Add Application to Channel",
+    "name": null,
+    "description": "Add an application to a specific audio channel",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/channels/add-application-to-channel",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/channels/add-application-to-channel",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/channels/add-application-to-channel.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Mix to add to the audio channel"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Adjust Channel Volume",
+    "name": null,
+    "description": "Adjust the volume of an audio channel",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/channels/adjust-channel-volume",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/channels/adjust-channel-volume",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/channels/adjust-channel-volume.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Channel",
+        "type": "Select",
+        "required": true,
+        "description": "Audio channel you want to affect"
+      },
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Desired mix of the channel you want to affect"
+      },
+      {
+        "name": "Volume Delta",
+        "type": "Number",
+        "description": "Will add/subtract from the current volume",
+        "default": 5
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Channel Information",
+    "name": null,
+    "description": "Retrieve information about an audio channel",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/channels/get-channel-information",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/channels/get-channel-information",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/channels/get-channel-information.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Channel",
+        "type": "Select",
+        "required": true,
+        "description": "Audio channel you want to obtain the current information for"
+      }
+    ],
+    "variables": [
+      {
+        "name": "waveLinkChannelId",
+        "type": "string",
+        "description": "Identifier of the channel ID",
+        "value": "PCM_OUT_00_V_00_SD1"
+      },
+      {
+        "name": "waveLinkChannelName",
+        "type": "string",
+        "description": "Name of the channel",
+        "value": "System"
+      },
+      {
+        "name": "waveLinkChannelVolume",
+        "type": "number",
+        "description": "Current volume level of the channel",
+        "value": 1
+      },
+      {
+        "name": "waveLinkChannelMuted",
+        "type": "bool",
+        "description": "Indicates if the channel is muted",
+        "value": false
+      },
+      {
+        "name": "waveLinkChannelLevel",
+        "type": "number",
+        "description": "Current volume level of the channel",
+        "value": 1
+      },
+      {
+        "name": "waveLinkChannelEffectsCount",
+        "type": "number",
+        "description": "Current number of effects applied to the channel",
+        "value": 0
+      },
+      {
+        "name": "waveLinkChannelMixesCount",
+        "type": "number",
+        "description": "Current number of mixes the channel is part of",
+        "value": 2
+      },
+      {
+        "name": "waveLinkChannelMix.0.id",
+        "type": "string",
+        "description": "ID of the first mix the channel is part of",
+        "value": "PCM_IN_01_V_00_SD1"
+      },
+      {
+        "name": "waveLinkChannelMix.0.name",
+        "type": "string",
+        "description": "Name of the first mix the channel is part of",
+        "value": "Testing Name Mix"
+      },
+      {
+        "name": "waveLinkChannelMix.0.level",
+        "type": "number",
+        "description": "Volume level of the first mix the channel is part of",
+        "value": 1
+      },
+      {
+        "name": "waveLinkChannelMix.0.muted",
+        "type": "bool",
+        "description": "Indicates if the first mix the channel is part of is muted",
+        "value": false
+      },
+      {
+        "name": "waveLinkChannelMix.1.id",
+        "type": "string",
+        "description": "ID of the second mix the channel is part of",
+        "value": "PCM_IN_01_V_02_SD2"
+      },
+      {
+        "name": "waveLinkChannelMix.1.name",
+        "type": "string",
+        "description": "Name of the second mix the channel is part of",
+        "value": "Stream Mix"
+      },
+      {
+        "name": "waveLinkChannelMix.1.level",
+        "type": "number",
+        "description": "Volume level of the second mix the channel is part of",
+        "value": 1
+      },
+      {
+        "name": "waveLinkChannelMix.1.muted",
+        "type": "bool",
+        "description": "Indicates if the second mix the channel is part of is muted",
+        "value": false
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Mute Channel",
+    "name": null,
+    "description": "Mute a specific audio channel",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/channels/mute-channel",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/channels/mute-channel",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/channels/mute-channel.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Channel",
+        "type": "Select",
+        "required": true,
+        "description": "Audio channel you want to affect"
+      },
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "Mute State\nOptions: `Muted`, `Not Muted`, `Toggle`\n",
+        "default": "Muted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Channel Effect State",
+    "name": null,
+    "description": "Set the state of a specific effect within an audio channel",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/channels/set-channel-effect-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/channels/set-channel-effect-state",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/channels/set-channel-effect-state.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Channel",
+        "type": "Select",
+        "required": true,
+        "description": "Audio channel you want to affect"
+      },
+      {
+        "name": "Effect",
+        "type": "Select",
+        "required": true,
+        "description": "Effect which should be applied to the audio channel"
+      },
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "Effect State\nOptions: `Disabled`, `Enabled`, `Toggle`\n",
+        "default": "Disabled"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Channel Mix Mute",
+    "name": null,
+    "description": "Mute a specific mix within an audio channel",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/channels/set-channel-mix-mute",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/channels/set-channel-mix-mute",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/channels/set-channel-mix-mute.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Channel",
+        "type": "Select",
+        "required": true,
+        "description": "Audio channel you want to affect"
+      },
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Mix which should be affected"
+      },
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "Mute State\nOptions: `Muted`, `Not Muted`, `Toggle`\n",
+        "default": "Muted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Channel Volume",
+    "name": null,
+    "description": "Set the output volume of an audio channel",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/channels/set-channel-volume",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/channels/set-channel-volume",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/channels/set-channel-volume.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Channel",
+        "type": "Select",
+        "required": true,
+        "description": "Audio channel you want to affect"
+      },
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Audio input mix you want to affect"
+      },
+      {
+        "name": "Volume",
+        "type": "Number",
+        "required": true,
+        "description": "Volume of the audio input mix",
+        "default": 100
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Input Device Information",
+    "name": null,
+    "description": "Retrieve information about an audio input device",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/inputs/get-input-device-information",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/inputs/get-input-device-information",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/inputs/get-input-device-information.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Input Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio input device you want to obtain the current information for"
+      }
+    ],
+    "variables": [
+      {
+        "name": "waveLinkInputDeviceId",
+        "type": "string",
+        "description": "Identifier of the input device",
+        "value": "{0.0.1.00000000}.{96e65e84-0aaf-4b18-8f69-3da2d478b3d4}"
+      },
+      {
+        "name": "waveLinkInputDeviceName",
+        "type": "string",
+        "description": "Name of the input device",
+        "value": "Microphone (2- Realtek USB2.0 Audio)"
+      },
+      {
+        "name": "waveLinkInputDeviceType",
+        "type": "string",
+        "description": "Type of the input device",
+        "value": "thirdParty"
+      },
+      {
+        "name": "waveLinkInputDeviceGain",
+        "type": "number",
+        "description": "Current gain level of the input device",
+        "value": 0.5541552
+      },
+      {
+        "name": "waveLinkInputDeviceMuted",
+        "type": "bool",
+        "description": "Indicates if the input device is muted",
+        "value": false
+      },
+      {
+        "name": "waveLinkInputDeviceMicPcMix",
+        "type": "number",
+        "description": "Current microphone/PC mix level of the input device",
+        "value": 0
+      },
+      {
+        "name": "waveLinkInputDeviceClipGuard",
+        "type": "bool",
+        "description": "Indicates if the input device has clip guard enabled",
+        "value": false
+      },
+      {
+        "name": "waveLinkInputDeviceLowCutFilter",
+        "type": "bool",
+        "description": "Indicates if the input device has low cut filter enabled",
+        "value": false
+      },
+      {
+        "name": "waveLinkInputDeviceChannelCount",
+        "type": "number",
+        "description": "Number of channels of the input device",
+        "value": 0
+      },
+      {
+        "name": "waveLinkInputChannelId",
+        "type": "string",
+        "description": "Identifier of the input channel",
+        "value": null
+      },
+      {
+        "name": "waveLinkInputChannelName",
+        "type": "string",
+        "description": "Name of the input channel",
+        "value": null
+      },
+      {
+        "name": "waveLinkInputChannelVolume",
+        "type": "number",
+        "description": "Current volume level of the channel",
+        "value": 0
+      },
+      {
+        "name": "waveLinkInputChannelMuted",
+        "type": "bool",
+        "description": "Indicates if the input channel is muted",
+        "value": false
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Mute Input Device",
+    "name": null,
+    "description": "Mute a specific audio input device",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/inputs/mute-input-device",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/inputs/mute-input-device",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/inputs/mute-input-device.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Input Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio input device you want to affect"
+      },
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "State\nOptions: `Muted`, `Not Muted`, `Toggle`\n",
+        "default": "Muted"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Input Clipguard State",
+    "name": null,
+    "description": "Sets the clipguard state of a specific audio input device",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-clipguard-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-clipguard-state",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/inputs/set-input-clipguard-state.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Input Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio input device you want to affect"
+      },
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "State\nOptions: `Enabled`, `Disabled`, `Toggle`\n",
+        "default": "Enabled"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Input Gain Lock State",
+    "name": null,
+    "description": "Sets the gain lock state of a specific audio input device",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-gain-lock-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-gain-lock-state",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/inputs/set-input-gain-lock-state.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Input Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio input device you want to affect"
+      },
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "State\nOptions: `Enabled`, `Disabled`, `Toggle`\n",
+        "default": "Enabled"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Input Gain",
+    "name": null,
+    "description": "Sets the gain of a specific audio input device",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-gain",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-gain",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/inputs/set-input-gain.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Input Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio input device you want to affect"
+      },
+      {
+        "name": "Gain",
+        "type": "number",
+        "required": true,
+        "description": "Gain\nRange: `0` to `1` db\n",
+        "default": "Enabled"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Input Low Cut Filter",
+    "name": null,
+    "description": "Sets the low cut filter state of a specific audio input device",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-low-cut-filter",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-low-cut-filter",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/inputs/set-input-low-cut-filter.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Input Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio input device you want to affect"
+      },
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "State\nOptions: `Enabled`, `Disabled`, `Toggle`\n",
+        "default": "Enabled"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Adjust Mix Volume",
+    "name": null,
+    "description": "Adjust the volume of an audio mix",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/mixes/adjust-mix-volume",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/mixes/adjust-mix-volume",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/mixes/adjust-mix-volume.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Audio mix you want to affect"
+      },
+      {
+        "name": "Volume Delta",
+        "type": "Number",
+        "description": "Will add/subtract from the current volume",
+        "default": 5
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Mix Information",
+    "name": null,
+    "description": "Retrieve information about an audio mix",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/mixes/get-mix-information",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/mixes/get-mix-information",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/mixes/get-mix-information.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Audio mix you want to obtain the current information for"
+      }
+    ],
+    "variables": [
+      {
+        "name": "waveLinkMixId",
+        "type": "string",
+        "description": "Identifier of the mix ID",
+        "value": "PCM_IN_01_V_04_SD3"
+      },
+      {
+        "name": "waveLinkMixName",
+        "type": "string",
+        "description": "Name of the mix",
+        "value": "Chat Mix"
+      },
+      {
+        "name": "waveLinkMixVolume",
+        "type": "number",
+        "description": "Current volume level of the mix",
+        "value": 1
+      },
+      {
+        "name": "waveLinkMixMuted",
+        "type": "bool",
+        "description": "Indicates if the mix is muted",
+        "value": false
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Mix Volume",
+    "name": null,
+    "description": "Sets the volume of a specific audio mix",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/mixes/set-mix-volume",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/mixes/set-mix-volume",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/mixes/set-mix-volume.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Audio mix you want to affect"
+      },
+      {
+        "name": "Volume",
+        "type": "number",
+        "required": true,
+        "description": "Gain\nRange: `0` to `100` db\n",
+        "default": 100
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Add Output Device to Mix",
+    "name": null,
+    "description": "Adds an output device to a specific audio mix",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/outputs/add-output-to-device-mix",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/outputs/add-output-to-device-mix",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/outputs/add-output-to-device-mix.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Output Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio output device you want to add to the mix"
+      },
+      {
+        "name": "Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Audio mix you want to add the output device to"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Selected Output Device",
+    "name": null,
+    "description": "Retrieve information about the currently selected audio output device",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/outputs/get-selected-output-device",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/outputs/get-selected-output-device",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/outputs/get-selected-output-device.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [
+      {
+        "name": "waveLinkOutputDeviceId",
+        "type": "string",
+        "description": "Identifier of the output device",
+        "value": "{0.0.0.00000000}.{51228b0e-d9af-4c0f-a03c-934a19a8cb23}"
+      },
+      {
+        "name": "waveLinkOutputDeviceName",
+        "type": "string",
+        "description": "Name of the output device",
+        "value": "SPDIF Interface (2- Realtek USB2.0 Audio)"
+      },
+      {
+        "name": "waveLinkOutputId",
+        "type": "string",
+        "description": "Identifier of the output device",
+        "value": "{0.0.0.00000000}.{51228b0e-d9af-4c0f-a03c-934a19a8cb23}"
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Monitored Mix",
+    "name": null,
+    "description": "Sets the mix to monitor",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/outputs/set-monitored-mix",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/outputs/set-monitored-mix",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/outputs/set-monitored-mix.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Monitored Mix",
+        "type": "Select",
+        "required": true,
+        "description": "Audio mix you want to affect"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Output Volume",
+    "name": null,
+    "description": "Sets the volume of a specific audio output",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/wave-link-3.x/outputs/set-output-volume",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/outputs/set-output-volume",
+    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/outputs/set-output-volume.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Output Device",
+        "type": "Select",
+        "required": true,
+        "description": "Audio output device you want to affect"
+      },
+      {
+        "name": "Volume",
+        "type": "number",
+        "required": true,
+        "description": "Gain\nRange: `0` to `100`\n",
+        "default": 100
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "Basic Webhook",
     "name": null,
     "description": "Post messages to a Discord channel with webhooks",
@@ -8712,6 +10396,150 @@
         "value": "2024-03-02 13:00:47"
       }
     ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Play Video Background by Name",
+    "name": null,
+    "description": "Play Video Background by Name",
+    "version": "1.0.7",
+    "route": "/api/sub-actions/integrations/streamfog/backgrounds/play-video-background-by-name",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/integrations/streamfog/backgrounds/play-video-background-by-name",
+    "sourcePath": "3.api/1.sub-actions/integrations/streamfog/backgrounds/play-video-background-by-name.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Play Video Background",
+    "name": null,
+    "description": "Play Video Background",
+    "version": "1.0.7",
+    "route": "/api/sub-actions/integrations/streamfog/backgrounds/play-video-background",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/integrations/streamfog/backgrounds/play-video-background",
+    "sourcePath": "3.api/1.sub-actions/integrations/streamfog/backgrounds/play-video-background.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Activate Lens by Name",
+    "name": null,
+    "description": "Activates the Selected Lens by name in Streamfog",
+    "version": "1.0.7",
+    "route": "/api/sub-actions/integrations/streamfog/lenses/activate-lens-by-name",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/integrations/streamfog/lenses/activate-lens-by-name",
+    "sourcePath": "3.api/1.sub-actions/integrations/streamfog/lenses/activate-lens-by-name.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Activate Lens",
+    "name": null,
+    "description": "Activates the Selected Lens in Streamfog",
+    "version": "1.0.7",
+    "route": "/api/sub-actions/integrations/streamfog/lenses/activate-lens",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/integrations/streamfog/lenses/activate-lens",
+    "sourcePath": "3.api/1.sub-actions/integrations/streamfog/lenses/activate-lens.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Deactivate Lens",
+    "name": null,
+    "description": "Deactivate the current lens in Streamfog",
+    "version": "1.0.7",
+    "route": "/api/sub-actions/integrations/streamfog/lenses/deactivate-lens",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/integrations/streamfog/lenses/deactivate-lens",
+    "sourcePath": "3.api/1.sub-actions/integrations/streamfog/lenses/deactivate-lens.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Activate Outfit by Name",
+    "name": null,
+    "description": "Activates the Selected Outfit by name in Streamfog",
+    "version": "1.0.7",
+    "route": "/api/sub-actions/integrations/streamfog/outfits/activate-outfit-by-name",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/integrations/streamfog/outfits/activate-outfit-by-name",
+    "sourcePath": "3.api/1.sub-actions/integrations/streamfog/outfits/activate-outfit-by-name.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Activate Outfit",
+    "name": null,
+    "description": "Activates the Selected Outfit in Streamfog",
+    "version": "1.0.7",
+    "route": "/api/sub-actions/integrations/streamfog/outfits/activate-outfit",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/integrations/streamfog/outfits/activate-outfit",
+    "sourcePath": "3.api/1.sub-actions/integrations/streamfog/outfits/activate-outfit.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Deactivate Outfit",
+    "name": null,
+    "description": "Deactivates the Selected Outfit in Streamfog",
+    "version": "1.0.7",
+    "route": "/api/sub-actions/integrations/streamfog/outfits/deactivate-outfit",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/integrations/streamfog/outfits/deactivate-outfit",
+    "sourcePath": "3.api/1.sub-actions/integrations/streamfog/outfits/deactivate-outfit.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":wip",
+    "parameters": [],
+    "variables": [],
     "commonVariables": [],
     "codeBlocks": [],
     "codeBlockCount": 0
@@ -19799,6 +21627,90 @@
     "codeBlockCount": 0
   },
   {
+    "title": "Cron",
+    "name": null,
+    "description": "Schedule a trigger using a Cron expression",
+    "version": "1.1.0",
+    "route": "/api/triggers/core/schedule/cron",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/core/schedule/cron",
+    "sourcePath": "3.api/2.triggers/core/schedule/cron.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Cron Expression",
+        "type": "string",
+        "required": true,
+        "description": "Enter a valid Cron expression to define the schedule.\n"
+      }
+    ],
+    "variables": [
+      {
+        "name": "expression",
+        "type": "string",
+        "description": "The Cron expression that defined the schedule for this trigger",
+        "value": "0 0 * * *"
+      },
+      {
+        "name": "triggeredAt",
+        "type": "DateTime",
+        "description": "The timestamp when the Cron schedule was last triggered",
+        "value": "8/22/2026 5:15:00 PM"
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Timed Actions",
+    "name": null,
+    "description": "Trigger for a Timed Action",
+    "version": null,
+    "route": "/api/triggers/core/schedule/timed-actions",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/core/schedule/timed-actions",
+    "sourcePath": "3.api/2.triggers/core/schedule/timed-actions.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":read-more{to=\"/guide/core/timers\"}",
+    "parameters": [
+      {
+        "name": "Timers",
+        "type": "Select",
+        "required": true,
+        "description": "Select a timer from the Settings -> Timed Actions tab.\n\n::tip\nYou can quickly register a new timed action by clicking the `Create Timer` button!\n::\n"
+      }
+    ],
+    "variables": [
+      {
+        "name": "timerId",
+        "type": "Guid",
+        "description": "The ID of the timer",
+        "value": "4ed37eec-3b4d-49a5-ac63-57ae62f5231b",
+        "version": "0.2.4"
+      },
+      {
+        "name": "timerName",
+        "type": "string",
+        "description": "The name of the timer",
+        "value": "Socials",
+        "version": "0.2.4"
+      },
+      {
+        "name": "counter",
+        "type": "int",
+        "description": "A counter that tracks how many times the timer has fired (even if it's not set to trigger any action, as long it's enabled)",
+        "value": 5251
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "Streamer.bot Started",
     "name": null,
     "description": "Trigger for when Streamer.bot is Started",
@@ -19977,52 +21889,6 @@
         "type": "boolean",
         "description": "Is this action a test?",
         "value": true
-      }
-    ],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Timed Actions",
-    "name": null,
-    "description": "Trigger for a Timed Action",
-    "version": null,
-    "route": "/api/triggers/core/timed-actions",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/triggers/core/timed-actions",
-    "sourcePath": "3.api/2.triggers/core/timed-actions.md",
-    "section": "api",
-    "headings": [],
-    "summary": ":read-more{to=\"/guide/core/timers\"}",
-    "parameters": [
-      {
-        "name": "Timers",
-        "type": "Select",
-        "required": true,
-        "description": "Select a timer from the Settings -> Timed Actions tab.\n\n::tip\nYou can quickly register a new timed action by clicking the `Create Timer` button!\n::\n"
-      }
-    ],
-    "variables": [
-      {
-        "name": "timerId",
-        "type": "Guid",
-        "description": "The ID of the timer",
-        "value": "4ed37eec-3b4d-49a5-ac63-57ae62f5231b",
-        "version": "0.2.4"
-      },
-      {
-        "name": "timerName",
-        "type": "string",
-        "description": "The name of the timer",
-        "value": "Socials",
-        "version": "0.2.4"
-      },
-      {
-        "name": "counter",
-        "type": "int",
-        "description": "A counter that tracks how many times the timer has fired (even if it’s not set to trigger any action, as long it's enabled)",
-        "value": 5251
       }
     ],
     "commonVariables": [],
@@ -39013,6 +40879,379 @@
     "codeBlockCount": 0
   },
   {
+    "title": "Modiversary",
+    "name": null,
+    "description": "Trigger for a Twitch Modiversary",
+    "version": "1.0.7",
+    "route": "/api/triggers/twitch/chat/modiversary",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/twitch/chat/modiversary",
+    "sourcePath": "3.api/2.triggers/twitch/chat/modiversary.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Range",
+        "import": "common/range"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [
+      {
+        "name": "broadcastUser",
+        "type": "string",
+        "description": "The Twitch display name of the broadcaster account",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "broadcastUserName",
+        "type": "string",
+        "description": "The Twitch user name of the broadcaster account",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "broadcastUserId",
+        "type": "string",
+        "description": "The Twitch user ID of the broadcaster account",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "broadcastIsAffiliate",
+        "type": "boolean",
+        "description": "Is the broadcaster an affiliate?",
+        "value": false
+      },
+      {
+        "name": "broadcastIsPartner",
+        "type": "boolean",
+        "description": "Is the broadcaster a partner?",
+        "value": true
+      },
+      {
+        "name": "internal",
+        "type": "boolean",
+        "description": "If message was sent via Streamer.bot sub-action or C#\n",
+        "value": "True / False"
+      },
+      {
+        "name": "msgId",
+        "type": "string",
+        "description": "Twitch's message identifier",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "bits",
+        "type": "number",
+        "description": "The amount of bits donated",
+        "value": 200
+      },
+      {
+        "name": "role",
+        "type": "number",
+        "description": "The role of the user<br>1=`Viewer`, 2=`VIP`, 3=`Moderator`, 4=`Broadcaster`",
+        "value": 1
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "description": "Hex value of the user's chat color",
+        "value": "#e5e5e5"
+      },
+      {
+        "name": "colorR",
+        "type": "string",
+        "description": "The red in RGB of the user's chat color",
+        "value": 229
+      },
+      {
+        "name": "colorG",
+        "type": "string",
+        "description": "The green in RGB of the user's chat color",
+        "value": 229
+      },
+      {
+        "name": "colorB",
+        "type": "string",
+        "description": "The blue in RGB of the user's chat color",
+        "value": 229
+      },
+      {
+        "name": "message",
+        "type": "string",
+        "description": "Text content of the chat message",
+        "value": "Hello!"
+      },
+      {
+        "name": "messageStripped",
+        "type": "string",
+        "description": "The chat message with emotes stripped",
+        "value": "Hello!"
+      },
+      {
+        "name": "messageCheermotesStripped",
+        "type": "string",
+        "description": "The chat message with cheer emotes stripped.",
+        "value": "Hello!"
+      },
+      {
+        "name": "emoteCount",
+        "type": "number",
+        "description": "Number of emotes in the chat message",
+        "value": 0
+      },
+      {
+        "name": "emotes",
+        "type": "List<Twitch.Common.Models.Emote>",
+        "description": "A C# accessible list of emotes used in the chat message",
+        "children": [
+          {
+            "name": "Type",
+            "type": "string",
+            "description": "From which source the emote came from",
+            "value": "Twitch"
+          },
+          {
+            "name": "StartIndex",
+            "type": "number",
+            "description": "On which letter the emote started",
+            "value": 0
+          },
+          {
+            "name": "EndIndex",
+            "type": "number",
+            "description": "On which letter the emote ended",
+            "value": 4
+          },
+          {
+            "name": "ImageUrl",
+            "type": "string",
+            "description": "The URL of an image from the emote",
+            "value": "https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/2.0"
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "description": "The name of the emote as displayed in chat",
+            "value": "Kappa"
+          },
+          {
+            "name": "Id",
+            "type": "number",
+            "description": "A unique identifier for the emote",
+            "value": 25
+          }
+        ]
+      },
+      {
+        "name": "isHighlight",
+        "type": "boolean",
+        "description": "Is this message a Twitch Highlight?",
+        "value": true
+      },
+      {
+        "name": "isAction",
+        "type": "boolean",
+        "description": "Is this message a `/me` action?",
+        "value": true
+      },
+      {
+        "name": "isReply",
+        "type": "boolean",
+        "description": "Is this message a reply?",
+        "value": true
+      },
+      {
+        "name": "reply.msgId",
+        "type": "string",
+        "description": "The message id of the reply",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "reply.userId",
+        "type": "string",
+        "description": "The user id from the user who sent the reply",
+        "value": 718933593
+      },
+      {
+        "name": "reply.userLogin",
+        "type": "string",
+        "description": "The user login from the user who sent the reply",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "reply.userName",
+        "type": "string",
+        "description": "The user name from the user who sent the reply",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "reply.msgBody",
+        "type": "string",
+        "description": "The text content of the reply, **Spaces are replaced by `\\s`**",
+        "value": "My\\schat\\smessage"
+      },
+      {
+        "name": "reply.threadMsgId",
+        "type": "string",
+        "description": "The message id of the thread",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "reply.threadUserLogin",
+        "type": "string",
+        "description": "The user login name of the thread",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "firstMessage",
+        "type": "boolean",
+        "description": "Is this user a first time chatter?",
+        "value": true
+      },
+      {
+        "name": "rawInput",
+        "type": "string",
+        "description": "The message entered"
+      },
+      {
+        "name": "rawInputEscaped",
+        "type": "string",
+        "description": "The message escaped"
+      },
+      {
+        "name": "rawInputUrlEncoded",
+        "type": "string",
+        "description": "The message URL encoded"
+      },
+      {
+        "name": "input#",
+        "type": "string",
+        "description": "The `#` word of the message entered, spaces are delimiters and variable names are 0 indexed, so `input0` would give the first word, `input1` would give the second, and so on"
+      },
+      {
+        "name": "inputEscaped#",
+        "type": "string",
+        "description": "The indexed word escaped"
+      },
+      {
+        "name": "inputUrlEncoded#",
+        "type": "string",
+        "description": "The indexed word URL encoded"
+      },
+      {
+        "name": "inSharedChat",
+        "type": "boolean",
+        "description": "Whether or not the broadcaster is currently in a shared chat"
+      },
+      {
+        "name": "fromSharedChat",
+        "type": "boolean",
+        "description": "Whether or not the message originated from a different broadcaster in shared chat"
+      },
+      {
+        "name": "user",
+        "type": "string",
+        "description": "The display name of the user",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "userName",
+        "type": "string",
+        "description": "The login name of the user",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "userId",
+        "type": "string",
+        "description": "Unique user identifier",
+        "value": 718933593
+      },
+      {
+        "name": "userType",
+        "type": "string",
+        "description": "Streaming service of this user",
+        "value": "twitch"
+      },
+      {
+        "name": "userGroups",
+        "version": "0.2.5",
+        "type": "string",
+        "description": "Comma-delimited list of groups the user is in",
+        "value": "Awesome Streamers,Discord Peeps,Top Contributors"
+      },
+      {
+        "name": "isSubscribed",
+        "type": "boolean",
+        "description": "Is this user subscribed?",
+        "value": true
+      },
+      {
+        "name": "subscriptionTier",
+        "type": "number",
+        "description": "The subscription tier (T1 = 1000, T2 = 2000, T3 = 3000) (only available if `isSubscribed` is `True`)",
+        "value": 3000
+      },
+      {
+        "name": "monthsSubscribed",
+        "type": "number",
+        "description": "The amount of months the user is subscribed",
+        "value": 3
+      },
+      {
+        "name": "isModerator",
+        "type": "boolean",
+        "description": "Is this user a moderator?",
+        "value": true
+      },
+      {
+        "name": "isVip",
+        "type": "boolean",
+        "description": "Is this user a VIP?",
+        "value": true
+      },
+      {
+        "name": "userPreviousActive",
+        "type": "DateTime",
+        "description": "When was this user last active?",
+        "value": "8/4/2023 10:56:06 AM"
+      },
+      {
+        "name": "badges",
+        "type": "List<Twitch.Common.Models.Badge>",
+        "description": "A C# accessible list of emotes used in the chat message",
+        "children": [
+          {
+            "name": "Name",
+            "type": "string",
+            "description": "The name of the badge",
+            "value": "moderator"
+          },
+          {
+            "name": "Version",
+            "type": "number",
+            "description": "The version of the badge",
+            "value": 1
+          },
+          {
+            "name": "ImageUrl",
+            "type": "string",
+            "description": "The image URL of the badge",
+            "value": "https://static-cdn.jtvnw.net/badges/v1/3267646d-33f0-4b17-b3df-f923a41db1d0/3"
+          }
+        ]
+      },
+      {
+        "name": "badgeCount",
+        "type": "number",
+        "description": "The count of badges this user has",
+        "value": 3
+      }
+    ],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "Watch Streak",
     "name": null,
     "description": "Triggers when a user shares their watch streak",
@@ -42113,7 +44352,7 @@
   {
     "title": "Hype Train Level Up",
     "name": null,
-    "description": "Trigger for a Twitch Hype Train Level Up",
+    "description": "Trigger for when a Twitch Hype Train levels up",
     "version": null,
     "route": "/api/triggers/twitch/hype-train/level-up",
     "sourceRepo": "streamerbot-docs",
@@ -42630,7 +44869,7 @@
   {
     "title": "Hype Train Update",
     "name": null,
-    "description": "Trigger for when a Twitch Hype Train Updates",
+    "description": "Trigger for when a Twitch Hype Train updates its progress",
     "version": null,
     "route": "/api/triggers/twitch/hype-train/update",
     "sourceRepo": "streamerbot-docs",
@@ -42638,7 +44877,7 @@
     "sourcePath": "3.api/2.triggers/twitch/hype-train/update.md",
     "section": "api",
     "headings": [],
-    "summary": "",
+    "summary": "**Note:** This trigger is fired whenever a Twitch Hype Train updates its progress, **within the current level.**\n<br>\nWhen an update causes the Hype Train to level up, the Hype Train Level Up trigger will be fired instead.",
     "parameters": [],
     "variables": [
       {
@@ -49774,6 +52013,415 @@
         "type": "boolean",
         "description": "Is the broadcaster a partner?",
         "value": true
+      },
+      {
+        "name": "user",
+        "type": "string",
+        "description": "The display name of the user",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "userName",
+        "type": "string",
+        "description": "The login name of the user",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "userId",
+        "type": "string",
+        "description": "Unique user identifier",
+        "value": 718933593
+      },
+      {
+        "name": "userType",
+        "type": "string",
+        "description": "Streaming service of this user",
+        "value": "twitch"
+      },
+      {
+        "name": "userGroups",
+        "version": "0.2.5",
+        "type": "string",
+        "description": "Comma-delimited list of groups the user is in",
+        "value": "Awesome Streamers,Discord Peeps,Top Contributors"
+      },
+      {
+        "name": "isSubscribed",
+        "type": "boolean",
+        "description": "Is this user subscribed?",
+        "value": true
+      },
+      {
+        "name": "subscriptionTier",
+        "type": "number",
+        "description": "The subscription tier (T1 = 1000, T2 = 2000, T3 = 3000) (only available if `isSubscribed` is `True`)",
+        "value": 3000
+      },
+      {
+        "name": "monthsSubscribed",
+        "type": "number",
+        "description": "The amount of months the user is subscribed",
+        "value": 3
+      },
+      {
+        "name": "isModerator",
+        "type": "boolean",
+        "description": "Is this user a moderator?",
+        "value": true
+      },
+      {
+        "name": "isVip",
+        "type": "boolean",
+        "description": "Is this user a VIP?",
+        "value": true
+      },
+      {
+        "name": "userPreviousActive",
+        "type": "DateTime",
+        "description": "When was this user last active?",
+        "value": "8/4/2023 10:56:06 AM"
+      },
+      {
+        "name": "badges",
+        "type": "List<Twitch.Common.Models.Badge>",
+        "description": "A C# accessible list of emotes used in the chat message",
+        "children": [
+          {
+            "name": "Name",
+            "type": "string",
+            "description": "The name of the badge",
+            "value": "moderator"
+          },
+          {
+            "name": "Version",
+            "type": "number",
+            "description": "The version of the badge",
+            "value": 1
+          },
+          {
+            "name": "ImageUrl",
+            "type": "string",
+            "description": "The image URL of the badge",
+            "value": "https://static-cdn.jtvnw.net/badges/v1/3267646d-33f0-4b17-b3df-f923a41db1d0/3"
+          }
+        ]
+      },
+      {
+        "name": "badgeCount",
+        "type": "number",
+        "description": "The count of badges this user has",
+        "value": 3
+      },
+      {
+        "name": "source.userId",
+        "type": "string",
+        "description": "The Twitch user ID from which chat the event originated",
+        "value": 123456789
+      },
+      {
+        "name": "source.userLogin",
+        "type": "string",
+        "description": "The Twitch user login name from which chat the event originated",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "source.userName",
+        "type": "string",
+        "description": "The Twitch display name from which chat the event originated",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "source.isSubscribed",
+        "type": "boolean",
+        "description": "Whether or not the source chat owner is subscribed in your channel",
+        "value": false
+      },
+      {
+        "name": "source.isModerator",
+        "type": "boolean",
+        "description": "Whether or not the source chat owner is a moderator in your channel",
+        "value": true
+      },
+      {
+        "name": "source.isVip",
+        "type": "boolean",
+        "description": "Whether or not the source chat owner is a VIP in your channel",
+        "value": false
+      }
+    ],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Shared Modiversary",
+    "name": null,
+    "description": "Trigger for a Shared Twitch Modiversary",
+    "version": "1.0.7",
+    "route": "/api/triggers/twitch/shared-chat/modiversary",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/twitch/shared-chat/modiversary",
+    "sourcePath": "3.api/2.triggers/twitch/shared-chat/modiversary.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Range",
+        "import": "common/range"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [
+      {
+        "name": "broadcastUser",
+        "type": "string",
+        "description": "The Twitch display name of the broadcaster account",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "broadcastUserName",
+        "type": "string",
+        "description": "The Twitch user name of the broadcaster account",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "broadcastUserId",
+        "type": "string",
+        "description": "The Twitch user ID of the broadcaster account",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "broadcastIsAffiliate",
+        "type": "boolean",
+        "description": "Is the broadcaster an affiliate?",
+        "value": false
+      },
+      {
+        "name": "broadcastIsPartner",
+        "type": "boolean",
+        "description": "Is the broadcaster a partner?",
+        "value": true
+      },
+      {
+        "name": "internal",
+        "type": "boolean",
+        "description": "If message was sent via Streamer.bot sub-action or C#\n",
+        "value": "True / False"
+      },
+      {
+        "name": "msgId",
+        "type": "string",
+        "description": "Twitch's message identifier",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "bits",
+        "type": "number",
+        "description": "The amount of bits donated",
+        "value": 200
+      },
+      {
+        "name": "role",
+        "type": "number",
+        "description": "The role of the user<br>1=`Viewer`, 2=`VIP`, 3=`Moderator`, 4=`Broadcaster`",
+        "value": 1
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "description": "Hex value of the user's chat color",
+        "value": "#e5e5e5"
+      },
+      {
+        "name": "colorR",
+        "type": "string",
+        "description": "The red in RGB of the user's chat color",
+        "value": 229
+      },
+      {
+        "name": "colorG",
+        "type": "string",
+        "description": "The green in RGB of the user's chat color",
+        "value": 229
+      },
+      {
+        "name": "colorB",
+        "type": "string",
+        "description": "The blue in RGB of the user's chat color",
+        "value": 229
+      },
+      {
+        "name": "message",
+        "type": "string",
+        "description": "Text content of the chat message",
+        "value": "Hello!"
+      },
+      {
+        "name": "messageStripped",
+        "type": "string",
+        "description": "The chat message with emotes stripped",
+        "value": "Hello!"
+      },
+      {
+        "name": "messageCheermotesStripped",
+        "type": "string",
+        "description": "The chat message with cheer emotes stripped.",
+        "value": "Hello!"
+      },
+      {
+        "name": "emoteCount",
+        "type": "number",
+        "description": "Number of emotes in the chat message",
+        "value": 0
+      },
+      {
+        "name": "emotes",
+        "type": "List<Twitch.Common.Models.Emote>",
+        "description": "A C# accessible list of emotes used in the chat message",
+        "children": [
+          {
+            "name": "Type",
+            "type": "string",
+            "description": "From which source the emote came from",
+            "value": "Twitch"
+          },
+          {
+            "name": "StartIndex",
+            "type": "number",
+            "description": "On which letter the emote started",
+            "value": 0
+          },
+          {
+            "name": "EndIndex",
+            "type": "number",
+            "description": "On which letter the emote ended",
+            "value": 4
+          },
+          {
+            "name": "ImageUrl",
+            "type": "string",
+            "description": "The URL of an image from the emote",
+            "value": "https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/2.0"
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "description": "The name of the emote as displayed in chat",
+            "value": "Kappa"
+          },
+          {
+            "name": "Id",
+            "type": "number",
+            "description": "A unique identifier for the emote",
+            "value": 25
+          }
+        ]
+      },
+      {
+        "name": "isHighlight",
+        "type": "boolean",
+        "description": "Is this message a Twitch Highlight?",
+        "value": true
+      },
+      {
+        "name": "isAction",
+        "type": "boolean",
+        "description": "Is this message a `/me` action?",
+        "value": true
+      },
+      {
+        "name": "isReply",
+        "type": "boolean",
+        "description": "Is this message a reply?",
+        "value": true
+      },
+      {
+        "name": "reply.msgId",
+        "type": "string",
+        "description": "The message id of the reply",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "reply.userId",
+        "type": "string",
+        "description": "The user id from the user who sent the reply",
+        "value": 718933593
+      },
+      {
+        "name": "reply.userLogin",
+        "type": "string",
+        "description": "The user login from the user who sent the reply",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "reply.userName",
+        "type": "string",
+        "description": "The user name from the user who sent the reply",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "reply.msgBody",
+        "type": "string",
+        "description": "The text content of the reply, **Spaces are replaced by `\\s`**",
+        "value": "My\\schat\\smessage"
+      },
+      {
+        "name": "reply.threadMsgId",
+        "type": "string",
+        "description": "The message id of the thread",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "reply.threadUserLogin",
+        "type": "string",
+        "description": "The user login name of the thread",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "firstMessage",
+        "type": "boolean",
+        "description": "Is this user a first time chatter?",
+        "value": true
+      },
+      {
+        "name": "rawInput",
+        "type": "string",
+        "description": "The message entered"
+      },
+      {
+        "name": "rawInputEscaped",
+        "type": "string",
+        "description": "The message escaped"
+      },
+      {
+        "name": "rawInputUrlEncoded",
+        "type": "string",
+        "description": "The message URL encoded"
+      },
+      {
+        "name": "input#",
+        "type": "string",
+        "description": "The `#` word of the message entered, spaces are delimiters and variable names are 0 indexed, so `input0` would give the first word, `input1` would give the second, and so on"
+      },
+      {
+        "name": "inputEscaped#",
+        "type": "string",
+        "description": "The indexed word escaped"
+      },
+      {
+        "name": "inputUrlEncoded#",
+        "type": "string",
+        "description": "The indexed word URL encoded"
+      },
+      {
+        "name": "inSharedChat",
+        "type": "boolean",
+        "description": "Whether or not the broadcaster is currently in a shared chat"
+      },
+      {
+        "name": "fromSharedChat",
+        "type": "boolean",
+        "description": "Whether or not the message originated from a different broadcaster in shared chat"
       },
       {
         "name": "user",
@@ -60339,6 +62987,24 @@
     "codeBlockCount": 0
   },
   {
+    "title": "Parse",
+    "name": "Parse",
+    "description": "Parse a string and replace variables using the provided arguments.",
+    "version": "1.0.7",
+    "route": "/api/csharp/methods/core/parse",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/core/parse",
+    "sourcePath": "3.api/3.csharp/3.methods/core/parse.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "SetArgument",
     "name": "SetArgument",
     "description": "Set an [argument](/guide/variables) to be used in subsequent sub-actions",
@@ -61407,6 +64073,24 @@
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/kick-ban-user",
     "sourcePath": "3.api/3.csharp/3.methods/kick/kick-ban-user.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "KickDeleteChatMessage",
+    "name": "KickDeleteChatMessage",
+    "description": "Deletes the selected chat message (by message ID) from the Kick stream",
+    "version": "1.0.7",
+    "route": "/api/csharp/methods/kick/kick-delete-chat-message",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/kick/kick-delete-chat-message",
+    "sourcePath": "3.api/3.csharp/3.methods/kick/kick-delete-chat-message.md",
     "section": "api",
     "headings": [],
     "summary": "",
@@ -63323,6 +66007,24 @@
     "codeBlockCount": 0
   },
   {
+    "title": "TwitchAddActiveMonitoringSuspiciousStatus",
+    "name": "TwitchAddActiveMonitoringSuspiciousStatus",
+    "description": "Adds selected user to the Twitch active monitoring suspicious status list",
+    "version": "1.0.7",
+    "route": "/api/csharp/methods/twitch/moderation/twitch-add-active-monitoring-suspicious-status",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/moderation/twitch-add-active-monitoring-suspicious-status",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/moderation/twitch-add-active-monitoring-suspicious-status.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "TwitchAddBlockedTerm",
     "name": "TwitchAddBlockedTerm",
     "description": "Adds selected term to the Twitch blocked list",
@@ -63331,6 +66033,24 @@
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/moderation/twitch-add-blocked-term",
     "sourcePath": "3.api/3.csharp/3.methods/twitch/moderation/twitch-add-blocked-term.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchAddRestrictedSuspiciousStatus",
+    "name": "TwitchAddRestrictedSuspiciousStatus",
+    "description": "Adds selected user to the Twitch restricted suspicious status list",
+    "version": "1.0.7",
+    "route": "/api/csharp/methods/twitch/moderation/twitch-add-restricted-suspicious-status",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/moderation/twitch-add-restricted-suspicious-status",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/moderation/twitch-add-restricted-suspicious-status.md",
     "section": "api",
     "headings": [],
     "summary": "",
@@ -63413,6 +66133,24 @@
     "codeBlockCount": 0
   },
   {
+    "title": "TwitchRemoveSuspiciousStatus",
+    "name": "TwitchRemoveSuspiciousStatus",
+    "description": "Removes selected user from the Twitch suspicious status list",
+    "version": "1.0.7",
+    "route": "/api/csharp/methods/twitch/moderation/twitch-remove-suspicious-status",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/moderation/twitch-remove-suspicious-status",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/moderation/twitch-remove-suspicious-status.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "TwitchWarnUser",
     "name": "TwitchWarnUser",
     "description": "Warns specified Twitch user for the given reason",
@@ -63475,6 +66213,42 @@
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/user/twitch-get-extended-user-info-by-id",
     "sourcePath": "3.api/3.csharp/3.methods/twitch/user/twitch-get-extended-user-info-by-id.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchGetMods",
+    "name": "TwitchGetMods",
+    "description": "Get a list of all users currently assigned as moderators in the broadcaster's Twitch channel.",
+    "version": "1.0.7",
+    "route": "/api/csharp/methods/twitch/user/twitch-get-mods",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/user/twitch-get-mods",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/user/twitch-get-mods.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "TwitchGetVips",
+    "name": "TwitchGetVips",
+    "description": "Get a list of all users currently assigned as VIPs in the broadcaster's Twitch channel.",
+    "version": "1.0.7",
+    "route": "/api/csharp/methods/twitch/user/twitch-get-vips",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/csharp/methods/twitch/user/twitch-get-vips",
+    "sourcePath": "3.api/3.csharp/3.methods/twitch/user/twitch-get-vips.md",
     "section": "api",
     "headings": [],
     "summary": "",
@@ -68763,6 +71537,39 @@
       "Notes"
     ],
     "summary": "As with any major release, there is bound to be some issues that fall through the cracks and/or get missed during the alpha/beta cycles.  This is why these testing phases are so important.\n\nStreamer.bot 1.0.1 addresses some issues that came up, fixes some other things, and even adds some new things.\n\nNew Features\n* Add **2** new Sub-Actions, File Exists and Folder Exists\n* When clicking Save a Toast is shown when the save is complete\n* When Adding or Removing items from an export a Toast is shown to indicated something happened\n* Add an Account Settings button to the User Profile popup\n* Add Reply To to Kick Messages both in arguments, and Websocket payload",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Streamer.bot Chat",
+    "name": null,
+    "description": "The latest updates and improvements for Streamer.bot Chat and Overlay",
+    "version": null,
+    "route": "/changelogs/chat",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/changelogs/chat",
+    "sourcePath": "5.changelogs/chat.md",
+    "section": "changelogs",
+    "headings": [
+      "📅 August 19, 2026",
+      "✨ What's New",
+      "🛠️ Improvements & Updates",
+      "🐛 Fixes",
+      "📅 August 12, 2026",
+      "✨ What's New",
+      "🛠️ Improvements & Updates",
+      "🐛 Fixes",
+      "📅 August 5, 2026",
+      "🐛 Fixes",
+      "📅 July 30, 2026",
+      "🐛 Fixes",
+      "📅 May 1, 2026",
+      "🛠️ Improvements & Updates"
+    ],
+    "summary": "📅 August 19, 2026\n\n✨ What's New\n\n- **Local font family support**\n- Added optional ability to override font family via text entry\n- Overlay settings for toggling display of user avatars and pronouns",
     "parameters": [],
     "variables": [],
     "commonVariables": [],

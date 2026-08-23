@@ -2,7 +2,7 @@
 
 Triggers fire actions in response to Twitch, YouTube, OBS, timer, and custom events.
 
-## Pages captured (822)
+## Pages captured (825)
 
 - [`Triggers`](https://docs.streamer.bot/guide/core/triggers) — Overview of trigger configuration in Streamer.bot
 - [`Trigger Custom Event`](https://docs.streamer.bot/api/sub-actions/core/triggers/custom-event-trigger) — 
@@ -36,12 +36,12 @@ Triggers fire actions in response to Twitch, YouTube, OBS, timer, and custom eve
 - [`Process Stopped`](https://docs.streamer.bot/api/triggers/core/processes/process-stopped) — Trigger for when a Process is Stopped
 - [`Added`](https://docs.streamer.bot/api/triggers/core/quotes/quote-added) — 
 - [`Show`](https://docs.streamer.bot/api/triggers/core/quotes/show-quote) — 
+- [`Cron`](https://docs.streamer.bot/api/triggers/core/schedule/cron) — 
+- [`Timed Actions`](https://docs.streamer.bot/api/triggers/core/schedule/timed-actions) — Trigger for a Timed Action
 - [`Streamer.bot Started`](https://docs.streamer.bot/api/triggers/core/streamerbot-started) — 
 - [`Clipboard Changed`](https://docs.streamer.bot/api/triggers/core/system/clipboard-changed) — 
 - [`Toast Activation`](https://docs.streamer.bot/api/triggers/core/system/toast-activation) — Trigger for a Toast Activation
 - [`Test`](https://docs.streamer.bot/api/triggers/core/test) — Trigger for a Test trigger
-- [`Timed Actions`](https://docs.streamer.bot/api/triggers/core/timed-actions) — Trigger for a Timed Action
 - [`Dictation`](https://docs.streamer.bot/api/triggers/core/voice-control/dictation) — Trigger for a Voice Control Dictation
 - [`Websocket Client Closed`](https://docs.streamer.bot/api/triggers/core/websocket/client/websocket-client-closed) — Trigger for when the Websocket Client connection is Closed
-- [`Websocket Client Message`](https://docs.streamer.bot/api/triggers/core/websocket/client/websocket-client-message) — Trigger for a the Websocket Client Message
-- … and 782 more. See `topic-triggers-&-events.json`.
+- … and 785 more. See `topic-triggers-&-events.json`.

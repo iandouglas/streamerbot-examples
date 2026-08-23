@@ -2022,6 +2022,90 @@
     "codeBlockCount": 0
   },
   {
+    "title": "Cron",
+    "name": null,
+    "description": "Schedule a trigger using a Cron expression",
+    "version": "1.1.0",
+    "route": "/api/triggers/core/schedule/cron",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/core/schedule/cron",
+    "sourcePath": "3.api/2.triggers/core/schedule/cron.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Cron Expression",
+        "type": "string",
+        "required": true,
+        "description": "Enter a valid Cron expression to define the schedule.\n"
+      }
+    ],
+    "variables": [
+      {
+        "name": "expression",
+        "type": "string",
+        "description": "The Cron expression that defined the schedule for this trigger",
+        "value": "0 0 * * *"
+      },
+      {
+        "name": "triggeredAt",
+        "type": "DateTime",
+        "description": "The timestamp when the Cron schedule was last triggered",
+        "value": "8/22/2026 5:15:00 PM"
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Timed Actions",
+    "name": null,
+    "description": "Trigger for a Timed Action",
+    "version": null,
+    "route": "/api/triggers/core/schedule/timed-actions",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/core/schedule/timed-actions",
+    "sourcePath": "3.api/2.triggers/core/schedule/timed-actions.md",
+    "section": "api",
+    "headings": [],
+    "summary": ":read-more{to=\"/guide/core/timers\"}",
+    "parameters": [
+      {
+        "name": "Timers",
+        "type": "Select",
+        "required": true,
+        "description": "Select a timer from the Settings -> Timed Actions tab.\n\n::tip\nYou can quickly register a new timed action by clicking the `Create Timer` button!\n::\n"
+      }
+    ],
+    "variables": [
+      {
+        "name": "timerId",
+        "type": "Guid",
+        "description": "The ID of the timer",
+        "value": "4ed37eec-3b4d-49a5-ac63-57ae62f5231b",
+        "version": "0.2.4"
+      },
+      {
+        "name": "timerName",
+        "type": "string",
+        "description": "The name of the timer",
+        "value": "Socials",
+        "version": "0.2.4"
+      },
+      {
+        "name": "counter",
+        "type": "int",
+        "description": "A counter that tracks how many times the timer has fired (even if it's not set to trigger any action, as long it's enabled)",
+        "value": 5251
+      }
+    ],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "Streamer.bot Started",
     "name": null,
     "description": "Trigger for when Streamer.bot is Started",
@@ -2200,52 +2284,6 @@
         "type": "boolean",
         "description": "Is this action a test?",
         "value": true
-      }
-    ],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Timed Actions",
-    "name": null,
-    "description": "Trigger for a Timed Action",
-    "version": null,
-    "route": "/api/triggers/core/timed-actions",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/triggers/core/timed-actions",
-    "sourcePath": "3.api/2.triggers/core/timed-actions.md",
-    "section": "api",
-    "headings": [],
-    "summary": ":read-more{to=\"/guide/core/timers\"}",
-    "parameters": [
-      {
-        "name": "Timers",
-        "type": "Select",
-        "required": true,
-        "description": "Select a timer from the Settings -> Timed Actions tab.\n\n::tip\nYou can quickly register a new timed action by clicking the `Create Timer` button!\n::\n"
-      }
-    ],
-    "variables": [
-      {
-        "name": "timerId",
-        "type": "Guid",
-        "description": "The ID of the timer",
-        "value": "4ed37eec-3b4d-49a5-ac63-57ae62f5231b",
-        "version": "0.2.4"
-      },
-      {
-        "name": "timerName",
-        "type": "string",
-        "description": "The name of the timer",
-        "value": "Socials",
-        "version": "0.2.4"
-      },
-      {
-        "name": "counter",
-        "type": "int",
-        "description": "A counter that tracks how many times the timer has fired (even if it’s not set to trigger any action, as long it's enabled)",
-        "value": 5251
       }
     ],
     "commonVariables": [],
@@ -21236,6 +21274,379 @@
     "codeBlockCount": 0
   },
   {
+    "title": "Modiversary",
+    "name": null,
+    "description": "Trigger for a Twitch Modiversary",
+    "version": "1.0.7",
+    "route": "/api/triggers/twitch/chat/modiversary",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/twitch/chat/modiversary",
+    "sourcePath": "3.api/2.triggers/twitch/chat/modiversary.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Range",
+        "import": "common/range"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [
+      {
+        "name": "broadcastUser",
+        "type": "string",
+        "description": "The Twitch display name of the broadcaster account",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "broadcastUserName",
+        "type": "string",
+        "description": "The Twitch user name of the broadcaster account",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "broadcastUserId",
+        "type": "string",
+        "description": "The Twitch user ID of the broadcaster account",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "broadcastIsAffiliate",
+        "type": "boolean",
+        "description": "Is the broadcaster an affiliate?",
+        "value": false
+      },
+      {
+        "name": "broadcastIsPartner",
+        "type": "boolean",
+        "description": "Is the broadcaster a partner?",
+        "value": true
+      },
+      {
+        "name": "internal",
+        "type": "boolean",
+        "description": "If message was sent via Streamer.bot sub-action or C#\n",
+        "value": "True / False"
+      },
+      {
+        "name": "msgId",
+        "type": "string",
+        "description": "Twitch's message identifier",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "bits",
+        "type": "number",
+        "description": "The amount of bits donated",
+        "value": 200
+      },
+      {
+        "name": "role",
+        "type": "number",
+        "description": "The role of the user<br>1=`Viewer`, 2=`VIP`, 3=`Moderator`, 4=`Broadcaster`",
+        "value": 1
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "description": "Hex value of the user's chat color",
+        "value": "#e5e5e5"
+      },
+      {
+        "name": "colorR",
+        "type": "string",
+        "description": "The red in RGB of the user's chat color",
+        "value": 229
+      },
+      {
+        "name": "colorG",
+        "type": "string",
+        "description": "The green in RGB of the user's chat color",
+        "value": 229
+      },
+      {
+        "name": "colorB",
+        "type": "string",
+        "description": "The blue in RGB of the user's chat color",
+        "value": 229
+      },
+      {
+        "name": "message",
+        "type": "string",
+        "description": "Text content of the chat message",
+        "value": "Hello!"
+      },
+      {
+        "name": "messageStripped",
+        "type": "string",
+        "description": "The chat message with emotes stripped",
+        "value": "Hello!"
+      },
+      {
+        "name": "messageCheermotesStripped",
+        "type": "string",
+        "description": "The chat message with cheer emotes stripped.",
+        "value": "Hello!"
+      },
+      {
+        "name": "emoteCount",
+        "type": "number",
+        "description": "Number of emotes in the chat message",
+        "value": 0
+      },
+      {
+        "name": "emotes",
+        "type": "List<Twitch.Common.Models.Emote>",
+        "description": "A C# accessible list of emotes used in the chat message",
+        "children": [
+          {
+            "name": "Type",
+            "type": "string",
+            "description": "From which source the emote came from",
+            "value": "Twitch"
+          },
+          {
+            "name": "StartIndex",
+            "type": "number",
+            "description": "On which letter the emote started",
+            "value": 0
+          },
+          {
+            "name": "EndIndex",
+            "type": "number",
+            "description": "On which letter the emote ended",
+            "value": 4
+          },
+          {
+            "name": "ImageUrl",
+            "type": "string",
+            "description": "The URL of an image from the emote",
+            "value": "https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/2.0"
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "description": "The name of the emote as displayed in chat",
+            "value": "Kappa"
+          },
+          {
+            "name": "Id",
+            "type": "number",
+            "description": "A unique identifier for the emote",
+            "value": 25
+          }
+        ]
+      },
+      {
+        "name": "isHighlight",
+        "type": "boolean",
+        "description": "Is this message a Twitch Highlight?",
+        "value": true
+      },
+      {
+        "name": "isAction",
+        "type": "boolean",
+        "description": "Is this message a `/me` action?",
+        "value": true
+      },
+      {
+        "name": "isReply",
+        "type": "boolean",
+        "description": "Is this message a reply?",
+        "value": true
+      },
+      {
+        "name": "reply.msgId",
+        "type": "string",
+        "description": "The message id of the reply",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "reply.userId",
+        "type": "string",
+        "description": "The user id from the user who sent the reply",
+        "value": 718933593
+      },
+      {
+        "name": "reply.userLogin",
+        "type": "string",
+        "description": "The user login from the user who sent the reply",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "reply.userName",
+        "type": "string",
+        "description": "The user name from the user who sent the reply",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "reply.msgBody",
+        "type": "string",
+        "description": "The text content of the reply, **Spaces are replaced by `\\s`**",
+        "value": "My\\schat\\smessage"
+      },
+      {
+        "name": "reply.threadMsgId",
+        "type": "string",
+        "description": "The message id of the thread",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "reply.threadUserLogin",
+        "type": "string",
+        "description": "The user login name of the thread",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "firstMessage",
+        "type": "boolean",
+        "description": "Is this user a first time chatter?",
+        "value": true
+      },
+      {
+        "name": "rawInput",
+        "type": "string",
+        "description": "The message entered"
+      },
+      {
+        "name": "rawInputEscaped",
+        "type": "string",
+        "description": "The message escaped"
+      },
+      {
+        "name": "rawInputUrlEncoded",
+        "type": "string",
+        "description": "The message URL encoded"
+      },
+      {
+        "name": "input#",
+        "type": "string",
+        "description": "The `#` word of the message entered, spaces are delimiters and variable names are 0 indexed, so `input0` would give the first word, `input1` would give the second, and so on"
+      },
+      {
+        "name": "inputEscaped#",
+        "type": "string",
+        "description": "The indexed word escaped"
+      },
+      {
+        "name": "inputUrlEncoded#",
+        "type": "string",
+        "description": "The indexed word URL encoded"
+      },
+      {
+        "name": "inSharedChat",
+        "type": "boolean",
+        "description": "Whether or not the broadcaster is currently in a shared chat"
+      },
+      {
+        "name": "fromSharedChat",
+        "type": "boolean",
+        "description": "Whether or not the message originated from a different broadcaster in shared chat"
+      },
+      {
+        "name": "user",
+        "type": "string",
+        "description": "The display name of the user",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "userName",
+        "type": "string",
+        "description": "The login name of the user",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "userId",
+        "type": "string",
+        "description": "Unique user identifier",
+        "value": 718933593
+      },
+      {
+        "name": "userType",
+        "type": "string",
+        "description": "Streaming service of this user",
+        "value": "twitch"
+      },
+      {
+        "name": "userGroups",
+        "version": "0.2.5",
+        "type": "string",
+        "description": "Comma-delimited list of groups the user is in",
+        "value": "Awesome Streamers,Discord Peeps,Top Contributors"
+      },
+      {
+        "name": "isSubscribed",
+        "type": "boolean",
+        "description": "Is this user subscribed?",
+        "value": true
+      },
+      {
+        "name": "subscriptionTier",
+        "type": "number",
+        "description": "The subscription tier (T1 = 1000, T2 = 2000, T3 = 3000) (only available if `isSubscribed` is `True`)",
+        "value": 3000
+      },
+      {
+        "name": "monthsSubscribed",
+        "type": "number",
+        "description": "The amount of months the user is subscribed",
+        "value": 3
+      },
+      {
+        "name": "isModerator",
+        "type": "boolean",
+        "description": "Is this user a moderator?",
+        "value": true
+      },
+      {
+        "name": "isVip",
+        "type": "boolean",
+        "description": "Is this user a VIP?",
+        "value": true
+      },
+      {
+        "name": "userPreviousActive",
+        "type": "DateTime",
+        "description": "When was this user last active?",
+        "value": "8/4/2023 10:56:06 AM"
+      },
+      {
+        "name": "badges",
+        "type": "List<Twitch.Common.Models.Badge>",
+        "description": "A C# accessible list of emotes used in the chat message",
+        "children": [
+          {
+            "name": "Name",
+            "type": "string",
+            "description": "The name of the badge",
+            "value": "moderator"
+          },
+          {
+            "name": "Version",
+            "type": "number",
+            "description": "The version of the badge",
+            "value": 1
+          },
+          {
+            "name": "ImageUrl",
+            "type": "string",
+            "description": "The image URL of the badge",
+            "value": "https://static-cdn.jtvnw.net/badges/v1/3267646d-33f0-4b17-b3df-f923a41db1d0/3"
+          }
+        ]
+      },
+      {
+        "name": "badgeCount",
+        "type": "number",
+        "description": "The count of badges this user has",
+        "value": 3
+      }
+    ],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "Watch Streak",
     "name": null,
     "description": "Triggers when a user shares their watch streak",
@@ -24336,7 +24747,7 @@
   {
     "title": "Hype Train Level Up",
     "name": null,
-    "description": "Trigger for a Twitch Hype Train Level Up",
+    "description": "Trigger for when a Twitch Hype Train levels up",
     "version": null,
     "route": "/api/triggers/twitch/hype-train/level-up",
     "sourceRepo": "streamerbot-docs",
@@ -24853,7 +25264,7 @@
   {
     "title": "Hype Train Update",
     "name": null,
-    "description": "Trigger for when a Twitch Hype Train Updates",
+    "description": "Trigger for when a Twitch Hype Train updates its progress",
     "version": null,
     "route": "/api/triggers/twitch/hype-train/update",
     "sourceRepo": "streamerbot-docs",
@@ -24861,7 +25272,7 @@
     "sourcePath": "3.api/2.triggers/twitch/hype-train/update.md",
     "section": "api",
     "headings": [],
-    "summary": "",
+    "summary": "**Note:** This trigger is fired whenever a Twitch Hype Train updates its progress, **within the current level.**\n<br>\nWhen an update causes the Hype Train to level up, the Hype Train Level Up trigger will be fired instead.",
     "parameters": [],
     "variables": [
       {
@@ -31997,6 +32408,415 @@
         "type": "boolean",
         "description": "Is the broadcaster a partner?",
         "value": true
+      },
+      {
+        "name": "user",
+        "type": "string",
+        "description": "The display name of the user",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "userName",
+        "type": "string",
+        "description": "The login name of the user",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "userId",
+        "type": "string",
+        "description": "Unique user identifier",
+        "value": 718933593
+      },
+      {
+        "name": "userType",
+        "type": "string",
+        "description": "Streaming service of this user",
+        "value": "twitch"
+      },
+      {
+        "name": "userGroups",
+        "version": "0.2.5",
+        "type": "string",
+        "description": "Comma-delimited list of groups the user is in",
+        "value": "Awesome Streamers,Discord Peeps,Top Contributors"
+      },
+      {
+        "name": "isSubscribed",
+        "type": "boolean",
+        "description": "Is this user subscribed?",
+        "value": true
+      },
+      {
+        "name": "subscriptionTier",
+        "type": "number",
+        "description": "The subscription tier (T1 = 1000, T2 = 2000, T3 = 3000) (only available if `isSubscribed` is `True`)",
+        "value": 3000
+      },
+      {
+        "name": "monthsSubscribed",
+        "type": "number",
+        "description": "The amount of months the user is subscribed",
+        "value": 3
+      },
+      {
+        "name": "isModerator",
+        "type": "boolean",
+        "description": "Is this user a moderator?",
+        "value": true
+      },
+      {
+        "name": "isVip",
+        "type": "boolean",
+        "description": "Is this user a VIP?",
+        "value": true
+      },
+      {
+        "name": "userPreviousActive",
+        "type": "DateTime",
+        "description": "When was this user last active?",
+        "value": "8/4/2023 10:56:06 AM"
+      },
+      {
+        "name": "badges",
+        "type": "List<Twitch.Common.Models.Badge>",
+        "description": "A C# accessible list of emotes used in the chat message",
+        "children": [
+          {
+            "name": "Name",
+            "type": "string",
+            "description": "The name of the badge",
+            "value": "moderator"
+          },
+          {
+            "name": "Version",
+            "type": "number",
+            "description": "The version of the badge",
+            "value": 1
+          },
+          {
+            "name": "ImageUrl",
+            "type": "string",
+            "description": "The image URL of the badge",
+            "value": "https://static-cdn.jtvnw.net/badges/v1/3267646d-33f0-4b17-b3df-f923a41db1d0/3"
+          }
+        ]
+      },
+      {
+        "name": "badgeCount",
+        "type": "number",
+        "description": "The count of badges this user has",
+        "value": 3
+      },
+      {
+        "name": "source.userId",
+        "type": "string",
+        "description": "The Twitch user ID from which chat the event originated",
+        "value": 123456789
+      },
+      {
+        "name": "source.userLogin",
+        "type": "string",
+        "description": "The Twitch user login name from which chat the event originated",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "source.userName",
+        "type": "string",
+        "description": "The Twitch display name from which chat the event originated",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "source.isSubscribed",
+        "type": "boolean",
+        "description": "Whether or not the source chat owner is subscribed in your channel",
+        "value": false
+      },
+      {
+        "name": "source.isModerator",
+        "type": "boolean",
+        "description": "Whether or not the source chat owner is a moderator in your channel",
+        "value": true
+      },
+      {
+        "name": "source.isVip",
+        "type": "boolean",
+        "description": "Whether or not the source chat owner is a VIP in your channel",
+        "value": false
+      }
+    ],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Shared Modiversary",
+    "name": null,
+    "description": "Trigger for a Shared Twitch Modiversary",
+    "version": "1.0.7",
+    "route": "/api/triggers/twitch/shared-chat/modiversary",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/triggers/twitch/shared-chat/modiversary",
+    "sourcePath": "3.api/2.triggers/twitch/shared-chat/modiversary.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Range",
+        "import": "common/range"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [
+      {
+        "name": "broadcastUser",
+        "type": "string",
+        "description": "The Twitch display name of the broadcaster account",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "broadcastUserName",
+        "type": "string",
+        "description": "The Twitch user name of the broadcaster account",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "broadcastUserId",
+        "type": "string",
+        "description": "The Twitch user ID of the broadcaster account",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "broadcastIsAffiliate",
+        "type": "boolean",
+        "description": "Is the broadcaster an affiliate?",
+        "value": false
+      },
+      {
+        "name": "broadcastIsPartner",
+        "type": "boolean",
+        "description": "Is the broadcaster a partner?",
+        "value": true
+      },
+      {
+        "name": "internal",
+        "type": "boolean",
+        "description": "If message was sent via Streamer.bot sub-action or C#\n",
+        "value": "True / False"
+      },
+      {
+        "name": "msgId",
+        "type": "string",
+        "description": "Twitch's message identifier",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "bits",
+        "type": "number",
+        "description": "The amount of bits donated",
+        "value": 200
+      },
+      {
+        "name": "role",
+        "type": "number",
+        "description": "The role of the user<br>1=`Viewer`, 2=`VIP`, 3=`Moderator`, 4=`Broadcaster`",
+        "value": 1
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "description": "Hex value of the user's chat color",
+        "value": "#e5e5e5"
+      },
+      {
+        "name": "colorR",
+        "type": "string",
+        "description": "The red in RGB of the user's chat color",
+        "value": 229
+      },
+      {
+        "name": "colorG",
+        "type": "string",
+        "description": "The green in RGB of the user's chat color",
+        "value": 229
+      },
+      {
+        "name": "colorB",
+        "type": "string",
+        "description": "The blue in RGB of the user's chat color",
+        "value": 229
+      },
+      {
+        "name": "message",
+        "type": "string",
+        "description": "Text content of the chat message",
+        "value": "Hello!"
+      },
+      {
+        "name": "messageStripped",
+        "type": "string",
+        "description": "The chat message with emotes stripped",
+        "value": "Hello!"
+      },
+      {
+        "name": "messageCheermotesStripped",
+        "type": "string",
+        "description": "The chat message with cheer emotes stripped.",
+        "value": "Hello!"
+      },
+      {
+        "name": "emoteCount",
+        "type": "number",
+        "description": "Number of emotes in the chat message",
+        "value": 0
+      },
+      {
+        "name": "emotes",
+        "type": "List<Twitch.Common.Models.Emote>",
+        "description": "A C# accessible list of emotes used in the chat message",
+        "children": [
+          {
+            "name": "Type",
+            "type": "string",
+            "description": "From which source the emote came from",
+            "value": "Twitch"
+          },
+          {
+            "name": "StartIndex",
+            "type": "number",
+            "description": "On which letter the emote started",
+            "value": 0
+          },
+          {
+            "name": "EndIndex",
+            "type": "number",
+            "description": "On which letter the emote ended",
+            "value": 4
+          },
+          {
+            "name": "ImageUrl",
+            "type": "string",
+            "description": "The URL of an image from the emote",
+            "value": "https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/2.0"
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "description": "The name of the emote as displayed in chat",
+            "value": "Kappa"
+          },
+          {
+            "name": "Id",
+            "type": "number",
+            "description": "A unique identifier for the emote",
+            "value": 25
+          }
+        ]
+      },
+      {
+        "name": "isHighlight",
+        "type": "boolean",
+        "description": "Is this message a Twitch Highlight?",
+        "value": true
+      },
+      {
+        "name": "isAction",
+        "type": "boolean",
+        "description": "Is this message a `/me` action?",
+        "value": true
+      },
+      {
+        "name": "isReply",
+        "type": "boolean",
+        "description": "Is this message a reply?",
+        "value": true
+      },
+      {
+        "name": "reply.msgId",
+        "type": "string",
+        "description": "The message id of the reply",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "reply.userId",
+        "type": "string",
+        "description": "The user id from the user who sent the reply",
+        "value": 718933593
+      },
+      {
+        "name": "reply.userLogin",
+        "type": "string",
+        "description": "The user login from the user who sent the reply",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "reply.userName",
+        "type": "string",
+        "description": "The user name from the user who sent the reply",
+        "value": "TwitchUser123"
+      },
+      {
+        "name": "reply.msgBody",
+        "type": "string",
+        "description": "The text content of the reply, **Spaces are replaced by `\\s`**",
+        "value": "My\\schat\\smessage"
+      },
+      {
+        "name": "reply.threadMsgId",
+        "type": "string",
+        "description": "The message id of the thread",
+        "value": "a126e8a8-43f7-4a14-8990-e8c3feea76d8"
+      },
+      {
+        "name": "reply.threadUserLogin",
+        "type": "string",
+        "description": "The user login name of the thread",
+        "value": "twitchuser123"
+      },
+      {
+        "name": "firstMessage",
+        "type": "boolean",
+        "description": "Is this user a first time chatter?",
+        "value": true
+      },
+      {
+        "name": "rawInput",
+        "type": "string",
+        "description": "The message entered"
+      },
+      {
+        "name": "rawInputEscaped",
+        "type": "string",
+        "description": "The message escaped"
+      },
+      {
+        "name": "rawInputUrlEncoded",
+        "type": "string",
+        "description": "The message URL encoded"
+      },
+      {
+        "name": "input#",
+        "type": "string",
+        "description": "The `#` word of the message entered, spaces are delimiters and variable names are 0 indexed, so `input0` would give the first word, `input1` would give the second, and so on"
+      },
+      {
+        "name": "inputEscaped#",
+        "type": "string",
+        "description": "The indexed word escaped"
+      },
+      {
+        "name": "inputUrlEncoded#",
+        "type": "string",
+        "description": "The indexed word URL encoded"
+      },
+      {
+        "name": "inSharedChat",
+        "type": "boolean",
+        "description": "Whether or not the broadcaster is currently in a shared chat"
+      },
+      {
+        "name": "fromSharedChat",
+        "type": "boolean",
+        "description": "Whether or not the message originated from a different broadcaster in shared chat"
       },
       {
         "name": "user",

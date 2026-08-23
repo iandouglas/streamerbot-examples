@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-08-16T08:05:51.255583+00:00",
+  "generatedAt": "2026-08-23T08:05:25.250314+00:00",
   "sources": {
     "officialDocs": {
       "site": "https://docs.streamer.bot/",
       "repo": "https://github.com/Streamerbot/docs",
       "localRoot": "agentic/streamerbot-docs",
-      "revision": "55b710195bb2744eaf763fbb2383a9fdbdf57332",
+      "revision": "7a5f4eb478039dd987461f4b13e0a7baa2ac03e6",
       "branches": [
         {
           "name": "origin/Mustached-Maniac-patch-1",
@@ -29,8 +29,8 @@
         },
         {
           "name": "origin/main",
-          "shortHash": "55b7101",
-          "subject": "docs: add tabs for instructions varying on install location"
+          "shortHash": "7a5f4eb",
+          "subject": "added WaveLink3 and new methods (#432)"
         }
       ]
     },
@@ -49,27 +49,27 @@
     }
   },
   "counts": {
-    "allPages": 2173,
-    "docsPages": 1258,
+    "allPages": 2233,
+    "docsPages": 1318,
     "wikiPages": 915,
-    "api": 1082,
+    "api": 1141,
     "guide": 51,
     "getStarted": 11,
     "examples": 15,
-    "changelogs": 62,
+    "changelogs": 63,
     "csharpGuides": 9,
-    "csharpMethods": 195,
+    "csharpMethods": 202,
     "csharpClasses": 29,
     "csharpEnums": 6,
-    "subActions": 363,
-    "triggers": 415,
+    "subActions": 412,
+    "triggers": 418,
     "httpPages": 9,
     "websocketPages": 9,
     "udpPages": 2,
     "guidePages": 62,
     "examplePages": 15,
     "commandPages": 60,
-    "triggerPages": 822,
+    "triggerPages": 825,
     "timerPages": 6,
     "queuePages": 1
   },
