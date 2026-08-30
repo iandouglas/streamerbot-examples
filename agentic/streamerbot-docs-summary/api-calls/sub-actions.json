@@ -1678,6 +1678,848 @@
     "codeBlockCount": 0
   },
   {
+    "title": "Get Points Definition",
+    "name": null,
+    "description": "Fetch the current points definition for a specific point",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/admin/get-points-definition",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/admin/get-points-definition",
+    "sourcePath": "3.api/1.sub-actions/core/points/admin/get-points-definition.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to fetch"
+      },
+      {
+        "name": "Destination Variable",
+        "type": "string",
+        "description": "The variable to store the fetched points definition"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Reset Points Definition",
+    "name": null,
+    "description": "Reset the points definition for a specific point",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/admin/reset-points-definition",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/admin/reset-points-definition",
+    "sourcePath": "3.api/1.sub-actions/core/points/admin/reset-points-definition.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to reset"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Award Points to All",
+    "name": null,
+    "description": "Award points to all users",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/bulk/award-points-to-all",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/bulk/award-points-to-all",
+    "sourcePath": "3.api/1.sub-actions/core/points/bulk/award-points-to-all.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to award points for"
+      },
+      {
+        "name": "Amount",
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "description": "The amount of points to award to all users (supports variables)"
+      },
+      {
+        "name": "Platform",
+        "type": "string",
+        "description": "The platform to award points for (leave blank for all platforms)"
+      },
+      {
+        "name": "Only Award to Active Users",
+        "type": "checkbox",
+        "description": "If checked, it will only award points to active users"
+      },
+      {
+        "name": "Apply User/Group Multipliers",
+        "type": "checkbox",
+        "description": "If checked, it will apply any user/group multipliers to the awarded points"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Award Points to Group",
+    "name": null,
+    "description": "Award points to all users in the specified group",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/groups/award-points-to-group",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/groups/award-points-to-group",
+    "sourcePath": "3.api/1.sub-actions/core/points/groups/award-points-to-group.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to award points for"
+      },
+      {
+        "name": "Group",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the group you want to award points to (supports variables)"
+      },
+      {
+        "name": "Amount",
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "description": "The amount of points to award to all users (supports variables)"
+      },
+      {
+        "name": "Apply User/Group Multipliers",
+        "type": "checkbox",
+        "description": "If checked, it will apply any user/group multipliers to the awarded points"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Group Multiplier",
+    "name": null,
+    "description": "Fetch the multiplier for a specific group",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/groups/get-group-multiplier",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/groups/get-group-multiplier",
+    "sourcePath": "3.api/1.sub-actions/core/points/groups/get-group-multiplier.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to fetch the group multiplier for"
+      },
+      {
+        "name": "Group",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the group you want to fetch the multiplier for (supports variables)"
+      },
+      {
+        "name": "Destination Variable",
+        "type": "string",
+        "description": "The variable to store the fetched group multiplier"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Remove Group Multiplier",
+    "name": null,
+    "description": "Remove the multiplier for a specific group",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/groups/remove-group-multiplier",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/groups/remove-group-multiplier",
+    "sourcePath": "3.api/1.sub-actions/core/points/groups/remove-group-multiplier.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to remove the group multiplier for"
+      },
+      {
+        "name": "Group",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the group you want to remove the multiplier for"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Group Multiplier",
+    "name": null,
+    "description": "Set the multiplier for a specific group",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/groups/set-group-multiplier",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/groups/set-group-multiplier",
+    "sourcePath": "3.api/1.sub-actions/core/points/groups/set-group-multiplier.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to set the group multiplier for"
+      },
+      {
+        "name": "Group",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the group you want to set the multiplier for (supports variables)"
+      },
+      {
+        "name": "Multiplier",
+        "type": "number",
+        "required": true,
+        "default": 1.0,
+        "description": "The multiplier for the selected group (supports variables)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Points Leaderboard",
+    "name": null,
+    "description": "Fetch the points leaderboard for a specific point definition",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/leaderboards/get-points-leaderboard",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/leaderboards/get-points-leaderboard",
+    "sourcePath": "3.api/1.sub-actions/core/points/leaderboards/get-points-leaderboard.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to fetch the leaderboard for"
+      },
+      {
+        "name": "Count",
+        "type": "number",
+        "required": true,
+        "default": "None",
+        "description": "The number of top users to fetch"
+      },
+      {
+        "name": "Offset",
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "description": "The starting point for fetching the leaderboard (0-indexed, supports variables)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Award Points",
+    "name": null,
+    "description": "Award points to a specific user",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/user/award-points",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/user/award-points",
+    "sourcePath": "3.api/1.sub-actions/core/points/user/award-points.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to award points for"
+      },
+      {
+        "name": "User",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "The username of the user you want to award points to (supports variables)"
+      },
+      {
+        "name": "platform",
+        "type": "String",
+        "required": true,
+        "default": "%userType%",
+        "description": "The platform of the user you want to award points to (supports variables)"
+      },
+      {
+        "name": "Amount",
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "description": "The amount of points to award to all users (supports variables)"
+      },
+      {
+        "name": "Apply User/Group Multipliers",
+        "type": "checkbox",
+        "description": "If checked, it will apply any user/group multipliers to the awarded points"
+      },
+      {
+        "name": "Destination Variable",
+        "type": "String",
+        "required": false,
+        "default": "userPoints",
+        "description": "The argument variable name to store the users points after awarding (supports variables)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Check Points",
+    "name": null,
+    "description": "Check the points of a specific user",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/user/check-points",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/user/check-points",
+    "sourcePath": "3.api/1.sub-actions/core/points/user/check-points.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to check points for"
+      },
+      {
+        "name": "User",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "The username of the user you want to check points for (supports variables)"
+      },
+      {
+        "name": "platform",
+        "type": "String",
+        "required": true,
+        "default": "%userType%",
+        "description": "The platform of the user you want to check points for (supports variables)"
+      },
+      {
+        "name": "Required Amount",
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "description": "The minimum amount of points to check for (supports variables)"
+      },
+      {
+        "name": "Break Action of Failure",
+        "type": "checkbox",
+        "default": true,
+        "description": "If checked, it will break the action chain if the point check fails"
+      },
+      {
+        "name": "Destination Variable",
+        "type": "String",
+        "required": false,
+        "default": "userPoints",
+        "description": "The argument variable name to store the users points after awarding (supports variables)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Delete Points",
+    "name": null,
+    "description": "Deletes all points from a specific user",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/user/delete-points",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/user/delete-points",
+    "sourcePath": "3.api/1.sub-actions/core/points/user/delete-points.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to delete points for"
+      },
+      {
+        "name": "User",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "The username of the user you want to delete points from (supports variables)"
+      },
+      {
+        "name": "platform",
+        "type": "String",
+        "required": true,
+        "default": "%userType%",
+        "description": "The platform of the user you want to delete points from (supports variables)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Points",
+    "name": null,
+    "description": "Retrieve the points of a specific user",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/user/get-points",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/user/get-points",
+    "sourcePath": "3.api/1.sub-actions/core/points/user/get-points.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to retrieve points for"
+      },
+      {
+        "name": "User",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "The username of the user you want to retrieve points for (supports variables)"
+      },
+      {
+        "name": "platform",
+        "type": "String",
+        "required": true,
+        "default": "%userType%",
+        "description": "The platform of the user you want to retrieve points for (supports variables)"
+      },
+      {
+        "name": "Destination Variable",
+        "type": "String",
+        "required": false,
+        "default": "userPoints",
+        "description": "The argument variable name to store the users points (supports variables)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get User Multiplier",
+    "name": null,
+    "description": "Retrieve the multiplier for a specific user",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/user/get-user-multiplier",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/user/get-user-multiplier",
+    "sourcePath": "3.api/1.sub-actions/core/points/user/get-user-multiplier.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to retrieve the multiplier for"
+      },
+      {
+        "name": "User",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "The username of the user you want to retrieve the multiplier for (supports variables)"
+      },
+      {
+        "name": "platform",
+        "type": "String",
+        "required": true,
+        "default": "%userType%",
+        "description": "The platform of the user you want to retrieve the multiplier for (supports variables)"
+      },
+      {
+        "name": "Destination Variable",
+        "type": "String",
+        "required": false,
+        "default": "userMultiplier",
+        "description": "The argument variable name to store the effective multiplier value (supports variables)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Reset User Points",
+    "name": null,
+    "description": "Reset the points of a specific user to 0",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/user/reset-user-points",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/user/reset-user-points",
+    "sourcePath": "3.api/1.sub-actions/core/points/user/reset-user-points.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to award points for"
+      },
+      {
+        "name": "User",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "The username of the user you want to award points to (supports variables)"
+      },
+      {
+        "name": "platform",
+        "type": "String",
+        "required": true,
+        "default": "%userType%",
+        "description": "The platform of the user you want to award points to (supports variables)"
+      },
+      {
+        "name": "Destination Variable",
+        "type": "String",
+        "required": false,
+        "default": "userPoints",
+        "description": "The argument variable name to store the users points after resetting to 0 (supports variables)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Points",
+    "name": null,
+    "description": "Set the points of a specific user",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/user/set-points",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/user/set-points",
+    "sourcePath": "3.api/1.sub-actions/core/points/user/set-points.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to set points for"
+      },
+      {
+        "name": "User",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "The username of the user you want to set points for (supports variables)"
+      },
+      {
+        "name": "platform",
+        "type": "String",
+        "required": true,
+        "default": "%userType%",
+        "description": "The platform of the user you want to set points for (supports variables)"
+      },
+      {
+        "name": "Amount",
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "description": "The amount of points to set for the user (supports variables)"
+      },
+      {
+        "name": "Destination Variable",
+        "type": "String",
+        "required": false,
+        "default": "userPoints",
+        "description": "The argument variable name to store the users points after setting (supports variables)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Spend Points",
+    "name": null,
+    "description": "Spend points from a specific user",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/user/spend-points",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/user/spend-points",
+    "sourcePath": "3.api/1.sub-actions/core/points/user/spend-points.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to spend points for"
+      },
+      {
+        "name": "User",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "The username of the user you want to spend points from (supports variables)"
+      },
+      {
+        "name": "platform",
+        "type": "String",
+        "required": true,
+        "default": "%userType%",
+        "description": "The platform of the user you want to spend points from (supports variables)"
+      },
+      {
+        "name": "Amount",
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "description": "The amount of points to spend from the user (supports variables)"
+      },
+      {
+        "name": "Break action sequence if user has insufficient points",
+        "type": "checkbox",
+        "default": true,
+        "description": "If checked, the action sequence will be broken if the user has insufficient points"
+      },
+      {
+        "name": "Destination Variable",
+        "type": "String",
+        "required": false,
+        "default": "userPoints",
+        "description": "The argument variable name to store the users points after spending (supports variables)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Transfer Points",
+    "name": null,
+    "description": "Transfer points from one user to another",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/user/transfer-points",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/user/transfer-points",
+    "sourcePath": "3.api/1.sub-actions/core/points/user/transfer-points.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to transfer points for"
+      },
+      {
+        "name": "Source User",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "The username of the user you want to transfer points from (supports variables)"
+      },
+      {
+        "name": "Source Platform",
+        "type": "String",
+        "required": true,
+        "default": "%userType%",
+        "description": "The platform of the user you want to transfer points from (supports variables)"
+      },
+      {
+        "name": "Target User",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "The username of the user you want to transfer points to (supports variables)"
+      },
+      {
+        "name": "Target Platform",
+        "type": "String",
+        "required": true,
+        "default": "%userType%",
+        "description": "The platform of the user you want to transfer points to (supports variables)"
+      },
+      {
+        "name": "Amount",
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "description": "The amount of points to transfer (supports variables)"
+      },
+      {
+        "name": "Base Variable Name",
+        "type": "String",
+        "required": false,
+        "default": "userPoints",
+        "description": "Outputs '%(variableName)Source%' and '%(variableName)Target%' with the users points after the transfer (supports variables)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Update Points",
+    "name": null,
+    "description": "Update the point balance for a specific user",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/core/points/user/update-points",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/core/points/user/update-points",
+    "sourcePath": "3.api/1.sub-actions/core/points/user/update-points.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Point Definition",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "Choose the point definition you want to update points for"
+      },
+      {
+        "name": "User",
+        "type": "Select",
+        "required": true,
+        "default": "None",
+        "description": "The username of the user you want to update points for (supports variables)"
+      },
+      {
+        "name": "platform",
+        "type": "String",
+        "required": true,
+        "default": "%userType%",
+        "description": "The platform of the user you want to update points for (supports variables)"
+      },
+      {
+        "name": "Amount",
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "description": "The amount of points to update (supports variables)"
+      },
+      {
+        "name": "Apply User/Group Multipliers",
+        "type": "checkbox",
+        "description": "If checked, it will apply any user/group multipliers to the updated points"
+      },
+      {
+        "name": "Destination Variable",
+        "type": "String",
+        "required": false,
+        "default": "userPoints",
+        "description": "The argument variable name to store the users points after updating (supports variables)"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "Add Quote",
     "name": null,
     "description": "Add a quote which can be retrieved by the `Get Quote` Sub-Action",
@@ -3409,6 +4251,106 @@
     "codeBlockCount": 0
   },
   {
+    "title": "Set Power State",
+    "name": null,
+    "description": "Set the power state of the selected device in Elgato Control Center",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/control-center/brightness/set-brightness",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/control-center/brightness/set-brightness",
+    "sourcePath": "3.api/1.sub-actions/elgato/control-center/brightness/set-brightness.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Device",
+        "type": "Select",
+        "required": true,
+        "description": "Device to set the power state for"
+      },
+      {
+        "name": "Brightness",
+        "type": "number",
+        "required": true,
+        "description": "Brightness level for the device",
+        "minimum": 0,
+        "maximum": 100
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Power State",
+    "name": null,
+    "description": "Set the power state of the selected device in Elgato Control Center",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/control-center/power/set-power-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/control-center/power/set-power-state",
+    "sourcePath": "3.api/1.sub-actions/elgato/control-center/power/set-power-state.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Device",
+        "type": "Select",
+        "required": true,
+        "description": "Device to set the power state for"
+      },
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "Power state for the device",
+        "options": [
+          false,
+          true,
+          "Toggle"
+        ]
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Temperature",
+    "name": null,
+    "description": "Set the temperature of the selected device in Elgato Control Center",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/control-center/temperature/set-temperature",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/control-center/temperature/set-temperature",
+    "sourcePath": "3.api/1.sub-actions/elgato/control-center/temperature/set-temperature.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Device",
+        "type": "Select",
+        "required": true,
+        "description": "Device to set the temperature for"
+      },
+      {
+        "name": "Temperature",
+        "type": "number",
+        "required": true,
+        "description": "Temperature level for the device"
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
     "title": "Set Background",
     "name": null,
     "description": "Modify the background image of a Stream Deck key or dial",
@@ -3596,6 +4538,210 @@
         "import": "elgato/stream-deck-button-id"
       }
     ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Open Storage Location",
+    "name": null,
+    "description": "Open the storage location of the Elgato Studio application",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/studio/open-storage-location",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/studio/open-storage-location",
+    "sourcePath": "3.api/1.sub-actions/elgato/studio/open-storage-location.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Preview Info",
+    "name": null,
+    "description": "Retrieve information about the current preview in Elgato Studio",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/studio/preview/get-preview-info",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/studio/preview/get-preview-info",
+    "sourcePath": "3.api/1.sub-actions/elgato/studio/preview/get-preview-info.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Preview Fullscreen State",
+    "name": null,
+    "description": "Set the fullscreen state of the current preview in Elgato Studio",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/studio/preview/set-preview-fullscreen-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/studio/preview/set-preview-fullscreen-state",
+    "sourcePath": "3.api/1.sub-actions/elgato/studio/preview/set-preview-fullscreen-state.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "Fullscreen state for the preview",
+        "options": [
+          "Enabled",
+          "Disabled"
+        ]
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Preview Mute State",
+    "name": null,
+    "description": "Set the mute state of the current preview in Elgato Studio",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/studio/preview/set-preview-mute-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/studio/preview/set-preview-mute-state",
+    "sourcePath": "3.api/1.sub-actions/elgato/studio/preview/set-preview-mute-state.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "Mute state for the preview",
+        "options": [
+          "Enabled",
+          "Disabled"
+        ]
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Preview Volume",
+    "name": null,
+    "description": "Set the volume level of the current preview in Elgato Studio",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/studio/preview/set-preview-volume",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/studio/preview/set-preview-volume",
+    "sourcePath": "3.api/1.sub-actions/elgato/studio/preview/set-preview-volume.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "Volume",
+        "type": "number",
+        "required": true,
+        "description": "Volume level for the preview",
+        "minimum": 0,
+        "maximum": 100
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Last Recording Info",
+    "name": null,
+    "description": "Retrieve information about the last recording in Elgato Studio",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/studio/recording/get-last-recording-info",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/studio/recording/get-last-recording-info",
+    "sourcePath": "3.api/1.sub-actions/elgato/studio/recording/get-last-recording-info.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Get Recording Info",
+    "name": null,
+    "description": "Retrieve information about the current recording in Elgato Studio",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/studio/recording/get-recording-info",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/studio/recording/get-recording-info",
+    "sourcePath": "3.api/1.sub-actions/elgato/studio/recording/get-recording-info.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Set Recording State",
+    "name": null,
+    "description": "Set the state of the current recording in Elgato Studio",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/studio/recording/set-recording-state",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/studio/recording/set-recording-state",
+    "sourcePath": "3.api/1.sub-actions/elgato/studio/recording/set-recording-state.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [
+      {
+        "name": "State",
+        "type": "Select",
+        "required": true,
+        "description": "Recording state",
+        "options": [
+          "Enabled",
+          "Disabled"
+        ]
+      }
+    ],
+    "variables": [],
+    "commonVariables": [],
+    "codeBlocks": [],
+    "codeBlockCount": 0
+  },
+  {
+    "title": "Take Snapshot",
+    "name": null,
+    "description": "Takes a snapshot of the current Elgato Studio view",
+    "version": "1.1.0",
+    "route": "/api/sub-actions/elgato/studio/take-snapshot",
+    "sourceRepo": "streamerbot-docs",
+    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/studio/take-snapshot",
+    "sourcePath": "3.api/1.sub-actions/elgato/studio/take-snapshot.md",
+    "section": "api",
+    "headings": [],
+    "summary": "",
+    "parameters": [],
     "variables": [],
     "commonVariables": [],
     "codeBlocks": [],
@@ -4226,7 +5372,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/channels/add-application-to-channel.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Mix",
@@ -4251,7 +5397,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/channels/adjust-channel-volume.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Channel",
@@ -4288,7 +5434,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/channels/get-channel-information.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Channel",
@@ -4404,7 +5550,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/channels/mute-channel.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Channel",
@@ -4436,7 +5582,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/channels/set-channel-effect-state.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Channel",
@@ -4474,7 +5620,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/channels/set-channel-mix-mute.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Channel",
@@ -4512,7 +5658,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/channels/set-channel-volume.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Channel",
@@ -4550,7 +5696,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/inputs/get-input-device-information.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Input Device",
@@ -4654,7 +5800,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/inputs/mute-input-device.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Input Device",
@@ -4686,7 +5832,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/inputs/set-input-clipguard-state.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Input Device",
@@ -4718,7 +5864,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/inputs/set-input-gain-lock-state.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Input Device",
@@ -4782,7 +5928,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/inputs/set-input-low-cut-filter.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Input Device",
@@ -4846,7 +5992,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/mixes/adjust-mix-volume.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Mix",
@@ -4877,7 +6023,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/mixes/get-mix-information.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Mix",
@@ -4959,7 +6105,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/outputs/add-output-to-device-mix.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Output Device",
@@ -4990,7 +6136,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/outputs/get-selected-output-device.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [],
     "variables": [
       {
@@ -5027,7 +6173,7 @@
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/outputs/set-monitored-mix.md",
     "section": "api",
     "headings": [],
-    "summary": ":wip",
+    "summary": "",
     "parameters": [
       {
         "name": "Monitored Mix",
@@ -5050,832 +6196,6 @@
     "sourceRepo": "streamerbot-docs",
     "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3/outputs/set-output-volume",
     "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3/outputs/set-output-volume.md",
-    "section": "api",
-    "headings": [],
-    "summary": ":wip",
-    "parameters": [
-      {
-        "name": "Output Device",
-        "type": "Select",
-        "required": true,
-        "description": "Audio output device you want to affect"
-      },
-      {
-        "name": "Volume",
-        "type": "number",
-        "required": true,
-        "description": "Gain\nRange: `0` to `100`\n",
-        "default": 100
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Add Application to Channel",
-    "name": null,
-    "description": "Add an application to a specific audio channel",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/channels/add-application-to-channel",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/channels/add-application-to-channel",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/channels/add-application-to-channel.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Mix",
-        "type": "Select",
-        "required": true,
-        "description": "Mix to add to the audio channel"
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Adjust Channel Volume",
-    "name": null,
-    "description": "Adjust the volume of an audio channel",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/channels/adjust-channel-volume",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/channels/adjust-channel-volume",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/channels/adjust-channel-volume.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Channel",
-        "type": "Select",
-        "required": true,
-        "description": "Audio channel you want to affect"
-      },
-      {
-        "name": "Mix",
-        "type": "Select",
-        "required": true,
-        "description": "Desired mix of the channel you want to affect"
-      },
-      {
-        "name": "Volume Delta",
-        "type": "Number",
-        "description": "Will add/subtract from the current volume",
-        "default": 5
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Get Channel Information",
-    "name": null,
-    "description": "Retrieve information about an audio channel",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/channels/get-channel-information",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/channels/get-channel-information",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/channels/get-channel-information.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Channel",
-        "type": "Select",
-        "required": true,
-        "description": "Audio channel you want to obtain the current information for"
-      }
-    ],
-    "variables": [
-      {
-        "name": "waveLinkChannelId",
-        "type": "string",
-        "description": "Identifier of the channel ID",
-        "value": "PCM_OUT_00_V_00_SD1"
-      },
-      {
-        "name": "waveLinkChannelName",
-        "type": "string",
-        "description": "Name of the channel",
-        "value": "System"
-      },
-      {
-        "name": "waveLinkChannelVolume",
-        "type": "number",
-        "description": "Current volume level of the channel",
-        "value": 1
-      },
-      {
-        "name": "waveLinkChannelMuted",
-        "type": "bool",
-        "description": "Indicates if the channel is muted",
-        "value": false
-      },
-      {
-        "name": "waveLinkChannelLevel",
-        "type": "number",
-        "description": "Current volume level of the channel",
-        "value": 1
-      },
-      {
-        "name": "waveLinkChannelEffectsCount",
-        "type": "number",
-        "description": "Current number of effects applied to the channel",
-        "value": 0
-      },
-      {
-        "name": "waveLinkChannelMixesCount",
-        "type": "number",
-        "description": "Current number of mixes the channel is part of",
-        "value": 2
-      },
-      {
-        "name": "waveLinkChannelMix.0.id",
-        "type": "string",
-        "description": "ID of the first mix the channel is part of",
-        "value": "PCM_IN_01_V_00_SD1"
-      },
-      {
-        "name": "waveLinkChannelMix.0.name",
-        "type": "string",
-        "description": "Name of the first mix the channel is part of",
-        "value": "Testing Name Mix"
-      },
-      {
-        "name": "waveLinkChannelMix.0.level",
-        "type": "number",
-        "description": "Volume level of the first mix the channel is part of",
-        "value": 1
-      },
-      {
-        "name": "waveLinkChannelMix.0.muted",
-        "type": "bool",
-        "description": "Indicates if the first mix the channel is part of is muted",
-        "value": false
-      },
-      {
-        "name": "waveLinkChannelMix.1.id",
-        "type": "string",
-        "description": "ID of the second mix the channel is part of",
-        "value": "PCM_IN_01_V_02_SD2"
-      },
-      {
-        "name": "waveLinkChannelMix.1.name",
-        "type": "string",
-        "description": "Name of the second mix the channel is part of",
-        "value": "Stream Mix"
-      },
-      {
-        "name": "waveLinkChannelMix.1.level",
-        "type": "number",
-        "description": "Volume level of the second mix the channel is part of",
-        "value": 1
-      },
-      {
-        "name": "waveLinkChannelMix.1.muted",
-        "type": "bool",
-        "description": "Indicates if the second mix the channel is part of is muted",
-        "value": false
-      }
-    ],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Mute Channel",
-    "name": null,
-    "description": "Mute a specific audio channel",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/channels/mute-channel",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/channels/mute-channel",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/channels/mute-channel.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Channel",
-        "type": "Select",
-        "required": true,
-        "description": "Audio channel you want to affect"
-      },
-      {
-        "name": "State",
-        "type": "Select",
-        "required": true,
-        "description": "Mute State\nOptions: `Muted`, `Not Muted`, `Toggle`\n",
-        "default": "Muted"
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Set Channel Effect State",
-    "name": null,
-    "description": "Set the state of a specific effect within an audio channel",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/channels/set-channel-effect-state",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/channels/set-channel-effect-state",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/channels/set-channel-effect-state.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Channel",
-        "type": "Select",
-        "required": true,
-        "description": "Audio channel you want to affect"
-      },
-      {
-        "name": "Effect",
-        "type": "Select",
-        "required": true,
-        "description": "Effect which should be applied to the audio channel"
-      },
-      {
-        "name": "State",
-        "type": "Select",
-        "required": true,
-        "description": "Effect State\nOptions: `Disabled`, `Enabled`, `Toggle`\n",
-        "default": "Disabled"
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Set Channel Mix Mute",
-    "name": null,
-    "description": "Mute a specific mix within an audio channel",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/channels/set-channel-mix-mute",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/channels/set-channel-mix-mute",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/channels/set-channel-mix-mute.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Channel",
-        "type": "Select",
-        "required": true,
-        "description": "Audio channel you want to affect"
-      },
-      {
-        "name": "Mix",
-        "type": "Select",
-        "required": true,
-        "description": "Mix which should be affected"
-      },
-      {
-        "name": "State",
-        "type": "Select",
-        "required": true,
-        "description": "Mute State\nOptions: `Muted`, `Not Muted`, `Toggle`\n",
-        "default": "Muted"
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Set Channel Volume",
-    "name": null,
-    "description": "Set the output volume of an audio channel",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/channels/set-channel-volume",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/channels/set-channel-volume",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/channels/set-channel-volume.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Channel",
-        "type": "Select",
-        "required": true,
-        "description": "Audio channel you want to affect"
-      },
-      {
-        "name": "Mix",
-        "type": "Select",
-        "required": true,
-        "description": "Audio input mix you want to affect"
-      },
-      {
-        "name": "Volume",
-        "type": "Number",
-        "required": true,
-        "description": "Volume of the audio input mix",
-        "default": 100
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Get Input Device Information",
-    "name": null,
-    "description": "Retrieve information about an audio input device",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/inputs/get-input-device-information",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/inputs/get-input-device-information",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/inputs/get-input-device-information.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Input Device",
-        "type": "Select",
-        "required": true,
-        "description": "Audio input device you want to obtain the current information for"
-      }
-    ],
-    "variables": [
-      {
-        "name": "waveLinkInputDeviceId",
-        "type": "string",
-        "description": "Identifier of the input device",
-        "value": "{0.0.1.00000000}.{96e65e84-0aaf-4b18-8f69-3da2d478b3d4}"
-      },
-      {
-        "name": "waveLinkInputDeviceName",
-        "type": "string",
-        "description": "Name of the input device",
-        "value": "Microphone (2- Realtek USB2.0 Audio)"
-      },
-      {
-        "name": "waveLinkInputDeviceType",
-        "type": "string",
-        "description": "Type of the input device",
-        "value": "thirdParty"
-      },
-      {
-        "name": "waveLinkInputDeviceGain",
-        "type": "number",
-        "description": "Current gain level of the input device",
-        "value": 0.5541552
-      },
-      {
-        "name": "waveLinkInputDeviceMuted",
-        "type": "bool",
-        "description": "Indicates if the input device is muted",
-        "value": false
-      },
-      {
-        "name": "waveLinkInputDeviceMicPcMix",
-        "type": "number",
-        "description": "Current microphone/PC mix level of the input device",
-        "value": 0
-      },
-      {
-        "name": "waveLinkInputDeviceClipGuard",
-        "type": "bool",
-        "description": "Indicates if the input device has clip guard enabled",
-        "value": false
-      },
-      {
-        "name": "waveLinkInputDeviceLowCutFilter",
-        "type": "bool",
-        "description": "Indicates if the input device has low cut filter enabled",
-        "value": false
-      },
-      {
-        "name": "waveLinkInputDeviceChannelCount",
-        "type": "number",
-        "description": "Number of channels of the input device",
-        "value": 0
-      },
-      {
-        "name": "waveLinkInputChannelId",
-        "type": "string",
-        "description": "Identifier of the input channel",
-        "value": null
-      },
-      {
-        "name": "waveLinkInputChannelName",
-        "type": "string",
-        "description": "Name of the input channel",
-        "value": null
-      },
-      {
-        "name": "waveLinkInputChannelVolume",
-        "type": "number",
-        "description": "Current volume level of the channel",
-        "value": 0
-      },
-      {
-        "name": "waveLinkInputChannelMuted",
-        "type": "bool",
-        "description": "Indicates if the input channel is muted",
-        "value": false
-      }
-    ],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Mute Input Device",
-    "name": null,
-    "description": "Mute a specific audio input device",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/inputs/mute-input-device",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/inputs/mute-input-device",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/inputs/mute-input-device.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Input Device",
-        "type": "Select",
-        "required": true,
-        "description": "Audio input device you want to affect"
-      },
-      {
-        "name": "State",
-        "type": "Select",
-        "required": true,
-        "description": "State\nOptions: `Muted`, `Not Muted`, `Toggle`\n",
-        "default": "Muted"
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Set Input Clipguard State",
-    "name": null,
-    "description": "Sets the clipguard state of a specific audio input device",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-clipguard-state",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-clipguard-state",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/inputs/set-input-clipguard-state.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Input Device",
-        "type": "Select",
-        "required": true,
-        "description": "Audio input device you want to affect"
-      },
-      {
-        "name": "State",
-        "type": "Select",
-        "required": true,
-        "description": "State\nOptions: `Enabled`, `Disabled`, `Toggle`\n",
-        "default": "Enabled"
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Set Input Gain Lock State",
-    "name": null,
-    "description": "Sets the gain lock state of a specific audio input device",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-gain-lock-state",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-gain-lock-state",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/inputs/set-input-gain-lock-state.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Input Device",
-        "type": "Select",
-        "required": true,
-        "description": "Audio input device you want to affect"
-      },
-      {
-        "name": "State",
-        "type": "Select",
-        "required": true,
-        "description": "State\nOptions: `Enabled`, `Disabled`, `Toggle`\n",
-        "default": "Enabled"
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Set Input Gain",
-    "name": null,
-    "description": "Sets the gain of a specific audio input device",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-gain",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-gain",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/inputs/set-input-gain.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Input Device",
-        "type": "Select",
-        "required": true,
-        "description": "Audio input device you want to affect"
-      },
-      {
-        "name": "Gain",
-        "type": "number",
-        "required": true,
-        "description": "Gain\nRange: `0` to `1` db\n",
-        "default": "Enabled"
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Set Input Low Cut Filter",
-    "name": null,
-    "description": "Sets the low cut filter state of a specific audio input device",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-low-cut-filter",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/inputs/set-input-low-cut-filter",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/inputs/set-input-low-cut-filter.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Input Device",
-        "type": "Select",
-        "required": true,
-        "description": "Audio input device you want to affect"
-      },
-      {
-        "name": "State",
-        "type": "Select",
-        "required": true,
-        "description": "State\nOptions: `Enabled`, `Disabled`, `Toggle`\n",
-        "default": "Enabled"
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Adjust Mix Volume",
-    "name": null,
-    "description": "Adjust the volume of an audio mix",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/mixes/adjust-mix-volume",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/mixes/adjust-mix-volume",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/mixes/adjust-mix-volume.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Mix",
-        "type": "Select",
-        "required": true,
-        "description": "Audio mix you want to affect"
-      },
-      {
-        "name": "Volume Delta",
-        "type": "Number",
-        "description": "Will add/subtract from the current volume",
-        "default": 5
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Get Mix Information",
-    "name": null,
-    "description": "Retrieve information about an audio mix",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/mixes/get-mix-information",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/mixes/get-mix-information",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/mixes/get-mix-information.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Mix",
-        "type": "Select",
-        "required": true,
-        "description": "Audio mix you want to obtain the current information for"
-      }
-    ],
-    "variables": [
-      {
-        "name": "waveLinkMixId",
-        "type": "string",
-        "description": "Identifier of the mix ID",
-        "value": "PCM_IN_01_V_04_SD3"
-      },
-      {
-        "name": "waveLinkMixName",
-        "type": "string",
-        "description": "Name of the mix",
-        "value": "Chat Mix"
-      },
-      {
-        "name": "waveLinkMixVolume",
-        "type": "number",
-        "description": "Current volume level of the mix",
-        "value": 1
-      },
-      {
-        "name": "waveLinkMixMuted",
-        "type": "bool",
-        "description": "Indicates if the mix is muted",
-        "value": false
-      }
-    ],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Set Mix Volume",
-    "name": null,
-    "description": "Sets the volume of a specific audio mix",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/mixes/set-mix-volume",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/mixes/set-mix-volume",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/mixes/set-mix-volume.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Mix",
-        "type": "Select",
-        "required": true,
-        "description": "Audio mix you want to affect"
-      },
-      {
-        "name": "Volume",
-        "type": "number",
-        "required": true,
-        "description": "Gain\nRange: `0` to `100` db\n",
-        "default": 100
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Add Output Device to Mix",
-    "name": null,
-    "description": "Adds an output device to a specific audio mix",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/outputs/add-output-to-device-mix",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/outputs/add-output-to-device-mix",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/outputs/add-output-to-device-mix.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Output Device",
-        "type": "Select",
-        "required": true,
-        "description": "Audio output device you want to add to the mix"
-      },
-      {
-        "name": "Mix",
-        "type": "Select",
-        "required": true,
-        "description": "Audio mix you want to add the output device to"
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Get Selected Output Device",
-    "name": null,
-    "description": "Retrieve information about the currently selected audio output device",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/outputs/get-selected-output-device",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/outputs/get-selected-output-device",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/outputs/get-selected-output-device.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [],
-    "variables": [
-      {
-        "name": "waveLinkOutputDeviceId",
-        "type": "string",
-        "description": "Identifier of the output device",
-        "value": "{0.0.0.00000000}.{51228b0e-d9af-4c0f-a03c-934a19a8cb23}"
-      },
-      {
-        "name": "waveLinkOutputDeviceName",
-        "type": "string",
-        "description": "Name of the output device",
-        "value": "SPDIF Interface (2- Realtek USB2.0 Audio)"
-      },
-      {
-        "name": "waveLinkOutputId",
-        "type": "string",
-        "description": "Identifier of the output device",
-        "value": "{0.0.0.00000000}.{51228b0e-d9af-4c0f-a03c-934a19a8cb23}"
-      }
-    ],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Set Monitored Mix",
-    "name": null,
-    "description": "Sets the mix to monitor",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/outputs/set-monitored-mix",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/outputs/set-monitored-mix",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/outputs/set-monitored-mix.md",
-    "section": "api",
-    "headings": [],
-    "summary": "",
-    "parameters": [
-      {
-        "name": "Monitored Mix",
-        "type": "Select",
-        "required": true,
-        "description": "Audio mix you want to affect"
-      }
-    ],
-    "variables": [],
-    "commonVariables": [],
-    "codeBlocks": [],
-    "codeBlockCount": 0
-  },
-  {
-    "title": "Set Output Volume",
-    "name": null,
-    "description": "Sets the volume of a specific audio output",
-    "version": "1.1.0",
-    "route": "/api/sub-actions/elgato/wave-link-3.x/outputs/set-output-volume",
-    "sourceRepo": "streamerbot-docs",
-    "sourceUrl": "https://docs.streamer.bot/api/sub-actions/elgato/wave-link-3.x/outputs/set-output-volume",
-    "sourcePath": "3.api/1.sub-actions/elgato/wave-link-3.x/outputs/set-output-volume.md",
     "section": "api",
     "headings": [],
     "summary": "",

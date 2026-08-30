@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-08-23T08:05:25.250314+00:00",
+  "generatedAt": "2026-08-30T08:05:58.704643+00:00",
   "sources": {
     "officialDocs": {
       "site": "https://docs.streamer.bot/",
       "repo": "https://github.com/Streamerbot/docs",
       "localRoot": "agentic/streamerbot-docs",
-      "revision": "7a5f4eb478039dd987461f4b13e0a7baa2ac03e6",
+      "revision": "8faed3a1b424651e239881a0e69c27a1d6157dd1",
       "branches": [
         {
           "name": "origin/Mustached-Maniac-patch-1",
@@ -29,8 +29,8 @@
         },
         {
           "name": "origin/main",
-          "shortHash": "7a5f4eb",
-          "subject": "added WaveLink3 and new methods (#432)"
+          "shortHash": "8faed3a",
+          "subject": "docs: update chat changelogs"
         }
       ]
     },
@@ -49,10 +49,10 @@
     }
   },
   "counts": {
-    "allPages": 2233,
-    "docsPages": 1318,
+    "allPages": 2280,
+    "docsPages": 1365,
     "wikiPages": 915,
-    "api": 1141,
+    "api": 1188,
     "guide": 51,
     "getStarted": 11,
     "examples": 15,
@@ -61,15 +61,15 @@
     "csharpMethods": 202,
     "csharpClasses": 29,
     "csharpEnums": 6,
-    "subActions": 412,
-    "triggers": 418,
+    "subActions": 422,
+    "triggers": 455,
     "httpPages": 9,
     "websocketPages": 9,
     "udpPages": 2,
     "guidePages": 62,
     "examplePages": 15,
     "commandPages": 60,
-    "triggerPages": 825,
+    "triggerPages": 862,
     "timerPages": 6,
     "queuePages": 1
   },

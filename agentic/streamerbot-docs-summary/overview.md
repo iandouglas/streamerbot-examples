@@ -6,10 +6,10 @@ Streamer.bot is an event-driven automation tool for livestreamers. The official 
 
 ## What the local docs snapshot covers
 
-- Total markdown pages captured: **2233**
-- Official docs pages: **1318**
+- Total markdown pages captured: **2280**
+- Official docs pages: **1365**
 - Wiki pages: **915**
-- API reference pages captured: **1141**
+- API reference pages captured: **1188**
 - Guide pages captured: **51**
 - Get started pages captured: **11**
 - Example pages captured: **15**
@@ -19,8 +19,8 @@ Streamer.bot is an event-driven automation tool for livestreamers. The official 
 
 - C# guide + recipe pages: **9**
 - C# method reference pages: **202**
-- Trigger reference pages: **418**
-- Sub-action reference pages: **412**
+- Trigger reference pages: **455**
+- Sub-action reference pages: **422**
 - HTTP API pages: **9**
 - WebSocket API pages: **9**
 - UDP API pages: **2**

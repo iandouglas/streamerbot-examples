@@ -2,7 +2,7 @@
 
 Triggers fire actions in response to Twitch, YouTube, OBS, timer, and custom events.
 
-## Pages captured (825)
+## Pages captured (862)
 
 - [`Triggers`](https://docs.streamer.bot/guide/core/triggers) — Overview of trigger configuration in Streamer.bot
 - [`Trigger Custom Event`](https://docs.streamer.bot/api/sub-actions/core/triggers/custom-event-trigger) — 
@@ -44,4 +44,4 @@ Triggers fire actions in response to Twitch, YouTube, OBS, timer, and custom eve
 - [`Test`](https://docs.streamer.bot/api/triggers/core/test) — Trigger for a Test trigger
 - [`Dictation`](https://docs.streamer.bot/api/triggers/core/voice-control/dictation) — Trigger for a Voice Control Dictation
 - [`Websocket Client Closed`](https://docs.streamer.bot/api/triggers/core/websocket/client/websocket-client-closed) — Trigger for when the Websocket Client connection is Closed
-- … and 785 more. See `topic-triggers-&-events.json`.
+- … and 822 more. See `topic-triggers-&-events.json`.
