@@ -42269,7 +42269,7 @@
         "value": 5
       },
       {
-        "name": "copoReward",
+        "name": "channelPointsAwarded",
         "type": "int",
         "description": "The rewarded channel points for the watch streak",
         "value": 450
@@ -72545,6 +72545,10 @@
     "sourcePath": "5.changelogs/chat.md",
     "section": "changelogs",
     "headings": [
+      "📅 September 2, 2026",
+      "✨ What's New",
+      "🛠️ Improvements & Updates",
+      "🐛 Fixes",
       "📅 August 26, 2026",
       "✨ What's New",
       "🛠️ Improvements & Updates",
@@ -72564,7 +72568,7 @@
       "📅 May 1, 2026",
       "🛠️ Improvements & Updates"
     ],
-    "summary": "📅 August 26, 2026\n\n✨ What's New\n\n- **7TV Overlay Emotes Support**\n- Added Animate Emotes toggle in settings for disabling animated emotes\n- Added AVIF and WEBP support for animated emotes when supported by browser and emote provider",
+    "summary": "📅 September 2, 2026\n\n✨ What's New\n\n- Added Twitch GIF support for chat and overlay\n  - By default, GIF's are shown in the chat feed and collapsed in overlay (configurable in settings)\n- Split platform settings into separate pages for Twitch, YouTube, and Kick exclusive settings\n- Added per-event style overrides for all chat events\n  - Default styles can be configured per-platform, and then granularly overidden per-event\n  - Support for this feature in the overlay is planned for a future update\n- Added ability to explicitly hide events from the chat feed and the event feed, respectively\n- Added randomized event previews for all events in settings\n- YouTube event support added for:\n  - New Subscriber\n  - Jewels Gifted\n  - Membership Gifts\n- Added the ability to toggle display of chat badges in both the chat feed and the overlay\n- Added additional highlighted types for chat messages:\n  - Subscribers\n  - Broadcaster Account\n  - Bot Account\n- Added ability to manually add users to the highlighted, ignore, and ignore highlights lists in settings",
     "parameters": [],
     "variables": [],
     "commonVariables": [],

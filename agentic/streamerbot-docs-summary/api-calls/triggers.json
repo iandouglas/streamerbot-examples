@@ -22344,7 +22344,7 @@
         "value": 5
       },
       {
-        "name": "copoReward",
+        "name": "channelPointsAwarded",
         "type": "int",
         "description": "The rewarded channel points for the watch streak",
         "value": 450
