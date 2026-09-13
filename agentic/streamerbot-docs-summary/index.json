@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-06T08:06:08.697982+00:00",
+  "generatedAt": "2026-09-13T08:06:03.880563+00:00",
   "sources": {
     "officialDocs": {
       "site": "https://docs.streamer.bot/",
       "repo": "https://github.com/Streamerbot/docs",
       "localRoot": "agentic/streamerbot-docs",
-      "revision": "228376a7cbe0cdc77d0e2bb4052b77086c5c1bab",
+      "revision": "59029300d2ce5577884b8b41dc6f086b918adc3c",
       "branches": [
         {
           "name": "origin/Mustached-Maniac-patch-1",
@@ -29,8 +29,8 @@
         },
         {
           "name": "origin/main",
-          "shortHash": "228376a",
-          "subject": "docs: update chat changelogs"
+          "shortHash": "5902930",
+          "subject": "docs: add youtube link change to log"
         }
       ]
     },
