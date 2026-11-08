@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-01T14:37:52.033852+00:00",
+  "generatedAt": "2026-11-08T14:39:38.907090+00:00",
   "sources": {
     "officialDocs": {
       "site": "https://docs.streamer.bot/",
       "repo": "https://github.com/Streamerbot/docs",
       "localRoot": "agentic/streamerbot-docs",
-      "revision": "56253da4b3aebf70a1d134356368f1b13fcecd0e",
+      "revision": "25fcaebc801d3ca2d3a1b9132abdd821feef713e",
       "branches": [
         {
           "name": "origin/Mustached-Maniac-patch-1",
@@ -29,8 +29,8 @@
         },
         {
           "name": "origin/main",
-          "shortHash": "56253da",
-          "subject": "fix: missing hyphen"
+          "shortHash": "25fcaeb",
+          "subject": "Remove warning about $parse$ not accepting inline functions or formatting (#438)"
         }
       ]
     },

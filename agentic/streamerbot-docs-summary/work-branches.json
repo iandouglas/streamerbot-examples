@@ -22,8 +22,8 @@
     },
     {
       "name": "origin/main",
-      "shortHash": "56253da",
-      "subject": "fix: missing hyphen"
+      "shortHash": "25fcaeb",
+      "subject": "Remove warning about $parse$ not accepting inline functions or formatting (#438)"
     }
   ],
   "streamerbot-wiki": [
